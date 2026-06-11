@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Πsparrow | Continuous 3D System Registry</title>
+  <link rel="icon" href="data:,"><!-- Suppress favicon.ico 404 -->
+  <meta name="description" content="At Πsparrow, we engineer secure, boxy, high-contrast digital architectures designed for infinite growth. Experience our continuous 3D WebGL corridor.">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="preloader.css">
+
+  <!-- Google Fonts Preconnect for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  
+  <!-- Global Script CDN Libraries for file:// protocol compatibility -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+</head>
+<body>
+
+  <!-- Retro Scanline Overlay -->
+  <div class="scanlines"></div>
+
+  <!-- Fixed WebGL Background Canvas Container -->
+  <div id="webgl-canvas-container"></div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="container">
+      <a href="#hero" class="logo select-anchor">
+        <span class="pi">Π</span>sparrow
+      </a>
+      <nav>
+        <a href="#about" class="select-anchor" data-target-z="-10">About</a>
+        <a href="#products" class="select-anchor" data-target-z="-20">Registry</a>
+        <a href="#services" class="select-anchor" data-target-z="-30">Competencies</a>
+        <a href="#team" class="select-anchor" data-target-z="-40">Flock</a>
+        <a href="#contact" class="select-anchor" data-target-z="-50">Initialize</a>
+      </nav>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span class="status-text">SYS_NODE_OK</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive HTML UI Overlays (Floats over WebGL) -->
+  <div id="ui-overlay-container">
+
+    <!-- 1. HERO / ENGINEERING PLATFORMS -->
+    <section class="section-panel active" id="hero" data-z="0">
+      <div class="container">
+        <div class="hero-layout">
+          <div class="hero-content">
+            <div class="sys-label">ENGINEERING PLATFORMS</div>
+            <h1 class="hero-heading">Innovative Software, Naturally.</h1>
+            <p class="hero-sub">We engineer secure, boxy, high-contrast digital architectures designed for infinite growth.</p>
+            <div class="hero-actions">
+              <a href="#products" class="btn btn-primary select-anchor" data-target-z="-20">Explore Our Showcase</a>
+              <a href="#contact" class="btn btn-secondary select-anchor" data-target-z="-50">Get In Touch</a>
+            </div>
+          </div>
+          <div class="hero-empty-right">
+            <!-- Reserved space for the rotating 3D Π nest structure in WebGL -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. WHO WE ARE -->
+    <section class="section-panel" id="about" data-z="-10">
+      <div class="container">
+        <div class="sec-header">
+          <div class="sys-label">WHO WE ARE</div>
+          <h2 class="sec-title">Welcome to Πsparrow</h2>
+        </div>
+        <div class="about-layout">
+          <div class="about-text">
+            <p>
+              At Πsparrow, we believe in the power of technology to foster growth and structural efficiency. Like a sparrow building its nest <span class="hover-word" data-box="0">twig by twig</span> with precision, we build our software architectures with meticulous care, focusing on <span class="hover-word" data-box="1">mathematical precision</span> and technical detail.
+            </p>
+            <p>
+              Our name combines Π (Pi), representing the <span class="hover-word" data-box="2">infinite potential</span> of computing, with Sparrow, representing diligence, agility, and <span class="hover-word" data-box="3">system integrity</span>. This design philosophy drives us to deliver robust, high-performance, and perfectly clean digital systems.
+            </p>
+          </div>
+          <div class="about-empty-right">
+            <!-- Anchored 3D geometric nest of cubes in WebGL -->
+          </div>
+        </div>
+        
+        <!-- Decorative Glyph Separator -->
+        <div class="glyph-star-divider">
+          <span>★</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SYSTEM REGISTRY — Flagship Platforms -->
+    <section class="section-panel" id="products" data-z="-20">
+      <div class="container">
+        <div class="sec-header">
+          <div class="sys-label">SYSTEM REGISTRY</div>
+          <h2 class="sec-title">Our Flagship Platforms</h2>
+          <p class="sec-subtitle">Ready-to-deploy, high-contrast visual architectures.</p>
+        </div>
+        
+        <div class="registry-grid">
+          
+          <!-- Card a: Enterprise -->
+          <div class="boxy-card product-card" data-index="0">
+            <div class="card-header">
+              <h3 class="card-title">Enterprise</h3>
+              <span class="version-badge">v2.1.0</span>
+            </div>
+            <p class="card-desc">
+              A clean, boxy, high-contrast workforce directory designed to streamline organizational boundaries. Features automated attendance, dynamic role configuration, document audits, and interactive permissions registries in a developer-centric light-teal environment.
+            </p>
+            <ul class="card-bullets">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                WORKFORCE REGISTRY & COMPLIANCE
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                DYNAMIC ROLE ASSIGNMENT MATRIX
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                AUDIT TIMELINE HISTORY LOGGING
+              </li>
+            </ul>
+            <div class="card-action-bar">
+              <span class="card-sublabel">Human Resource Management</span>
+            </div>
+          </div>
+
+          <!-- Card b: Marketing -->
+          <div class="boxy-card product-card" data-index="1">
+            <div class="card-header">
+              <h3 class="card-title">Marketing</h3>
+              <span class="version-badge">v1.8.5</span>
+            </div>
+            <p class="card-desc">
+              Maximize sales visibility with structured lead pipeline tracking and conversion analytics. Easily monitor pipeline metrics, revenue stats, and target segments within a clean tabular layout styled for rapid, high-contrast inspection.
+            </p>
+            <ul class="card-bullets">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                PIPELINE PIPES & STAGES TRACKING
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                CONVERSION RATES & REVENUE ANCHORS
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                DYNAMIC REVENUE BY ACCOUNT MATRIX
+              </li>
+            </ul>
+            <div class="card-action-bar">
+              <span class="card-sublabel">Customer Relationships</span>
+            </div>
+          </div>
+
+          <!-- Card c: Publisher -->
+          <div class="boxy-card product-card" data-index="2">
+            <div class="card-header">
+              <h3 class="card-title">Publisher</h3>
+              <span class="version-badge">v3.0.2</span>
+            </div>
+            <p class="card-desc">
+              A modular content builder featuring drag-and-drop structural blocks, real-time typography styling, custom spacing configurations, and secure SEO tagging rules designed to compile responsive layouts instantly.
+            </p>
+            <ul class="card-bullets">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                MODULAR DRAG BLOCK EDITOR
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                COMPREHENSIVE TYPOGRAPHY PRESETS
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                INLINE METADATA & SEO EDITORS
+              </li>
+            </ul>
+            <div class="card-action-bar">
+              <span class="card-sublabel">Content Management</span>
+            </div>
+          </div>
+
+          <!-- Card d: Education -->
+          <div class="boxy-card product-card" data-index="3">
+            <div class="card-header">
+              <h3 class="card-title">Education</h3>
+              <span class="version-badge">v1.5.0</span>
+            </div>
+            <p class="card-desc">
+              Empower your technical teams with certification tracks, course registries, interactive progress trackers, learning statistics, and automated skill-point aggregation within an elegant developer-certified interface.
+            </p>
+            <ul class="card-bullets">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                DYNAMIC COURSE PROGRESS TRACKER
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                DEVELOPER CERTIFICATION REGISTRY
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                DETAILED LEARNING ANALYTICS
+              </li>
+            </ul>
+            <div class="card-action-bar">
+              <span class="card-sublabel">Learning Management</span>
+            </div>
+          </div>
+
+          <!-- Card e: Security -->
+          <div class="boxy-card product-card" data-index="4">
+            <div class="card-header">
+              <h3 class="card-title">Security</h3>
+              <span class="version-badge">v1.2.2</span>
+            </div>
+            <p class="card-desc">
+              A specialized security platform designed for nursery and play school operations. Combines active classroom cameras, real-time safety checklists, child check-in registries, and parent communications logs in a highly accessible layout.
+            </p>
+            <ul class="card-bullets">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                ACTIVE CLASSROOM CAMERA FEED GRID
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                SECURE CHILDREN CHECK-IN AUDIT
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                VISITOR LOGS & SAFETY METRICS
+              </li>
+            </ul>
+            <div class="card-action-bar">
+              <span class="card-sublabel">Classroom Safety & Audit</span>
+            </div>
+          </div>
+
+          <!-- Card f: Utility -->
+          <div class="boxy-card product-card" data-index="5">
+            <div class="card-header">
+              <h3 class="card-title">Utility</h3>
+              <span class="version-badge">v1.0.4</span>
+            </div>
+            <p class="card-desc">
+              Upload a ZIP containing structured nested image folders, choose target formats (WEBP, PNG, JPG), and download the output with folder hierarchies completely intact.
+            </p>
+            <ul class="card-bullets">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                FOLDER HIERARCHY PRESERVATION
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                BATCH IMAGES CONVERSION ENGINE
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                MULTIPLE FORMAT TARGETS (WEBP/PNG/JPG)
+              </li>
+            </ul>
+            <div class="card-action-bar">
+              <span class="card-sublabel">Image Conversion Engine</span>
+              <a href="https://visualfrog.pisparrow.com/" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.4rem 1rem; font-size: 0.7rem;">Visit VisualFrog</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SERVICE DIRECTORY — Core Competencies -->
+    <section class="section-panel" id="services" data-z="-30">
+      <div class="container">
+        <div class="sec-header">
+          <div class="sys-label">SERVICE DIRECTORY</div>
+          <h2 class="sec-title">Core Competencies</h2>
+          <p class="sec-subtitle">Diligence and precision in every line of code.</p>
+        </div>
+
+        <div class="services-grid">
+          
+          <!-- Competency 1 -->
+          <div class="boxy-card service-card" data-index="0">
+            <div class="service-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 class="service-title">Web Application Development</h3>
+            <p class="service-desc">
+              Crafting responsive, secure, and user-friendly web portals optimized with modular components and high-contrast styling systems.
+            </p>
+          </div>
+
+          <!-- Competency 2 -->
+          <div class="boxy-card service-card" data-index="1">
+            <div class="service-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <h3 class="service-title">Custom Software Architectures</h3>
+            <p class="service-desc">
+              Tailor-made software products engineered specifically to streamline your business rules, registries, and operational targets.
+            </p>
+          </div>
+
+          <!-- Competency 3 -->
+          <div class="boxy-card service-card" data-index="2">
+            <div class="service-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <h3 class="service-title">Finance & Auditing Tools</h3>
+            <p class="service-desc">
+              Highly secure and reliable transaction engines designed to audit records, calculate dynamic fields, and compile ledgers accurately.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PARTNERSHIP REGISTRY — Founders -->
+    <section class="section-panel" id="team" data-z="-40">
+      <div class="container">
+        <div class="sec-header">
+          <div class="sys-label">PARTNERSHIP REGISTRY</div>
+          <h2 class="sec-title">Our Core Flock</h2>
+          <p class="sec-subtitle">The architects behind the sparrow design system.</p>
+        </div>
+
+        <div class="partners-grid">
+          
+          <!-- Founder 1 -->
+          <div class="boxy-card partner-card" data-index="0">
+            <div class="partner-avatar">NN</div>
+            <div class="partner-info">
+              <h3 class="partner-name">Nikhil N</h3>
+              <span class="partner-role">Co-Founder & Lead Architect</span>
+            </div>
+          </div>
+
+          <!-- Founder 2 -->
+          <div class="boxy-card partner-card" data-index="1">
+            <div class="partner-avatar">AG</div>
+            <div class="partner-info">
+              <h3 class="partner-name">Ashalesha Gurjar</h3>
+              <span class="partner-role">Co-Founder & Operations Lead</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. COMMUNICATION CANAL — Contact Form + Footer -->
+    <section class="section-panel" id="contact" data-z="-50">
+      <div class="container">
+        <div class="sec-header">
+          <div class="sys-label">COMMUNICATION CANAL</div>
+          <h2 class="sec-title">Initialize A Project</h2>
+          <p class="sec-subtitle">Let us construct your structured platform solution.</p>
+        </div>
+
+        <div class="contact-container">
+          
+          <!-- Left Column: Info + Terminal Log Simulator -->
+          <div class="contact-info">
+            <p class="contact-intro">
+              Transmit your parameters. Our engineering deck will compile your system specifications and initiate connection protocols within 24 working cycles.
+            </p>
+            <div class="sys-console-output" id="consoleOutput">
+              <div class="console-line">
+                <span class="prefix">&gt;</span>
+                <span class="msg">SYSTEM_READY // AWAITING_PARAMETERS</span>
+              </div>
+              <div class="console-line">
+                <span class="prefix">&gt;</span>
+                <span class="msg">READY FOR INCOMING TRANSMISSION...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Form Box -->
+          <div class="contact-form-box boxy-card">
+            <form id="projectForm" novalidate>
+              <div class="form-grid">
+                
+                <!-- Name -->
+                <div class="form-group">
+                  <label for="name">Your Name</label>
+                  <input type="text" id="name" name="name" class="form-control" placeholder="E.g. Alan Turing" required>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                  <label for="email">Your Email</label>
+                  <input type="email" id="email" name="email" class="form-control" placeholder="E.g. alan@sparrow.io" required>
+                </div>
+
+                <!-- Subject -->
+                <div class="form-group form-group-full">
+                  <label for="subject">Subject</label>
+                  <input type="text" id="subject" name="subject" class="form-control" placeholder="E.g. Architecture deployment query" required>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group form-group-full">
+                  <label for="message">Message Description</label>
+                  <textarea id="message" name="message" class="form-control" placeholder="Compile your structural rules, integrations, and milestones here..." required></textarea>
+                </div>
+
+                <!-- Submit -->
+                <div class="form-group-full">
+                  <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%;">
+                    Send Transmission
+                  </button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- Old inline footer removed to make way for the dedicated WebGL footer -->
+      </div>
+    </section>
+
+    <!-- 7. INTERACTIVE WEBGL FOOTER -->
+    <section class="section-panel" id="interactive-footer" data-z="-60">
+      <div class="footer-canvas-container">
+        <canvas id="footer-canvas"></canvas>
+      </div>
+      <div class="footer-overlay">
+        <!-- Footer Top: Columns -->
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h4>Modules</h4>
+            <a href="#about" class="select-anchor" data-target-z="-10">About System</a>
+            <a href="#products" class="select-anchor" data-target-z="-20">Registry Deck</a>
+            <a href="#services" class="select-anchor" data-target-z="-30">Services Terminal</a>
+          </div>
+          <div class="footer-col">
+            <h4>Support</h4>
+            <a href="#contact" class="select-anchor" data-target-z="-50">Contact Canal</a>
+            <a href="#">System Status</a>
+            <a href="#">Documentation</a>
+          </div>
+          <div class="footer-col">
+            <h4>Portal</h4>
+            <a href="#">Client Logs</a>
+            <a href="#">Security Registry</a>
+            <a href="https://visualfrog.pisparrow.com/" target="_blank" rel="noopener noreferrer">VisualFrog</a>
+          </div>
+        </div>
+
+        <!-- Footer Bottom: Status and copyright -->
+        <div class="footer-bottom-bar">
+          <div class="footer-copy">
+            &copy; 2026 PISPARROW. All Rights Reserved.
+          </div>
+          <div class="footer-status">
+            <span class="status-dot"></span>
+            <span>FOOTER_NODE_OK</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Toast Notifications Wrapper -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Preloader Script -->
+  <script src="preloader.js"></script>
+  <!-- App Script -->
+  <script src="app.js"></script>
+  <!-- Footer Script -->
+  <script src="footer.js"></script>
+</body>
+</html>
