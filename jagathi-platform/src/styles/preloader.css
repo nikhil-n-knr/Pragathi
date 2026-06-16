@@ -29,7 +29,7 @@ body.preloader-active {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: 'Syncopate', sans-serif;
+  font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
   color: #424242; /* Brand charcoal gray */
   font-size: clamp(1.5rem, 3.5vw, 2.5rem);
   font-weight: 900;
@@ -50,29 +50,29 @@ body.preloader-active {
   opacity: 0; /* Hidden initially, fades in after count-up */
 }
 
-/* Phase 1: Custom scalloped circular loader */
-.preloader-loader-container {
+/* Phase 1: Segmented horizontal loading blocks */
+.preloader-dashed-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 170px;
-  height: 170px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   z-index: 100000;
-  pointer-events: none;
 }
 
-.preloader-loader-bg-path {
-  fill: none;
-  stroke: rgba(66, 66, 66, 0.12); /* Faint gray background path */
-  stroke-width: 4px;
+.preloader-dash-segment {
+  width: 16px;
+  height: 28px;
+  background-color: rgba(66, 66, 66, 0.15); /* Tinted charcoal empty segment */
+  border-radius: 1px;
+  transition: background-color 0.1s ease;
 }
 
-.preloader-loader-path {
-  fill: none;
-  stroke: #424242; /* Active brand charcoal gray stroke */
-  stroke-width: 4px;
-  stroke-linecap: round;
+.preloader-dash-segment.filled {
+  background-color: #424242; /* Brand charcoal filled segment */
+  box-shadow: 0 0 10px rgba(66, 66, 66, 0.4);
 }
 
 /* Phase 2: Central Text Box Reveal */
@@ -86,7 +86,7 @@ body.preloader-active {
 }
 
 .preloader-text {
-  font-family: 'Syncopate', sans-serif;
+  font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
   font-size: clamp(2.5rem, 8vw, 6rem);
   font-weight: 900;
   color: #424242;
@@ -130,8 +130,8 @@ body.preloader-active {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 170px;
-  height: 170px;
+  width: 240px;
+  height: 240px;
   z-index: 100000;
   transform-origin: center;
   pointer-events: none;
@@ -141,8 +141,8 @@ body.preloader-active {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 170px;
-  height: 170px;
+  width: 240px;
+  height: 240px;
   transform: translate(-50%, -50%);
   transform-origin: 50% 50%;
 }

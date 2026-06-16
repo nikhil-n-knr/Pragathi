@@ -1,4 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;600;900&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+@font-face {
+  font-family: 'Basement Grotesque';
+  src: url('https://db.onlinewebfonts.com/t/22a5057c44af95176db4b4c5dd40fb15.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
 @import "tailwindcss";
 @import "./preloader.css";
 @import "./footer.css";

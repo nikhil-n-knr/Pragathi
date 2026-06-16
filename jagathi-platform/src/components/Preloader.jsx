@@ -36,124 +36,156 @@ export default function Preloader({ onComplete }) {
       }
     }, null, 4.5);
 
-    // Phase 1: Circular loader fill and Counter ticker increments from 1900 to 1989
+    // Phase 1: Segmented loader fills and Counter ticker increments from 1900 to 1989
     const counterObj = { val: 1900 };
     const yearDigits = document.querySelector('.year-digits');
-    const loaderPath = document.querySelector('.preloader-loader-path');
+    const segments = document.querySelectorAll('.preloader-dash-segment');
+
+    // Reveal '& EST.' text immediately in Phase 1 (faded gray, ready to zoom later)
+    tl.set(['.preloader-ampersand', '.preloader-est-label'], { opacity: 0.4 }, 0);
 
     tl.to(counterObj, {
       val: 1989,
-      duration: 1.8, // dynamic count-up mechanism over 1.8s
-      ease: "power2.inOut",
+      duration: 2.0,
+      ease: "power4.in", // Variable acceleration curve (start slow, accelerate)
       snap: "val",
       onUpdate: () => {
         if (yearDigits) yearDigits.textContent = counterObj.val;
+        
+        // Dynamic block progress loadout filling
+        const progress = (counterObj.val - 1900) / 89;
+        const fillCount = Math.floor(progress * segments.length);
+        segments.forEach((seg, i) => {
+          if (i < fillCount) {
+            seg.classList.add('filled');
+          } else {
+            seg.classList.remove('filled');
+          }
+        });
       }
     }, 0);
 
-    // Animate loader path stroke-dashoffset to 70% complete (drawn)
-    if (loaderPath) {
-      const length = loaderPath.getTotalLength();
-      gsap.set(loaderPath, {
-        strokeDasharray: length,
-        strokeDashoffset: length
-      });
-      tl.to(loaderPath, {
-        strokeDashoffset: length * 0.3,
-        duration: 1.8,
-        ease: "power2.inOut"
-      }, 0);
-    }
-
-    tl.set('.preloader-text-box', { display: 'block' }, 1.8);
-
-    // Reveal '& EST.' text exactly when counter reaches 1989 (at 1.8s) — gray, smooth fade-in
-    tl.to(['.preloader-ampersand', '.preloader-est-label'], {
+    // Strobe flash rapidly at the end (1.7s to 2.0s) for quick "full loadout" transition
+    tl.to(['.preloader-dashed-container', '.preloader-brand-container'], {
+      opacity: 0.15,
+      duration: 0.05,
+      repeat: 5,
+      yoyo: true,
+      ease: "none"
+    }, 1.7);
+    tl.to(['.preloader-dashed-container', '.preloader-brand-container'], {
       opacity: 1,
-      duration: 0.5,
-      ease: "power2.out"
-    }, 1.8);
+      duration: 0.05
+    }, 2.0);
 
-    // Initial typography zoom in and rapid flash sequence
-    tl.fromTo('.preloader-text-box', 
-      { scale: 0.85, opacity: 0 },
-      { scale: 1.05, opacity: 1, duration: 0.4, ease: "back.out(1.5)" },
-      1.8
-    );
-
-    // Flash opacity in rapid succession mimicking screen/glitch impacts
-    tl.to('.preloader-text-box', { opacity: 0.2, duration: 0.06, repeat: 4, yoyo: true }, 2.0);
-    tl.to('.preloader-text-box', { opacity: 1, duration: 0.08 }, 2.3);
-
-    // Phase 3: Collapse text box into a tiny central outline icon
-    tl.to('.preloader-text-box', {
-      scale: 0.0,
-      opacity: 0.0,
-      duration: 0.45,
-      ease: "power3.in"
-    }, 2.6);
-
-    // Innermost logo scallop outline and full logo badge fade/scale in at the origin center
-    const outlines = document.querySelectorAll('.preloader-scallop-outline');
+    // Phase 2 Transition: Completed loadout swaps segments for the zoom-in
+    tl.set('.preloader-dashed-container', { display: 'none' }, 2.0);
     
-    // Hide all outlines at t=0 — they will be revealed solid on their stagger time (not faded in)
-    tl.set(outlines, { opacity: 0 }, 0);
+    // Smooth, dramatic scale zoom-in tracking the text string '1989 & EST'
+    tl.to('.preloader-brand-container', {
+      scale: 3.8,
+      x: "18vw",
+      y: "-15vh",
+      transformOrigin: "bottom left",
+      duration: 1.0,
+      ease: "power3.inOut"
+    }, 2.0);
 
-    // Step 2: Symmetrically from the center, the yellow contour lines begin their slow, smooth outward flow ripple.
+    // Phase 3 Distortion Effects: Entry of the 'Jagathi' text frame at 3.0s
+    tl.set('.preloader-brand-container', { display: 'none' }, 3.0);
+    tl.set('.preloader-text-box', { display: 'block' }, 3.0);
+
+    // Dual-Action Animation:
+    // 1. Clean, mechanical wiggle displacement on the letter spans
+    const chars = document.querySelectorAll('.preloader-char');
+    tl.fromTo(chars,
+      { x: () => gsap.utils.random(-25, 25), y: () => gsap.utils.random(-15, 15), opacity: 0 },
+      { x: 0, y: 0, opacity: 1, duration: 0.45, ease: "power2.out", stagger: 0.03 },
+      3.0
+    );
+    tl.to(chars, {
+      x: () => gsap.utils.random(-4, 4),
+      y: () => gsap.utils.random(-2, 2),
+      duration: 0.07,
+      repeat: 4,
+      yoyo: true,
+      ease: "none"
+    }, 3.15);
+    tl.to(chars, { x: 0, y: 0, duration: 0.08 }, 3.5);
+
+    // 2. High-contrast blinking/flashing strobe strictly on the enclosing border line
+    tl.to('.preloader-text-box', {
+      borderColor: "transparent",
+      duration: 0.04,
+      repeat: 14,
+      yoyo: true,
+      ease: "none"
+    }, 3.0);
+    tl.to('.preloader-text-box', {
+      borderColor: "#424242",
+      duration: 0.04
+    }, 3.6);
+
+    // Concentric scallop outlines ripple outward symmetrically
+    const outlines = document.querySelectorAll('.preloader-scallop-outline');
+    tl.set(outlines, { opacity: 0 }, 0);
     tl.fromTo(outlines,
       {
         scale: 1.0,
-        opacity: 1,          // solid from first frame — no fade
+        opacity: 1,
         attr: { 'stroke-width': 1.5 }
       },
       {
         scale: (i) => 1.0 + 59.0 * Math.pow(i / (outlines.length - 1), 2.5),
         attr: {
           'stroke-width': (i) => {
-            const t = i / (outlines.length - 1); // 0 (innermost) → 1 (outermost)
+            const t = i / (outlines.length - 1);
             return parseFloat((1.5 + 13.5 * Math.pow(t, 1.2)).toFixed(2));
           }
         },
         transformOrigin: "50% 50%",
-        duration: 3.2, // Sped up outlines scale
+        duration: 3.2,
         ease: "sine.inOut",
         immediateRender: false,
         stagger: {
-          each: 0.15, // Faster stagger intervals
+          each: 0.15,
           from: "end"
         }
       },
       3.05
     );
 
-    // Step 3 & 4: Logo appears ~0.35s after waves start (at 3.05s + 0.35s = 3.4s)
+    // Central logo badge scales/fades in
     tl.set('.preloader-logo-badge', { display: 'block' }, 3.4);
     tl.fromTo('.preloader-logo-badge',
-      { scale: 0.9, opacity: 0 },
+      { scale: 0.85, opacity: 0 },
       { scale: 1.0, opacity: 1, duration: 0.8, ease: "power2.out", immediateRender: false },
       3.4
     );
 
-    // Step 5: Start portal reveal mask expansion, logo & loader fade-out, and brand container fade-out at 4.5s (speeding up entry)
-    tl.to(['.preloader-logo-badge', '.preloader-loader-container'], {
-      scale: 1.1,
+    // Phase 4 Component Separation: Conclude by translating logo UP and wordmark DOWN
+    tl.to('.preloader-logo-badge', {
+      y: -130,
+      scale: 1.05,
       opacity: 0,
-      duration: 1.2,
-      ease: "power1.inOut"
-    }, 4.5);
+      duration: 1.3,
+      ease: "power2.inOut"
+    }, 4.2);
 
-    tl.to('.preloader-brand-container', {
+    tl.to('.preloader-text-box', {
+      y: 130,
+      scale: 0.95,
       opacity: 0,
-      duration: 1.0,
-      ease: "power2.out"
-    }, 4.5);
+      duration: 1.3,
+      ease: "power2.inOut"
+    }, 4.2);
 
-    // Fade out the entire preloader overlay (cinematic dissolve)
+    // Fade out overlay background to seamlessly reveal home viewport
     tl.to('#preloader-overlay', {
       opacity: 0,
-      duration: 1.2,
+      duration: 1.3,
       ease: "power2.inOut"
-    }, 4.5);
+    }, 4.2);
 
     return () => {
       tl.kill();
@@ -167,25 +199,27 @@ export default function Preloader({ onComplete }) {
     <div id="preloader-overlay">
       {/* 2. Heritage Counter Ticker */}
       <div className="preloader-brand-container">
-        <span className="preloader-ampersand">&</span>
-        <span className="preloader-est-label"> EST. </span>
         <span className="year-digits">1900</span>
+        <span className="preloader-ampersand"> & </span>
+        <span className="preloader-est-label">EST.</span>
       </div>
 
-      {/* 3. Custom Scalloped Circular Loader */}
-      <div className="preloader-loader-container">
-        <svg 
-          viewBox="-200 -200 400 400" 
-          style={{ width: '100%', height: '100%', overflow: 'visible' }}
-        >
-          <path d={badgePath} className="preloader-loader-bg-path" />
-          <path d={badgePath} className="preloader-loader-path" />
-        </svg>
+      {/* 3. Segmented Loading Blocks (12 blocks) */}
+      <div className="preloader-dashed-container">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <div key={i} className="preloader-dash-segment" />
+        ))}
       </div>
 
       {/* 4. Typography Box for 'JAGATHI' */}
       <div className="preloader-text-box">
-        <div className="preloader-text">JAGATHI</div>
+        <div className="preloader-text">
+          {"JAGATHI".split("").map((char, i) => (
+            <span key={i} className="preloader-char" style={{ display: 'inline-block' }}>
+              {char}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* 4b. JAGATHI Logo Badge (renders logo/image.png) */}
