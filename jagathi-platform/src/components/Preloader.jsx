@@ -153,16 +153,16 @@ export default function Preloader({ onComplete }) {
     tl.set(outlines, { opacity: 0 }, 0);
     tl.fromTo(outlines,
       {
-        scale: 0.5,
+        scale: 1.0,
         opacity: 1,
-        attr: { 'stroke-width': 2.0 }
+        attr: { 'stroke-width': 24.0 }
       },
       {
         scale: (i) => 1.0 + 75.0 * Math.pow(i / (outlines.length - 1), 2.2),
         attr: {
           'stroke-width': (i) => {
             const t = i / (outlines.length - 1);
-            return parseFloat((2.0 + 80.0 * Math.pow(t, 1.5)).toFixed(2));
+            return parseFloat((24.0 + 60.0 * Math.pow(t, 1.5)).toFixed(2));
           }
         },
         transformOrigin: "50% 50%",
