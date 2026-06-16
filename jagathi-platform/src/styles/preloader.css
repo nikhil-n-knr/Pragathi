@@ -21,21 +21,24 @@ body.preloader-active {
   font-family: 'Outfit', sans-serif;
 }
 
-/* Bottom-left branding layout container */
+/* Centered branding layout container */
 .preloader-brand-container {
   position: absolute;
-  bottom: 4rem;
-  left: 4rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
   font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
   color: #424242; /* Brand charcoal gray */
-  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 900;
   letter-spacing: 0.05em;
   line-height: 1;
   pointer-events: none;
+  z-index: 100001;
 }
 
 .preloader-ampersand {
@@ -50,29 +53,34 @@ body.preloader-active {
   opacity: 0; /* Hidden initially, fades in after count-up */
 }
 
-/* Phase 1: Segmented horizontal loading blocks */
-.preloader-dashed-container {
+/* Phase 1: Semi-Circular Loader */
+.preloader-loader-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  width: 340px;
+  height: 340px;
   z-index: 100000;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.preloader-dash-segment {
-  width: 16px;
-  height: 28px;
-  background-color: rgba(66, 66, 66, 0.15); /* Tinted charcoal empty segment */
-  border-radius: 1px;
-  transition: background-color 0.1s ease;
+.preloader-loader-bg-path {
+  fill: none;
+  stroke: rgba(66, 66, 66, 0.15); /* Brand charcoal background path */
+  stroke-width: 4px;
 }
 
-.preloader-dash-segment.filled {
-  background-color: #424242; /* Brand charcoal filled segment */
-  box-shadow: 0 0 10px rgba(66, 66, 66, 0.4);
+.preloader-loader-path {
+  fill: none;
+  stroke: #424242; /* Brand charcoal active path */
+  stroke-width: 4px;
+  stroke-linecap: round;
+  transform: rotate(-90deg); /* Start from the top (12 o'clock) */
+  transform-origin: center;
 }
 
 /* Phase 2: Central Text Box Reveal */
@@ -103,6 +111,7 @@ body.preloader-active {
 
 /* Phase 3 & 4: Centered SVGs for Concentric Contours */
 .preloader-svg-container {
+  display: none; /* revealed via GSAP */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -110,7 +119,6 @@ body.preloader-active {
   width: 170px;
   height: 170px;
   pointer-events: none;
-  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 99999;
