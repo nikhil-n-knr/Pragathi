@@ -229,7 +229,6 @@ export default function Preloader({ onComplete }) {
           viewBox="-200 -200 400 400" 
           style={{ width: '100%', height: '100%', overflow: 'visible' }}
         >
-          <circle cx="0" cy="0" r="150" className="preloader-loader-bg-path" />
           <circle cx="0" cy="0" r="150" className="preloader-loader-path" />
         </svg>
       </div>
@@ -249,7 +248,7 @@ export default function Preloader({ onComplete }) {
       <div className="preloader-logo-badge">
         <img 
           className="preloader-logo-image" 
-          src="/assets/branding/logo.png" 
+          src="/assets/branding/logo.svg" 
           alt="Jagathi Logo" 
         />
       </div>
