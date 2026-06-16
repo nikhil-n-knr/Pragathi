@@ -97,13 +97,11 @@ export default function Preloader({ onComplete }) {
     tl.set('.preloader-brand-container', { display: 'none' }, 3.0);
 
     // Reveal Phase 3 Boxed Text 'JAGATHI' at the center (at 3.0s)
-    tl.set('.preloader-text-box', { display: 'block', opacity: 0, y: 0, scale: 0.9 }, 3.0);
-    tl.to('.preloader-text-box', {
-      opacity: 1,
-      scale: 1.0,
-      duration: 0.4,
-      ease: "back.out(1.7)"
-    }, 3.0);
+    tl.fromTo('.preloader-text-box',
+      { scale: 0.9, opacity: 0, display: 'block' },
+      { scale: 1.0, opacity: 1, duration: 0.4, ease: "back.out(1.7)", immediateRender: false },
+      3.0
+    );
 
     // Dual-Action Animation for JAGATHI:
     // 1. Letters wiggle
@@ -178,10 +176,9 @@ export default function Preloader({ onComplete }) {
     );
 
     // Central logo badge scales/fades in (at 4.5s)
-    tl.set('.preloader-logo-badge', { display: 'block', y: 0 }, 4.5);
     tl.fromTo('.preloader-logo-badge',
-      { scale: 0.7, opacity: 0 },
-      { scale: 1.0, opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.5)", immediateRender: false },
+      { scale: 0.7, opacity: 0, display: 'block' },
+      { scale: 1.0, opacity: 1, duration: 0.8, ease: "back.out(1.5)", immediateRender: false },
       4.5
     );
 
@@ -227,7 +224,7 @@ export default function Preloader({ onComplete }) {
       <div className="preloader-loader-container">
         <svg 
           viewBox="-200 -200 400 400" 
-          style={{ width: '100%', height: '100%', overflow: 'visible' }}
+          style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'visible' }}
         >
           <circle cx="0" cy="0" r="150" className="preloader-loader-path" />
         </svg>
@@ -257,7 +254,7 @@ export default function Preloader({ onComplete }) {
       <div className="preloader-svg-container">
         <svg 
           viewBox="-200 -200 400 400" 
-          style={{ width: '100%', height: '100%', position: 'absolute', overflow: 'visible' }}
+          style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'visible' }}
         >
           <defs>
             <g id="jagathi-contour-shape">

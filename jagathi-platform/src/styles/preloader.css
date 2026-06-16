@@ -65,6 +65,11 @@ body.preloader-active {
   align-items: center;
 }
 
+.preloader-loader-container svg {
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
 .preloader-loader-bg-path {
   fill: none;
   stroke: rgba(66, 66, 66, 0.15); /* Brand charcoal background path */
@@ -76,8 +81,6 @@ body.preloader-active {
   stroke: #424242; /* Brand charcoal active path */
   stroke-width: 4px;
   stroke-linecap: round;
-  transform: rotate(-90deg); /* Start from the top (12 o'clock) */
-  transform-origin: center;
 }
 
 /* Phase 2: Central Text Box Reveal */
@@ -139,8 +142,8 @@ body.preloader-active {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 170px;
-  height: 170px;
+  width: 200px;
+  height: 200px;
   z-index: 100000;
   transform-origin: center;
   pointer-events: none;
@@ -150,8 +153,8 @@ body.preloader-active {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 186px;
-  height: 238px;
-  transform: translate(-50%, -38.9%);
-  transform-origin: 50% 38.9%;
+  width: 200px;
+  height: 200px;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
 }
