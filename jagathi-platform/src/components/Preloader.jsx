@@ -65,8 +65,6 @@ export default function Preloader({ onComplete }) {
       }, 0);
     }
 
-    // Phase 2: Instant swap to boxed text 'JAGATHI' with typography flash
-    tl.set('.preloader-loader-container', { display: 'none' }, 1.8);
     tl.set('.preloader-text-box', { display: 'block' }, 1.8);
 
     // Reveal '& EST.' text exactly when counter reaches 1989 (at 1.8s) — gray, smooth fade-in
@@ -136,8 +134,8 @@ export default function Preloader({ onComplete }) {
       3.4
     );
 
-    // Step 5: Start portal reveal mask expansion, logo fade-out, and brand container fade-out at 4.5s (speeding up entry)
-    tl.to('.preloader-logo-badge', {
+    // Step 5: Start portal reveal mask expansion, logo & loader fade-out, and brand container fade-out at 4.5s (speeding up entry)
+    tl.to(['.preloader-logo-badge', '.preloader-loader-container'], {
       scale: 1.1,
       opacity: 0,
       duration: 1.2,
