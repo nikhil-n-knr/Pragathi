@@ -93,7 +93,7 @@ export default function Preloader({ onComplete }) {
 
     // Phase 3 Distortion Effects: Entry of the 'Jagathi' text frame at 3.0s
     tl.set('.preloader-brand-container', { display: 'none' }, 3.0);
-    tl.set('.preloader-text-box', { display: 'block' }, 3.0);
+    tl.set('.preloader-text-box', { display: 'block', y: 120 }, 3.0);
 
     // Dual-Action Animation:
     // 1. Clean, mechanical wiggle displacement on the letter spans
@@ -156,16 +156,16 @@ export default function Preloader({ onComplete }) {
     );
 
     // Central logo badge scales/fades in
-    tl.set('.preloader-logo-badge', { display: 'block' }, 3.4);
+    tl.set('.preloader-logo-badge', { display: 'block', y: -120 }, 3.4);
     tl.fromTo('.preloader-logo-badge',
       { scale: 0.85, opacity: 0 },
-      { scale: 1.0, opacity: 1, duration: 0.8, ease: "power2.out", immediateRender: false },
+      { scale: 1.0, opacity: 1, y: -120, duration: 0.8, ease: "power2.out", immediateRender: false },
       3.4
     );
 
     // Phase 4 Component Separation: Conclude by translating logo UP and wordmark DOWN
     tl.to('.preloader-logo-badge', {
-      y: -130,
+      y: -300,
       scale: 1.05,
       opacity: 0,
       duration: 1.3,
@@ -173,7 +173,7 @@ export default function Preloader({ onComplete }) {
     }, 4.2);
 
     tl.to('.preloader-text-box', {
-      y: 130,
+      y: 300,
       scale: 0.95,
       opacity: 0,
       duration: 1.3,
