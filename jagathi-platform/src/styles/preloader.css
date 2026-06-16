@@ -79,7 +79,7 @@ body.preloader-active {
 .preloader-loader-path {
   fill: none;
   stroke: #424242; /* Brand charcoal active path */
-  stroke-width: 4px;
+  stroke-width: 24px;
   stroke-linecap: round;
 }
 
