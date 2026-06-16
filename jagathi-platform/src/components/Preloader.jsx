@@ -60,10 +60,12 @@ export default function Preloader({ onComplete }) {
       const length = 2 * Math.PI * 150; // Radius 150
       gsap.set(loaderPath, {
         strokeDasharray: length,
-        strokeDashoffset: length
+        strokeDashoffset: length,
+        attr: { 'stroke-width': 24 }
       });
       tl.to(loaderPath, {
         strokeDashoffset: length * 0.3, // 70% complete (30% remaining offset)
+        attr: { 'stroke-width': 72 },
         duration: 1.8,
         ease: "power2.inOut"
       }, 0);
