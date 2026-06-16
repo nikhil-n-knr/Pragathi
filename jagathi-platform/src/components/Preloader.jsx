@@ -36,10 +36,10 @@ export default function Preloader({ onComplete }) {
       }
     }, null, 4.5);
 
-    // Phase 1: Block loader fills and Counter ticker increments from 1900 to 1989
+    // Phase 1: Circular loader fill and Counter ticker increments from 1900 to 1989
     const counterObj = { val: 1900 };
     const yearDigits = document.querySelector('.year-digits');
-    const segments = document.querySelectorAll('.preloader-dash-segment');
+    const loaderPath = document.querySelector('.preloader-loader-path');
 
     tl.to(counterObj, {
       val: 1989,
@@ -51,18 +51,22 @@ export default function Preloader({ onComplete }) {
       }
     }, 0);
 
-    // Incrementally fill dash segments based on counter timeline progress
-    segments.forEach((seg, index) => {
-      const triggerTime = (index / segments.length) * 1.65;
-      tl.to(seg, {
-        backgroundColor: '#FFE600',
-        boxShadow: '0 0 10px rgba(255, 230, 0, 0.5)',
-        duration: 0.05
-      }, triggerTime);
-    });
+    // Animate loader path stroke-dashoffset to 70% complete (drawn)
+    if (loaderPath) {
+      const length = loaderPath.getTotalLength();
+      gsap.set(loaderPath, {
+        strokeDasharray: length,
+        strokeDashoffset: length
+      });
+      tl.to(loaderPath, {
+        strokeDashoffset: length * 0.3,
+        duration: 1.8,
+        ease: "power2.inOut"
+      }, 0);
+    }
 
     // Phase 2: Instant swap to boxed text 'JAGATHI' with typography flash
-    tl.set('.preloader-dashed-container', { display: 'none' }, 1.8);
+    tl.set('.preloader-loader-container', { display: 'none' }, 1.8);
     tl.set('.preloader-text-box', { display: 'block' }, 1.8);
 
     // Reveal '& EST.' text exactly when counter reaches 1989 (at 1.8s) — gray, smooth fade-in
@@ -170,11 +174,15 @@ export default function Preloader({ onComplete }) {
         <span className="year-digits">1900</span>
       </div>
 
-      {/* 3. Dashed Loading Bar (12 blocks) */}
-      <div className="preloader-dashed-container">
-        {Array.from({ length: 12 }).map((_, i) => (
-          <div key={i} className="preloader-dash-segment" />
-        ))}
+      {/* 3. Custom Scalloped Circular Loader */}
+      <div className="preloader-loader-container">
+        <svg 
+          viewBox="-200 -200 400 400" 
+          style={{ width: '100%', height: '100%', overflow: 'visible' }}
+        >
+          <path d={badgePath} className="preloader-loader-bg-path" />
+          <path d={badgePath} className="preloader-loader-path" />
+        </svg>
       </div>
 
       {/* 4. Typography Box for 'JAGATHI' */}

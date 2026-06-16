@@ -62,7 +62,7 @@ class InteractiveFooter {
     });
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2.0));
-    this.renderer.setClearColor(0xffe600, 1.0);
+    this.renderer.setClearColor(0xffea0a, 1.0);
   }
 
   setupFluidSim() {
@@ -309,7 +309,7 @@ class InteractiveFooter {
           float b = texture2D(tText, vUv + displacement * 0.2).a;
 
           vec3 textCol = vec3(r, g, b);
-          vec3 bgCol = vec3(255.0 / 255.0, 230.0 / 255.0, 0.0 / 255.0);
+          vec3 bgCol = vec3(255.0 / 255.0, 234.0 / 255.0, 10.0 / 255.0);
           vec3 finalColor = mix(bgCol, vec3(0.02, 0.02, 0.03), textCol);
 
           vec3 smokeCol = vec3(0.05, 0.05, 0.08);

@@ -1,7 +1,7 @@
 /* PISPARROW Interactive WebGL Footer Styles - 100% Identical to Vanilla */
 
 #interactive-footer {
-  background-color: #ffe600; /* Jagathi Brand Yellow background */
+  background-color: #FFEA0A; /* Jagathi Brand Yellow background */
   position: relative; /* Modified from absolute/absolute top:0 to relative to render at the bottom of the pages */
   width: 100%;
   height: 100vh;
