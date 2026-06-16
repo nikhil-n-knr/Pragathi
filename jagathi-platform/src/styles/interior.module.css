@@ -1,0 +1,126 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 8rem 0 5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.titleSection {
+  padding: 0 4rem;
+  margin-bottom: 3rem;
+  max-width: 800px;
+}
+
+.subtitle {
+  color: var(--brand-yellow);
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+/* Horizontal scroll showcase container */
+.horizontalScrollWrapper {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2rem 4rem;
+  gap: 3rem;
+  scrollbar-width: none; /* Hide default scrollbar for clean layout */
+  scroll-behavior: smooth;
+  cursor: grab;
+}
+
+.horizontalScrollWrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.horizontalScrollWrapper:active {
+  cursor: grabbing;
+}
+
+/* Portfolio item block */
+.itemPanel {
+  flex: 0 0 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: #111111;
+  /* Silk ripple effect is rendered dynamically inside a canvas overlay or via webgl */
+}
+
+.imagePanel {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.itemPanel:hover .imagePanel {
+  transform: scale(1.05);
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.itemCat {
+  font-size: 0.75rem;
+  color: var(--brand-yellow);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.itemTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.itemMeta {
+  color: var(--text-gray);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  .horizontalScrollWrapper {
+    padding: 1rem 1.5rem;
+    gap: 2rem;
+  }
+  
+  .itemPanel {
+    flex: 0 0 280px;
+  }
+  
+  .imageContainer {
+    height: 350px;
+  }
+  
+  .titleSection {
+    padding: 0 1.5rem;
+  }
+}

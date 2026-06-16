@@ -1,0 +1,123 @@
+.preloaderContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.brandBlock {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.counter {
+  font-size: 8rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  font-family: 'Syncopate', sans-serif;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  margin-bottom: 1rem;
+  transition: color 0.5s ease;
+}
+
+.counterActive {
+  color: #ffffff;
+}
+
+.estText {
+  font-size: 1rem;
+  color: var(--brand-yellow);
+  font-family: 'Syncopate', sans-serif;
+  letter-spacing: 0.3em;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.estVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.logoContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  z-index: 5;
+  pointer-events: none;
+  transition: all 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.logoVisible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Symmetric wave ripples */
+.waveWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.waveLine {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 0, 0.15);
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  transform: scale(0);
+  opacity: 0;
+}
+
+/* Portal reveal circular mask effect */
+.portalMask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: destination-out;
+}
+
+.progressContainer {
+  position: absolute;
+  bottom: 10%;
+  width: 200px;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  width: 0%;
+  background-color: var(--brand-yellow);
+  transition: width 0.1s linear;
+}

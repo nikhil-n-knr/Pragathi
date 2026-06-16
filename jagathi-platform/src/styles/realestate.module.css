@@ -1,0 +1,126 @@
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 8rem 2rem 5rem 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.titleSection {
+  margin-bottom: 4rem;
+}
+
+.subtitle {
+  color: var(--brand-yellow);
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+/* Spatial Drafting Grid Container */
+.gridCanvasWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gridCanvasActive {
+  opacity: 0.4; /* Faint yellow drafting paper lines */
+}
+
+/* Drafting grid visual properties */
+.layoutGrid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  margin-top: 4rem;
+}
+
+.gridItem {
+  grid-column: span 4;
+  background-color: rgba(10, 10, 10, 0.5);
+  border: 1px solid #111111;
+  padding: 2rem;
+  border-radius: 4px;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.gridItem:hover {
+  border-color: var(--brand-yellow);
+  transform: translateY(-5px);
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.itemCategory {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--brand-yellow);
+  text-transform: uppercase;
+}
+
+.itemArea {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+
+.itemTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.itemDetailList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  list-style: none;
+  border-top: 1px solid #222;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.itemDetailList li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.itemDetailList strong {
+  color: #ffffff;
+}
+
+@media (max-width: 992px) {
+  .gridItem {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 768px) {
+  .gridItem {
+    grid-column: span 12;
+  }
+}
