@@ -28,18 +28,21 @@ export default function Preloader({ onComplete }) {
       }
     });
 
-    // Trigger main layout fade-in and page entrance events at 4.8s (when exit starts)
+    // Trigger main layout fade-in and page entrance events at 5.6s (when exit starts)
     tl.call(() => {
       window.dispatchEvent(new Event('preloaderComplete'));
       if (onCompleteRef.current) {
         onCompleteRef.current();
       }
-    }, null, 4.8);
+    }, null, 5.6);
 
-    // Phase 1: Semi-Circular Loader + Center Ticker (0.0s to 1.8s)
+    // Phase 1: Loader at Center, Counter at Bottom-Left (0.0s to 1.8s)
     const counterObj = { val: 1900 };
     const yearDigits = document.querySelector('.year-digits');
     const loaderPath = document.querySelector('.preloader-loader-path');
+
+    // Reveal '& EST.' text immediately in Phase 1 (faded gray)
+    tl.set(['.preloader-ampersand', '.preloader-est-label'], { opacity: 0.4 }, 0);
 
     // Ticker count-up animation
     tl.to(counterObj, {
@@ -66,23 +69,41 @@ export default function Preloader({ onComplete }) {
       }, 0);
     }
 
-    // Phase 2 Transition: Fade out Phase 1 items (at 1.8s)
-    tl.to(['.preloader-loader-container', '.preloader-brand-container'], {
+    // Phase 2 Transition: Fade out Phase 1 circular loader and zoom counter (1.8s to 2.8s)
+    tl.to('.preloader-loader-container', {
       opacity: 0,
       scale: 0.8,
       duration: 0.4,
       ease: "power2.inOut"
     }, 1.8);
-    tl.set(['.preloader-loader-container', '.preloader-brand-container'], { display: 'none' }, 2.2);
+    tl.set('.preloader-loader-container', { display: 'none' }, 2.2);
 
-    // Reveal Phase 2 Boxed Text 'JAGATHI' (at 1.8s)
-    tl.set('.preloader-text-box', { display: 'block', opacity: 0, y: 0, scale: 0.9 }, 1.8);
+    // Zoom in the counter layout
+    tl.to('.preloader-brand-container', {
+      scale: 3.8,
+      x: "18vw",
+      y: "-15vh",
+      transformOrigin: "bottom left",
+      duration: 1.0,
+      ease: "power3.inOut"
+    }, 1.8);
+
+    // Phase 3 Transition: Fade out counter (at 2.8s)
+    tl.to('.preloader-brand-container', {
+      opacity: 0,
+      duration: 0.2,
+      ease: "power2.in"
+    }, 2.8);
+    tl.set('.preloader-brand-container', { display: 'none' }, 3.0);
+
+    // Reveal Phase 3 Boxed Text 'JAGATHI' at the center (at 3.0s)
+    tl.set('.preloader-text-box', { display: 'block', opacity: 0, y: 0, scale: 0.9 }, 3.0);
     tl.to('.preloader-text-box', {
       opacity: 1,
       scale: 1.0,
       duration: 0.4,
       ease: "back.out(1.7)"
-    }, 1.8);
+    }, 3.0);
 
     // Dual-Action Animation for JAGATHI:
     // 1. Letters wiggle
@@ -90,7 +111,7 @@ export default function Preloader({ onComplete }) {
     tl.fromTo(chars,
       { x: () => gsap.utils.random(-25, 25), y: () => gsap.utils.random(-15, 15), opacity: 0 },
       { x: 0, y: 0, opacity: 1, duration: 0.4, ease: "power2.out", stagger: 0.03 },
-      1.8
+      3.0
     );
     tl.to(chars, {
       x: () => gsap.utils.random(-4, 4),
@@ -99,8 +120,8 @@ export default function Preloader({ onComplete }) {
       repeat: 8,
       yoyo: true,
       ease: "none"
-    }, 2.15);
-    tl.to(chars, { x: 0, y: 0, duration: 0.08 }, 2.80);
+    }, 3.35);
+    tl.to(chars, { x: 0, y: 0, duration: 0.08 }, 4.00);
 
     // 2. Border strobe
     tl.to('.preloader-text-box', {
@@ -109,23 +130,23 @@ export default function Preloader({ onComplete }) {
       repeat: 24,
       yoyo: true,
       ease: "none"
-    }, 1.80);
+    }, 3.00);
     tl.to('.preloader-text-box', {
       borderColor: "#424242",
       duration: 0.04
-    }, 2.80);
+    }, 4.00);
 
-    // Phase 3 Transition: Fade out Phase 2 items (at 3.2s)
+    // Phase 4 Transition: Fade out wordmark (at 4.2s)
     tl.to('.preloader-text-box', {
       opacity: 0,
       scale: 0.8,
       duration: 0.4,
       ease: "power2.in"
-    }, 3.2);
-    tl.set('.preloader-text-box', { display: 'none' }, 3.6);
+    }, 4.2);
+    tl.set('.preloader-text-box', { display: 'none' }, 4.6);
 
-    // Reveal SVG Outlines and Logo Badge (at 3.2s)
-    tl.set('.preloader-svg-container', { display: 'flex' }, 3.2);
+    // Reveal SVG Outlines and Logo Badge (at 4.2s)
+    tl.set('.preloader-svg-container', { display: 'flex' }, 4.2);
 
     // Outlines zoom outward and get thicker
     const outlines = document.querySelectorAll('.preloader-scallop-outline');
@@ -153,37 +174,37 @@ export default function Preloader({ onComplete }) {
           from: "end"
         }
       },
-      3.2
+      4.2
     );
 
-    // Central logo badge scales/fades in (at 3.5s)
-    tl.set('.preloader-logo-badge', { display: 'block', y: 0 }, 3.5);
+    // Central logo badge scales/fades in (at 4.5s)
+    tl.set('.preloader-logo-badge', { display: 'block', y: 0 }, 4.5);
     tl.fromTo('.preloader-logo-badge',
       { scale: 0.7, opacity: 0 },
       { scale: 1.0, opacity: 1, y: 0, duration: 0.8, ease: "back.out(1.5)", immediateRender: false },
-      3.5
+      4.5
     );
 
-    // Phase 4 Exit: Conclude by fading/scaling everything out (at 4.8s)
+    // Phase 5 Exit: Conclude by fading/scaling everything out (at 5.6s)
     tl.to('.preloader-logo-badge', {
       scale: 1.2,
       opacity: 0,
       duration: 0.8,
       ease: "power2.inOut"
-    }, 4.8);
+    }, 5.6);
 
     tl.to(outlines, {
       opacity: 0,
       duration: 0.8,
       ease: "power2.inOut"
-    }, 4.8);
+    }, 5.6);
 
     // Fade out overlay background to seamlessly reveal home viewport
     tl.to('#preloader-overlay', {
       opacity: 0,
       duration: 1.0,
       ease: "power2.inOut"
-    }, 4.8);
+    }, 5.6);
 
     return () => {
       tl.kill();
@@ -198,6 +219,8 @@ export default function Preloader({ onComplete }) {
       {/* 2. Heritage Counter Ticker */}
       <div className="preloader-brand-container">
         <span className="year-digits">1900</span>
+        <span className="preloader-ampersand"> & </span>
+        <span className="preloader-est-label">EST.</span>
       </div>
 
       {/* 3. Semi-Circular Loader (Phase 1) */}
