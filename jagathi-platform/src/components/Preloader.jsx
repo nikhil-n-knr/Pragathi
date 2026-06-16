@@ -247,7 +247,7 @@ export default function Preloader({ onComplete }) {
       <div className="preloader-logo-badge">
         <img 
           className="preloader-logo-image" 
-          src="/assets/branding/logo.svg" 
+          src="/assets/branding/logo.png?v=2" 
           alt="Jagathi Logo" 
         />
       </div>
