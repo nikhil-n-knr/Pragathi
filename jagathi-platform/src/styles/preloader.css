@@ -24,30 +24,41 @@ body.preloader-active {
 /* Bottom-left branding layout container */
 .preloader-brand-container {
   position: absolute;
-  bottom: 4rem;
-  left: 4rem;
+  bottom: clamp(1.5rem, 4vw, 4rem);
+  left: clamp(1.5rem, 4vw, 4rem);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
   font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
   color: #424242; /* Brand charcoal gray */
   font-size: clamp(1.5rem, 3.5vw, 2.5rem);
   font-weight: 900;
   letter-spacing: 0.05em;
-  line-height: 1;
+  line-height: 1.2;
   pointer-events: none;
+  padding-bottom: 8px; /* Prevent descenders and underlines from clipping */
+}
+
+.preloader-est-prefix {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  width: 0px;
+  opacity: 0;
+  white-space: nowrap;
+  will-change: width, opacity, margin-right;
 }
 
 .preloader-ampersand {
   border-bottom: 3px solid #424242; /* Brand charcoal gray underline */
-  padding-bottom: 2px;
+  padding-bottom: 6px; /* Increased to ensure underline is fully visible */
   display: inline-block;
-  line-height: 0.8;
-  opacity: 0; /* Hidden initially, fades in after count-up */
+  line-height: 1.1; /* Avoid character clipping at top/bottom */
+  margin-right: 0.35rem;
 }
 
 .preloader-est-label {
-  opacity: 0; /* Hidden initially, fades in after count-up */
+  display: inline-block;
+  line-height: 1.1;
 }
 
 /* Phase 1: Semi-Circular Loader */
@@ -66,7 +77,7 @@ body.preloader-active {
 }
 
 .preloader-loader-container svg {
-  transform: rotate(-90deg);
+  transform: rotate(90deg);
   transform-origin: center;
 }
 
@@ -90,23 +101,39 @@ body.preloader-active {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 4px solid #424242;
-  padding: 1.5rem 3.5rem;
+  border: 14px solid #424242; /* Increased to 14px to align with circle */
+  padding: clamp(0.8rem, 1.8vw, 1.4rem) clamp(1.2rem, 3vw, 2.6rem);
   background: transparent;
   transform-origin: center;
   box-sizing: border-box;
+  filter: url(#liquid-entrance-wave);
+  will-change: transform, filter;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate(-50%, -50%) translateZ(0);
 }
 
 .preloader-text {
   font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
-  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-size: clamp(2.1rem, 7.5vw, 7rem); /* Increased font size with safe bounds */
   font-weight: 900;
   color: #424242;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  line-height: 1;
+  line-height: 1.1;
   text-align: center;
-  margin-right: -0.18em; /* Offset letter-spacing of last character */
+  margin-right: -0.04em; /* Offset letter-spacing of last character */
+  white-space: nowrap; /* Ensure text never wraps on any viewport */
+  overflow: hidden; /* horizontal baseline wrapper */
+  padding: 0.2rem 0;
+}
+
+.preloader-char {
+  display: inline-block;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* Phase 3 & 4: Centered SVGs for Concentric Contours */
@@ -122,6 +149,7 @@ body.preloader-active {
   justify-content: center;
   align-items: center;
   z-index: 99999;
+  overflow: visible; /* Ensure outlines are not clipped when scaling past 400px */
 }
 
 .preloader-svg-container svg {
@@ -131,9 +159,10 @@ body.preloader-active {
 .preloader-scallop-outline {
   fill: none;
   stroke: #424242;
-  stroke-width: 1.5px;
+  stroke-width: 14px;           /* matches logo circle border thickness */
+  vector-effect: non-scaling-stroke; /* constant visual px regardless of GSAP scale */
   transform-origin: 50% 50%;
-  vector-effect: non-scaling-stroke;
+  opacity: 0;                   /* prevent initial layout flash */
 }
 
 /* Central logo badge styling */
@@ -158,4 +187,10 @@ body.preloader-active {
   height: 300px;
   transform: translate(-50%, -50%);
   transform-origin: 50% 50%;
+}
+
+.preloader-loader-dot-path {
+  fill: none;
+  stroke: #424242;
+  stroke-linecap: round;
 }

@@ -10,15 +10,15 @@ export default function Header() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Construction', path: '/construction' },
-    { name: 'Real Estate', path: '/real-estate' },
+    { name: 'Construction & Land Dev', path: '/construction' },
     { name: 'Interior', path: '/interior' },
+    { name: 'Civil Market', path: '/civil-market' },
   ];
 
   return (
     <header className={styles.header}>
       <Link href="/" className={styles.logo}>
-        <span style={{ color: 'var(--brand-yellow)' }}>J</span>AGATHI
+        JAGATHI
       </Link>
       
       <nav className={styles.nav}>

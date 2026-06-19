@@ -24,7 +24,7 @@ const SpecialChar = ({ type, resolvedChar, active }) => {
           transition: 'opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)'
         }}
       >
-        <svg className="w-full h-full text-[#FFFF00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <svg className="w-full h-full text-[#424242]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 4v2" />
           <path d="M12 6L7 19h10L12 6z" />
           <circle cx="12" cy="4" r="1.5" fill="currentColor" />
@@ -49,7 +49,7 @@ const SpecialChar = ({ type, resolvedChar, active }) => {
           transition: 'opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)'
         }}
       >
-        <svg className="w-full h-full text-[#FFFF00] overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+        <svg className="w-full h-full text-[#424242] overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <path d="M12 5v14" />
           <path d="M2 5h20" />
         </svg>
@@ -73,7 +73,7 @@ const SpecialChar = ({ type, resolvedChar, active }) => {
           transition: 'opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)'
         }}
       >
-        <svg className="w-full h-full text-[#FFFF00] animate-spin" style={{ animationDuration: '3.5s' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <svg className="w-full h-full text-[#424242] animate-spin" style={{ animationDuration: '3.5s' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <circle cx="12" cy="12" r="10" />
           <circle cx="12" cy="12" r="6" strokeDasharray="2 2" />
           <path d="M12 2v20M2 12h20" strokeWidth="0.75" strokeDasharray="1 1" />
@@ -98,14 +98,14 @@ const SpecialChar = ({ type, resolvedChar, active }) => {
           transition: 'opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)'
         }}
       >
-        <svg className="w-full h-full text-[#FFFF00] overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <svg className="w-full h-full text-[#424242] overflow-visible" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M9 18h6M10 20h4" strokeLinecap="round"/>
           <path d="M7.5 10.5c0-3 2-5 4.5-5s4.5 2 4.5 5c0 1.5-1 2.5-2 3.5l-1 1.5h-3l-1-1.5c-1-1-2-2-2-3.5Z"/>
           <path d="M12 7v5" strokeLinecap="round"/>
           <polygon 
             points="12,14 1,24 23,24" 
-            fill="rgba(255, 255, 0, 0.18)" 
-            stroke="rgba(255, 255, 0, 0.5)" 
+            fill="rgba(66, 66, 66, 0.18)" 
+            stroke="rgba(66, 66, 66, 0.5)" 
             strokeWidth="0.75" 
             strokeDasharray="2 2"
             className="animate-pulse"
@@ -131,7 +131,7 @@ const SpecialChar = ({ type, resolvedChar, active }) => {
           transition: 'opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.7s cubic-bezier(0.25, 1, 0.5, 1)'
         }}
       >
-        <svg className="w-full h-full text-[#FFFF00]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <svg className="w-full h-full text-[#424242]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <path d="M17 5H8v14h9" />
           <path d="M8 12h5l6-6M19 6h-4M19 6v4" />
         </svg>
@@ -140,7 +140,7 @@ const SpecialChar = ({ type, resolvedChar, active }) => {
   );
 
   return (
-    <span className="inline-block text-[#FFFF00]">
+    <span className="inline-block text-[#424242]">
       {type === 'compass' && renderCompass()}
       {type === 'horizon' && renderHorizon()}
       {type === 'voxel' && renderVoxel()}
@@ -294,10 +294,10 @@ export default function FinalCTA() {
   return (
     <section 
       ref={containerRef}
-      className="relative z-10 bg-[#000000] text-[#FFFF00] border-t border-[#FFFF00]/15 w-full flex flex-col items-center justify-center overflow-visible select-none"
+      className="relative z-10 bg-transparent text-[#424242] border-t border-[#424242]/15 w-full flex flex-col items-center justify-center overflow-visible select-none"
       style={{
         paddingTop: 'clamp(6rem, 10vw, 12rem)',
-        paddingBottom: 'clamp(8rem, 12vw, 15rem)',
+        paddingBottom: 'clamp(18rem, 24vw, 32rem)',
         fontFamily: '"Outfit", sans-serif',
         fontWeight: 900
       }}
@@ -305,8 +305,8 @@ export default function FinalCTA() {
       <div className="w-full max-w-6xl mx-auto px-6 flex flex-col items-center text-center overflow-visible">
         {/* Living Blueprint Headline */}
         <h2 
-          className="text-[#FFFF00] font-black text-3xl md:text-5xl lg:text-[2.65rem] uppercase tracking-wider leading-tight text-center w-full select-none overflow-visible flex flex-wrap justify-center items-center gap-x-[0.3em] gap-y-[0.1em] font-sans"
-          style={{ letterSpacing: '0.08em', fontFamily: '"Syncopate", sans-serif' }}
+          className="text-[#424242] font-black text-3xl md:text-5xl lg:text-[2.65rem] uppercase tracking-wider leading-tight text-center w-full select-none overflow-visible flex flex-wrap justify-center items-center gap-x-[0.3em] gap-y-[0.1em] font-sans"
+          style={{ letterSpacing: '0.05em', fontFamily: '"Basement Grotesque", "Syncopate", sans-serif' }}
         >
           {wordsData.map((wData, wIdx) => (
             <Word 
@@ -320,7 +320,7 @@ export default function FinalCTA() {
 
         {/* Advisory Subtext */}
         <p 
-          className="text-[#FFFF00]/75 font-sans font-light text-xs md:text-sm lg:text-base mt-8 leading-relaxed text-center max-w-xl split-reveal"
+          className="text-[#424242]/75 font-sans font-light text-xs md:text-sm lg:text-base mt-8 leading-relaxed text-center max-w-xl split-reveal"
           style={{ fontWeight: 300 }}
         >
           Begin matching your investment horizon or spatial execution parameters with our specialist advisory desk.
@@ -334,7 +334,7 @@ export default function FinalCTA() {
             onMouseEnter={() => setHoveredPanel(1)}
             onMouseLeave={() => setHoveredPanel(null)}
             onClick={() => window.location.href = "mailto:info@jagathi.com"}
-            className="border border-[#FFFF00] relative overflow-hidden flex flex-col justify-center items-center h-[260px] cursor-pointer bg-[#000000] text-[#FFFF00] hover:bg-[#FFFF00] hover:text-[#000000] p-8 text-center"
+            className="border border-[#424242] relative overflow-hidden flex flex-col justify-center items-center h-[260px] cursor-pointer bg-transparent text-[#424242] hover:bg-[#424242] hover:text-[#FFEA0A] p-8 text-center"
             style={{
               flexGrow: hoveredPanel === 1 ? 1.85 : hoveredPanel === 2 ? 1.0 : 1.4,
               flexBasis: '0px',
@@ -347,7 +347,7 @@ export default function FinalCTA() {
               className="absolute inset-0 pointer-events-none transition-opacity duration-500 bg-grid-pattern z-0"
               style={{ 
                 opacity: hoveredPanel === 1 ? 0.16 : 0,
-                backgroundImage: 'linear-gradient(rgba(255, 255, 0, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 0, 0.2) 1px, transparent 1px)',
+                backgroundImage: 'linear-gradient(rgba(66, 66, 66, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(66, 66, 66, 0.2) 1px, transparent 1px)',
                 backgroundSize: '24px 24px'
               }}
             />
@@ -366,8 +366,8 @@ export default function FinalCTA() {
           <div 
             onMouseEnter={() => setHoveredPanel(2)}
             onMouseLeave={() => setHoveredPanel(null)}
-            onClick={() => router.push('/real-estate')}
-            className="border border-[#FFFF00] relative overflow-hidden flex flex-col justify-center items-center h-[260px] cursor-pointer bg-[#000000] text-[#FFFF00] hover:bg-[#FFFF00] hover:text-[#000000] p-8 text-center"
+            onClick={() => router.push('/civil-market')}
+            className="border border-[#424242] relative overflow-hidden flex flex-col justify-center items-center h-[260px] cursor-pointer bg-transparent text-[#424242] hover:bg-[#424242] hover:text-[#FFEA0A] p-8 text-center"
             style={{
               flexGrow: hoveredPanel === 2 ? 1.85 : hoveredPanel === 1 ? 1.0 : 1.4,
               flexBasis: '0px',
@@ -377,7 +377,7 @@ export default function FinalCTA() {
           >
             {/* Coordinate line tracker sweeping on hover */}
             <div 
-              className="absolute top-0 bottom-0 w-[2px] bg-[#FFFF00]/70 pointer-events-none transition-all duration-1000 ease-in-out z-0"
+              className="absolute top-0 bottom-0 w-[2px] bg-[#424242]/70 pointer-events-none transition-all duration-1000 ease-in-out z-0"
               style={{
                 left: hoveredPanel === 2 ? '100%' : '-10%',
                 opacity: hoveredPanel === 2 ? 1 : 0

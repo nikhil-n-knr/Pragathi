@@ -8,7 +8,7 @@ import { AnimatePresence } from 'framer-motion';
 import Lenis from 'lenis';
 import HomeScene from '../components/scenes/HomeScene';
 import KineticHeadline from '../components/KineticHeadline';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
 import FluidMediaField from '../components/FluidMediaField';
 import ShowcaseBanner from '../components/ShowcaseBanner';
 import GatewaySection from '../components/GatewaySection';
@@ -26,6 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    document.body.classList.add('home-theme-yellow-gray');
     gsap.registerPlugin(ScrollTrigger);
 
     // 1. Initialize Lenis Smooth Scroll
@@ -102,6 +103,7 @@ export default function Home() {
 
     // Cleanup scrolling triggers and Lenis instance
     return () => {
+      document.body.classList.remove('home-theme-yellow-gray');
       scrollTracker.kill();
       gatewaysReveal.kill();
       revealsTweens.forEach(t => {
@@ -117,13 +119,13 @@ export default function Home() {
     <div 
       ref={scrollContainerRef}
       id="home-scroll-container"
-      className="relative min-h-[220vh] bg-transparent text-white font-sans overflow-x-hidden w-full flex flex-col items-center"
+      className="relative min-h-[220vh] bg-transparent text-current font-sans overflow-x-hidden w-full flex flex-col items-center"
     >
       {/* 1. Page-Specific Local WebGL Background Canvas */}
       <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
         <Canvas
           camera={{ position: [0, 0, 6], fov: 55 }}
-          gl={{ antialias: true, alpha: false, stencil: false, depth: true }}
+          gl={{ antialias: true, alpha: true, stencil: false, depth: true }}
           dpr={[1, 1.5]}
         >
           <ambientLight intensity={0.15} />
@@ -136,7 +138,7 @@ export default function Home() {
       <Hero />
 
       {/* 3. Kinetic Word Bands (Yu-inspired) */}
-      <section className="relative z-10 py-8">
+      <section className="relative z-10 pt-12 pb-20">
         <KineticHeadline />
       </section>
 
@@ -152,8 +154,8 @@ export default function Home() {
       {/* 6. Featured Media Strip (Fluid Parallax Cards - Staggered columns) */}
       <section className="relative z-10 px-6 w-full max-w-6xl mx-auto overflow-visible flex flex-col items-center" style={{ paddingTop: 'clamp(4rem, 8vw, 10rem)', paddingBottom: 'clamp(4rem, 8vw, 10rem)' }}>
         <div className="flex flex-col items-center text-center mb-6 w-full">
-          <span className="text-yellow-400 font-mono text-xs uppercase tracking-widest block text-center">// Featured Work</span>
-          <h2 className="text-white font-bold text-3xl md:text-5xl uppercase tracking-wider mt-2 text-center w-full">
+          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest block text-center">// Featured Work</span>
+          <h2 className="text-[#424242] font-bold text-3xl md:text-5xl uppercase tracking-wider mt-2 text-center w-full">
             Landmarks of Distinction
           </h2>
         </div>
@@ -173,7 +175,7 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Footer */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

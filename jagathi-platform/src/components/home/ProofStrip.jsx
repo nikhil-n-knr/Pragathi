@@ -37,46 +37,46 @@ export default function ProofStrip() {
   }, []);
 
   return (
-    <section className="relative z-10 bg-zinc-950/45 border-y border-yellow-400/15 w-full flex justify-center py-16 split-reveal">
-      <div className="w-full max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-yellow-400/10 text-center">
+    <section className="relative z-10 bg-transparent border-y border-[#424242]/20 w-full flex justify-center py-16 split-reveal">
+      <div className="w-full max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-[#424242]/20 text-center">
         
         {/* Metric 1 */}
         <div className="flex flex-col items-center px-4 py-4 justify-between h-32">
-          <span className="text-yellow-400/30 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_01</span>
+          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_01</span>
           <div 
-            className="metric-number text-yellow-400 text-3xl md:text-5xl font-black font-mono leading-none my-2"
+            className="metric-number text-[#424242] text-3xl md:text-5xl font-black font-mono leading-none my-2"
             data-value="35"
             data-suffix="+"
           >
             0+
           </div>
           <div className="flex flex-col items-center">
-            <div className="text-gray-300 text-[10px] tracking-widest uppercase font-semibold">Years of Legacy</div>
-            <span className="text-yellow-400/20 font-mono text-[7px] block mt-1">LAT: 12.9716° N</span>
+            <div className="text-gray-800 text-[10px] tracking-widest uppercase font-semibold">Years of Legacy</div>
+            <span className="text-[#424242]/45 font-mono text-[7px] block mt-1">LAT: 12.9716° N</span>
           </div>
         </div>
 
         {/* Metric 2 */}
         <div className="flex flex-col items-center px-4 py-4 justify-between h-32">
-          <span className="text-yellow-400/30 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_02</span>
+          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_02</span>
           <div 
-            className="metric-number text-yellow-400 text-3xl md:text-5xl font-black font-mono leading-none my-2"
+            className="metric-number text-[#424242] text-3xl md:text-5xl font-black font-mono leading-none my-2"
             data-value="450"
             data-suffix="+"
           >
             0+
           </div>
           <div className="flex flex-col items-center">
-            <div className="text-gray-300 text-[10px] tracking-widest uppercase font-semibold">Delivered Assets</div>
-            <span className="text-yellow-400/20 font-mono text-[7px] block mt-1">LNG: 77.5946° E</span>
+            <div className="text-gray-800 text-[10px] tracking-widest uppercase font-semibold">Delivered Assets</div>
+            <span className="text-[#424242]/45 font-mono text-[7px] block mt-1">LNG: 77.5946° E</span>
           </div>
         </div>
 
         {/* Metric 3 */}
         <div className="flex flex-col items-center px-4 py-4 justify-between h-32">
-          <span className="text-yellow-400/30 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_03</span>
+          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_03</span>
           <div 
-            className="metric-number text-yellow-400 text-3xl md:text-5xl font-black font-mono leading-none my-2"
+            className="metric-number text-[#424242] text-3xl md:text-5xl font-black font-mono leading-none my-2"
             data-value="1.2"
             data-suffix="M+"
             data-decimal="true"
@@ -84,24 +84,24 @@ export default function ProofStrip() {
             0.0M+
           </div>
           <div className="flex flex-col items-center">
-            <div className="text-gray-300 text-[10px] tracking-widest uppercase font-semibold">Sq. Ft. Completed</div>
-            <span className="text-yellow-400/20 font-mono text-[7px] block mt-1">ALT: 920.0 METERS</span>
+            <div className="text-gray-800 text-[10px] tracking-widest uppercase font-semibold">Sq. Ft. Completed</div>
+            <span className="text-[#424242]/45 font-mono text-[7px] block mt-1">ALT: 920.0 METERS</span>
           </div>
         </div>
 
         {/* Metric 4 */}
         <div className="flex flex-col items-center px-4 py-4 justify-between h-32">
-          <span className="text-yellow-400/30 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_04</span>
+          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_04</span>
           <div 
-            className="metric-number text-yellow-400 text-3xl md:text-5xl font-black font-mono leading-none my-2"
+            className="metric-number text-[#424242] text-3xl md:text-5xl font-black font-mono leading-none my-2"
             data-value="100"
             data-suffix="%"
           >
             0%
           </div>
           <div className="flex flex-col items-center">
-            <div className="text-gray-300 text-[10px] tracking-widest uppercase font-semibold">Compliance Rating</div>
-            <span className="text-yellow-400/20 font-mono text-[7px] block mt-1">STATUS: COMPLIANT_OK</span>
+            <div className="text-gray-800 text-[10px] tracking-widest uppercase font-semibold">Compliance Rating</div>
+            <span className="text-[#424242]/45 font-mono text-[7px] block mt-1">STATUS: COMPLIANT_OK</span>
           </div>
         </div>
 

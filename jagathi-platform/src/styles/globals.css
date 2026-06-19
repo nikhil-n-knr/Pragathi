@@ -21,7 +21,72 @@
   /* Mouse position for the radial glow, defaulted to center screen */
   --mouse-x: 50%;
   --mouse-y: 50%;
+
+  /* Default custom cursor theme (yellow) */
+  --cursor-dot: #FFEA0A;
+  --cursor-border: #FFEA0A;
+  --cursor-bg: rgba(255, 234, 10, 0.02);
+  --cursor-glow: rgba(255, 234, 10, 0.15);
+  --cursor-border-hover: #FFEA0A;
+  --cursor-bg-hover: rgba(255, 234, 10, 0.08);
+  --cursor-glow-hover: rgba(255, 234, 10, 0.3);
+  --cursor-border-click: #FFEA0A;
+  --cursor-bg-click: rgba(255, 234, 10, 0.18);
+  --cursor-glow-click: rgba(255, 234, 10, 0.25);
+
+  /* Default header theme (dark transparent) */
+  --header-bg: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  --header-logo: #ffffff;
+  --header-logo-hover: var(--brand-yellow);
+  --header-link: var(--text-gray);
+  --header-link-hover: #ffffff;
 }
+
+body.home-theme-yellow-gray {
+  --bg-color: #FFEA0A;
+  --text-color: #424242;
+  --text-gray: #555555;
+  --brand-yellow-glow: rgba(66, 66, 66, 0.05);
+
+  /* Homepage-specific custom cursor theme (charcoal gray) */
+  --cursor-dot: #424242;
+  --cursor-border: #424242;
+  --cursor-bg: rgba(66, 66, 66, 0.02);
+  --cursor-glow: rgba(66, 66, 66, 0.15);
+  --cursor-border-hover: #424242;
+  --cursor-bg-hover: rgba(66, 66, 66, 0.08);
+  --cursor-glow-hover: rgba(66, 66, 66, 0.3);
+  --cursor-border-click: #424242;
+  --cursor-bg-click: rgba(66, 66, 66, 0.18);
+  --cursor-glow-click: rgba(66, 66, 66, 0.25);
+
+  /* Homepage-specific header theme */
+  --header-bg: transparent;
+  --header-logo: #424242;
+  --header-logo-hover: #000000;
+  --header-link: #555555;
+  --header-link-hover: #000000;
+  
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Home theme text selection override */
+body.home-theme-yellow-gray ::selection {
+  background: #424242;
+  color: #FFEA0A;
+}
+
+body.home-theme-yellow-gray ::-webkit-scrollbar-track {
+  background: #FFEA0A;
+}
+body.home-theme-yellow-gray ::-webkit-scrollbar-thumb {
+  background: #d4c309;
+}
+body.home-theme-yellow-gray ::-webkit-scrollbar-thumb:hover {
+  background: #424242;
+}
+
 
 .font-serif-luxury {
   font-family: 'Playfair Display', Georgia, serif;
@@ -61,7 +126,7 @@ body::before {
   height: 100vh;
   pointer-events: none;
   background: radial-gradient(
-    600px circle at var(--mouse-x) var(--mouse-y),
+    200px circle at var(--mouse-x) var(--mouse-y),
     var(--brand-yellow-glow) 0%,
     transparent 80%
   );
@@ -76,10 +141,10 @@ body.custom-cursor-active * {
 }
 
 /* Heading Fonts */
-h1, h2, h3, h4, .brand-header {
-  font-family: 'Syncopate', sans-serif;
+h1, h2, h3, h4, .brand-header, .font-basement {
+  font-family: 'Basement Grotesque', 'Syncopate', sans-serif !important;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
 }
 
 /* Hardware Acceleration Helpers */

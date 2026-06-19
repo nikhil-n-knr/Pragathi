@@ -48,20 +48,20 @@ export default function Hero() {
   return (
     <section className="relative h-screen flex flex-col justify-center items-center text-center px-6 z-10 pointer-events-none">
       <div className="max-w-4xl flex flex-col items-center">
-        <h1 className="hero-title text-white font-extrabold tracking-[0.22em] text-5xl md:text-8xl leading-none uppercase overflow-hidden select-text h-[1.1em] flex items-center justify-center">
+        <h1 className="hero-title text-[#424242] font-extrabold tracking-[0.22em] text-5xl md:text-8xl leading-none uppercase overflow-hidden select-text h-[1.1em] flex items-center justify-center">
           <span className="hero-title-reveal inline-block transform translate-y-full will-change-transform">
             JAGATHI
           </span>
         </h1>
-        <h2 className="hero-subtitle text-yellow-400 font-sans font-light tracking-[0.3em] text-sm md:text-lg uppercase mt-6 select-text opacity-0">
+        <h2 className="hero-subtitle text-[#424242]/80 font-sans font-light tracking-[0.3em] text-sm md:text-lg uppercase mt-6 select-text opacity-0">
           Built for Legacies
         </h2>
-        <p className="hero-desc text-gray-400 font-sans font-light text-xs md:text-sm mt-6 max-w-xl leading-relaxed select-text opacity-0">
+        <p className="hero-desc text-gray-600 font-sans font-light text-xs md:text-sm mt-6 max-w-xl leading-relaxed select-text opacity-0">
           We engineer landmark infrastructure, develop high-yield land, and design flawless, turnkey interior spaces from A to Z.
         </p>
       </div>
       <div className="hero-scroll-btn absolute bottom-16 flex flex-col items-center gap-2 opacity-0">
-        <span className="text-gray-500 uppercase tracking-[0.30em] text-[8px] animate-bounce">Scroll to explore</span>
+        <span className="text-gray-600 uppercase tracking-[0.30em] text-[8px] animate-bounce">Scroll to explore</span>
       </div>
     </section>
   );

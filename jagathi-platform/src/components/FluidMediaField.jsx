@@ -209,11 +209,11 @@ export default function FluidMediaField({ onSelectProject }) {
             className="card-item sticky top-[10vh] h-[80vh] w-full flex items-center justify-center mb-16 overflow-visible"
           >
             <div 
-              className="card-inner w-full h-full bg-zinc-950 border border-yellow-400/15 rounded-sm shadow-2xl shadow-black/95 overflow-hidden flex flex-col relative"
+              className="card-inner w-full h-full bg-[#424242] border border-[#FFEA0A]/15 rounded-sm shadow-2xl shadow-black/95 overflow-hidden flex flex-col relative"
               style={{ willChange: 'transform, opacity' }}
             >
               {/* Top - Image Before/After Slider */}
-              <div className="relative w-full h-[52%] md:h-[55%] overflow-hidden border-b border-yellow-400/10">
+              <div className="relative w-full h-[52%] md:h-[55%] overflow-hidden border-b border-[#FFEA0A]/10">
                 <BeforeAfterSlider 
                   beforeImage={p.beforeImage} 
                   afterImage={p.afterImage} 
@@ -223,44 +223,44 @@ export default function FluidMediaField({ onSelectProject }) {
               </div>
 
               {/* Bottom - Metadata & Wording (with plenty of breathing room) */}
-              <div className="w-full h-[48%] md:h-[45%] flex flex-col justify-between p-6 md:p-8 lg:p-10 text-left bg-zinc-950">
+              <div className="w-full h-[48%] md:h-[45%] flex flex-col justify-between p-6 md:p-8 lg:p-10 text-left bg-[#424242]">
                 <div>
                   <div className="flex justify-between items-center w-full mb-3 md:mb-4">
-                    <span className="text-yellow-400/35 font-mono text-[9px] uppercase tracking-widest block">
+                    <span className="text-[#FFEA0A]/40 font-mono text-[9px] uppercase tracking-widest block">
                       // SYSTEM_INDEX: {p.num}
                     </span>
-                    <span className="text-yellow-400/20 font-mono text-[7px]">
+                    <span className="text-[#FFEA0A]/35 font-mono text-[7px]">
                       GPS: {p.coords}
                     </span>
                   </div>
 
                   <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-3">
                     <h3 className="text-white font-extrabold text-xl md:text-2xl lg:text-3xl uppercase leading-none font-sans tracking-wide">
-                      <span className="text-yellow-400 tracking-[0.05em] mr-2">{p.title.split(' ')[0]} /</span>
+                      <span className="text-[#FFEA0A] tracking-[0.05em] mr-2">{p.title.split(' ')[0]} /</span>
                       <span className="font-serif-luxury italic text-white lowercase first-letter:uppercase tracking-[0.05em] font-normal">
                         {p.title.split(' ').slice(1).join(' ')}
                       </span>
                     </h3>
-                    <span className="text-yellow-400 font-mono text-[9px] uppercase tracking-widest block font-medium">
+                    <span className="text-[#FFEA0A] font-mono text-[9px] uppercase tracking-widest block font-medium">
                       {p.tag}
                     </span>
                   </div>
 
-                  <div className="h-px bg-yellow-400/10 w-full mb-4" />
+                  <div className="h-px bg-[#FFEA0A]/10 w-full mb-4" />
 
-                  <p className="text-gray-400 font-sans font-light text-[12px] md:text-[13px] lg:text-[14px] leading-relaxed max-w-3xl">
+                  <p className="text-gray-350 font-sans font-light text-[12px] md:text-[13px] lg:text-[14px] leading-relaxed max-w-3xl">
                     {p.desc}
                   </p>
                 </div>
 
-                <div className="mt-4 flex flex-row items-center justify-between w-full border-t border-yellow-400/5 pt-4">
+                <div className="mt-4 flex flex-row items-center justify-between w-full border-t border-[#FFEA0A]/10 pt-4">
                   <div className="flex flex-col">
-                    <span className="text-gray-500 font-mono text-[7px] uppercase tracking-widest">Location</span>
-                    <span className="text-gray-300 text-[11px] font-medium font-sans uppercase mt-1">{p.location}</span>
+                    <span className="text-gray-400 font-mono text-[7px] uppercase tracking-widest">Location</span>
+                    <span className="text-gray-200 text-[11px] font-medium font-sans uppercase mt-1">{p.location}</span>
                   </div>
                   <button 
                     onClick={() => onSelectProject && onSelectProject(p)}
-                    className="border border-yellow-400/30 text-yellow-400 hover:bg-yellow-400 hover:text-black transition-colors duration-300 px-6 py-2 uppercase text-[9px] tracking-widest font-semibold rounded-sm"
+                    className="border border-[#FFEA0A]/30 text-[#FFEA0A] hover:bg-[#FFEA0A] hover:text-[#424242] transition-colors duration-300 px-6 py-2 uppercase text-[9px] tracking-widest font-semibold rounded-sm"
                     data-interactive
                   >
                     View Details

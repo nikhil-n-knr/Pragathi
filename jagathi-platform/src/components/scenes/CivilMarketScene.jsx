@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber';
 import { Text, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
-export default function RealEstateScene({ scrollProgress }) {
+export default function CivilMarketScene({ scrollProgress }) {
   const sceneRef = useRef();
   const terrainMaterialRef = useRef();
   
@@ -126,8 +126,8 @@ export default function RealEstateScene({ scrollProgress }) {
       void main() {
         // Base dark matte floor color
         vec3 darkBase = vec3(0.04, 0.04, 0.04);
-        // Liquid gold color
-        vec3 liquidGold = vec3(1.0, 0.78, 0.0);
+        // Liquid gold color (themed to charcoal)
+        vec3 liquidGold = vec3(66.0 / 255.0, 66.0 / 255.0, 66.0 / 255.0);
 
         // Grid pattern
         vec2 gridVal = abs(fract(vPosition.xz * 1.5 - 0.5) - 0.5) / 0.03;
@@ -189,25 +189,25 @@ export default function RealEstateScene({ scrollProgress }) {
       <Text
         position={[2.0, -18, -1]}
         fontSize={0.6}
-        color="#ffea00"
+        color="#424242"
         font="https://cdn.jsdelivr.net/npm/@fontsource/outfit/files/outfit-latin-700-normal.woff"
         anchorX="center"
         anchorY="middle"
-        outlineWidth={0.03}
-        outlineColor="#000000"
+        outlineWidth={0.02}
+        outlineColor="#FFEA0A"
       >
-        [ CURATED LAND ]
+        [ CIVIL MARKET ]
       </Text>
 
       <Text
         position={[-2.2, -26, 0.5]}
         fontSize={0.65}
-        color="#ffffff"
+        color="#424242"
         font="https://cdn.jsdelivr.net/npm/@fontsource/outfit/files/outfit-latin-700-normal.woff"
         anchorX="center"
         anchorY="middle"
-        outlineWidth={0.03}
-        outlineColor="#000000"
+        outlineWidth={0.02}
+        outlineColor="#FFEA0A"
       >
         [ LUXURY SPACES ]
       </Text>
@@ -215,12 +215,12 @@ export default function RealEstateScene({ scrollProgress }) {
       <Text
         position={[1.5, -33, -1.5]}
         fontSize={0.6}
-        color="#ffea00"
+        color="#424242"
         font="https://cdn.jsdelivr.net/npm/@fontsource/outfit/files/outfit-latin-700-normal.woff"
         anchorX="center"
         anchorY="middle"
-        outlineWidth={0.03}
-        outlineColor="#000000"
+        outlineWidth={0.02}
+        outlineColor="#FFEA0A"
       >
         [ FUTURE EQUITY ]
       </Text>
@@ -236,7 +236,7 @@ export default function RealEstateScene({ scrollProgress }) {
             >
               <boxGeometry args={[p.w, p.h, p.d]} />
               <meshStandardMaterial
-                color={isHovered ? '#ffea00' : '#141414'}
+                color={isHovered ? '#424242' : '#222222'}
                 roughness={0.1}
                 metalness={isHovered ? 0.95 : 0.8}
                 wireframe={false}
@@ -279,8 +279,8 @@ export default function RealEstateScene({ scrollProgress }) {
           }}
         >
           <div style={{
-            background: 'rgba(0, 0, 0, 0.75)',
-            border: '1px solid rgba(255, 234, 0, 0.4)',
+            background: 'rgba(66, 66, 66, 0.95)',
+            border: '1px solid #FFEA0A',
             backdropFilter: 'blur(8px)',
             borderRadius: '2px',
             padding: '8px 12px',
@@ -292,7 +292,7 @@ export default function RealEstateScene({ scrollProgress }) {
             textTransform: 'uppercase',
             boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
           }}>
-            <div style={{ color: '#ffea00', fontWeight: 'bold', marginBottom: '4px' }}>
+            <div style={{ color: '#FFEA0A', fontWeight: 'bold', marginBottom: '4px' }}>
               {hoveredData.code}
             </div>
             <div style={{ margin: '2px 0', opacity: 0.8 }}>

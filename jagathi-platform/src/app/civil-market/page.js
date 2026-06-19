@@ -4,11 +4,11 @@ import React, { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import InteriorScene from '../../components/scenes/InteriorScene';
+import CivilMarketScene from '../../components/scenes/CivilMarketScene';
 import MediaFloat from '../../components/MediaFloat';
 // import Footer from '../../components/Footer';
 
-export default function InteriorPage() {
+export default function CivilMarketPage() {
   const scrollProgress = useRef(0);
   const scrollContainerRef = useRef(null);
 
@@ -17,7 +17,7 @@ export default function InteriorPage() {
     document.body.classList.add('home-theme-yellow-gray');
     gsap.registerPlugin(ScrollTrigger);
 
-    // Track scroll to drive local camera pan and bulb descent
+    // Track scroll to drive camera deep vertical descent through plots
     const trigger = ScrollTrigger.create({
       trigger: scrollContainerRef.current,
       start: 'top top',
@@ -42,81 +42,82 @@ export default function InteriorPage() {
       {/* 1. Page-Specific Local WebGL Background Canvas */}
       <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
         <Canvas
-          camera={{ position: [2.0, -60.2, 4.8], fov: 60 }}
-          gl={{ antialias: true, alpha: true, stencil: true, depth: true }}
+          camera={{ position: [2.0, -12, 7.0], fov: 55 }}
+          gl={{ antialias: true, alpha: true, stencil: false, depth: true }}
           dpr={[1, 1.5]}
         >
-          <ambientLight intensity={0.1} />
-          <InteriorScene scrollProgress={scrollProgress} />
+          <ambientLight intensity={0.12} />
+          <directionalLight position={[-3, 10, -5]} intensity={0.65} />
+          <CivilMarketScene scrollProgress={scrollProgress} />
         </Canvas>
       </div>
 
       {/* 2. Hero Section */}
       <section className="relative h-screen flex flex-col justify-center items-start px-8 md:px-24 z-10 pointer-events-none max-w-4xl">
-        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest mb-3">// Pillar 02 / Interspace Design</span>
+        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest mb-3">// Pillar 03 / Civil Market</span>
         <h1 className="text-[#424242] font-extrabold text-4xl md:text-7xl leading-none uppercase select-text tracking-wider">
-          <span className="text-[#424242] font-sans tracking-[0.1em]">SPATIAL SYSTEMS /</span>
+          <span className="text-[#424242] font-sans tracking-[0.1em]">CIVIL MARKET /</span>
           <span className="font-serif-luxury italic text-[#424242]/90 lowercase first-letter:uppercase tracking-[0.05em] block mt-4 font-normal">
-            Concept to curation
+            Lands & plotted assets
           </span>
         </h1>
         <div className="border-l border-[#424242]/20 pl-6 md:pl-8 py-2 mt-8 max-w-xl">
           <p className="text-[#424242]/80 font-sans font-light text-xs md:text-sm leading-relaxed select-text">
-            We design and execute flawless interior spaces. From master planning and bespoke carpentry to structural lighting and texture curation, we manage every square inch of your environment.
+            Securing smart-grid industrial zones, plotted inventories, and commercial growth corridors. Our civil market portfolio is anchored in geotech stability, accessibility, and high capital growth.
           </p>
         </div>
       </section>
 
-      {/* 3. Spatial Curation & Material Language */}
+      {/* 3. Land Curation Intelligence */}
       <section className="relative z-10 py-24 px-8 md:px-24 w-full max-w-6xl mx-auto flex flex-col items-center">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           <div>
-            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Design Clusters</span>
-            <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">Spatial Planning</h2>
+            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Curation Logic</span>
+            <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">Land Intelligence</h2>
             
             <div className="flex flex-col gap-6 mt-8">
               <div className="border-l-2 border-[#424242]/30 pl-4 hover:border-[#424242] transition-colors">
-                <h4 className="text-[#424242] font-bold text-sm uppercase">Layout & Circulation Logic</h4>
+                <h4 className="text-[#424242] font-bold text-sm uppercase">Growth Corridor Mapping</h4>
                 <p className="text-[#424242]/80 font-sans font-light text-xs mt-1 leading-relaxed">
-                  Analyzing functional zones, movement vectors, and sightlines to maximize ergonomics and spatial flow.
+                  We screen plot appreciation patterns, transit loops, and arterial connectivity matrices to isolate high-potential zones before market saturation.
                 </p>
               </div>
               <div className="border-l-2 border-[#424242]/30 pl-4 hover:border-[#424242] transition-colors">
-                <h4 className="text-[#424242] font-bold text-sm uppercase">Execution Scope</h4>
+                <h4 className="text-[#424242] font-bold text-sm uppercase">Regulatory/Zoning Clearance</h4>
                 <p className="text-[#424242]/80 font-sans font-light text-xs mt-1 leading-relaxed">
-                  Full-scale electrical-light sync, custom false ceilings, custom carpentry integration, and localized structural partition walls.
+                  Complete zoning clearance, titles search verification, environmental compliance, and structural build permission audits.
                 </p>
               </div>
               <div className="border-l-2 border-[#424242]/30 pl-4 hover:border-[#424242] transition-colors">
-                <h4 className="text-[#424242] font-bold text-sm uppercase">Signature Environments</h4>
+                <h4 className="text-[#424242] font-bold text-sm uppercase">Micro-Infrastructure Ready</h4>
                 <p className="text-[#424242]/80 font-sans font-light text-xs mt-1 leading-relaxed">
-                  Curating premium hospitality lounges, retail showrooms, corporate director suites, and luxury penthouses.
+                  Every asset we list is equipped with dedicated grid access, baseline drainage setups, and boundary structural retaining systems.
                 </p>
               </div>
             </div>
           </div>
 
           <div>
-            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Curation Process</span>
-            <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">Turnkey Workflow</h2>
+            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Investor Framework</span>
+            <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">Investor Logic</h2>
             
             <div className="flex flex-col gap-6 mt-8">
               <div className="border-l-2 border-[#424242]/30 pl-4 hover:border-[#424242] transition-colors">
-                <h4 className="text-[#424242] font-bold text-sm uppercase">Stage 01 / Material Selection</h4>
+                <h4 className="text-[#424242] font-bold text-sm uppercase">Liquidity Horizon Modeling</h4>
                 <p className="text-[#424242]/80 font-sans font-light text-xs mt-1 leading-relaxed">
-                  Choosing stones, fine hardwoods, structural metal finishes, and textiles from our physical materials lab.
+                  Analysis matching your capitalization model with appreciation velocity metrics (short vs long-term horizons).
                 </p>
               </div>
               <div className="border-l-2 border-[#424242]/30 pl-4 hover:border-[#424242] transition-colors">
-                <h4 className="text-[#424242] font-bold text-sm uppercase">Stage 02 / In-house Fabrication</h4>
+                <h4 className="text-[#424242] font-bold text-sm uppercase">Advisory Screen Process</h4>
                 <p className="text-[#424242]/80 font-sans font-light text-xs mt-1 leading-relaxed">
-                  Precision carpentry, cladding prep, and customized light fittings built in our dedicated fabrication centers.
+                  One-on-one consultation aligning portfolio allocations with verified structural assets.
                 </p>
               </div>
               <div className="border-l-2 border-[#424242]/30 pl-4 hover:border-[#424242] transition-colors">
-                <h4 className="text-[#424242] font-bold text-sm uppercase">Stage 03 / Delivery & Fitting</h4>
+                <h4 className="text-[#424242] font-bold text-sm uppercase">Appreciation Analytics</h4>
                 <p className="text-[#424242]/80 font-sans font-light text-xs mt-1 leading-relaxed">
-                  One point of contact managing assembly, light installation, joinery alignments, and final surface curations.
+                  Historical zone performance audits and projection reports driven by spatial industrial expansions.
                 </p>
               </div>
             </div>
@@ -124,80 +125,80 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* 4. Swatches (Floating Media Cards - ApeChain style) */}
+      {/* 4. Asset Dossiers (Floating Media Cards - ApeChain style) */}
       <section className="relative z-10 py-24 px-8 md:px-24 w-full max-w-6xl mx-auto flex flex-col items-center">
         <div className="text-center mb-16">
-          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Material Language</span>
+          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Civil Assets</span>
           <h2 className="text-[#424242] font-bold text-3xl md:text-5xl uppercase tracking-wider mt-2">
-            Material Swatches & Finishes
+            Plotted Premium Civil Inventory
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <MediaFloat intensity={1.1}>
+          <MediaFloat intensity={0.95}>
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80" 
-                  alt="Dark Veined Marble"
+                  src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80" 
+                  alt="Industrial Zone Hub"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent pointer-events-none" />
                 <span className="absolute bottom-3 left-3 text-[8px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2 py-0.5 border border-[#FFEA0A]/20 rounded-sm font-semibold">
-                  [ CALACATTA HONED ]
+                  [ SILICON PLOTS ]
                 </span>
               </div>
               <div className="mt-4 text-center flex flex-col items-center w-full">
-                <span className="text-[#424242]/60 font-mono text-[9px] uppercase tracking-widest block text-center w-full">Texture 01 / Italian Stone</span>
-                <h3 className="text-[#424242] font-bold text-lg uppercase mt-1 text-center w-full group-hover:text-[#424242]/70 transition-colors">Dark Veined Marble</h3>
+                <span className="text-[#424242]/60 font-mono text-[9px] uppercase tracking-widest block text-center w-full">Sector A / Whitefield</span>
+                <h3 className="text-[#424242] font-bold text-lg uppercase mt-1 text-center w-full group-hover:text-[#424242]/70 transition-colors">Industrial Zone Hub</h3>
                 <p className="text-[#424242]/80 text-xs mt-2 leading-relaxed font-light font-sans text-center w-full">
-                  Deep charcoal marble surfaces with structural golden veins, hone finished.
+                  Acreage: 18.2 Acres // Coords: 13.0640° N, 80.2460° E. Ideal for thermodynamic cogen grids.
                 </p>
               </div>
             </div>
           </MediaFloat>
 
-          <MediaFloat intensity={0.9}>
+          <MediaFloat intensity={1.15}>
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=800&q=80" 
-                  alt="Bespoke Smoked Joinery"
+                  src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80" 
+                  alt="Solitaire Ridge"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent pointer-events-none" />
                 <span className="absolute bottom-3 left-3 text-[8px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2 py-0.5 border border-[#FFEA0A]/20 rounded-sm font-semibold">
-                  [ SMOKED OAK ]
+                  [ RESIDENTIAL RECENT ]
                 </span>
               </div>
               <div className="mt-4 text-center flex flex-col items-center w-full">
-                <span className="text-[#424242]/60 font-mono text-[9px] uppercase tracking-widest block text-center w-full">Texture 02 / Hardwood</span>
-                <h3 className="text-[#424242] font-bold text-lg uppercase mt-1 text-center w-full group-hover:text-[#424242]/70 transition-colors">Bespoke Smoked Joinery</h3>
+                <span className="text-[#424242]/60 font-mono text-[9px] uppercase tracking-widest block text-center w-full">Sector B / Foothills</span>
+                <h3 className="text-[#424242] font-bold text-lg uppercase mt-1 text-center w-full group-hover:text-[#424242]/70 transition-colors">Solitaire Ridge</h3>
                 <p className="text-[#424242]/80 text-xs mt-2 leading-relaxed font-light font-sans text-center w-full">
-                  Stained smoked oak features designed for floating sideboard cabinetry.
+                  Acreage: 12.5 Acres // Coords: 13.0980° N, 80.2920° E. Premium luxury estate zoning.
                 </p>
               </div>
             </div>
           </MediaFloat>
 
-          <MediaFloat intensity={1.2}>
+          <MediaFloat intensity={0.85}>
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80" 
-                  alt="Bouclé Lounge Curation"
+                  src="https://images.unsplash.com/photo-1524813686514-a57563d77d61?w=800&q=80" 
+                  alt="Nexus Edge Plot"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent pointer-events-none" />
                 <span className="absolute bottom-3 left-3 text-[8px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2 py-0.5 border border-[#FFEA0A]/20 rounded-sm font-semibold">
-                  [ TACTILE BOUCLÉ ]
+                  [ COMMERCIAL HOLD ]
                 </span>
               </div>
               <div className="mt-4 text-center flex flex-col items-center w-full">
-                <span className="text-[#424242]/60 font-mono text-[9px] uppercase tracking-widest block text-center w-full">Texture 03 / Upholstery</span>
-                <h3 className="text-[#424242] font-bold text-lg uppercase mt-1 text-center w-full group-hover:text-[#424242]/70 transition-colors">Bouclé Lounge Curation</h3>
+                <span className="text-[#424242]/60 font-mono text-[9px] uppercase tracking-widest block text-center w-full">Sector C / Corridor</span>
+                <h3 className="text-[#424242] font-bold text-lg uppercase mt-1 text-center w-full group-hover:text-[#424242]/70 transition-colors">Nexus Edge Plot</h3>
                 <p className="text-[#424242]/80 text-xs mt-2 leading-relaxed font-light font-sans text-center w-full">
-                  High-tactility bouclé fabric selected for parametric furniture curations.
+                  Acreage: 8.4 Acres // Coords: 13.0320° N, 80.1880° E. Smart-grid ready commercial buffer.
                 </p>
               </div>
             </div>
@@ -205,31 +206,31 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* 5. Curation Call to Action */}
+      {/* 5. Opportunity Map & Advisory CTA */}
       <section className="relative z-10 py-24 bg-transparent border-t border-[#424242]/20 text-center">
         <div className="max-w-4xl mx-auto px-6">
-          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Custom Spaces</span>
+          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Strategic Security</span>
           <h2 className="text-[#424242] font-extrabold text-3xl md:text-5xl uppercase tracking-wider mt-2 leading-tight">
-            Consult our Turnkey Designers.
+            Secure Premium Civil Assets.
           </h2>
           <p className="text-[#424242]/80 font-sans font-light text-xs md:text-sm mt-6 leading-relaxed max-w-xl mx-auto">
-            From preliminary layouts to fabric selection and installation loops, we manage the entire spatial lifecycle. Book a concept meeting today.
+            Our civil market assets are vetted with absolute title security and geo-appreciation models. Connect with our dedicated advisory desk to scan live coordinates.
           </p>
           
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
             <a 
-              href="mailto:design@jagathi.com" 
+              href="mailto:civil@jagathi.com" 
               className="inline-block bg-[#424242] text-[#FFEA0A] px-8 py-3 uppercase text-xs tracking-widest font-semibold hover:bg-[#555555] transition-colors rounded-sm"
               data-interactive
             >
-              Consult Turnkey Planner
+              Talk to Advisory Desk
             </a>
             <a 
-              href="#catalog" 
+              href="#map" 
               className="inline-block border border-[#424242]/40 text-[#424242] px-8 py-3 uppercase text-xs tracking-widest font-semibold hover:bg-[#424242] hover:text-[#FFEA0A] transition-all duration-300 rounded-sm"
               data-interactive
             >
-              Explore Turnkey Catalog
+              Scan Asset Catalog
             </a>
           </div>
         </div>

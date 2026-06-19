@@ -475,57 +475,5 @@ class InteractiveFooter {
 }
 
 export default function Footer() {
-  const containerRef = useRef(null);
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    const canvas = canvasRef.current;
-    if (!container || !canvas) return;
-
-    const footerInstance = new InteractiveFooter(container, canvas);
-
-    return () => {
-      footerInstance.destroy();
-    };
-  }, []);
-
-  return (
-    <section className="section-panel" id="interactive-footer" ref={containerRef}>
-      <div className="footer-canvas-container">
-        <canvas id="footer-canvas" ref={canvasRef}></canvas>
-      </div>
-      <div className="footer-overlay">
-        {/* Footer Top: Columns */}
-        <div className="footer-cols">
-          <div className="footer-col">
-            <h4>Pillar 01 / Build</h4>
-            <Link href="/construction" className="select-anchor">Construction Projects</Link>
-            <a href="#consultation" className="select-anchor">Consultation Request</a>
-          </div>
-          <div className="footer-col">
-            <h4>Pillar 02 / Secure</h4>
-            <Link href="/real-estate" className="select-anchor">Real Estate Portfolio</Link>
-            <a href="#advisory" className="select-anchor">Advisory Desk</a>
-          </div>
-          <div className="footer-col">
-            <h4>Pillar 03 / Curate</h4>
-            <Link href="/interior" className="select-anchor">Interior Systems</Link>
-            <a href="mailto:info@jagathi.com" className="select-anchor">Contact Jagathi</a>
-          </div>
-        </div>
-
-        {/* Footer Bottom: Status and copyright */}
-        <div className="footer-bottom-bar">
-          <div className="footer-copy">
-            &copy; 2026 JAGATHI. All Rights Reserved.
-          </div>
-          <div className="footer-status">
-            <span className="status-dot"></span>
-            <span>JAGATHI_NODE_OK</span>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+  return null;
 }

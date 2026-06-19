@@ -237,7 +237,7 @@ export default function InteriorScene({ scrollProgress }) {
       varying vec2 vUv;
 
       void main() {
-        vec3 yellowGlow = vec3(1.0, 0.88, 0.0);
+        vec3 yellowGlow = vec3(66.0 / 255.0, 66.0 / 255.0, 66.0 / 255.0);
         
         // Fade vertical density (denser at top near bulb)
         float verticalFade = smoothstep(-1.5, 1.5, vPosition.y); // Y ranges -1.5 to 1.5
@@ -259,19 +259,19 @@ export default function InteriorScene({ scrollProgress }) {
         {/* Floor wireframe */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, centerY, 0]}>
           <planeGeometry args={[6, 6, 8, 8]} />
-          <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.15} depthWrite={false} />
+          <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.3} depthWrite={false} />
         </mesh>
         
         {/* Back Wall wireframe */}
         <mesh position={[0, centerY + 2.0, -3.0]}>
           <planeGeometry args={[6, 4, 8, 6]} />
-          <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.1} depthWrite={false} />
+          <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.2} depthWrite={false} />
         </mesh>
 
         {/* Side Wall wireframe */}
         <mesh rotation={[0, Math.PI / 2, 0]} position={[-3.0, centerY + 2.0, 0]}>
           <planeGeometry args={[6, 4, 8, 6]} />
-          <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.1} depthWrite={false} />
+          <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.2} depthWrite={false} />
         </mesh>
 
         {/* Dining Table wireframe */}
@@ -279,24 +279,24 @@ export default function InteriorScene({ scrollProgress }) {
           {/* tabletop */}
           <mesh position={[0, 0.75, 0]}>
             <boxGeometry args={[2.0, 0.08, 1.2]} />
-            <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.25} />
+            <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.4} />
           </mesh>
           {/* legs */}
           <mesh position={[-0.9, 0.375, -0.5]}>
             <boxGeometry args={[0.08, 0.75, 0.08]} />
-            <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.2} />
+            <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.35} />
           </mesh>
           <mesh position={[0.9, 0.375, -0.5]}>
             <boxGeometry args={[0.08, 0.75, 0.08]} />
-            <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.2} />
+            <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.35} />
           </mesh>
           <mesh position={[-0.9, 0.375, 0.5]}>
             <boxGeometry args={[0.08, 0.75, 0.08]} />
-            <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.2} />
+            <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.35} />
           </mesh>
           <mesh position={[0.9, 0.375, 0.5]}>
             <boxGeometry args={[0.08, 0.75, 0.08]} />
-            <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.2} />
+            <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.35} />
           </mesh>
         </group>
 
@@ -305,12 +305,12 @@ export default function InteriorScene({ scrollProgress }) {
           {/* seat */}
           <mesh position={[0, 0.45, 0]}>
             <boxGeometry args={[0.5, 0.05, 0.5]} />
-            <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.2} />
+            <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.35} />
           </mesh>
           {/* backrest */}
           <mesh position={[0.2, 0.85, 0]}>
             <boxGeometry args={[0.05, 0.8, 0.5]} />
-            <meshBasicMaterial color="#ffea00" wireframe={true} transparent={true} opacity={0.2} />
+            <meshBasicMaterial color="#424242" wireframe={true} transparent={true} opacity={0.35} />
           </mesh>
         </group>
       </group>
@@ -415,23 +415,23 @@ export default function InteriorScene({ scrollProgress }) {
           {/* Bulb cap */}
           <mesh position={[0, 0.18, 0]}>
             <cylinderGeometry args={[0.06, 0.06, 0.12]} />
-            <meshStandardMaterial color={isHovered ? '#ffea00' : '#444444'} roughness={0.2} metalness={0.8} />
+            <meshStandardMaterial color={isHovered ? '#424242' : '#888888'} roughness={0.2} metalness={0.8} />
           </mesh>
 
           {/* Glowing filament/bulb sphere */}
           <mesh>
             <sphereGeometry args={[0.16, 16, 16]} />
             <meshStandardMaterial
-              color={lightOn ? '#ffffbb' : '#888888'}
-              emissive={lightOn ? '#ffea00' : '#000000'}
-              emissiveIntensity={lightOn ? 2.5 : 0}
+              color={lightOn ? '#424242' : '#888888'}
+              emissive={lightOn ? '#424242' : '#000000'}
+              emissiveIntensity={lightOn ? 1.0 : 0}
               roughness={0.05}
               metalness={0.9}
             />
           </mesh>
 
           {/* Light emission point source */}
-          {lightOn && <pointLight position={[0, 0, 0]} color="#ffea00" intensity={1.8} distance={12} />}
+          {lightOn && <pointLight position={[0, 0, 0]} color="#424242" intensity={1.8} distance={12} />}
         </group>
       </group>
     </group>

@@ -67,15 +67,15 @@ export default function YellowFog({ scrollProgress = 0, baseOpacity = 0.05 }) {
       float n = noise(noiseUv1) * 0.65 + noise(noiseUv2) * 0.35;
       float fogDensity = baseDensity * (0.35 + 0.65 * n);
 
-      // Signature brand yellow volumetric glow color
-      vec3 yellowFogColor = vec3(1.0, 0.90, 0.0);
+      // Signature brand charcoal volumetric mist color
+      vec3 charcoalFogColor = vec3(66.0 / 255.0, 66.0 / 255.0, 66.0 / 255.0);
       
       float distToCenter = length(uv - vec2(0.5));
       float glow = smoothstep(1.1, 0.0, distToCenter);
       
-      vec3 finalColor = yellowFogColor * fogDensity * glow;
+      vec3 finalColor = charcoalFogColor * fogDensity * glow;
       
-      gl_FragColor = vec4(finalColor, fogDensity);
+      gl_FragColor = vec4(finalColor, fogDensity * 0.8);
     }
   `;
 
@@ -89,7 +89,7 @@ export default function YellowFog({ scrollProgress = 0, baseOpacity = 0.05 }) {
         depthWrite={false}
         depthTest={false}
         transparent={true}
-        blending={THREE.AdditiveBlending}
+        blending={THREE.NormalBlending}
       />
     </mesh>
   );

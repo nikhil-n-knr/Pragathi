@@ -86,7 +86,7 @@ export default function ShowcaseBanner({ onPlayReel }) {
   return (
     <div 
       ref={triggerRef} 
-      className="relative w-full h-[160vh] bg-black overflow-hidden flex items-center justify-center z-20"
+      className="relative w-full h-[160vh] bg-transparent overflow-hidden flex items-center justify-center z-20"
     >
       {/* Expanding Banner Container using mask-image to clip boundaries only */}
       <div 

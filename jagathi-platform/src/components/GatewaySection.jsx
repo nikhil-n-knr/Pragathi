@@ -22,8 +22,8 @@ export default function GatewaySection() {
   const smoothScrollVel = fluid ? fluid.smoothScrollVel : null;
 
   const row1DescTokens = ["Delivering", "master-scale", "concrete", "cores,", "structural", "lattices,", "and", "industrial", "complexes", "built", "to", "endure", "generations."];
-  const row2DescTokens = ["Sourcing,", "securing,", "and", "scaling", "exclusive", "property", "holdings", "and", "topographic", "developments", "for", "long-term", "equity."];
-  const row3DescTokens = ["Every", "square", "inch", "managed", "seamlessly—from", "raw", "architectural", "layouts", "and", "custom", "millwork", "to", "absolute", "lighting", "design."];
+  const row2DescTokens = ["Every", "square", "inch", "managed", "seamlessly—from", "raw", "architectural", "layouts", "and", "custom", "millwork", "to", "absolute", "lighting", "design."];
+  const row3DescTokens = ["Vetting", "and", "securing", "high-potential", "growth", "corridors,", "industrial", "smart-zones,", "and", "premium", "plotted", "inventories."];
 
   const getIsActive = (index) => {
     return hoveredRow === index || (hoveredRow === null && autoplayRow === index);
@@ -48,11 +48,11 @@ export default function GatewaySection() {
       const elements = gsap.utils.toArray(tokensClass);
       return elements.map((el, index) => {
         const dir = index % 2 === 0 ? 1 : -1;
-        const distance = gsap.utils.random(2, 4); // tight vertical wiggle
+        const distance = gsap.utils.random(1.5, 2.5); // subtle horizontal drift to avoid collision
         const duration = gsap.utils.random(1.2, 1.8); // faster, energetic loop
 
         const tween = gsap.to(el, {
-          y: dir * distance,
+          x: dir * distance,
           duration: duration,
           ease: "sine.inOut",
           repeat: -1,
@@ -72,15 +72,15 @@ export default function GatewaySection() {
     const updatePlayState = () => {
       // Row 1
       const active1 = getIsActive(0);
-      r1.forEach(({ tween }) => active1 ? tween.play() : gsap.to(tween.targets(), { y: 0, duration: 0.3, onComplete: () => tween.pause() }));
+      r1.forEach(({ tween }) => active1 ? tween.play() : gsap.to(tween.targets(), { x: 0, duration: 0.3, onComplete: () => tween.pause() }));
 
       // Row 2
       const active2 = getIsActive(1);
-      r2.forEach(({ tween }) => active2 ? tween.play() : gsap.to(tween.targets(), { y: 0, duration: 0.3, onComplete: () => tween.pause() }));
+      r2.forEach(({ tween }) => active2 ? tween.play() : gsap.to(tween.targets(), { x: 0, duration: 0.3, onComplete: () => tween.pause() }));
 
       // Row 3
       const active3 = getIsActive(2);
-      r3.forEach(({ tween }) => active3 ? tween.play() : gsap.to(tween.targets(), { y: 0, duration: 0.3, onComplete: () => tween.pause() }));
+      r3.forEach(({ tween }) => active3 ? tween.play() : gsap.to(tween.targets(), { x: 0, duration: 0.3, onComplete: () => tween.pause() }));
     };
 
     updatePlayState();
@@ -151,7 +151,7 @@ export default function GatewaySection() {
 
   return (
     <section 
-      className="relative z-10 w-full bg-[#000000] text-[#FFFF00] flex flex-col items-center justify-center gap-[clamp(8rem,14vw,18rem)] overflow-visible"
+      className="relative z-10 w-full bg-transparent text-[#424242] flex flex-col items-center justify-center gap-[clamp(8rem,14vw,18rem)] overflow-visible"
       style={{
         paddingTop: 'clamp(6rem, 10vw, 12rem)',
         paddingBottom: 'clamp(8rem, 14vw, 18rem)',
@@ -159,14 +159,14 @@ export default function GatewaySection() {
       }}
     >
       {/* Visual Title Header */}
-      <div className="flex flex-col items-center text-center px-6 max-w-4xl mx-auto w-full mb-8 split-reveal">
-        <span className="text-[#FFFF00]/70 font-mono text-xs uppercase tracking-widest block text-center">// Gateway Portals</span>
-        <h2 className="text-[#FFFF00] font-black text-3xl md:text-5xl lg:text-6xl uppercase tracking-wider mt-2 text-center w-full leading-tight font-sans">
+      <div className="flex flex-col items-center text-center px-6 max-w-4xl mx-auto w-full mt-8 md:mt-14 mb-8 split-reveal">
+        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest block text-center mb-4">// Gateway Portals</span>
+        <h2 className="text-[#424242] font-black text-3xl md:text-5xl lg:text-6xl uppercase tracking-wider mt-2 text-center w-full leading-normal font-basement">
           One Group. Three Disciplines.
         </h2>
       </div>
 
-      {/* ROW 1: Construction */}
+      {/* ROW 1: Construction & Land Development */}
       <div className="relative w-full max-w-[1440px] mx-auto px-6 md:px-16 lg:px-24 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20 overflow-visible split-reveal">
         {/* Left Column (52% width): Floating, expandable image */}
         <div className="w-full md:w-[52%] flex justify-center items-center overflow-visible">
@@ -178,7 +178,7 @@ export default function GatewaySection() {
           >
             <div
               ref={(el) => (imageRefs.current[0] = el)}
-              className="image-frame-wrapper w-full h-full relative overflow-hidden border border-[#FFFF00] transition-all duration-700 ease-out z-10"
+              className="image-frame-wrapper w-full h-full relative overflow-hidden border border-[#424242]/30 transition-all duration-700 ease-out z-10"
               data-hovered={getIsActive(0) ? "true" : "false"}
               style={{
                 clipPath: 'inset(8% 12% 8% 12% round 24px)',
@@ -188,7 +188,7 @@ export default function GatewaySection() {
             >
               <img 
                 src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80" 
-                alt="Construction" 
+                alt="Construction & Land Development" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-[#000000]/10 hover:bg-transparent transition-colors duration-300" />
@@ -198,20 +198,20 @@ export default function GatewaySection() {
 
         {/* Right Column (45% width): Kinetic text inside sidebar border */}
         <div 
-          className="w-full md:w-[45%] flex flex-col items-start text-left overflow-visible select-text cursor-default border-l border-yellow-400/20 hover:border-yellow-400/60 transition-colors duration-500 pl-6 md:pl-8 py-2"
+          className="w-full md:w-[45%] flex flex-col items-start text-left overflow-visible select-text cursor-default border-l border-[#424242]/20 hover:border-[#424242]/60 transition-colors duration-500 pl-6 md:pl-8 py-2"
           onMouseEnter={() => setHoveredRow(0)}
           onMouseLeave={() => setHoveredRow(null)}
         >
-          <span className="text-[#FFFF00]/60 font-mono text-[9px] tracking-widest uppercase mb-3">// PORTAL 01 // CONSTRUCTION</span>
-          <div className="font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider mb-6 leading-tight select-none uppercase font-sans">
-            <span className="text-yellow-400 tracking-[0.1em] mr-2">CONSTRUCTION /</span>
-            <span className="font-serif-luxury italic text-white lowercase first-letter:uppercase tracking-[0.05em] block md:inline mt-2 md:mt-0 font-normal">
-              Heavy civil engineering
+          <span className="text-[#424242]/60 font-mono text-[9px] tracking-widest uppercase mb-4">// PORTAL 01 // CONSTRUCTION & LAND DEV</span>
+          <div className="font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider mb-8 leading-normal select-none uppercase font-basement">
+            <span className="text-[#424242] tracking-[0.03em] block">CONSTRUCTION & LAND DEV /</span>
+            <span className="font-sans font-light text-gray-800 lowercase first-letter:uppercase tracking-[0.05em] block mt-3 text-xl md:text-2xl">
+              Heavy civil & land development
             </span>
           </div>
-          <div className="text-[#FFFF00]/75 text-sm md:text-base font-light leading-relaxed max-w-xl text-justify font-sans">
+          <div className="text-[#424242]/75 text-sm md:text-base font-light leading-relaxed max-w-xl text-justify font-sans">
             {row1DescTokens.map((t, idx) => (
-              <span key={idx} className="drift-word-0 kinetic-word inline-block mr-1.5 mb-1">
+              <span key={idx} className="drift-word-0 kinetic-word inline-block mr-3 mb-2">
                 {t}
               </span>
             ))}
@@ -219,24 +219,24 @@ export default function GatewaySection() {
         </div>
       </div>
 
-      {/* ROW 2: Real Estate */}
+      {/* ROW 2: Interiors (Bespoke Turnkey design) */}
       <div className="relative w-full max-w-[1440px] mx-auto px-6 md:px-16 lg:px-24 flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-20 overflow-visible split-reveal">
         {/* Left Column (45% width): Kinetic text inside sidebar border (Aligned right) */}
         <div 
-          className="w-full md:w-[45%] flex flex-col items-end text-right overflow-visible select-text cursor-default border-r border-yellow-400/20 hover:border-yellow-400/60 transition-colors duration-500 pr-6 md:pr-8 py-2"
+          className="w-full md:w-[45%] flex flex-col items-end text-right overflow-visible select-text cursor-default border-r border-[#424242]/20 hover:border-[#424242]/60 transition-colors duration-500 pr-6 md:pr-8 py-2"
           onMouseEnter={() => setHoveredRow(1)}
           onMouseLeave={() => setHoveredRow(null)}
         >
-          <span className="text-[#FFFF00]/60 font-mono text-[9px] tracking-widest uppercase mb-3">// PORTAL 02 // REAL ESTATE</span>
-          <div className="font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider mb-6 leading-tight select-none uppercase font-sans">
-            <span className="text-yellow-400 tracking-[0.1em] mr-2">REAL ESTATE /</span>
-            <span className="font-serif-luxury italic text-white lowercase first-letter:uppercase tracking-[0.05em] block md:inline mt-2 md:mt-0 font-normal">
-              High-yield asset holdings
+          <span className="text-[#424242]/60 font-mono text-[9px] tracking-widest uppercase mb-4">// PORTAL 02 // INTERIOR A-Z</span>
+          <div className="font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider mb-8 leading-normal select-none uppercase font-basement">
+            <span className="text-[#424242] tracking-[0.1em] block">INTERIORS /</span>
+            <span className="font-sans font-light text-gray-800 lowercase first-letter:uppercase tracking-[0.05em] block mt-3 text-xl md:text-2xl">
+              Turnkey bespoke spaces
             </span>
           </div>
-          <div className="text-[#FFFF00]/75 text-sm md:text-base font-light leading-relaxed max-w-xl text-justify font-sans">
+          <div className="text-[#424242]/75 text-sm md:text-base font-light leading-relaxed max-w-xl text-justify font-sans">
             {row2DescTokens.map((t, idx) => (
-              <span key={idx} className="drift-word-1 kinetic-word inline-block mr-1.5 mb-1">
+              <span key={idx} className="drift-word-1 kinetic-word inline-block mr-3 mb-2">
                 {t}
               </span>
             ))}
@@ -249,11 +249,11 @@ export default function GatewaySection() {
             className="relative w-full aspect-[16/10] md:aspect-[16/9] max-w-2xl overflow-visible cursor-pointer"
             onMouseEnter={() => setHoveredRow(1)}
             onMouseLeave={() => setHoveredRow(null)}
-            onClick={() => router.push('/real-estate')}
+            onClick={() => router.push('/interior')}
           >
             <div
               ref={(el) => (imageRefs.current[1] = el)}
-              className="image-frame-wrapper w-full h-full relative overflow-hidden border border-[#FFFF00] transition-all duration-700 ease-out z-10"
+              className="image-frame-wrapper w-full h-full relative overflow-hidden border border-[#424242]/30 transition-all duration-700 ease-out z-10"
               data-hovered={getIsActive(1) ? "true" : "false"}
               style={{
                 clipPath: 'inset(8% 12% 8% 12% round 24px)',
@@ -262,8 +262,8 @@ export default function GatewaySection() {
               }}
             >
               <img 
-                src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/0dccab47-16b0-4716-9e1a-b97f124e3031_1600w.webp" 
-                alt="Real Estate" 
+                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=80" 
+                alt="Interiors" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-[#000000]/10 hover:bg-transparent transition-colors duration-300" />
@@ -272,7 +272,7 @@ export default function GatewaySection() {
         </div>
       </div>
 
-      {/* ROW 3: Interior A-Z */}
+      {/* ROW 3: Civil Market */}
       <div className="relative w-full max-w-[1440px] mx-auto px-6 md:px-16 lg:px-24 flex flex-col md:flex-row items-center justify-between gap-12 md:gap-20 overflow-visible split-reveal">
         {/* Left Column (52% width): Floating, expandable image */}
         <div className="w-full md:w-[52%] flex justify-center items-center overflow-visible">
@@ -280,11 +280,11 @@ export default function GatewaySection() {
             className="relative w-full aspect-[16/10] md:aspect-[16/9] max-w-2xl overflow-visible cursor-pointer"
             onMouseEnter={() => setHoveredRow(2)}
             onMouseLeave={() => setHoveredRow(null)}
-            onClick={() => router.push('/interior')}
+            onClick={() => router.push('/civil-market')}
           >
             <div
               ref={(el) => (imageRefs.current[2] = el)}
-              className="image-frame-wrapper w-full h-full relative overflow-hidden border border-[#FFFF00] transition-all duration-700 ease-out z-10"
+              className="image-frame-wrapper w-full h-full relative overflow-hidden border border-[#424242]/30 transition-all duration-700 ease-out z-10"
               data-hovered={getIsActive(2) ? "true" : "false"}
               style={{
                 clipPath: 'inset(8% 12% 8% 12% round 24px)',
@@ -293,8 +293,8 @@ export default function GatewaySection() {
               }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=80" 
-                alt="Interior" 
+                src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/0dccab47-16b0-4716-9e1a-b97f124e3031_1600w.webp" 
+                alt="Civil Market" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-[#000000]/10 hover:bg-transparent transition-colors duration-300" />
@@ -304,20 +304,20 @@ export default function GatewaySection() {
 
         {/* Right Column (45% width): Kinetic text inside sidebar border */}
         <div 
-          className="w-full md:w-[45%] flex flex-col items-start text-left overflow-visible select-text cursor-default border-l border-yellow-400/20 hover:border-yellow-400/60 transition-colors duration-500 pl-6 md:pl-8 py-2"
+          className="w-full md:w-[45%] flex flex-col items-start text-left overflow-visible select-text cursor-default border-l border-[#424242]/20 hover:border-[#424242]/60 transition-colors duration-500 pl-6 md:pl-8 py-2"
           onMouseEnter={() => setHoveredRow(2)}
           onMouseLeave={() => setHoveredRow(null)}
         >
-          <span className="text-[#FFFF00]/60 font-mono text-[9px] tracking-widest uppercase mb-3">// PORTAL 03 // INTERIOR A-Z</span>
-          <div className="font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider mb-6 leading-tight select-none uppercase font-sans">
-            <span className="text-yellow-400 tracking-[0.1em] mr-2">INTERIORS /</span>
-            <span className="font-serif-luxury italic text-white lowercase first-letter:uppercase tracking-[0.05em] block md:inline mt-2 md:mt-0 font-normal">
-              Turnkey bespoke spaces
+          <span className="text-[#424242]/60 font-mono text-[9px] tracking-widest uppercase mb-4">// PORTAL 03 // CIVIL MARKET</span>
+          <div className="font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider mb-8 leading-normal select-none uppercase font-basement">
+            <span className="text-[#424242] tracking-[0.1em] block">CIVIL MARKET /</span>
+            <span className="font-sans font-light text-gray-800 lowercase first-letter:uppercase tracking-[0.05em] block mt-3 text-xl md:text-2xl">
+              Lands & plotted assets
             </span>
           </div>
-          <div className="text-[#FFFF00]/75 text-sm md:text-base font-light leading-relaxed max-w-xl text-justify font-sans">
+          <div className="text-[#424242]/75 text-sm md:text-base font-light leading-relaxed max-w-xl text-justify font-sans">
             {row3DescTokens.map((t, idx) => (
-              <span key={idx} className="drift-word-2 kinetic-word inline-block mr-1.5 mb-1">
+              <span key={idx} className="drift-word-2 kinetic-word inline-block mr-3 mb-2">
                 {t}
               </span>
             ))}

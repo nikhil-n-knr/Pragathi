@@ -55,13 +55,13 @@
 }
 
 .footer-col h4 {
-  font-family: 'Syncopate', monospace;
-  font-size: 0.85rem;
+  font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
+  font-size: 0.82rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: rgba(15, 23, 42, 0.5);
   margin-bottom: 0.5rem;
-  text-shadow: none; /* Monospace column headers */
+  text-shadow: none;
 }
 
 .footer-col a {

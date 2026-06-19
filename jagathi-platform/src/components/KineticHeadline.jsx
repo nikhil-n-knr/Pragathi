@@ -25,7 +25,7 @@ export default function KineticHeadline() {
       direction: 'left',
       words: [
         { text: "INFRASTRUCTURE", path: "/construction" },
-        { text: "LAND ACQUISITION", path: "/real-estate" },
+        { text: "CIVIL MARKET", path: "/civil-market" },
         { text: "INTERIOR DESIGN", path: "/interior" },
         { text: "CIVIL ENGINEERING", path: "/construction" }
       ]
@@ -111,15 +111,14 @@ export default function KineticHeadline() {
     const updateLag = () => {
       const vel = smoothScrollVel ? smoothScrollVel.current : 0;
       
-      // Elastic lag and skew variables
-      const skew = vel * -0.055; // horizontal skew lag
-      const lag = vel * -0.22; // translation lag offset
+      // Elastic horizontal translation lag offset based on scroll speed
+      const lag = vel * -0.22;
 
       if (parent1Ref.current) {
-        parent1Ref.current.style.transform = `skewX(${skew}deg) translateX(${lag}px)`;
+        parent1Ref.current.style.transform = `translateX(${lag}px)`;
       }
       if (parent2Ref.current) {
-        parent2Ref.current.style.transform = `skewX(${-skew}deg) translateX(${-lag}px)`;
+        parent2Ref.current.style.transform = `translateX(${-lag}px)`;
       }
 
       rAfId = requestAnimationFrame(updateLag);
@@ -138,7 +137,7 @@ export default function KineticHeadline() {
 
   return (
     <div 
-      className="w-full py-12 overflow-hidden bg-black/90 border-y border-yellow-400/10 select-none flex flex-col gap-6 relative z-10"
+      className="w-full pt-12 pb-18 overflow-hidden bg-[#424242] border-y border-[#FFEA0A]/20 select-none flex flex-col gap-6 relative z-10 shadow-2xl"
       style={{ transform: 'skewY(-1.8deg)' }} // Technical slanted grid alignment
     >
       {railData.map((rail, railIdx) => {
@@ -162,31 +161,36 @@ export default function KineticHeadline() {
                   {/* Dynamic interactive Word Link Capsule */}
                   <Link 
                     href={word.path}
-                    className="inline-block relative transition-all duration-300 hover:scale-108 hover:z-20 hover:tracking-wide select-all font-bold"
+                    className="inline-block relative transition-all duration-355 hover:scale-108 hover:z-20 hover:tracking-wide select-all font-bold"
                     style={{
                       transformOrigin: 'center center',
                       textShadow: '0 0 0px transparent',
-                      color: railIdx === 0 ? '#ffffff' : '#ffea00'
+                      color: 'transparent',
+                      WebkitTextStroke: railIdx === 0 ? '1.5px #FFEA0A' : '1.5px #ffffff',
+                      transition: 'all 0.35s cubic-bezier(0.25, 1, 0.5, 1)'
                     }}
                     onMouseEnter={(e) => {
                       if (railIdx === 0) {
-                        e.target.style.textShadow = '0 0 16px rgba(255, 230, 0, 0.4)';
-                        e.target.style.color = '#ffea00';
+                        e.target.style.textShadow = '0 0 20px rgba(255, 234, 10, 0.5)';
+                        e.target.style.color = '#FFEA0A';
+                        e.target.style.WebkitTextStroke = '1.5px #FFEA0A';
                       } else {
-                        e.target.style.textShadow = '0 0 16px rgba(255, 255, 255, 0.4)';
+                        e.target.style.textShadow = '0 0 20px rgba(255, 255, 255, 0.5)';
                         e.target.style.color = '#ffffff';
+                        e.target.style.WebkitTextStroke = '1.5px #ffffff';
                       }
                     }}
                     onMouseLeave={(e) => {
                       e.target.style.textShadow = '0 0 0px transparent';
-                      e.target.style.color = railIdx === 0 ? '#ffffff' : '#ffea00';
+                      e.target.style.color = 'transparent';
+                      e.target.style.WebkitTextStroke = railIdx === 0 ? '1.5px #FFEA0A' : '1.5px #ffffff';
                     }}
                     data-interactive
                   >
                     {word.text}
                   </Link>
 
-                  <span className="text-yellow-400/25 text-3xl md:text-5xl font-light select-none">•</span>
+                  <span className="text-[#FFEA0A]/40 text-3xl md:text-5xl font-light select-none">•</span>
                 </div>
               ))}
             </div>

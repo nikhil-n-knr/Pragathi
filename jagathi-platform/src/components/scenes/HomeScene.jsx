@@ -16,7 +16,7 @@ function RibbonBranch({ points, scrollProgress, delayStart, delayEnd }) {
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
     uProgress: { value: 0 },
-    uColor: { value: new THREE.Color("#ffea00") }
+    uColor: { value: new THREE.Color("#424242") }
   }), []);
 
   useFrame((state) => {
@@ -117,11 +117,11 @@ function GridParticles() {
         />
       </bufferGeometry>
       <pointsMaterial 
-        color="#ffea00" 
-        size={0.022} 
+        color="#424242" 
+        size={0.026} 
         sizeAttenuation={true} 
         transparent={true} 
-        opacity={0.4} 
+        opacity={0.65} 
         depthWrite={false} 
       />
     </points>
@@ -216,15 +216,15 @@ export default function HomeScene({ scrollProgress }) {
       {/* Emissive node lights at the base endpoints of the three branches */}
       <mesh position={[-2.2, -2.4, -1.0]}>
         <sphereGeometry args={[0.08, 16, 16]} />
-        <meshBasicMaterial color="#ffff00" />
+        <meshBasicMaterial color="#424242" />
       </mesh>
       <mesh position={[0, -2.6, 1.0]}>
         <sphereGeometry args={[0.08, 16, 16]} />
-        <meshBasicMaterial color="#ffff00" />
+        <meshBasicMaterial color="#424242" />
       </mesh>
       <mesh position={[2.2, -2.4, -1.0]}>
         <sphereGeometry args={[0.08, 16, 16]} />
-        <meshBasicMaterial color="#ffff00" />
+        <meshBasicMaterial color="#424242" />
       </mesh>
     </group>
   );
