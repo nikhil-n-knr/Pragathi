@@ -1,0 +1,47 @@
+/* ─────────────────────────────────────────────
+   Ken Burns — unique pan + zoom per discipline
+   Each plays infinitely, alternates direction
+───────────────────────────────────────────── */
+
+/* Card 0 — Construction: zoom in, drift left-down */
+@keyframes kenBurns0 {
+  0%   { transform: scale(1.0) translate(0%,   0%);   }
+  50%  { transform: scale(1.1) translate(-2.5%, 1.5%); }
+  100% { transform: scale(1.0) translate(0%,   0%);   }
+}
+
+/* Card 1 — Interiors: zoom in, drift right-up */
+@keyframes kenBurns1 {
+  0%   { transform: scale(1.0) translate(0%,    0%);    }
+  50%  { transform: scale(1.12) translate(2%,  -2%);    }
+  100% { transform: scale(1.0) translate(0%,    0%);    }
+}
+
+/* Card 2 — Civil Market: zoom in, drift right-down with wide sweep */
+@keyframes kenBurns2 {
+  0%   { transform: scale(1.0)  translate(0%,  0%);   }
+  50%  { transform: scale(1.08) translate(2%, 2%);    }
+  100% { transform: scale(1.0)  translate(0%,  0%);   }
+}
+
+.kenBurns0 {
+  animation: kenBurns0 22s ease-in-out infinite;
+  will-change: transform;
+}
+
+.kenBurns1 {
+  animation: kenBurns1 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+.kenBurns2 {
+  animation: kenBurns2 20s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Pause Ken Burns on card hover — hover scale handled by React state */
+.kenBurns0:hover,
+.kenBurns1:hover,
+.kenBurns2:hover {
+  animation-play-state: paused;
+}

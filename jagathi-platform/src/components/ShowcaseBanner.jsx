@@ -1,226 +1,316 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import styles from '../styles/kenBurns.module.css';
 
+/* ─────────────────────────────────────
+   Hover-triggered count-up stat block
+───────────────────────────────────────*/
+function HoverStat({ registryId, target, suffix, isDecimal, label, coord }) {
+  const [display, setDisplay] = useState(isDecimal ? target.toFixed(1) : String(target));
+  const [hovered, setHovered] = useState(false);
+  const timerRef = useRef(null);
+
+  const runCounter = useCallback(() => {
+    setHovered(true);
+    clearInterval(timerRef.current);
+    const steps = 60;
+    const duration = 1400;
+    let step = 0;
+    timerRef.current = setInterval(() => {
+      step++;
+      const progress = step / steps;
+      // ease-out curve
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = target * eased;
+      if (step >= steps) {
+        setDisplay(isDecimal ? target.toFixed(1) : String(Math.floor(target)));
+        clearInterval(timerRef.current);
+      } else {
+        setDisplay(isDecimal ? current.toFixed(1) : String(Math.floor(current)));
+      }
+    }, duration / steps);
+  }, [target, isDecimal]);
+
+  useEffect(() => () => clearInterval(timerRef.current), []);
+
+  return (
+    <div
+      className="flex flex-col items-center px-4 py-8 md:py-10 cursor-default select-none"
+      onMouseEnter={runCounter}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div
+        className="text-3xl md:text-5xl lg:text-6xl font-black font-basement leading-none transition-colors duration-200 mb-2"
+        style={{ color: hovered ? '#FFEA0A' : '#ffffff' }}
+      >
+        {display}{suffix}
+      </div>
+      <div
+        className="text-[9px] md:text-[11px] tracking-widest uppercase font-semibold transition-colors duration-300"
+        style={{ color: hovered ? '#FFEA0A' : 'rgba(255,255,255,0.6)' }}
+      >
+        {label}
+      </div>
+    </div>
+  );
+}
+
+const stats = [
+  { registryId: 'NODE_REGISTRY_01', target: 35,  suffix: '+',  isDecimal: false, label: 'Years of Legacy',   coord: 'LAT: 12.9716° N'    },
+  { registryId: 'NODE_REGISTRY_02', target: 450, suffix: '+',  isDecimal: false, label: 'Delivered Assets',  coord: 'LNG: 77.5946° E'    },
+  { registryId: 'NODE_REGISTRY_03', target: 1.2, suffix: 'M+', isDecimal: true,  label: 'Sq. Ft. Completed', coord: 'ALT: 920.0 METERS'   },
+  { registryId: 'NODE_REGISTRY_04', target: 100, suffix: '%',  isDecimal: false, label: 'Compliance Rating', coord: 'STATUS: COMPLIANT_OK' },
+];
+
+/* ─────────────────────────────────────
+   Main showcase items
+───────────────────────────────────────*/
+const showcaseItems = [
+  {
+    index: 0, label: '01',
+    title: 'The Jagathi Standard',
+    subtitle: 'Quality without compromise',
+    description: "Every project we touch carries one non-negotiable — it must outlast the generation that built it. No shortcuts in material selection, no tolerance for misaligned joints, no acceptance of 'good enough'. The Jagathi Standard is a singular commitment to permanence.",
+    image: '/assets/images/showcase_jagathi_standard.png',
+    kenBurns: styles.kenBurns0,
+  },
+  {
+    index: 1, label: '02',
+    title: 'The Full Lifecycle',
+    subtitle: 'Land to living — one team',
+    description: "We acquire the land. We design the structure. We build the shell. We finish the interior. No gaps, no handoffs, no version loss between disciplines. When Jagathi takes a project from brief to handover, every phase is owned in-house.",
+    image: '/assets/images/showcase_full_lifecycle.png',
+    kenBurns: styles.kenBurns1,
+  },
+  {
+    index: 2, label: '03',
+    title: '35 Years. Still Building.',
+    subtitle: 'A legacy measured in skylines',
+    description: "Since 1989, we have completed projects that define the skylines and communities of the regions we build in. Thirty-five years of earned trust, delivered on deadline, built on honesty. The benchmark is not the industry average — it is the last project we completed.",
+    image: '/assets/images/showcase_35_years.png',
+    kenBurns: styles.kenBurns2,
+  },
+  {
+    index: 3, label: '04',
+    title: 'The Promise Delivered',
+    subtitle: 'Every handover. On time.',
+    description: "A build is only as strong as the trust that surrounds it. Jagathi's track record of on-time, on-spec delivery has made us the first call for clients who cannot afford surprises. We sign on accountability and we follow through — every single time.",
+    image: '/assets/images/showcase_the_promise.png',
+    kenBurns: styles.kenBurns0,
+  },
+  {
+    index: 4, label: '05',
+    title: 'Precision at Every Level',
+    subtitle: 'Engineered to the millimetre',
+    description: "From the reinforcement spacing in a load-bearing column to the flush alignment of a door frame — Jagathi's quality process operates at a resolution that most developers never reach. Precision is not an attribute here. It is the baseline.",
+    image: '/assets/images/showcase_precision.png',
+    kenBurns: styles.kenBurns1,
+  },
+];
+
+/* ─────────────────────────────────────
+   Main component
+───────────────────────────────────────*/
 export default function ShowcaseBanner({ onPlayReel }) {
-  const triggerRef = useRef(null);
-  const bannerRef = useRef(null);
-  const contentRef = useRef(null);
-  const [maskAttrs, setMaskAttrs] = useState({
-    x: '28%',
-    y: '22%',
-    width: '44%',
-    height: '56%',
-    rx: '40',
-    ry: '40'
-  });
+  const [activeTab, setActiveTab] = useState(0);
+  const autoRef = useRef(null);
+  const sectionRef = useRef(null);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const isMobile = window.innerWidth < 768;
-    if (isMobile) {
-      setMaskAttrs({
-        x: '8%',
-        y: '15%',
-        width: '84%',
-        height: '70%',
-        rx: '24',
-        ry: '24'
-      });
-    }
+  const startAutoplay = useCallback(() => {
+    clearInterval(autoRef.current);
+    autoRef.current = setInterval(() => {
+      setActiveTab((prev) => (prev + 1) % showcaseItems.length);
+    }, 4500);
   }, []);
 
+  useEffect(() => { startAutoplay(); return () => clearInterval(autoRef.current); }, [startAutoplay]);
+
+  // Click → switch + reset timer
+  const handleTabClick = (index) => {
+    clearInterval(autoRef.current);
+    setActiveTab(index);
+    startAutoplay();
+  };
+
+  // Hover → instantly switch + reset timer
+  const handleTabHover = (index) => {
+    if (index === activeTab) return;
+    clearInterval(autoRef.current);
+    setActiveTab(index);
+    startAutoplay();
+  };
+
+  // When mouse leaves the section → resume autoplay
+  const handleSectionLeave = () => { startAutoplay(); };
+
+  // Scroll reveal
   useEffect(() => {
     if (typeof window === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
-
-    const trigger = triggerRef.current;
-    const banner = bannerRef.current;
-    const content = contentRef.current;
-    if (!trigger || !banner) return;
-
-    const isMobile = window.innerWidth < 768;
-    const initialMask = isMobile ? {
-      x: '8%',
-      y: '15%',
-      width: '84%',
-      height: '70%',
-      rx: '24px',
-      ry: '24px'
-    } : {
-      x: '28%',
-      y: '22%',
-      width: '44%',
-      height: '56%',
-      rx: '40px',
-      ry: '40px'
-    };
-
-    // Pin timeline scrubbing the mask rect attributes and content fade/scale
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: trigger,
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1, // 1-second smooth catch-up delay
-        pin: banner,
-        pinSpacing: false
-      }
+    const targets = sectionRef.current?.querySelectorAll('.sc-reveal');
+    if (!targets?.length) return;
+    gsap.set(targets, { y: 36, opacity: 0 });
+    const t = gsap.to(targets, {
+      y: 0, opacity: 1, duration: 0.9, stagger: 0.08, ease: 'power3.out',
+      scrollTrigger: { trigger: sectionRef.current, start: 'top 72%', toggleActions: 'play none none none' },
     });
-
-    // 1. Scrub SVG mask-rect attributes from centered float rounded container to fullbleed rect
-    tl.fromTo('#mask-rect', 
-      {
-        attr: initialMask
-      },
-      {
-        attr: {
-          x: '0%',
-          y: '0%',
-          width: '100%',
-          height: '100%',
-          rx: '0px',
-          ry: '0px'
-        },
-        ease: 'power2.inOut',
-        force3D: true // GPU acceleration
-      },
-      0
-    );
-
-    // 2. Liquid wobble peak (up to scale 95 at 50% transition, then decays to 0)
-    tl.fromTo('#liquid-jelly-map',
-      { attr: { scale: 0 } },
-      { attr: { scale: 95 }, ease: 'sine.out', duration: 0.5 },
-      0
-    ).to('#liquid-jelly-map',
-      { attr: { scale: 0 }, ease: 'sine.in', duration: 0.5 },
-      0.5
-    );
-
-    // 3. Fade and scale the inner content to coordinate with the expansion
-    if (content) {
-      tl.fromTo(content,
-        { opacity: 0.5, scale: 0.9 },
-        { opacity: 1, scale: 1, ease: 'power2.out' },
-        0
-      );
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.trigger === trigger) t.kill();
-      });
-    };
+    return () => { t.scrollTrigger?.kill(); t.kill(); };
   }, []);
 
+  const active = showcaseItems[activeTab];
+
   return (
-    <div 
-      ref={triggerRef} 
-      className="relative w-full h-[160vh] bg-transparent overflow-hidden flex items-center justify-center z-20"
+    <section
+      ref={sectionRef}
+      className="relative w-full bg-[#424242] overflow-hidden flex flex-col"
+      style={{ fontFamily: '"Outfit", sans-serif', minHeight: '100vh' }}
+      onMouseLeave={handleSectionLeave}
     >
-      {/* Expanding Banner Container using mask-image to clip boundaries only */}
-      <div 
-        ref={bannerRef}
-        className="w-full h-screen relative flex items-center justify-center overflow-hidden"
-        style={{
-          maskImage: 'url(#showcase-mask)',
-          WebkitMaskImage: 'url(#showcase-mask)',
-          maskRepeat: 'no-repeat',
-          WebkitMaskRepeat: 'no-repeat',
-          maskSize: 'cover',
-          WebkitMaskSize: 'cover',
-          willChange: 'mask-image'
-        }}
-      >
-        {/* Self-contained SVG Liquid Wobble Filter & Mask inside the viewport */}
-        <svg 
-          style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', top: 0, left: 0, zIndex: -1 }} 
-          aria-hidden="true"
-        >
-          <defs>
-            <filter id="liquid-jelly" x="-20%" y="-20%" width="140%" height="140%">
-              <feTurbulence 
-                type="fractalNoise" 
-                baseFrequency="0.008 0.015" 
-                numOctaves="2" 
-                result="noise" 
-              />
-              <feDisplacementMap 
-                id="liquid-jelly-map" 
-                in="SourceGraphic" 
-                in2="noise" 
-                scale="0" 
-                xChannelSelector="R" 
-                yChannelSelector="G" 
-              />
-            </filter>
-
-            <mask id="showcase-mask" maskContentUnits="userSpaceOnUse">
-              <rect 
-                id="mask-rect"
-                fill="white"
-                x={maskAttrs.x}
-                y={maskAttrs.y}
-                width={maskAttrs.width}
-                height={maskAttrs.height}
-                rx={maskAttrs.rx}
-                ry={maskAttrs.ry}
-                filter="url(#liquid-jelly)"
-              />
-            </mask>
-          </defs>
-        </svg>
-
-        {/* Background Project Image acting as Video/Reel preview */}
-        <img 
-          src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/482e7b6a-168c-4d0d-b35d-0e2ff4014577_3840w.webp" 
-          alt="Showcase Reel Banner" 
-          className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none scale-105 opacity-55"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-black/80 pointer-events-none" />
-
-        {/* Play Banner Interface */}
-        <div 
-          ref={contentRef}
-          className="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-3xl pointer-events-auto"
-        >
-          <span className="text-yellow-400 font-mono text-[9px] md:text-[11px] uppercase tracking-[0.35em] mb-4">
-            {"// CINEMATIC ENCODING"}
-          </span>
-          <h2 className="text-white font-extrabold text-3xl md:text-6xl uppercase tracking-[0.1em] leading-tight mb-8">
-            HEAVY BUILD REEL
-          </h2>
-          
-          {/* Elastic Play Button Container */}
-          <div 
-            onClick={() => onPlayReel && onPlayReel({
-              title: "HEAVY BUILD CINEMATIC REEL",
-              tag: "EXPLORE THE LANDMARKS",
-              image: "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/482e7b6a-168c-4d0d-b35d-0e2ff4014577_3840w.webp",
-              desc: "A high-fidelity capture of heavy engineering complexes, core foundations, municipal lattice works, and industrial design curations completed from 1989 to present."
-            })}
-            className="w-20 h-20 rounded-full border border-yellow-400 flex items-center justify-center cursor-pointer hover:bg-yellow-400 hover:scale-110 active:scale-95 group transition-all duration-300 shadow-lg shadow-yellow-400/10"
-            data-interactive
-          >
-            <span className="text-yellow-400 text-2xl group-hover:text-black transition-colors ml-1">▶</span>
+      {/* ── Dimmed full-bleed BG ── */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {showcaseItems.map(({ index, image, kenBurns }) => (
+          <div key={index} className="absolute inset-0 transition-opacity duration-900 ease-in-out"
+            style={{ opacity: activeTab === index ? 1 : 0 }}>
+            <img src={image} alt="" aria-hidden="true"
+              className={`w-full h-full object-cover block ${activeTab === index ? kenBurns : ''}`}
+              style={{ filter: 'brightness(0.18) saturate(0.5)' }} />
           </div>
-          
-          <span className="text-gray-400 font-mono text-[8px] tracking-widest uppercase mt-6 select-none animate-pulse">
-            Scroll to expand & play
-          </span>
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#424242] via-[#424242]/60 to-[#424242]" />
+      </div>
+
+      {/* ══════════════════════════════
+          TOP: Centered title
+      ══════════════════════════════ */}
+      <div className="sc-reveal relative z-10 w-full text-center pt-24 md:pt-32 pb-14 md:pb-20 px-6">
+        <span className="block text-[#FFEA0A]/70 font-mono text-xs md:text-sm uppercase tracking-[0.45em] font-semibold mb-6">
+          {'// Who We Are'}
+        </span>
+        {/* Title turns yellow on hover */}
+        <h2
+          className="font-basement text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-wide leading-none text-white hover:text-[#FFEA0A] transition-colors duration-300 cursor-default select-none"
+        >
+          The Jagathi Story
+        </h2>
+      </div>
+
+      {/* ══════════════════════════════════════════
+          MIDDLE: Tabs left | Image bleeds right
+      ══════════════════════════════════════════ */}
+      <div className="relative z-10 flex flex-col md:flex-row flex-1 items-stretch" style={{ paddingBottom: '5rem' }}>
+
+        {/* LEFT: Accordion tabs */}
+        <div
+          className="flex-shrink-0 flex flex-col justify-center"
+          style={{ width: 'clamp(300px, 30vw, 460px)', paddingLeft: 'clamp(2.5rem, 5vw, 6rem)', paddingRight: '2rem', paddingBottom: '4rem' }}
+        >
+          {showcaseItems.map(({ index, label, title, subtitle, description }) => {
+            const isActive = activeTab === index;
+            return (
+              <div
+                key={index}
+                className="sc-reveal relative border-b border-white/[0.07] last:border-b-0 cursor-pointer select-none"
+                onClick={() => handleTabClick(index)}
+                onMouseEnter={() => handleTabHover(index)}
+              >
+                {/* Yellow left bar */}
+                <div className="absolute left-0 top-0 w-[2px] rounded-r-full bg-[#FFEA0A] transition-all duration-500 ease-in-out"
+                  style={{ height: isActive ? '100%' : '0%' }} />
+
+                {/* Header */}
+                <div className="flex items-center gap-5 py-6 pl-14 pr-4">
+                  <span className="font-mono text-sm font-bold tracking-[0.3em] flex-shrink-0 transition-colors duration-300"
+                    style={{ color: isActive ? '#FFEA0A' : 'rgba(255,255,255,0.2)' }}>
+                    {label}
+                  </span>
+                  <h3 className="font-basement text-lg md:text-xl lg:text-2xl xl:text-3xl font-black uppercase tracking-tight leading-tight transition-colors duration-300"
+                    style={{ color: isActive ? '#ffffff' : 'rgba(255,255,255,0.22)' }}>
+                    {title}
+                  </h3>
+                </div>
+
+                {/* Accordion */}
+                <div className="overflow-hidden transition-all duration-500 ease-in-out"
+                  style={{ display: 'grid', gridTemplateRows: isActive ? '1fr' : '0fr' }}>
+                  <div className="overflow-hidden">
+                    <div className="pl-14 pr-4 pb-8 flex flex-col gap-5">
+                      <span className="text-[#FFEA0A] text-base md:text-lg font-semibold tracking-wide">{subtitle}</span>
+                      <p className="text-white/60 text-base md:text-lg leading-relaxed font-light">{description}</p>
+                      {onPlayReel && (
+                        <button onClick={(e) => { e.stopPropagation(); onPlayReel({ title: active.title, tag: active.label, image: active.image, desc: active.description }); }}
+                          className="inline-flex items-center gap-2.5 mt-2 w-fit group">
+                          <span className="w-7 h-7 rounded-full border border-[#FFEA0A]/40 flex items-center justify-center group-hover:bg-[#FFEA0A] transition-all duration-300 flex-shrink-0">
+                            <span className="text-[#FFEA0A] text-xs group-hover:text-black transition-colors ml-0.5">▶</span>
+                          </span>
+                          <span className="text-[#FFEA0A] text-xs font-extrabold uppercase tracking-[0.22em] group-hover:text-white transition-colors">Watch Reel</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* Technical Hud Markers inside Banner */}
-        <div className="absolute top-12 left-12 font-mono text-[8px] text-yellow-400/35 hidden md:block">
-          STATUS: IN_VIEW_WARP_ACTIVE
-        </div>
-        <div className="absolute bottom-12 right-12 font-mono text-[8px] text-yellow-400/35 hidden md:block">
-          ZOOM: SCALE_SCRUB_1.0
+        {/* RIGHT: Image — fills to right edge */}
+        <div className="flex-1 relative overflow-hidden rounded-tl-[20px] rounded-bl-[20px]">
+          {/* Left blend */}
+          <div className="absolute left-0 inset-y-0 w-24 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to right, #424242 0%, transparent 100%)' }} />
+          {/* Bottom blend */}
+          <div className="absolute inset-x-0 bottom-0 h-40 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to top, #424242 0%, transparent 100%)' }} />
+
+          {/* Images */}
+          {showcaseItems.map(({ index, image, title, kenBurns }) => (
+            <div key={index} className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+              style={{ opacity: activeTab === index ? 1 : 0, zIndex: activeTab === index ? 2 : 1 }}>
+              <img src={image} alt={title}
+                className={`w-full h-full object-cover block ${activeTab === index ? kenBurns : ''}`}
+                style={{ filter: 'brightness(0.88) contrast(1.05)' }} />
+            </div>
+          ))}
+
+          {/* Active label */}
+          <div className="absolute bottom-20 left-8 z-20 flex items-center gap-2.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#FFEA0A] animate-pulse" />
+            <span className="text-white/50 font-mono text-[10px] tracking-[0.25em] uppercase">
+              {active.label} — {active.title}
+            </span>
+          </div>
+
+          {/* Dot nav */}
+          <div className="absolute top-5 right-6 z-20 flex gap-2.5">
+            {showcaseItems.map(({ index }) => (
+              <button key={index} onClick={() => handleTabClick(index)}
+                className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                style={{
+                  background: activeTab === index ? '#FFEA0A' : 'rgba(255,255,255,0.25)',
+                  transform: activeTab === index ? 'scale(1.6)' : 'scale(1)',
+                }} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* ══════════════════════════════════════════
+          BOTTOM: Stats bar — full width over image
+      ══════════════════════════════════════════ */}
+      <div className="absolute bottom-0 left-0 right-0 z-30">
+        {/* Divider line */}
+        <div className="w-full h-px bg-white/10" />
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 backdrop-blur-sm"
+          style={{ background: 'rgba(66,66,66,0.75)' }}>
+          {stats.map((stat) => (
+            <HoverStat key={stat.registryId} {...stat} />
+          ))}
+        </div>
+      </div>
+
+    </section>
   );
 }

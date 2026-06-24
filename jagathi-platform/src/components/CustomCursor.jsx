@@ -83,19 +83,33 @@ export default function CustomCursor() {
 
   return (
     <div className={styles.cursorWrapper}>
-      {/* Raw 4px Solid Yellow Dot */}
+      {/* Raw 4px Solid Yellow Dot (Exact hotspot) */}
       <div 
         ref={dotRef}
         className={styles.cursorDot}
       />
       
-      {/* Spring-physics 40px Outer Yellow Halo Ring */}
+      {/* Trailing Spring-Physics SVG Arrow Pointer */}
       <div 
         ref={ringRef} 
         className={`${styles.cursorRing} ${
           clicked ? styles.cursorRingClick : hovered ? styles.cursorRingHover : ''
         }`} 
-      />
+      >
+        <svg 
+          width="28" 
+          height="28" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          className={styles.arrowSvg}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path 
+            d="M4.5 3L19.5 12L12.5 14L10.5 21L4.5 3Z" 
+            className={styles.arrowPath}
+          />
+        </svg>
+      </div>
     </div>
   );
 }

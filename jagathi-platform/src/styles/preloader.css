@@ -19,6 +19,7 @@ body.preloader-active {
   pointer-events: auto;
   overflow: hidden;
   font-family: 'Outfit', sans-serif;
+  will-change: opacity;
 }
 
 /* Bottom-left branding layout container */
@@ -49,11 +50,14 @@ body.preloader-active {
 }
 
 .preloader-ampersand {
-  border-bottom: 3px solid #424242; /* Brand charcoal gray underline */
-  padding-bottom: 6px; /* Increased to ensure underline is fully visible */
+  border-bottom: 1.5px solid #424242; /* Thinner underline */
+  padding-bottom: 1px; /* Tighter padding so it matches the other text height */
   display: inline-block;
-  line-height: 1.1; /* Avoid character clipping at top/bottom */
-  margin-right: 0.35rem;
+  line-height: 1.0;
+  margin-right: 0.2rem;
+  font-size: 0.72em; /* Smaller size so it fits the height of others */
+  vertical-align: middle;
+  transform: translateY(-2px); /* Align perfectly on baseline */
 }
 
 .preloader-est-label {
@@ -90,7 +94,7 @@ body.preloader-active {
 .preloader-loader-path {
   fill: none;
   stroke: #424242; /* Brand charcoal active path */
-  stroke-width: 24px;
+  stroke-width: 32px;
   stroke-linecap: round;
 }
 
@@ -106,8 +110,7 @@ body.preloader-active {
   background: transparent;
   transform-origin: center;
   box-sizing: border-box;
-  filter: url(#liquid-entrance-wave);
-  will-change: transform, filter;
+  will-change: transform, opacity;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform: translate(-50%, -50%) translateZ(0);
@@ -138,7 +141,6 @@ body.preloader-active {
 
 /* Phase 3 & 4: Centered SVGs for Concentric Contours */
 .preloader-svg-container {
-  display: none; /* revealed via GSAP */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -146,10 +148,12 @@ body.preloader-active {
   width: 400px;
   height: 400px;
   pointer-events: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   z-index: 99999;
   overflow: visible; /* Ensure outlines are not clipped when scaling past 400px */
+  opacity: 0;
 }
 
 .preloader-svg-container svg {
@@ -159,15 +163,16 @@ body.preloader-active {
 .preloader-scallop-outline {
   fill: none;
   stroke: #424242;
-  stroke-width: 14px;           /* matches logo circle border thickness */
-  vector-effect: non-scaling-stroke; /* constant visual px regardless of GSAP scale */
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
   transform-origin: 50% 50%;
   opacity: 0;                   /* prevent initial layout flash */
+  will-change: transform, opacity;
 }
 
 /* Central logo badge styling */
 .preloader-logo-badge {
-  display: none; /* revealed via GSAP timeline */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -177,6 +182,12 @@ body.preloader-active {
   z-index: 100000;
   transform-origin: center;
   pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.preloader-brand-badge-5 {
+  will-change: transform, opacity;
 }
 
 .preloader-logo-image {
@@ -192,5 +203,6 @@ body.preloader-active {
 .preloader-loader-dot-path {
   fill: none;
   stroke: #424242;
+  stroke-width: 32px;
   stroke-linecap: round;
 }

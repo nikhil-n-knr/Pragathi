@@ -29,6 +29,24 @@ function GridParticles() {
     return pos;
   }, []);
 
+  // Generate a circular canvas texture to render circular nodes instead of squares
+  const circleTexture = useMemo(() => {
+    if (typeof window === 'undefined') return null;
+    const canvas = document.createElement('canvas');
+    canvas.width = 64;
+    canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+    
+    ctx.beginPath();
+    ctx.arc(32, 32, 28, 0, 2 * Math.PI);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.minFilter = THREE.LinearFilter;
+    return texture;
+  }, []);
+
   useFrame((state) => {
     if (pointsRef.current) {
       pointsRef.current.rotation.y = state.clock.getElapsedTime() * 0.012;
@@ -46,11 +64,13 @@ function GridParticles() {
       </bufferGeometry>
       <pointsMaterial 
         color="#424242" 
-        size={0.008} 
+        size={0.09} 
         sizeAttenuation={true} 
         transparent={true} 
-        opacity={0.65} 
+        opacity={0.55} 
         depthWrite={false} 
+        map={circleTexture || undefined}
+        alphaTest={0.01}
       />
     </points>
   );

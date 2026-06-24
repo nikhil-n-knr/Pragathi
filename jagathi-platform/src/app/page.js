@@ -15,7 +15,7 @@ import GatewaySection from '../components/GatewaySection';
 
 // Modularized Homepage Components
 import Hero from '../components/home/Hero';
-import ProofStrip from '../components/home/ProofStrip';
+
 import FinalCTA from '../components/home/FinalCTA';
 import ProjectOverlay from '../components/home/ProjectOverlay';
 import OrganicBackgroundLine from '../components/home/OrganicBackgroundLine';
@@ -24,6 +24,19 @@ export default function Home() {
   const scrollProgress = useRef(0);
   const scrollContainerRef = useRef(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [preloaderDone, setPreloaderDone] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleComplete = () => setPreloaderDone(true);
+    window.addEventListener('preloaderComplete', handleComplete);
+    if (!document.getElementById('preloader-overlay')) {
+      setPreloaderDone(true);
+    }
+    return () => {
+      window.removeEventListener('preloaderComplete', handleComplete);
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -124,6 +137,7 @@ export default function Home() {
           camera={{ position: [0, 0, 6], fov: 55 }}
           gl={{ antialias: true, alpha: true, stencil: false, depth: true }}
           dpr={[1, 1.5]}
+          frameloop={preloaderDone ? 'always' : 'never'}
         >
           <ambientLight intensity={0.15} />
           <directionalLight position={[2, 6, 4]} intensity={0.7} />
@@ -147,8 +161,7 @@ export default function Home() {
         {/* 4. Three Gateway Panels (Build, Secure, Curate) */}
         <GatewaySection onSelectProject={setSelectedProject} />
 
-        {/* 5. Proof Strip (Metrics, Legacy, Delivery Model) */}
-        <ProofStrip />
+
 
         {/* 5b. Play Reel Showcase Banner (Organic Elastic Expansion) */}
         <ShowcaseBanner onPlayReel={(reel) => setSelectedProject(reel)} />

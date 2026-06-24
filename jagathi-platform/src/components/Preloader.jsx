@@ -12,6 +12,21 @@ export default function Preloader({ onComplete }) {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
 
+  // Off-thread asynchronous image decoding to prevent first-render main thread decode stutters (hangs)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const logoImg = new Image();
+    logoImg.src = "/assets/branding/logo.png?v=2";
+    if (logoImg.decode) {
+      logoImg.decode().catch(() => {});
+    }
+    const badgeImg = new Image();
+    badgeImg.src = "/assets/brand/5.png";
+    if (badgeImg.decode) {
+      badgeImg.decode().catch(() => {});
+    }
+  }, []);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
@@ -29,19 +44,19 @@ export default function Preloader({ onComplete }) {
     const rippleTl = gsap.timeline({ repeat: -1, paused: true });
     outlines.forEach((outline, i) => {
       rippleTl.fromTo(outline,
-        { scale: 0.7, opacity: 0, strokeWidth: '14px', svgOrigin: '0 0' },
+        { scale: 0.7, opacity: 0, svgOrigin: '0 0' },
         { 
           scale: targetScale, 
-          strokeWidth: '48px', 
           svgOrigin: '0 0', 
-          duration: 3.75, // Slower speed (25% increase from 3.0s)
+          duration: 6.5, // Slower ripple (graceful motion)
           ease: 'power1.out',
+          force3D: true, // GPU acceleration for buttery smoothness
           keyframes: [
-            { opacity: 1, duration: 1.0 },  // 25% increase from 0.8s
-            { opacity: 0, duration: 2.75 } // 25% increase from 2.2s
+            { opacity: 0.45, duration: 1.2 }, // reaches a softer max opacity of 45%
+            { opacity: 0, duration: 5.3 }   // fades out completely as it moves further away
           ]
         },
-        i * 0.225 // 25% speed reduction delay adjustment from 0.18s
+        i * 0.25 // Smooth stagger for 12 outlines
       );
     });
 
@@ -55,13 +70,13 @@ export default function Preloader({ onComplete }) {
       }
     });
 
-    // Trigger main layout fade-in and page entrance events at 11.5s (when exit starts)
+    // Trigger main layout fade-in and page entrance events at 12.0s (when exit is almost complete)
     tl.call(() => {
       window.dispatchEvent(new Event('preloaderComplete'));
       if (onCompleteRef.current) {
         onCompleteRef.current();
       }
-    }, null, 11.5);
+    }, null, 12.0);
 
     // Phase 1: Loader at Center, Counter at Bottom-Left (0.0s to 1.8s)
     const counterObj = { val: 1900 };
@@ -87,12 +102,10 @@ export default function Preloader({ onComplete }) {
       const length = 2 * Math.PI * 150; // Radius 150
       gsap.set(loaderPath, {
         strokeDasharray: length,
-        strokeDashoffset: length,
-        attr: { 'stroke-width': 32 }
+        strokeDashoffset: length
       });
       tl.to(loaderPath, {
         strokeDashoffset: length * 0.3, // 70% complete (30% remaining offset)
-        attr: { 'stroke-width': 84 },
         duration: 4.0,
         ease: "power2.inOut"
       }, 0);
@@ -101,14 +114,12 @@ export default function Preloader({ onComplete }) {
       const loaderDot = document.querySelector('.preloader-loader-dot-path');
       gsap.set(loaderDot, {
         strokeDasharray: `0 ${length}`,
-        strokeDashoffset: length - 57, // starts 57px ahead
-        attr: { 'stroke-width': 32 }
+        strokeDashoffset: length - 57 // starts 57px ahead
       });
       
       // Animate leading dot in perfect mathematical sync with main path with constant visual gap
       tl.to(loaderDot, {
-        strokeDashoffset: length * 0.3 - 109, // ends 109px ahead to maintain constant 25px gap (G + W_end = 25 + 84 = 109)
-        attr: { 'stroke-width': 84 },
+        strokeDashoffset: length * 0.3 - 109, // ends 109px ahead to maintain constant gap
         duration: 4.0,
         ease: "power2.inOut"
       }, 0);
@@ -146,10 +157,6 @@ export default function Preloader({ onComplete }) {
     }, 5.0);
     tl.set('.preloader-brand-container', { display: 'none' }, 5.3);
 
-    // Initialize SVG liquid-entrance-wave filter attributes
-    tl.set('#liquid-entrance-displacement', { attr: { scale: 0 } }, 0);
-    tl.set('#liquid-entrance-turbulence', { attr: { baseFrequency: "0.01 0.03" } }, 0);
-
     // Reveal Phase 3 Boxed Text 'JAGATHI' at the center (at 5.2s, starting with transparent border)
     tl.fromTo('.preloader-text-box',
       { scale: 0.9, opacity: 0, display: 'block', borderColor: "transparent" },
@@ -174,104 +181,78 @@ export default function Preloader({ onComplete }) {
       5.2
     );
 
-    // High-fidelity liquid entrance wave distortion animation (Subtle Wave Mode):
-    // Ramp up displacement scale gently as letters break the baseline
-    tl.to('#liquid-entrance-displacement', {
-      attr: { scale: 12 },
-      duration: 0.20,
-      ease: "power1.out"
-    }, 5.2);
-
-    // Smoothly settle displacement scale to a constant flowing state of 8px (keeps borders waving)
-    tl.to('#liquid-entrance-displacement', {
-      attr: { scale: 8 },
-      duration: 0.50,
-      ease: "power2.inOut"
-    }, 5.40);
-
-    // Create a standalone infinite loop for turbulence coordinates so the wave keeps flowing continuously
-    const flowTween = gsap.to('#liquid-entrance-turbulence', {
-      attr: { baseFrequency: "0.02 0.08" },
-      duration: 2.0,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut"
-    });
-
-    // 2. Border Reveal & Blinking (starts at 5.85s, right as letters finish rising)
-    // Blinks between transparent and solid brand charcoal (#424242)
+    // Border Reveal & Blinking (starts at 5.85s, right as letters finish rising)
+    // Blinks between transparent and solid brand charcoal (#424242) exactly 3 times
     tl.to('.preloader-text-box', {
       borderColor: "#424242",
-      duration: 0.12,
+      duration: 0.1,
       repeat: 4, // 5 states: solid -> trans -> solid -> trans -> solid
       yoyo: true,
       ease: "none"
     }, 5.85);
 
-    // Phase 4 Transition: Reveal Logo Badge & Wave Outlines (at 8.0s)
-    // Fade out the wordmark box
+    // Phase 4 Transition: Reveal Logo Badge & Wave Outlines (at 6.5s)
+    // Fade out the wordmark box a bit early
     tl.to('.preloader-text-box', {
       opacity: 0,
-      scale: 0.9,
-      duration: 0.4,
+      scale: 0.85,
+      duration: 0.5,
       ease: "power2.inOut"
-    }, 8.0);
-    tl.set('.preloader-text-box', { display: 'none' }, 8.4);
+    }, 6.5);
+    tl.set('.preloader-text-box', { display: 'none' }, 7.0);
 
-    // Reveal SVG Outlines and Logo Badge
-    tl.set('.preloader-svg-container', { display: 'flex' }, 8.0);
+    // Reveal SVG Outlines (fade opacity to 1)
+    tl.to('.preloader-svg-container', { opacity: 1, duration: 0.4 }, 6.8);
 
-    // Start the infinite looping ripples at 8.0s
+    // Start the infinite looping ripples at 6.8s
     tl.call(() => {
       rippleTl.play();
-    }, null, 8.0);
+    }, null, 6.8);
 
-    // Central logo badge scales/fades in
+    // Central logo badge scales/fades in slowly and majestically (overlapping crossfade)
     tl.fromTo('.preloader-logo-badge',
-      { scale: 0.7, opacity: 0, display: 'block' },
-      { scale: 1.0, opacity: 1, duration: 0.8, ease: "power2.out", immediateRender: false },
-      8.0
+      { scale: 0.7, opacity: 0 },
+      { scale: 1.0, opacity: 1, duration: 1.6, ease: "power2.out", immediateRender: false },
+      6.8
     );
 
     // Brand kit 5 badge fades in underneath the logo badge shortly AFTER the logo appears
     tl.fromTo('.preloader-brand-badge-5',
-      { opacity: 0, y: 15, display: 'block' },
-      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", immediateRender: false },
-      9.0
+      { opacity: 0, y: 15 },
+      { opacity: 1, y: 0, duration: 1.2, ease: "power2.out", immediateRender: false },
+      7.6
     );
 
-    // Phase 5 Exit: Conclude by fading/scaling everything out (at 11.5s)
+    // Phase 5 Exit: Conclude by fading/scaling everything out (at 11.0s)
     tl.to('.preloader-logo-badge', {
-      scale: 1.15,
-      opacity: 0,
-      duration: 0.8,
+      scale: 1.12,
+      opacity: 0, // Smoothly fade out logo badge
+      duration: 1.3,
       ease: "power2.inOut"
-    }, 11.5);
+    }, 11.0);
 
     tl.to('.preloader-brand-badge-5', {
-      scale: 1.15,
-      opacity: 0,
-      duration: 0.8,
+      scale: 1.12,
+      opacity: 0, // Smoothly fade out brand badge
+      duration: 1.3,
       ease: "power2.inOut"
-    }, 11.5);
+    }, 11.0);
 
-    // Fade out the outlines parent container to hide the continuous ripples
     tl.to('.preloader-svg-container', {
-      opacity: 0,
-      duration: 0.8,
-      ease: "power2.inOut"
-    }, 11.5);
+      opacity: 0, // Smoothly fade out ripple outlines container
+      duration: 1.3,
+      ease: "power3.inOut"
+    }, 11.0);
 
-    // Fade out overlay background to reveal the main website
+    // Fade out overlay background to reveal the main website (all nested children fade out automatically with parent opacity)
     tl.to('#preloader-overlay', {
       opacity: 0,
-      duration: 0.9,
-      ease: "power2.inOut"
-    }, 11.5);
+      duration: 1.3,
+      ease: "power3.inOut"
+    }, 11.0);
 
     return () => {
       tl.kill();
-      flowTween.kill();
       rippleTl.kill(); // clean up infinite loop on unmount
       document.body.classList.remove('preloader-active');
     };
@@ -302,7 +283,7 @@ export default function Preloader({ onComplete }) {
       </div>
 
       {/* 4. Typography Box for 'JAGATHI' */}
-      <div className="preloader-text-box">
+      <div className="preloader-text-box" style={{ display: 'none', opacity: 0 }}>
         <div className="preloader-text">
           {"JAGATHI".split("").map((char, i) => (
             <span key={i} className="preloader-char" style={{ display: 'inline-block' }}>
@@ -312,22 +293,23 @@ export default function Preloader({ onComplete }) {
         </div>
       </div>
 
-      {/* 4b. Jagathi Brand Kit Badge (appears at bottom-right of logo) */}
-      <div className="preloader-brand-badge-5 absolute opacity-0 z-[100001]" style={{ top: '50%', marginTop: '90px', left: '50%', marginLeft: '80px', transform: 'translateX(-50%)' }}>
-        <img src="/assets/brand/5.png" alt="Brand element" style={{ width: '96px', height: 'auto', opacity: 0.9 }} />
+      {/* 4b. Jagathi Brand Kit Badge (appears centered below the logo) */}
+      <div className="preloader-brand-badge-5 absolute z-[100001]" style={{ top: '50%', marginTop: '-40px', left: '50%', transform: 'translateX(-50%)', opacity: 0, pointerEvents: 'none' }}>
+        <img src="/assets/brand/5.png" alt="Brand element" style={{ width: '408px', height: 'auto', opacity: 0.9 }} decoding="async" />
       </div>
 
       {/* 4c. JAGATHI Logo Badge (renders logo/image.png) */}
-      <div className="preloader-logo-badge">
+      <div className="preloader-logo-badge" style={{ opacity: 0 }}>
         <img 
           className="preloader-logo-image" 
           src="/assets/branding/logo.png?v=2" 
           alt="Jagathi Logo" 
+          decoding="async"
         />
       </div>
 
       {/* 5. SVG outlines for Phase 4 Topographic Waves */}
-      <div className="preloader-svg-container">
+      <div className="preloader-svg-container" style={{ opacity: 0 }}>
         <svg 
           viewBox="-200 -200 400 400" 
           style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'visible' }}
@@ -337,11 +319,13 @@ export default function Preloader({ onComplete }) {
               <path d={badgePath} />
             </g>
           </defs>
-          {Array.from({ length: 5 }).map((_, i) => (
+          {Array.from({ length: 12 }).map((_, i) => (
             <path 
               key={i} 
               d={badgePath} 
               className="preloader-scallop-outline" 
+              strokeLinejoin="round"
+              strokeLinecap="round"
             />
           ))}
         </svg>
