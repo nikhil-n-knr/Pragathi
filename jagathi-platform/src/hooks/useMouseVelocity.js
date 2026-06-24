@@ -3,9 +3,10 @@ import { useEffect, useRef } from 'react';
 export default function useMouseVelocity() {
   const mouseRef = useRef({ x: 0, y: 0 });
   const velocityRef = useRef({ x: 0, y: 0, speed: 0 });
-  const lastTimeRef = useRef(Date.now());
+  const lastTimeRef = useRef(0);
 
   useEffect(() => {
+    lastTimeRef.current = Date.now();
     const handleMouseMove = (e) => {
       const currentTime = Date.now();
       const timeDelta = Math.max(1, currentTime - lastTimeRef.current);

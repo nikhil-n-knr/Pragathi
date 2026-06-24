@@ -5,6 +5,12 @@ import { useFrame } from '@react-three/fiber';
 import { Text, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
+// Simple deterministic pseudo-random generator to satisfy React 19 purity rules
+function seededRandom(s) {
+  const x = Math.sin(s) * 10000;
+  return x - Math.floor(x);
+}
+
 export default function CivilMarketScene({ scrollProgress }) {
   const sceneRef = useRef();
   const terrainMaterialRef = useRef();
@@ -15,38 +21,32 @@ export default function CivilMarketScene({ scrollProgress }) {
   // The terrain center is placed at Y = -40
   const terrainY = -40;
 
-  // Local shader uniforms for terrain liquid gold ripple
-  const uniforms = useMemo(() => ({
-    uTime: { value: 0 },
-    uHitPoint: { value: new THREE.Vector3(999, 999, 999) }, // default off-screen
-    uHoverIntensity: { value: 0.0 },
-    uOpacity: { value: 0.0 }
-  }), []);
-
   useFrame((state) => {
-    const p = scrollProgress && typeof scrollProgress === 'object' && 'current' in scrollProgress ? scrollProgress.current : Number(scrollProgress);
+    if (terrainMaterialRef.current) {
+      const p = scrollProgress && typeof scrollProgress === 'object' && 'current' in scrollProgress ? scrollProgress.current : Number(scrollProgress);
 
-    const sceneOpacity = 1.0;
-    if (sceneRef.current) {
-      sceneRef.current.visible = true;
-    }
+      const sceneOpacity = 1.0;
+      if (sceneRef.current) {
+        sceneRef.current.visible = true;
+      }
 
-    // Camera controller local Y-descent
-    const camera = state.camera;
-    camera.position.x = 2.0;
-    camera.position.z = 7.0;
-    camera.position.y = -12.0 - p * 23.0; // descends from Y = -12 down to Y = -35
-    camera.lookAt(0, -40, 0);
+      // Camera controller local Y-descent
+      const camera = state.camera;
+      camera.position.x = 2.0;
+      camera.position.z = 7.0;
+      camera.position.y = -12.0 - p * 23.0; // descends from Y = -12 down to Y = -35
+      camera.lookAt(0, -40, 0);
 
-    // Set opacity uniform for terrain shader
-    uniforms.uOpacity.value = sceneOpacity;
-    uniforms.uTime.value = state.clock.getElapsedTime();
+      // Set opacity uniform for terrain shader
+      terrainMaterialRef.current.uniforms.uOpacity.value = sceneOpacity;
+      terrainMaterialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
 
-    // Smoothly decay hover intensity if not hovering
-    if (!hoveredData) {
-      uniforms.uHoverIntensity.value += (0.0 - uniforms.uHoverIntensity.value) * 0.1;
-    } else {
-      uniforms.uHoverIntensity.value += (1.0 - uniforms.uHoverIntensity.value) * 0.15;
+      // Smoothly decay hover intensity if not hovering
+      if (!hoveredData) {
+        terrainMaterialRef.current.uniforms.uHoverIntensity.value += (0.0 - terrainMaterialRef.current.uniforms.uHoverIntensity.value) * 0.1;
+      } else {
+        terrainMaterialRef.current.uniforms.uHoverIntensity.value += (1.0 - terrainMaterialRef.current.uniforms.uHoverIntensity.value) * 0.15;
+      }
     }
   });
 
@@ -61,15 +61,23 @@ export default function CivilMarketScene({ scrollProgress }) {
         // Leave central channels empty for visual flow (roads)
         if (Math.abs(x) === 0 || Math.abs(z) === 0) continue;
 
-        // Generate height and project data
-        const height = 0.2 + Math.random() * 0.8;
-        const acres = (1.5 + Math.random() * 8.5).toFixed(1);
+        // Generate height and project data using deterministic seeds
+        const seed1 = x * 12.9898 + z * 78.233;
+        const seed2 = x * 43.123 + z * 93.382;
+        const seed3 = x * 57.821 + z * 18.521;
+        const seed4 = x * 31.415 + z * 62.831;
+
+        const height = 0.2 + seededRandom(seed1) * 0.8;
+        const acres = (1.5 + seededRandom(seed2) * 8.5).toFixed(1);
+        const randX = seededRandom(seed3);
+        const randZ = seededRandom(seed4);
+
         const code = `SECTOR-${Math.abs(x)}${String.fromCharCode(65 + Math.abs(z))}`;
         const coordinates = `${(13.045 + x * 0.012).toFixed(4)}° N, ${(80.220 + z * 0.018).toFixed(4)}° E`;
 
         grid.push({
-          x: x * spacing + (Math.random() - 0.5) * 0.2,
-          z: z * spacing + (Math.random() - 0.5) * 0.2,
+          x: x * spacing + (randX - 0.5) * 0.2,
+          z: z * spacing + (randZ - 0.5) * 0.2,
           w: 1.1,
           h: height,
           d: 1.1,
@@ -154,7 +162,9 @@ export default function CivilMarketScene({ scrollProgress }) {
   // Handle pointer move over terrain to perform raycasting calculations
   const handlePointerMove = (e) => {
     e.stopPropagation();
-    uniforms.uHitPoint.value.copy(e.point);
+    if (terrainMaterialRef.current) {
+      terrainMaterialRef.current.uniforms.uHitPoint.value.copy(e.point);
+    }
     
     // Find closest plot
     const worldPoint = e.point;
@@ -180,7 +190,9 @@ export default function CivilMarketScene({ scrollProgress }) {
 
   const handlePointerOut = () => {
     setHoveredData(null);
-    uniforms.uHitPoint.value.set(999, 999, 999);
+    if (terrainMaterialRef.current) {
+      terrainMaterialRef.current.uniforms.uHitPoint.value.set(999, 999, 999);
+    }
   };
 
   return (
@@ -260,7 +272,12 @@ export default function CivilMarketScene({ scrollProgress }) {
           ref={terrainMaterialRef}
           vertexShader={terrainShader.vertexShader}
           fragmentShader={terrainShader.fragmentShader}
-          uniforms={uniforms}
+          uniforms={useMemo(() => ({
+            uTime: { value: 0 },
+            uHitPoint: { value: new THREE.Vector3(999, 999, 999) },
+            uHoverIntensity: { value: 0.0 },
+            uOpacity: { value: 0.0 }
+          }), [])}
           transparent={true}
           depthWrite={true}
         />

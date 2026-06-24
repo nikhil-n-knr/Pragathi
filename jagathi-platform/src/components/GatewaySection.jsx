@@ -12,13 +12,8 @@ export default function GatewaySection() {
   const imageRefs = useRef([]);
   const hoverProgressRefs = useRef([0, 0, 0]); // Smooth zoom progress trackers
 
-  // Safe fetch of the fluid context
-  let fluid = null;
-  try {
-    fluid = useFluid();
-  } catch (e) {
-    console.warn("FluidContext not found. Bending animations will run on fallback scroll tracker.");
-  }
+  // Fetch of the fluid context
+  const fluid = useFluid();
   const smoothScrollVel = fluid ? fluid.smoothScrollVel : null;
 
   const row1DescTokens = ["Delivering", "master-scale", "concrete", "cores,", "structural", "lattices,", "and", "industrial", "complexes", "built", "to", "endure", "generations."];
@@ -160,7 +155,7 @@ export default function GatewaySection() {
     >
       {/* Visual Title Header */}
       <div className="flex flex-col items-center text-center px-6 max-w-4xl mx-auto w-full mt-8 md:mt-14 mb-8 split-reveal">
-        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest block text-center mb-4">// Gateway Portals</span>
+        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest block text-center mb-4">{"// Gateway Portals"}</span>
         <h2 className="text-[#424242] font-black text-3xl md:text-5xl lg:text-6xl uppercase tracking-wider mt-2 text-center w-full leading-normal font-basement">
           One Group. Three Disciplines.
         </h2>
@@ -187,7 +182,7 @@ export default function GatewaySection() {
               }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80" 
+                src="/assets/images/9bac245c-5aba-4bc5-98af-f60ccff7fb97.jpeg" 
                 alt="Construction & Land Development" 
                 className="w-full h-full object-cover"
               />
@@ -202,9 +197,9 @@ export default function GatewaySection() {
           onMouseEnter={() => setHoveredRow(0)}
           onMouseLeave={() => setHoveredRow(null)}
         >
-          <span className="text-[#424242]/60 font-mono text-[9px] tracking-widest uppercase mb-4">// PORTAL 01 // CONSTRUCTION & LAND DEV</span>
+          <span className="text-[#424242]/60 font-mono text-[9px] tracking-widest uppercase mb-4">{"// PORTAL 01 // CONSTRUCTION & LAND DEVELOPMENT"}</span>
           <div className="font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider mb-8 leading-normal select-none uppercase font-basement">
-            <span className="text-[#424242] tracking-[0.03em] block">CONSTRUCTION & LAND DEV /</span>
+            <span className="text-[#424242] tracking-[0.03em] block">CONSTRUCTION & LAND DEVELOPMENT /</span>
             <span className="font-sans font-light text-gray-800 lowercase first-letter:uppercase tracking-[0.05em] block mt-3 text-xl md:text-2xl">
               Heavy civil & land development
             </span>
@@ -227,7 +222,7 @@ export default function GatewaySection() {
           onMouseEnter={() => setHoveredRow(1)}
           onMouseLeave={() => setHoveredRow(null)}
         >
-          <span className="text-[#424242]/60 font-mono text-[9px] tracking-widest uppercase mb-4">// PORTAL 02 // INTERIOR A-Z</span>
+          <span className="text-[#424242]/60 font-mono text-[9px] tracking-widest uppercase mb-4">{"// PORTAL 02 // INTERIOR A-Z"}</span>
           <div className="font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider mb-8 leading-normal select-none uppercase font-basement">
             <span className="text-[#424242] tracking-[0.1em] block">INTERIORS /</span>
             <span className="font-sans font-light text-gray-800 lowercase first-letter:uppercase tracking-[0.05em] block mt-3 text-xl md:text-2xl">
@@ -262,7 +257,7 @@ export default function GatewaySection() {
               }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1000&q=80" 
+                src="/assets/images/modern-room-with-wooden-staircase-daytime_181624-11447.avif" 
                 alt="Interiors" 
                 className="w-full h-full object-cover"
               />
@@ -293,7 +288,7 @@ export default function GatewaySection() {
               }}
             >
               <img 
-                src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/0dccab47-16b0-4716-9e1a-b97f124e3031_1600w.webp" 
+                src="/assets/images/aab4121b-6a8c-49a8-85ca-4e53328ac84c.jpeg" 
                 alt="Civil Market" 
                 className="w-full h-full object-cover"
               />
@@ -308,7 +303,7 @@ export default function GatewaySection() {
           onMouseEnter={() => setHoveredRow(2)}
           onMouseLeave={() => setHoveredRow(null)}
         >
-          <span className="text-[#424242]/60 font-mono text-[9px] tracking-widest uppercase mb-4">// PORTAL 03 // CIVIL MARKET</span>
+          <span className="text-[#424242]/60 font-mono text-[9px] tracking-widest uppercase mb-4">{"// PORTAL 03 // CIVIL MARKET"}</span>
           <div className="font-bold text-2xl md:text-3xl lg:text-4xl tracking-wider mb-8 leading-normal select-none uppercase font-basement">
             <span className="text-[#424242] tracking-[0.1em] block">CIVIL MARKET /</span>
             <span className="font-sans font-light text-gray-800 lowercase first-letter:uppercase tracking-[0.05em] block mt-3 text-xl md:text-2xl">

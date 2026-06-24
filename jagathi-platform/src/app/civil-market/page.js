@@ -39,9 +39,9 @@ export default function CivilMarketPage() {
       ref={scrollContainerRef}
       className="relative min-h-[300vh] bg-transparent text-[#424242] font-sans overflow-x-hidden w-full flex flex-col items-center"
     >
-      {/* 1. Page-Specific Local WebGL Background Canvas */}
+      {/* 1. Page-Specific Local WebGL Background Canvas (Hidden per request) */}
       <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
-        <Canvas
+        {/* <Canvas
           camera={{ position: [2.0, -12, 7.0], fov: 55 }}
           gl={{ antialias: true, alpha: true, stencil: false, depth: true }}
           dpr={[1, 1.5]}
@@ -49,12 +49,12 @@ export default function CivilMarketPage() {
           <ambientLight intensity={0.12} />
           <directionalLight position={[-3, 10, -5]} intensity={0.65} />
           <CivilMarketScene scrollProgress={scrollProgress} />
-        </Canvas>
+        </Canvas> */}
       </div>
 
       {/* 2. Hero Section */}
       <section className="relative h-screen flex flex-col justify-center items-start px-8 md:px-24 z-10 pointer-events-none max-w-4xl">
-        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest mb-3">// Pillar 03 / Civil Market</span>
+        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest mb-3">{"// Pillar 03 / Civil Market"}</span>
         <h1 className="text-[#424242] font-extrabold text-4xl md:text-7xl leading-none uppercase select-text tracking-wider">
           <span className="text-[#424242] font-sans tracking-[0.1em]">CIVIL MARKET /</span>
           <span className="font-serif-luxury italic text-[#424242]/90 lowercase first-letter:uppercase tracking-[0.05em] block mt-4 font-normal">
@@ -72,7 +72,7 @@ export default function CivilMarketPage() {
       <section className="relative z-10 py-24 px-8 md:px-24 w-full max-w-6xl mx-auto flex flex-col items-center">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           <div>
-            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Curation Logic</span>
+            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Curation Logic"}</span>
             <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">Land Intelligence</h2>
             
             <div className="flex flex-col gap-6 mt-8">
@@ -98,7 +98,7 @@ export default function CivilMarketPage() {
           </div>
 
           <div>
-            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Investor Framework</span>
+            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Investor Framework"}</span>
             <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">Investor Logic</h2>
             
             <div className="flex flex-col gap-6 mt-8">
@@ -128,7 +128,7 @@ export default function CivilMarketPage() {
       {/* 4. Asset Dossiers (Floating Media Cards - ApeChain style) */}
       <section className="relative z-10 py-24 px-8 md:px-24 w-full max-w-6xl mx-auto flex flex-col items-center">
         <div className="text-center mb-16">
-          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Civil Assets</span>
+          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Civil Assets"}</span>
           <h2 className="text-[#424242] font-bold text-3xl md:text-5xl uppercase tracking-wider mt-2">
             Plotted Premium Civil Inventory
           </h2>
@@ -139,7 +139,7 @@ export default function CivilMarketPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80" 
+                  src="/assets/images/3b077e58-5a29-436c-b927-cd27d6b12948.jpeg" 
                   alt="Industrial Zone Hub"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -162,7 +162,7 @@ export default function CivilMarketPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80" 
+                  src="/assets/images/6a35eb17-d080-4a95-a7b4-877a2f58e914.jpeg" 
                   alt="Solitaire Ridge"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -185,7 +185,7 @@ export default function CivilMarketPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1524813686514-a57563d77d61?w=800&q=80" 
+                  src="/assets/images/9373d4ee-6453-4600-9e02-3fc7cb704741.jpeg" 
                   alt="Nexus Edge Plot"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -209,7 +209,7 @@ export default function CivilMarketPage() {
       {/* 5. Opportunity Map & Advisory CTA */}
       <section className="relative z-10 py-24 bg-transparent border-t border-[#424242]/20 text-center">
         <div className="max-w-4xl mx-auto px-6">
-          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Strategic Security</span>
+          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Strategic Security"}</span>
           <h2 className="text-[#424242] font-extrabold text-3xl md:text-5xl uppercase tracking-wider mt-2 leading-tight">
             Secure Premium Civil Assets.
           </h2>

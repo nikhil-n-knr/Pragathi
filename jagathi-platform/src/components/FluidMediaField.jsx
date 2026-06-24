@@ -71,7 +71,7 @@ function BeforeAfterSlider({ beforeImage, afterImage, title, aspect }) {
         draggable="false"
       />
       <div className="absolute top-4 left-4 text-[8px] font-mono tracking-widest text-yellow-400/50 bg-black/60 px-2.5 py-1 border border-yellow-400/10 rounded-sm">
-        BEFORE // BLUEPRINT_RAW
+        {"BEFORE // BLUEPRINT_RAW"}
       </div>
 
       {/* After Image (Foreground, clipped) */}
@@ -87,7 +87,7 @@ function BeforeAfterSlider({ beforeImage, afterImage, title, aspect }) {
         />
       </div>
       <div className="absolute top-4 right-4 text-[8px] font-mono tracking-widest text-yellow-400 bg-black/85 px-2.5 py-1 border border-yellow-400/20 rounded-sm font-semibold pointer-events-none">
-        AFTER // ARCHITECTED
+        {"AFTER // ARCHITECTED"}
       </div>
 
       {/* Divider Bar */}
@@ -122,8 +122,8 @@ export default function FluidMediaField({ onSelectProject }) {
       num: "01",
       title: "Cogen Energy Complex",
       tag: "Project 01 / Heavy Build",
-      beforeImage: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1600&q=80",
-      afterImage: "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/aa5ed4de-1a7e-4bb7-b0ea-1a4c511663df_1600w.webp",
+      beforeImage: "/assets/images/44ee9b52-459f-4c74-bd5d-6467e42583f7.jpeg",
+      afterImage: "/assets/images/a792ceff-b679-4879-b1d3-9032d7dac3d1.jpeg",
       desc: "Isolated structural foundation matrices for thermodynamic piping loops and massive civil concrete grids.",
       aspect: "[ COGEN CORES ]",
       location: "Whitefield, IN",
@@ -134,8 +134,8 @@ export default function FluidMediaField({ onSelectProject }) {
       num: "02",
       title: "Solitaire Valleys",
       tag: "Project 02 / Real Estate",
-      beforeImage: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&q=80",
-      afterImage: "https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/952269bf-60f5-48dc-afce-13953bead1eb_1600w.webp",
+      beforeImage: "/assets/images/ad6b12eb-3d97-499e-83a4-a20a0bb2193c.jpeg",
+      afterImage: "/assets/images/ae311553-a439-4cab-8da6-632d9881d2a6.jpeg",
       desc: "Strategic land acquisition and premium residential valley plot mappings overlooking municipal green zones.",
       aspect: "[ RIDGE ESTATES ]",
       location: "Nandi Foothills, IN",
@@ -146,8 +146,8 @@ export default function FluidMediaField({ onSelectProject }) {
       num: "03",
       title: "Orion Glass Villa",
       tag: "Project 03 / Engineering",
-      beforeImage: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1600&q=80",
-      afterImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80",
+      beforeImage: "/assets/images/e05bf928-1b34-4f37-a4ac-1f2b93aa09f6.jpeg",
+      afterImage: "/assets/images/f0e62086-9165-468b-b56f-7ddfedefefa0.jpeg",
       desc: "Suspended steel-lattice core configured via genetic structural shear mapping and glass architectural extensions.",
       aspect: "[ STRUCTURAL ARCS ]",
       location: "Beverly Hills, CA",
@@ -158,8 +158,8 @@ export default function FluidMediaField({ onSelectProject }) {
       num: "04",
       title: "Calacatta Penthouse",
       tag: "Project 04 / Curation",
-      beforeImage: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?w=1600&q=80",
-      afterImage: "https://images.unsplash.com/photo-1600607686527-6fb886090705?w=1600&q=80",
+      beforeImage: "/assets/images/photo-1500004621732-74cd4ad4d53e.avif",
+      afterImage: "/assets/images/083e604b-244e-447c-a7bf-d645a12a3a88.jpeg",
       desc: "Bespoke Italian stone surfaces and smoked wood carpentries tailored for ultra-high-net-worth turnkey estates.",
       aspect: "[ TURNKEY INTERIOR ]",
       location: "Aspen Heights, CO",
@@ -206,14 +206,14 @@ export default function FluidMediaField({ onSelectProject }) {
           <div 
             key={p.id}
             ref={(el) => (cardsRef.current[idx] = el)}
-            className="card-item sticky top-[10vh] h-[80vh] w-full flex items-center justify-center mb-16 overflow-visible"
+            className="card-item sticky top-[8vh] md:top-[10vh] h-auto min-h-[75vh] md:h-[80vh] w-full flex items-center justify-center mb-10 md:mb-16 overflow-visible"
           >
             <div 
               className="card-inner w-full h-full bg-[#424242] border border-[#FFEA0A]/15 rounded-sm shadow-2xl shadow-black/95 overflow-hidden flex flex-col relative"
               style={{ willChange: 'transform, opacity' }}
             >
               {/* Top - Image Before/After Slider */}
-              <div className="relative w-full h-[52%] md:h-[55%] overflow-hidden border-b border-[#FFEA0A]/10">
+              <div className="relative w-full aspect-[16/10] md:h-[55%] md:aspect-auto overflow-hidden border-b border-[#FFEA0A]/10">
                 <BeforeAfterSlider 
                   beforeImage={p.beforeImage} 
                   afterImage={p.afterImage} 
@@ -223,11 +223,11 @@ export default function FluidMediaField({ onSelectProject }) {
               </div>
 
               {/* Bottom - Metadata & Wording (with plenty of breathing room) */}
-              <div className="w-full h-[48%] md:h-[45%] flex flex-col justify-between p-6 md:p-8 lg:p-10 text-left bg-[#424242]">
+              <div className="w-full flex-grow md:h-[45%] flex flex-col justify-between p-5 md:p-8 lg:p-10 text-left bg-[#424242]">
                 <div>
                   <div className="flex justify-between items-center w-full mb-3 md:mb-4">
                     <span className="text-[#FFEA0A]/40 font-mono text-[9px] uppercase tracking-widest block">
-                      // SYSTEM_INDEX: {p.num}
+                      {"// SYSTEM_INDEX: "}{p.num}
                     </span>
                     <span className="text-[#FFEA0A]/35 font-mono text-[7px]">
                       GPS: {p.coords}

@@ -42,7 +42,7 @@ export default function ProofStrip() {
         
         {/* Metric 1 */}
         <div className="flex flex-col items-center px-4 py-4 justify-between h-32">
-          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_01</span>
+          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">{"// NODE_REGISTRY_01"}</span>
           <div 
             className="metric-number text-[#424242] text-3xl md:text-5xl font-black font-mono leading-none my-2"
             data-value="35"
@@ -58,7 +58,7 @@ export default function ProofStrip() {
 
         {/* Metric 2 */}
         <div className="flex flex-col items-center px-4 py-4 justify-between h-32">
-          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_02</span>
+          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">{"// NODE_REGISTRY_02"}</span>
           <div 
             className="metric-number text-[#424242] text-3xl md:text-5xl font-black font-mono leading-none my-2"
             data-value="450"
@@ -74,7 +74,7 @@ export default function ProofStrip() {
 
         {/* Metric 3 */}
         <div className="flex flex-col items-center px-4 py-4 justify-between h-32">
-          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_03</span>
+          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">{"// NODE_REGISTRY_03"}</span>
           <div 
             className="metric-number text-[#424242] text-3xl md:text-5xl font-black font-mono leading-none my-2"
             data-value="1.2"
@@ -91,7 +91,7 @@ export default function ProofStrip() {
 
         {/* Metric 4 */}
         <div className="flex flex-col items-center px-4 py-4 justify-between h-32">
-          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">// NODE_REGISTRY_04</span>
+          <span className="text-[#424242]/45 font-mono text-[8px] uppercase tracking-widest block">{"// NODE_REGISTRY_04"}</span>
           <div 
             className="metric-number text-[#424242] text-3xl md:text-5xl font-black font-mono leading-none my-2"
             data-value="100"

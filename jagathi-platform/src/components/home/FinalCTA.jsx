@@ -357,7 +357,7 @@ export default function FinalCTA() {
                 <PanelSlotText text="REQUEST CONSULTATION" isHovered={hoveredPanel === 1} />
               </span>
               <span className="font-mono text-[9px] tracking-[0.3em] opacity-85 block uppercase mt-1">
-                // INTERSPACE ENTRY
+                {"// INTERSPACE ENTRY"}
               </span>
             </div>
           </div>
@@ -394,7 +394,7 @@ export default function FinalCTA() {
                 <PanelSlotText text="ADVISORY DESK" isHovered={hoveredPanel === 2} />
               </span>
               <span className="font-mono text-[9px] tracking-[0.3em] opacity-85 block uppercase mt-1">
-                // SECURE CORRIDORS
+                {"// SECURE CORRIDORS"}
               </span>
             </div>
           </div>

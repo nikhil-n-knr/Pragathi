@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
@@ -8,6 +8,29 @@ export default function ShowcaseBanner({ onPlayReel }) {
   const triggerRef = useRef(null);
   const bannerRef = useRef(null);
   const contentRef = useRef(null);
+  const [maskAttrs, setMaskAttrs] = useState({
+    x: '28%',
+    y: '22%',
+    width: '44%',
+    height: '56%',
+    rx: '40',
+    ry: '40'
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) {
+      setMaskAttrs({
+        x: '8%',
+        y: '15%',
+        width: '84%',
+        height: '70%',
+        rx: '24',
+        ry: '24'
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -17,6 +40,23 @@ export default function ShowcaseBanner({ onPlayReel }) {
     const banner = bannerRef.current;
     const content = contentRef.current;
     if (!trigger || !banner) return;
+
+    const isMobile = window.innerWidth < 768;
+    const initialMask = isMobile ? {
+      x: '8%',
+      y: '15%',
+      width: '84%',
+      height: '70%',
+      rx: '24px',
+      ry: '24px'
+    } : {
+      x: '28%',
+      y: '22%',
+      width: '44%',
+      height: '56%',
+      rx: '40px',
+      ry: '40px'
+    };
 
     // Pin timeline scrubbing the mask rect attributes and content fade/scale
     const tl = gsap.timeline({
@@ -33,14 +73,7 @@ export default function ShowcaseBanner({ onPlayReel }) {
     // 1. Scrub SVG mask-rect attributes from centered float rounded container to fullbleed rect
     tl.fromTo('#mask-rect', 
       {
-        attr: {
-          x: '28%',
-          y: '22%',
-          width: '44%',
-          height: '56%',
-          rx: '40px',
-          ry: '40px'
-        }
+        attr: initialMask
       },
       {
         attr: {
@@ -129,12 +162,12 @@ export default function ShowcaseBanner({ onPlayReel }) {
               <rect 
                 id="mask-rect"
                 fill="white"
-                x="28%"
-                y="22%"
-                width="44%"
-                height="56%"
-                rx="40"
-                ry="40"
+                x={maskAttrs.x}
+                y={maskAttrs.y}
+                width={maskAttrs.width}
+                height={maskAttrs.height}
+                rx={maskAttrs.rx}
+                ry={maskAttrs.ry}
                 filter="url(#liquid-jelly)"
               />
             </mask>
@@ -155,7 +188,7 @@ export default function ShowcaseBanner({ onPlayReel }) {
           className="relative z-10 flex flex-col items-center justify-center text-center px-6 max-w-3xl pointer-events-auto"
         >
           <span className="text-yellow-400 font-mono text-[9px] md:text-[11px] uppercase tracking-[0.35em] mb-4">
-            // CINEMATIC ENCODING
+            {"// CINEMATIC ENCODING"}
           </span>
           <h2 className="text-white font-extrabold text-3xl md:text-6xl uppercase tracking-[0.1em] leading-tight mb-8">
             HEAVY BUILD REEL

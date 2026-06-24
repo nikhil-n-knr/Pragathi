@@ -18,6 +18,7 @@ import Hero from '../components/home/Hero';
 import ProofStrip from '../components/home/ProofStrip';
 import FinalCTA from '../components/home/FinalCTA';
 import ProjectOverlay from '../components/home/ProjectOverlay';
+import OrganicBackgroundLine from '../components/home/OrganicBackgroundLine';
 
 export default function Home() {
   const scrollProgress = useRef(0);
@@ -40,18 +41,14 @@ export default function Home() {
       touchMultiplier: 2.0
     });
 
-    // Synchronize Lenis frames with requestAnimationFrame
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
     // Sync GSAP ScrollTrigger updates with Lenis scroll
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => {
+
+    // Synchronize Lenis with GSAP's ticker (removes duplicate raf loop and ensures perfect sync)
+    const updateLenis = (time) => {
       lenis.raf(time * 1000);
-    });
+    };
+    gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
     // 2. Track scroll progress to animate R3F WebGL Camera and mesh
@@ -111,7 +108,7 @@ export default function Home() {
         t.kill();
       });
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
+      gsap.ticker.remove(updateLenis);
     };
   }, []);
 
@@ -138,31 +135,37 @@ export default function Home() {
       <Hero />
 
       {/* 3. Kinetic Word Bands (Yu-inspired) */}
-      <section className="relative z-10 pt-12 pb-20">
+      <section className="relative z-10 pt-12 pb-20 w-full">
         <KineticHeadline />
       </section>
 
-      {/* 4. Three Gateway Panels (Build, Secure, Curate) */}
-      <GatewaySection onSelectProject={setSelectedProject} />
+      {/* Main Content Area with Organic Background Line */}
+      <div className="relative w-full flex flex-col items-center">
+        {/* Organic Wavy Background Line */}
+        <OrganicBackgroundLine />
 
-      {/* 5. Proof Strip (Metrics, Legacy, Delivery Model) */}
-      <ProofStrip />
+        {/* 4. Three Gateway Panels (Build, Secure, Curate) */}
+        <GatewaySection onSelectProject={setSelectedProject} />
 
-      {/* 5b. Play Reel Showcase Banner (Organic Elastic Expansion) */}
-      <ShowcaseBanner onPlayReel={(reel) => setSelectedProject(reel)} />
+        {/* 5. Proof Strip (Metrics, Legacy, Delivery Model) */}
+        <ProofStrip />
 
-      {/* 6. Featured Media Strip (Fluid Parallax Cards - Staggered columns) */}
-      <section className="relative z-10 px-6 w-full max-w-6xl mx-auto overflow-visible flex flex-col items-center" style={{ paddingTop: 'clamp(4rem, 8vw, 10rem)', paddingBottom: 'clamp(4rem, 8vw, 10rem)' }}>
-        <div className="flex flex-col items-center text-center mb-6 w-full">
-          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest block text-center">// Featured Work</span>
-          <h2 className="text-[#424242] font-bold text-3xl md:text-5xl uppercase tracking-wider mt-2 text-center w-full">
-            Landmarks of Distinction
-          </h2>
-        </div>
-        <div className="w-full">
-          <FluidMediaField onSelectProject={(proj) => setSelectedProject(proj)} />
-        </div>
-      </section>
+        {/* 5b. Play Reel Showcase Banner (Organic Elastic Expansion) */}
+        <ShowcaseBanner onPlayReel={(reel) => setSelectedProject(reel)} />
+
+        {/* 6. Featured Media Strip (Fluid Parallax Cards - Staggered columns) */}
+        <section className="relative z-10 px-6 w-full max-w-6xl mx-auto overflow-visible flex flex-col items-center" style={{ paddingTop: 'clamp(4rem, 8vw, 10rem)', paddingBottom: 'clamp(4rem, 8vw, 10rem)' }}>
+          <div className="flex flex-col items-center text-center mb-6 w-full">
+            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest block text-center">{"// Featured Work"}</span>
+            <h2 className="text-[#424242] font-bold text-3xl md:text-5xl uppercase tracking-wider mt-2 text-center w-full">
+              Landmarks of Distinction
+            </h2>
+          </div>
+          <div className="w-full">
+            <FluidMediaField onSelectProject={(proj) => setSelectedProject(proj)} />
+          </div>
+        </section>
+      </div>
 
       {/* 7. Final Call to Action Strip */}
       <FinalCTA />

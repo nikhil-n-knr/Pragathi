@@ -111,28 +111,12 @@ body.home-theme-yellow-gray ::-webkit-scrollbar-thumb:hover {
 html, body {
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
 }
 
-/* Dynamic mouse-tracked radial glow */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  background: radial-gradient(
-    200px circle at var(--mouse-x) var(--mouse-y),
-    var(--brand-yellow-glow) 0%,
-    transparent 80%
-  );
-  z-index: 1;
-  transition: opacity 1.5s ease;
-}
+/* Dynamic mouse-tracked radial glow removed */
 
 /* Hide cursor when custom cursor is active */
 body.custom-cursor-active, 

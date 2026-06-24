@@ -5,24 +5,19 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
 export default function YellowFog({ scrollProgress = 0, baseOpacity = 0.05 }) {
-  const meshRef = useRef();
+  const materialRef = useRef();
   const { size } = useThree();
 
-  const uniforms = useMemo(() => ({
-    uTime: { value: 0 },
-    uScrollProgress: { value: 0 },
-    uBaseOpacity: { value: baseOpacity },
-    uResolution: { value: new THREE.Vector2(size.width, size.height) }
-  }), [size.width, size.height, baseOpacity]);
-
   useFrame((state) => {
-    uniforms.uTime.value = state.clock.getElapsedTime();
-    
-    // Support either a GSAP-animated Ref object or a direct number
-    if (scrollProgress && typeof scrollProgress === 'object' && 'current' in scrollProgress) {
-      uniforms.uScrollProgress.value = scrollProgress.current;
-    } else {
-      uniforms.uScrollProgress.value = Number(scrollProgress);
+    if (materialRef.current) {
+      materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+      
+      // Support either a GSAP-animated Ref object or a direct number
+      if (scrollProgress && typeof scrollProgress === 'object' && 'current' in scrollProgress) {
+        materialRef.current.uniforms.uScrollProgress.value = scrollProgress.current;
+      } else {
+        materialRef.current.uniforms.uScrollProgress.value = Number(scrollProgress);
+      }
     }
   });
 
@@ -80,12 +75,18 @@ export default function YellowFog({ scrollProgress = 0, baseOpacity = 0.05 }) {
   `;
 
   return (
-    <mesh ref={meshRef}>
+    <mesh>
       <planeGeometry args={[2, 2]} />
       <shaderMaterial
+        ref={materialRef}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
-        uniforms={uniforms}
+        uniforms={useMemo(() => ({
+          uTime: { value: 0 },
+          uScrollProgress: { value: 0 },
+          uBaseOpacity: { value: baseOpacity },
+          uResolution: { value: new THREE.Vector2(size.width, size.height) }
+        }), [size.width, size.height, baseOpacity])}
         depthWrite={false}
         depthTest={false}
         transparent={true}

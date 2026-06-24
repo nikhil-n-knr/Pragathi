@@ -55,13 +55,13 @@ export default function Preloader({ onComplete }) {
       }
     });
 
-    // Trigger main layout fade-in and page entrance events at 5.8s (when exit starts)
+    // Trigger main layout fade-in and page entrance events at 11.5s (when exit starts)
     tl.call(() => {
       window.dispatchEvent(new Event('preloaderComplete'));
       if (onCompleteRef.current) {
         onCompleteRef.current();
       }
-    }, null, 5.8);
+    }, null, 11.5);
 
     // Phase 1: Loader at Center, Counter at Bottom-Left (0.0s to 1.8s)
     const counterObj = { val: 1900 };
@@ -74,7 +74,7 @@ export default function Preloader({ onComplete }) {
     // Ticker count-up animation
     tl.to(counterObj, {
       val: 1989,
-      duration: 1.8,
+      duration: 4.0, // Slowed down from 1.8s
       ease: "power2.out",
       snap: "val",
       onUpdate: () => {
@@ -93,7 +93,7 @@ export default function Preloader({ onComplete }) {
       tl.to(loaderPath, {
         strokeDashoffset: length * 0.3, // 70% complete (30% remaining offset)
         attr: { 'stroke-width': 84 },
-        duration: 1.8,
+        duration: 4.0,
         ease: "power2.inOut"
       }, 0);
 
@@ -109,19 +109,19 @@ export default function Preloader({ onComplete }) {
       tl.to(loaderDot, {
         strokeDashoffset: length * 0.3 - 109, // ends 109px ahead to maintain constant 25px gap (G + W_end = 25 + 84 = 109)
         attr: { 'stroke-width': 84 },
-        duration: 1.8,
+        duration: 4.0,
         ease: "power2.inOut"
       }, 0);
     }
 
-    // Phase 2 Transition: Fade out Phase 1 circular loader (1.8s to 2.2s)
+    // Phase 2 Transition: Fade out Phase 1 circular loader
     tl.to('.preloader-loader-container', {
       opacity: 0,
       scale: 0.8,
       duration: 0.4,
       ease: "power2.inOut"
-    }, 1.8);
-    tl.set('.preloader-loader-container', { display: 'none' }, 2.2);
+    }, 4.0);
+    tl.set('.preloader-loader-container', { display: 'none' }, 4.4);
 
     // Zoom brand container slightly and reveal '& EST.' on the left, sliding digits to the right
     tl.to('.preloader-brand-container', {
@@ -129,32 +129,32 @@ export default function Preloader({ onComplete }) {
       transformOrigin: "bottom left",
       duration: 0.5,
       ease: "power2.out"
-    }, 1.8);
+    }, 4.0);
     tl.to('.preloader-est-prefix', {
       width: 'auto',
       opacity: 1,
       marginRight: '0.45rem',
       duration: 0.6,
       ease: "power2.out"
-    }, 1.8);
+    }, 4.0);
 
-    // Phase 3 Transition: Fade out counter (at 2.8s)
+    // Phase 3 Transition: Fade out counter (at 5.0s)
     tl.to('.preloader-brand-container', {
       opacity: 0,
       duration: 0.3,
       ease: "power2.in"
-    }, 2.8);
-    tl.set('.preloader-brand-container', { display: 'none' }, 3.1);
+    }, 5.0);
+    tl.set('.preloader-brand-container', { display: 'none' }, 5.3);
 
     // Initialize SVG liquid-entrance-wave filter attributes
     tl.set('#liquid-entrance-displacement', { attr: { scale: 0 } }, 0);
     tl.set('#liquid-entrance-turbulence', { attr: { baseFrequency: "0.01 0.03" } }, 0);
 
-    // Reveal Phase 3 Boxed Text 'JAGATHI' at the center (at 3.0s, starting with transparent border)
+    // Reveal Phase 3 Boxed Text 'JAGATHI' at the center (at 5.2s, starting with transparent border)
     tl.fromTo('.preloader-text-box',
       { scale: 0.9, opacity: 0, display: 'block', borderColor: "transparent" },
       { scale: 1.0, opacity: 1, duration: 0.4, ease: "back.out(1.7)", immediateRender: false },
-      3.0
+      5.2
     );
 
     // Stagger character entrance in REVERSE order (from end to start):
@@ -171,7 +171,7 @@ export default function Preloader({ onComplete }) {
         ease: "power3.out", 
         immediateRender: false 
       },
-      3.0
+      5.2
     );
 
     // High-fidelity liquid entrance wave distortion animation (Subtle Wave Mode):
@@ -180,14 +180,14 @@ export default function Preloader({ onComplete }) {
       attr: { scale: 12 },
       duration: 0.20,
       ease: "power1.out"
-    }, 3.0);
+    }, 5.2);
 
     // Smoothly settle displacement scale to a constant flowing state of 8px (keeps borders waving)
     tl.to('#liquid-entrance-displacement', {
       attr: { scale: 8 },
       duration: 0.50,
       ease: "power2.inOut"
-    }, 3.20);
+    }, 5.40);
 
     // Create a standalone infinite loop for turbulence coordinates so the wave keeps flowing continuously
     const flowTween = gsap.to('#liquid-entrance-turbulence', {
@@ -198,7 +198,7 @@ export default function Preloader({ onComplete }) {
       ease: "sine.inOut"
     });
 
-    // 2. Border Reveal & Blinking (starts at 3.65s, right as letters finish rising)
+    // 2. Border Reveal & Blinking (starts at 5.85s, right as letters finish rising)
     // Blinks between transparent and solid brand charcoal (#424242)
     tl.to('.preloader-text-box', {
       borderColor: "#424242",
@@ -206,54 +206,68 @@ export default function Preloader({ onComplete }) {
       repeat: 4, // 5 states: solid -> trans -> solid -> trans -> solid
       yoyo: true,
       ease: "none"
-    }, 3.65);
+    }, 5.85);
 
-    // Phase 4 Transition: Reveal Logo Badge & Wave Outlines (at 4.3s)
+    // Phase 4 Transition: Reveal Logo Badge & Wave Outlines (at 8.0s)
     // Fade out the wordmark box
     tl.to('.preloader-text-box', {
       opacity: 0,
       scale: 0.9,
       duration: 0.4,
       ease: "power2.inOut"
-    }, 4.3);
-    tl.set('.preloader-text-box', { display: 'none' }, 4.7);
+    }, 8.0);
+    tl.set('.preloader-text-box', { display: 'none' }, 8.4);
 
     // Reveal SVG Outlines and Logo Badge
-    tl.set('.preloader-svg-container', { display: 'flex' }, 4.3);
+    tl.set('.preloader-svg-container', { display: 'flex' }, 8.0);
 
-    // Start the infinite looping ripples at 4.3s
+    // Start the infinite looping ripples at 8.0s
     tl.call(() => {
       rippleTl.play();
-    }, null, 4.3);
+    }, null, 8.0);
 
     // Central logo badge scales/fades in
     tl.fromTo('.preloader-logo-badge',
       { scale: 0.7, opacity: 0, display: 'block' },
       { scale: 1.0, opacity: 1, duration: 0.8, ease: "power2.out", immediateRender: false },
-      4.3
+      8.0
     );
 
-    // Phase 5 Exit: Conclude by fading/scaling everything out (at 5.8s)
+    // Brand kit 5 badge fades in underneath the logo badge shortly AFTER the logo appears
+    tl.fromTo('.preloader-brand-badge-5',
+      { opacity: 0, y: 15, display: 'block' },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out", immediateRender: false },
+      9.0
+    );
+
+    // Phase 5 Exit: Conclude by fading/scaling everything out (at 11.5s)
     tl.to('.preloader-logo-badge', {
       scale: 1.15,
       opacity: 0,
       duration: 0.8,
       ease: "power2.inOut"
-    }, 5.8);
+    }, 11.5);
+
+    tl.to('.preloader-brand-badge-5', {
+      scale: 1.15,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power2.inOut"
+    }, 11.5);
 
     // Fade out the outlines parent container to hide the continuous ripples
     tl.to('.preloader-svg-container', {
       opacity: 0,
       duration: 0.8,
       ease: "power2.inOut"
-    }, 5.8);
+    }, 11.5);
 
     // Fade out overlay background to reveal the main website
     tl.to('#preloader-overlay', {
       opacity: 0,
       duration: 0.9,
       ease: "power2.inOut"
-    }, 5.8);
+    }, 11.5);
 
     return () => {
       tl.kill();
@@ -298,7 +312,12 @@ export default function Preloader({ onComplete }) {
         </div>
       </div>
 
-      {/* 4b. JAGATHI Logo Badge (renders logo/image.png) */}
+      {/* 4b. Jagathi Brand Kit Badge (appears at bottom-right of logo) */}
+      <div className="preloader-brand-badge-5 absolute opacity-0 z-[100001]" style={{ top: '50%', marginTop: '90px', left: '50%', marginLeft: '80px', transform: 'translateX(-50%)' }}>
+        <img src="/assets/brand/5.png" alt="Brand element" style={{ width: '96px', height: 'auto', opacity: 0.9 }} />
+      </div>
+
+      {/* 4c. JAGATHI Logo Badge (renders logo/image.png) */}
       <div className="preloader-logo-badge">
         <img 
           className="preloader-logo-image" 

@@ -102,7 +102,7 @@ export default function ConstructionPage() {
 
       {/* 2. Hero Section */}
       <section className="relative h-screen flex flex-col justify-center items-start px-8 md:px-24 z-10 pointer-events-none max-w-4xl">
-        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest mb-3">// Pillar 01 / Construction & Land Development</span>
+        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest mb-3">{"// Pillar 01 / Construction & Land Development"}</span>
         <h1 className="text-[#424242] font-extrabold text-4xl md:text-7xl leading-none uppercase select-text tracking-wider">
           <span className="text-[#424242] font-sans tracking-[0.05em]">CONSTRUCTION & LAND DEV /</span>
           <span className="font-serif-luxury italic text-[#424242]/90 lowercase first-letter:uppercase tracking-[0.05em] block mt-4 font-normal">
@@ -120,7 +120,7 @@ export default function ConstructionPage() {
       <section className="relative z-10 py-24 px-8 md:px-24 w-full max-w-6xl mx-auto flex flex-col items-center pointer-events-none">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           <div>
-            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Capability Clusters</span>
+            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Capability Clusters"}</span>
             <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">What We Build</h2>
             
             <div className="flex flex-col gap-6 mt-8">
@@ -146,7 +146,7 @@ export default function ConstructionPage() {
           </div>
 
           <div>
-            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Engineering Discipline</span>
+            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Engineering Discipline"}</span>
             <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">Scientific Approach</h2>
             
             <div className="flex flex-col gap-6 mt-8">
@@ -180,19 +180,19 @@ export default function ConstructionPage() {
       >
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 border border-[#FFEA0A]/15 divide-y sm:divide-y-0 sm:divide-x divide-[#FFEA0A]/15 bg-[#424242]/95 py-12 rounded-sm shadow-2xl pointer-events-auto">
           <div className="py-6 sm:py-0 flex flex-col items-center justify-center">
-            <span className="text-[#FFEA0A]/40 font-mono text-[7px] block mb-2">// CAP_VALUE_A // MAT_STEEL</span>
+            <span className="text-[#FFEA0A]/40 font-mono text-[7px] block mb-2">{"// CAP_VALUE_A // MAT_STEEL"}</span>
             <div ref={stat1} className="text-[#FFEA0A] text-4xl md:text-5xl font-black font-mono tracking-wider">0T</div>
-            <div className="text-gray-300 text-[9px] tracking-widest uppercase mt-3">// Reinforcement Steel Laid</div>
+            <div className="text-gray-300 text-[9px] tracking-widest uppercase mt-3">{"// Reinforcement Steel Laid"}</div>
           </div>
           <div className="py-6 sm:py-0 flex flex-col items-center justify-center">
-            <span className="text-[#FFEA0A]/40 font-mono text-[7px] block mb-2">// CAP_VALUE_B // MAT_CONCRETE</span>
+            <span className="text-[#FFEA0A]/40 font-mono text-[7px] block mb-2">{"// CAP_VALUE_B // MAT_CONCRETE"}</span>
             <div ref={stat2} className="text-[#FFEA0A] text-4xl md:text-5xl font-black font-mono tracking-wider">0m³</div>
-            <div className="text-gray-300 text-[9px] tracking-widest uppercase mt-3">// M50 Concrete Cast</div>
+            <div className="text-gray-300 text-[9px] tracking-widest uppercase mt-3">{"// M50 Concrete Cast"}</div>
           </div>
           <div className="py-6 sm:py-0 flex flex-col items-center justify-center">
-            <span className="text-[#FFEA0A]/40 font-mono text-[7px] block mb-2">// CAP_VALUE_C // AUDIT_SAFE</span>
+            <span className="text-[#FFEA0A]/40 font-mono text-[7px] block mb-2">{"// CAP_VALUE_C // AUDIT_SAFE"}</span>
             <div ref={stat3} className="text-[#FFEA0A] text-4xl md:text-5xl font-black font-mono tracking-wider">0%</div>
-            <div className="text-gray-300 text-[9px] tracking-widest uppercase mt-3">// Safety Audit Rating</div>
+            <div className="text-gray-300 text-[9px] tracking-widest uppercase mt-3">{"// Safety Audit Rating"}</div>
           </div>
         </div>
       </section>
@@ -200,7 +200,7 @@ export default function ConstructionPage() {
       {/* 5. Project Showcase (Floating Media Cards - ApeChain style) */}
       <section className="relative z-10 py-24 px-8 md:px-24 w-full max-w-6xl mx-auto flex flex-col items-center pointer-events-none">
         <div className="text-center mb-16">
-          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Portfolios in Action</span>
+          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Portfolios in Action"}</span>
           <h2 className="text-[#424242] font-bold text-3xl md:text-5xl uppercase tracking-wider mt-2">
             Signature Civil Outcomes
           </h2>
@@ -211,7 +211,7 @@ export default function ConstructionPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group pointer-events-auto">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&q=80" 
+                  src="/assets/images/a0b767e2-9bd9-41f9-bd8c-ee49850132dc.jpeg" 
                   alt="Silicon Arc Dome"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -234,7 +234,7 @@ export default function ConstructionPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group pointer-events-auto">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80" 
+                  src="/assets/images/a45ec4af-97ec-4f9b-8d22-1fa789968062.jpeg" 
                   alt="Cogen Plant B"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -257,7 +257,7 @@ export default function ConstructionPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group pointer-events-auto">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=800&q=80" 
+                  src="/assets/images/aa8a58a1-23eb-4674-a0b4-e3cbf6217898.jpeg" 
                   alt="Orion Link Bridge"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -281,7 +281,7 @@ export default function ConstructionPage() {
       {/* 6. Signature Outcomes & CTAs */}
       <section className="relative z-10 py-24 bg-transparent border-t border-[#424242]/20 pointer-events-none">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Monolithic Handover</span>
+          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Monolithic Handover"}</span>
           <h2 className="text-[#424242] font-extrabold text-3xl md:text-5xl uppercase tracking-wider mt-2 leading-tight">
             Compliance. Durability. Scale-Readiness.
           </h2>

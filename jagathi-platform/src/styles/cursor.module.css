@@ -22,7 +22,6 @@
               height 0.3s cubic-bezier(0.25, 1, 0.5, 1),
               background-color 0.3s ease,
               border-color 0.3s ease;
-  box-shadow: 0 0 12px var(--cursor-glow, rgba(255, 234, 10, 0.15));
 }
 
 /* Interactive element hover state */
@@ -31,7 +30,6 @@
   height: 34px;
   background-color: var(--cursor-bg-hover, rgba(255, 234, 10, 0.08));
   border-color: var(--cursor-border-hover, #FFEA0A);
-  box-shadow: 0 0 22px var(--cursor-glow-hover, rgba(255, 234, 10, 0.3));
 }
 
 /* Interactive click state */
@@ -40,7 +38,6 @@
   height: 18px;
   background-color: var(--cursor-bg-click, rgba(255, 234, 10, 0.18));
   border-color: var(--cursor-border-click, #FFEA0A);
-  box-shadow: 0 0 14px var(--cursor-glow-click, rgba(255, 234, 10, 0.25));
 }
 
 /* Raw 4px yellow dot styling */

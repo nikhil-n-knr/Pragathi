@@ -39,21 +39,21 @@ export default function InteriorPage() {
       ref={scrollContainerRef}
       className="relative min-h-[300vh] bg-transparent text-[#424242] font-sans overflow-x-hidden w-full flex flex-col items-center"
     >
-      {/* 1. Page-Specific Local WebGL Background Canvas */}
+      {/* 1. Page-Specific Local WebGL Background Canvas (Hidden per request) */}
       <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
-        <Canvas
+        {/* <Canvas
           camera={{ position: [2.0, -60.2, 4.8], fov: 60 }}
           gl={{ antialias: true, alpha: true, stencil: true, depth: true }}
           dpr={[1, 1.5]}
         >
           <ambientLight intensity={0.1} />
           <InteriorScene scrollProgress={scrollProgress} />
-        </Canvas>
+        </Canvas> */}
       </div>
 
       {/* 2. Hero Section */}
       <section className="relative h-screen flex flex-col justify-center items-start px-8 md:px-24 z-10 pointer-events-none max-w-4xl">
-        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest mb-3">// Pillar 02 / Interspace Design</span>
+        <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest mb-3">{"// Pillar 02 / Interspace Design"}</span>
         <h1 className="text-[#424242] font-extrabold text-4xl md:text-7xl leading-none uppercase select-text tracking-wider">
           <span className="text-[#424242] font-sans tracking-[0.1em]">SPATIAL SYSTEMS /</span>
           <span className="font-serif-luxury italic text-[#424242]/90 lowercase first-letter:uppercase tracking-[0.05em] block mt-4 font-normal">
@@ -71,7 +71,7 @@ export default function InteriorPage() {
       <section className="relative z-10 py-24 px-8 md:px-24 w-full max-w-6xl mx-auto flex flex-col items-center">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           <div>
-            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Design Clusters</span>
+            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Design Clusters"}</span>
             <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">Spatial Planning</h2>
             
             <div className="flex flex-col gap-6 mt-8">
@@ -97,7 +97,7 @@ export default function InteriorPage() {
           </div>
 
           <div>
-            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Curation Process</span>
+            <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Curation Process"}</span>
             <h2 className="text-[#424242] font-bold text-3xl uppercase tracking-wider mt-2 select-text">Turnkey Workflow</h2>
             
             <div className="flex flex-col gap-6 mt-8">
@@ -127,7 +127,7 @@ export default function InteriorPage() {
       {/* 4. Swatches (Floating Media Cards - ApeChain style) */}
       <section className="relative z-10 py-24 px-8 md:px-24 w-full max-w-6xl mx-auto flex flex-col items-center">
         <div className="text-center mb-16">
-          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Material Language</span>
+          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Material Language"}</span>
           <h2 className="text-[#424242] font-bold text-3xl md:text-5xl uppercase tracking-wider mt-2">
             Material Swatches & Finishes
           </h2>
@@ -138,7 +138,7 @@ export default function InteriorPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80" 
+                  src="/assets/images/modern-room-with-wooden-staircase-daytime_181624-11447.avif" 
                   alt="Dark Veined Marble"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -161,7 +161,7 @@ export default function InteriorPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=800&q=80" 
+                  src="/assets/images/modern-wooden-sauna-geometric-interior-stylish-relaxation-space_169016-68903.avif" 
                   alt="Bespoke Smoked Joinery"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -184,7 +184,7 @@ export default function InteriorPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80" 
+                  src="/assets/images/photo-1616611213095-58abb651f70c.avif" 
                   alt="Bouclé Lounge Curation"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -208,7 +208,7 @@ export default function InteriorPage() {
       {/* 5. Curation Call to Action */}
       <section className="relative z-10 py-24 bg-transparent border-t border-[#424242]/20 text-center">
         <div className="max-w-4xl mx-auto px-6">
-          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">// Custom Spaces</span>
+          <span className="text-[#424242]/70 font-mono text-xs uppercase tracking-widest">{"// Custom Spaces"}</span>
           <h2 className="text-[#424242] font-extrabold text-3xl md:text-5xl uppercase tracking-wider mt-2 leading-tight">
             Consult our Turnkey Designers.
           </h2>

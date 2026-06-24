@@ -7,37 +7,32 @@ import { useFluid } from '../../context/FluidContext';
 
 export default function GenesisScene({ scrollProgress }) {
   const meshRef = useRef();
+  const materialRef = useRef();
   const { mousePos } = useFluid();
   const { size } = useThree();
 
-  const uniforms = useMemo(() => ({
-    uTime: { value: 0 },
-    uScrollProgress: { value: 0 },
-    uMouse: { value: new THREE.Vector2(0, 0) },
-    uAspect: { value: size.width / size.height },
-    uOpacity: { value: 1.0 }
-  }), [size.width, size.height]);
-
   useFrame((state) => {
-    const p = scrollProgress.current;
-    
-    // Genesis Scene is fully active from scroll 0.0 to 1.0.
-    // We smoothly fade it out as we transition into Section 2 (Construction, scroll > 1.0).
-    let opacity = 1.0;
-    if (p > 0.8) {
-      opacity = Math.max(0.0, 1.0 - (p - 0.8) / 0.4);
-    }
-    
-    uniforms.uTime.value = state.clock.getElapsedTime();
-    uniforms.uScrollProgress.value = Math.min(1.0, p);
-    uniforms.uOpacity.value = opacity;
-    uniforms.uAspect.value = size.width / size.height;
+    if (materialRef.current) {
+      const p = scrollProgress.current;
+      
+      // Genesis Scene is fully active from scroll 0.0 to 1.0.
+      // We smoothly fade it out as we transition into Section 2 (Construction, scroll > 1.0).
+      let opacity = 1.0;
+      if (p > 0.8) {
+        opacity = Math.max(0.0, 1.0 - (p - 0.8) / 0.4);
+      }
+      
+      materialRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+      materialRef.current.uniforms.uScrollProgress.value = Math.min(1.0, p);
+      materialRef.current.uniforms.uOpacity.value = opacity;
+      materialRef.current.uniforms.uAspect.value = size.width / size.height;
 
-    // Pass normalized mouse coordinates (-1 to 1) converted to 0..1 space
-    uniforms.uMouse.value.set(
-      mousePos.current.normalizedX * 0.5 + 0.5,
-      mousePos.current.normalizedY * 0.5 + 0.5
-    );
+      // Pass normalized mouse coordinates (-1 to 1) converted to 0..1 space
+      materialRef.current.uniforms.uMouse.value.set(
+        mousePos.current.normalizedX * 0.5 + 0.5,
+        mousePos.current.normalizedY * 0.5 + 0.5
+      );
+    }
   });
 
   const vertexShader = `
@@ -162,9 +157,16 @@ export default function GenesisScene({ scrollProgress }) {
     <mesh ref={meshRef}>
       <planeGeometry args={[2, 2]} />
       <shaderMaterial
+        ref={materialRef}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
-        uniforms={uniforms}
+        uniforms={useMemo(() => ({
+          uTime: { value: 0 },
+          uScrollProgress: { value: 0 },
+          uMouse: { value: new THREE.Vector2(0, 0) },
+          uAspect: { value: size.width / size.height },
+          uOpacity: { value: 1.0 }
+        }), [size.width, size.height])}
         depthWrite={false}
         depthTest={false}
         transparent={true}

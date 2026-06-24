@@ -31,45 +31,37 @@ function FluidSimulation() {
 
   // Mesh refs
   const simMeshRef = useRef();
+  const simMaterialRef = useRef();
   const displayMeshRef = useRef();
 
   // Create a orthographic camera scene exclusively for FBO simulation to avoid recursively rendering the screen
   const fboScene = useMemo(() => new THREE.Scene(), []);
   const fboCamera = useMemo(() => new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1), []);
 
-  const uniforms = useMemo(() => ({
-    uPrevFrame: { value: null },
-    uMouse: { value: new THREE.Vector2(0, 0) },
-    uMouseVel: { value: new THREE.Vector2(0, 0) },
-    uTime: { value: 0 },
-    uAspect: { value: size.width / size.height },
-    uDamp: { value: 0.985 }, // smoke dissipation rate (lower = dissipates faster)
-    uRadius: { value: 0.055 }, // brush stroke size
-    uSpeedFactor: { value: 2.2 } // density increase based on speed
-  }), [size.width, size.height]);
-
   // Update loop
   useFrame((state) => {
     const { clock } = state;
     
-    // Set uniforms
-    uniforms.uTime.value = clock.getElapsedTime();
-    uniforms.uAspect.value = size.width / size.height;
-    
-    // Update mouse position & velocity from context
-    uniforms.uMouse.value.set(
-      mousePos.current.normalizedX,
-      mousePos.current.normalizedY
-    );
-    
-    // Decelerate stored velocity slightly over frame loops to prevent drift when mouse stops
-    uniforms.uMouseVel.value.set(
-      mouseVel.current.x * 0.9,
-      mouseVel.current.y * 0.9
-    );
+    if (simMaterialRef.current) {
+      // Set uniforms
+      simMaterialRef.current.uniforms.uTime.value = clock.getElapsedTime();
+      simMaterialRef.current.uniforms.uAspect.value = size.width / size.height;
+      
+      // Update mouse position & velocity from context
+      simMaterialRef.current.uniforms.uMouse.value.set(
+        mousePos.current.normalizedX,
+        mousePos.current.normalizedY
+      );
+      
+      // Decelerate stored velocity slightly over frame loops to prevent drift when mouse stops
+      simMaterialRef.current.uniforms.uMouseVel.value.set(
+        mouseVel.current.x * 0.9,
+        mouseVel.current.y * 0.9
+      );
 
-    // Swap uPrevFrame to the previous readTarget
-    uniforms.uPrevFrame.value = readTarget.current.texture;
+      // Swap uPrevFrame to the previous readTarget
+      simMaterialRef.current.uniforms.uPrevFrame.value = readTarget.current.texture;
+    }
 
     // 1. Render simulation pass to the writeTarget
     gl.setRenderTarget(writeTarget.current);
@@ -94,9 +86,19 @@ function FluidSimulation() {
         <mesh ref={simMeshRef}>
           <planeGeometry args={[2, 2]} />
           <shaderMaterial
+            ref={simMaterialRef}
             vertexShader={FluidVertexShader}
             fragmentShader={FluidFragmentShader}
-            uniforms={uniforms}
+            uniforms={useMemo(() => ({
+              uPrevFrame: { value: null },
+              uMouse: { value: new THREE.Vector2(0, 0) },
+              uMouseVel: { value: new THREE.Vector2(0, 0) },
+              uTime: { value: 0 },
+              uAspect: { value: size.width / size.height },
+              uDamp: { value: 0.985 }, // smoke dissipation rate (lower = dissipates faster)
+              uRadius: { value: 0.055 }, // brush stroke size
+              uSpeedFactor: { value: 2.2 } // density increase based on speed
+            }), [size.width, size.height])}
             depthWrite={false}
             depthTest={false}
           />

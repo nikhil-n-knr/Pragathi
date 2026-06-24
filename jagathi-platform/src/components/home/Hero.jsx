@@ -48,15 +48,15 @@ export default function Hero() {
   return (
     <section className="relative h-screen flex flex-col justify-center items-center text-center px-6 z-10 pointer-events-none">
       <div className="max-w-4xl flex flex-col items-center">
-        <h1 className="hero-title text-[#424242] font-extrabold tracking-[0.22em] text-5xl md:text-8xl leading-none uppercase overflow-hidden select-text h-[1.1em] flex items-center justify-center">
+        <h1 className="hero-title text-[#424242] font-extrabold tracking-[0.1em] sm:tracking-[0.22em] text-4xl sm:text-5xl md:text-8xl leading-none uppercase overflow-hidden select-text h-[1.1em] flex items-center justify-center">
           <span className="hero-title-reveal inline-block transform translate-y-full will-change-transform">
             JAGATHI
           </span>
         </h1>
-        <h2 className="hero-subtitle text-[#424242]/80 font-sans font-light tracking-[0.3em] text-sm md:text-lg uppercase mt-6 select-text opacity-0">
+        <h2 className="hero-subtitle text-[#424242]/80 font-sans font-light tracking-[0.2em] sm:tracking-[0.3em] text-xs sm:text-sm md:text-lg uppercase mt-6 select-text opacity-0">
           Built for Legacies
         </h2>
-        <p className="hero-desc text-gray-600 font-sans font-light text-xs md:text-sm mt-6 max-w-xl leading-relaxed select-text opacity-0">
+        <p className="hero-desc text-gray-600 font-sans font-light text-[10px] sm:text-xs md:text-sm mt-6 max-w-xl leading-relaxed select-text opacity-0 px-4">
           We engineer landmark infrastructure, develop high-yield land, and design flawless, turnkey interior spaces from A to Z.
         </p>
       </div>

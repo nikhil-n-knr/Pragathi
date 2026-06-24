@@ -5,6 +5,19 @@ import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useFluid } from '../../context/FluidContext';
 
+// Position of interior scene: Y = -62
+const centerY = -62;
+
+// Material shaders shared across solid room elements to compute masking
+const maskUniforms = {
+  uTime: { value: 0 },
+  uBulbPos: { value: new THREE.Vector3(0, centerY + 2.5, 0) },
+  uLightConeDir: { value: new THREE.Vector3(0, -1, 0) },
+  uConeAngleCos: { value: Math.cos(30 * Math.PI / 180) }, // 30 degrees cone
+  uLightOn: { value: 0.0 }, // 0 = off, 1 = on
+  uOpacity: { value: 0.0 }
+};
+
 export default function InteriorScene({ scrollProgress }) {
   const sceneRef = useRef();
   const bulbRef = useRef();
@@ -15,9 +28,6 @@ export default function InteriorScene({ scrollProgress }) {
   const [lightOn, setLightOn] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  // Position of interior scene: Y = -62
-  const centerY = -62;
-
   // Track light bulb physical parameters (pendulum swinging)
   const bulbPhysics = useRef({
     angleX: 0,
@@ -26,16 +36,6 @@ export default function InteriorScene({ scrollProgress }) {
     velZ: 0,
     restY: centerY + 2.5 // height of the hanging bulb
   });
-
-  // Material shaders shared across solid room elements to compute masking
-  const maskUniforms = useMemo(() => ({
-    uTime: { value: 0 },
-    uBulbPos: { value: new THREE.Vector3(0, centerY + 2.5, 0) },
-    uLightConeDir: { value: new THREE.Vector3(0, -1, 0) },
-    uConeAngleCos: { value: Math.cos(30 * Math.PI / 180) }, // 30 degrees cone
-    uLightOn: { value: 0.0 }, // 0 = off, 1 = on
-    uOpacity: { value: 0.0 }
-  }), []);
 
   useFrame((state) => {
     const p = scrollProgress && typeof scrollProgress === 'object' && 'current' in scrollProgress ? scrollProgress.current : Number(scrollProgress);

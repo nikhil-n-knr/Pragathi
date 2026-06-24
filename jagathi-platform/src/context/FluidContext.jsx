@@ -7,7 +7,7 @@ const FluidContext = createContext(null);
 export function FluidProvider({ children }) {
   const mousePos = useRef({ x: 0, y: 0, normalizedX: 0, normalizedY: 0 });
   const mouseVel = useRef({ x: 0, y: 0, speed: 0 });
-  const lastTime = useRef(typeof window !== 'undefined' ? Date.now() : 0);
+  const lastTime = useRef(0);
   const hoverActive = useRef(false);
 
   // Scroll velocity refs
@@ -22,6 +22,8 @@ export function FluidProvider({ children }) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+
+    lastTime.current = Date.now();
 
     // Initialize scroll position
     scrollY.current = window.scrollY;
