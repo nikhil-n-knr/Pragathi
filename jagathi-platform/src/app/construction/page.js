@@ -8,12 +8,12 @@ import HomeScene from '../../components/scenes/HomeScene';
 
 /* ─── Data ─────────────────────────────────────── */
 const processSteps = [
-  { num: '01', title: 'Site Survey & Geotech', desc: 'Deep core drilling, soil-matrix stress mapping, hydrostatic pressure profiling, and environmental compliance baseline. We examine the earth before laying a single stone.' },
-  { num: '02', title: 'BIM & Structural Design', desc: '3D BIM modeling integration to cross-verify load distributions, shear walls, and cantilever forces prior to casting. Digital twins prevent physical errors.' },
-  { num: '03', title: 'Foundation & Piling', desc: 'Reinforced pile caps, isolated footings, and raft foundation systems engineered to M50 grade concrete standards. Built to anchor massive structures forever.' },
-  { num: '04', title: 'Superstructure Build', desc: 'Column and slab cycles, core wall formation, structural steel erection, and floor deck expansion. Every floor poured with mathematical consistency.' },
-  { num: '05', title: 'MEP & Systems Sync', desc: 'Mechanical, electrical, and plumbing coordination built in-parallel with structural timelines to eliminate rework loops and guarantee spatial synergy.' },
-  { num: '06', title: 'Handover & Sign-off', desc: 'Non-Destructive Testing, concrete compressive strength metrics, regulatory structural audits, and zero-punch-list final handover to client.' },
+  { num: '01', title: 'Site Survey & Geotech', desc: 'Deep core drilling, soil-matrix stress mapping, hydrostatic pressure profiling, and environmental compliance baseline. We examine the earth before laying a single stone.', image: '/assets/images/ad6b12eb-3d97-499e-83a4-a20a0bb2193c.webp' },
+  { num: '02', title: 'BIM & Structural Design', desc: '3D BIM modeling integration to cross-verify load distributions, shear walls, and cantilever forces prior to casting. Digital twins prevent physical errors.', image: '/assets/images/0c809662-94e6-4a8f-9e00-20baf515a6fd.webp' },
+  { num: '03', title: 'Foundation & Piling', desc: 'Reinforced pile caps, isolated footings, and raft foundation systems engineered to M50 grade concrete standards. Built to anchor massive structures forever.', image: '/assets/images/ae311553-a439-4cab-8da6-632d9881d2a6.webp' },
+  { num: '04', title: 'Superstructure Build', desc: 'Column and slab cycles, core wall formation, structural steel erection, and floor deck expansion. Every floor poured with mathematical consistency.', image: '/assets/images/construction/highrise.webp' },
+  { num: '05', title: 'MEP & Systems Sync', desc: 'Mechanical, electrical, and plumbing coordination built in-parallel with structural timelines to eliminate rework loops and guarantee spatial synergy.', image: '/assets/images/construction/industrial.webp' },
+  { num: '06', title: 'Handover & Sign-off', desc: 'Non-Destructive Testing, concrete compressive strength metrics, regulatory structural audits, and zero-punch-list final handover to client.', image: '/assets/images/photo-1500004621732-74cd4ad4d53e.webp' },
 ];
 
 const materials = [
@@ -250,32 +250,49 @@ export default function ConstructionPage() {
             <h2 className="font-bold text-3xl md:text-6xl uppercase tracking-tight">OUR BUILD PROCESS</h2>
           </div>
 
-          {/* Stacking Cards Container */}
           <div className="relative flex flex-col gap-[12vh] w-full items-center">
-            {processSteps.map((step, i) => (
-              <div
-                key={i}
-                className="sticky top-[15vh] w-full flex items-center justify-center mb-[5vh] z-10"
-              >
-                <div className="w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl p-8 md:p-16 min-h-[45vh] md:min-h-[55vh] flex flex-col justify-between text-white text-center items-center">
-                  <div className="flex flex-col items-center justify-center border-b border-white/10 pb-6 mb-6 w-full">
-                    <span className="text-[#FFEA0A] font-mono text-[11px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 flex-shrink-0 tracking-widest mb-4">
-                      {step.num}
-                    </span>
-                    <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{step.title}</h3>
-                    <span className="font-mono text-[8px] tracking-[0.3em] text-[#FFEA0A] uppercase mt-2">{'// PHASE_0' + (i+1)}</span>
-                  </div>
-                  
-                  <p className="text-white/60 font-light text-sm md:text-lg leading-relaxed max-w-2xl" style={{ fontFamily: '"Outfit", sans-serif' }}>
-                    {step.desc}
-                  </p>
+            {processSteps.map((step, i) => {
+              const rowDirection = i % 2 === 1 ? 'flex-col md:flex-row-reverse' : 'flex-col md:flex-row';
+              return (
+                <div
+                  key={i}
+                  className="sticky top-[15vh] w-full flex items-center justify-center mb-[5vh] z-10"
+                >
+                  <div className={`w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[45vh] md:min-h-[55vh] text-white`}>
+                    
+                    {/* Details Column */}
+                    <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center w-full md:w-[60%] flex-shrink-0">
+                      <div className="flex flex-col items-center w-full">
+                        <span className="text-[#FFEA0A] font-mono text-[11px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 flex-shrink-0 tracking-widest mb-4">
+                          {step.num}
+                        </span>
+                        <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{step.title}</h3>
+                        <span className="font-mono text-[8px] tracking-[0.3em] text-[#FFEA0A] uppercase mt-2">{'// PHASE_0' + (i+1)}</span>
+                      </div>
+                      
+                      <p className="text-white/60 font-light text-sm md:text-base leading-relaxed max-w-xl mt-6" style={{ fontFamily: '"Outfit", sans-serif' }}>
+                        {step.desc}
+                      </p>
 
-                  <div className="flex justify-center mt-8 w-full border-t border-white/5 pt-4">
-                    <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">JAGATHI STANDARD / SECURED</span>
+                      <div className="flex justify-center mt-8 w-full border-t border-white/5 pt-4">
+                        <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">JAGATHI STANDARD / SECURED</span>
+                      </div>
+                    </div>
+
+                    {/* Image Column */}
+                    <div className="relative w-full h-[30vh] md:h-auto md:w-[40%] overflow-hidden group flex-shrink-0">
+                      <img
+                        src={step.image}
+                        alt={step.title}
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E]/80 via-transparent to-transparent pointer-events-none" />
+                    </div>
+
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

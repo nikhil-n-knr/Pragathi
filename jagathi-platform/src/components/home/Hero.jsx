@@ -34,9 +34,13 @@ export default function Hero() {
       );
     };
 
-    window.addEventListener('preloaderComplete', playIntro);
+    if (!document.getElementById('preloader-overlay')) {
+      playIntro();
+    } else {
+      window.addEventListener('preloaderComplete', playIntro);
+    }
     
-    // Fallback in case preloader completed earlier
+    // Fallback in case preloader completed earlier but overlay is still there momentarily
     const fallbackTimeout = setTimeout(playIntro, 5500);
 
     return () => {

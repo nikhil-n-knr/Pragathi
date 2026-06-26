@@ -14,10 +14,10 @@ const spaceTypes = [
 ];
 
 const processStages = [
-  { num: '01', title: 'Concept & Brief', desc: 'Client brief translation into spatial mood boards, material palettes, and layout studies. We define the language before we lift a tool.' },
-  { num: '02', title: 'Material Selection', desc: 'Choosing stones, fine hardwoods, structural metal finishes, and textiles from our curated materials library — every sample approved in-person.' },
-  { num: '03', title: 'In-house Fabrication', desc: 'Precision carpentry, cladding prep, and customized light fittings built in our dedicated fabrication center — no third-party delays.' },
-  { num: '04', title: 'Delivery & Fitting', desc: 'One point of contact managing assembly, light installation, joinery alignments, and final surface curations to zero-punch-list handover.' },
+  { num: '01', title: 'Concept & Brief', desc: 'Client brief translation into spatial mood boards, material palettes, and layout studies. We define the language before we lift a tool.', image: '/assets/images/interior-design-modern-loft-drawing-600nw-1102581248.webp' },
+  { num: '02', title: 'Material Selection', desc: 'Choosing stones, fine hardwoods, structural metal finishes, and textiles from our curated materials library — every sample approved in-person.', image: '/assets/images/landmarks/calacatta_after.webp' },
+  { num: '03', title: 'In-house Fabrication', desc: 'Precision carpentry, cladding prep, and customized light fittings built in our dedicated fabrication center — no third-party delays.', image: '/assets/images/modern-wooden-sauna-geometric-interior-stylish-relaxation-space_169016-68903.webp' },
+  { num: '04', title: 'Delivery & Fitting', desc: 'One point of contact managing assembly, light installation, joinery alignments, and final surface curations to zero-punch-list handover.', image: '/assets/images/interior/penthouse.webp' },
 ];
 
 const swatches = [
@@ -211,28 +211,46 @@ export default function InteriorPage() {
           </div>
 
           <div className="relative flex flex-col gap-[12vh] w-full items-center">
-            {processStages.map((stage, i) => (
-              <div
-                key={i}
-                className="sticky top-[15vh] w-full flex items-center justify-center mb-[5vh] z-10"
-              >
-                <div className="w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl p-8 md:p-16 min-h-[40vh] md:min-h-[50vh] flex flex-col justify-between text-white text-center items-center">
-                  <div className="flex flex-col items-center justify-center border-b border-white/10 pb-6 mb-6 w-full">
-                    <span className="text-[#FFEA0A] font-mono text-[10px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 inline-block tracking-widest mb-4">{stage.num}</span>
-                    <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{stage.title}</h3>
-                    <span className="font-mono text-[8px] tracking-[0.3em] text-[#FFEA0A] uppercase mt-2">{'// INTERSPACE_0' + (i+1)}</span>
-                  </div>
+            {processStages.map((stage, i) => {
+              const rowDirection = i % 2 === 1 ? 'flex-col md:flex-row-reverse' : 'flex-col md:flex-row';
+              return (
+                <div
+                  key={i}
+                  className="sticky top-[15vh] w-full flex items-center justify-center mb-[5vh] z-10"
+                >
+                  <div className={`w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[45vh] md:min-h-[55vh] text-white`}>
+                    
+                    {/* Details Column */}
+                    <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center w-full md:w-[60%] flex-shrink-0">
+                      <div className="flex flex-col items-center w-full">
+                        <span className="text-[#FFEA0A] font-mono text-[10px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 inline-block tracking-widest mb-4">{stage.num}</span>
+                        <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{stage.title}</h3>
+                        <span className="font-mono text-[8px] tracking-[0.3em] text-[#FFEA0A] uppercase mt-2">{'// INTERSPACE_0' + (i+1)}</span>
+                      </div>
 
-                  <p className="text-white/60 font-light text-sm md:text-lg leading-relaxed max-w-2xl" style={{ fontFamily: '"Outfit", sans-serif' }}>
-                    {stage.desc}
-                  </p>
+                      <p className="text-white/60 font-light text-sm md:text-base leading-relaxed max-w-xl mt-6" style={{ fontFamily: '"Outfit", sans-serif' }}>
+                        {stage.desc}
+                      </p>
 
-                  <div className="flex justify-center mt-8 w-full border-t border-white/5 pt-4">
-                    <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">JAGATHI SPATIAL / QUALITY GUARANTEED</span>
+                      <div className="flex justify-center mt-8 w-full border-t border-white/5 pt-4">
+                        <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">JAGATHI SPATIAL / QUALITY GUARANTEED</span>
+                      </div>
+                    </div>
+
+                    {/* Image Column */}
+                    <div className="relative w-full h-[30vh] md:h-auto md:w-[40%] overflow-hidden group flex-shrink-0">
+                      <img
+                        src={stage.image}
+                        alt={stage.title}
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E]/80 via-transparent to-transparent pointer-events-none" />
+                    </div>
+
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

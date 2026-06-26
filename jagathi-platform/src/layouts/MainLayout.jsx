@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { FluidProvider } from '../context/FluidContext';
-import CustomCursor from '../components/CustomCursor';
+
 import Preloader from '../components/Preloader';
 import Header from '../components/Header';
 
@@ -29,8 +29,7 @@ export default function MainLayout({ children }) {
       {/* 1. Black & Yellow Cinematic Preloader Sequence */}
       <Preloader onComplete={() => setLoadingComplete(true)} />
 
-      {/* 2. Custom Dual-Stage Spring Cursor */}
-      <CustomCursor />
+      {/* 2. Custom Dual-Stage Spring Cursor (Removed per user request to use default browser cursor) */}
 
       {/* 4. Global SVG Melting & Silk Displacement Filters */}
       <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden="true">
