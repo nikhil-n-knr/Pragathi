@@ -8,11 +8,12 @@ function BeforeAfterSlider({ beforeImage, afterImage, title, aspect }) {
   const containerRef = useRef(null);
   const [sliderVal, setSliderVal] = useState(50);
   const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const autoOscillateRef = useRef(null);
   const timeRef = useRef(0);
 
   useEffect(() => {
-    if (isHovered) {
+    if (isHovered || isDragging) {
       if (autoOscillateRef.current) {
         cancelAnimationFrame(autoOscillateRef.current);
       }
@@ -20,9 +21,9 @@ function BeforeAfterSlider({ beforeImage, afterImage, title, aspect }) {
     }
 
     const animate = () => {
-      timeRef.current += 1.5;
-      // Oscillate between 42% and 58%
-      const val = 50 + Math.sin(timeRef.current * 0.02) * 8;
+      timeRef.current += 1.2;
+      // Gentle oscillate between 38% and 62%
+      const val = 50 + Math.sin(timeRef.current * 0.018) * 12;
       setSliderVal(val);
       autoOscillateRef.current = requestAnimationFrame(animate);
     };
@@ -34,78 +35,86 @@ function BeforeAfterSlider({ beforeImage, afterImage, title, aspect }) {
         cancelAnimationFrame(autoOscillateRef.current);
       }
     };
-  }, [isHovered]);
+  }, [isHovered, isDragging]);
 
   const handleMove = (clientX) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    const percentage = Math.max(2, Math.min(98, (x / rect.width) * 100));
     setSliderVal(percentage);
   };
 
-  const handleMouseMove = (e) => {
-    handleMove(e.clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    if (e.touches && e.touches[0]) {
-      handleMove(e.touches[0].clientX);
-    }
-  };
-
   return (
-    <div 
+    <div
       ref={containerRef}
-      className="relative w-full h-full overflow-hidden select-none cursor-ew-resize bg-zinc-900 group/slider"
-      onMouseMove={handleMouseMove}
-      onTouchMove={handleTouchMove}
+      className="relative w-full h-full overflow-hidden select-none cursor-ew-resize bg-zinc-900"
+      onMouseMove={(e) => handleMove(e.clientX)}
+      onTouchMove={(e) => e.touches[0] && handleMove(e.touches[0].clientX)}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={() => { setIsHovered(false); setIsDragging(false); }}
+      onMouseDown={() => setIsDragging(true)}
+      onMouseUp={() => setIsDragging(false)}
     >
-      {/* Before Image (Background) */}
-      <img 
-        src={beforeImage} 
-        alt={`${title} Before`} 
-        className="absolute inset-0 w-full h-full object-cover opacity-35 filter grayscale"
+      {/* Before Image (Background - full width, desaturated) */}
+      <img
+        src={beforeImage}
+        alt={`${title} Before`}
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ filter: 'grayscale(0.65) brightness(0.75) contrast(1.1)' }}
         draggable="false"
+        loading="lazy"
       />
-      <div className="absolute top-4 left-4 text-[8px] font-mono tracking-widest text-yellow-400/50 bg-black/60 px-2.5 py-1 border border-yellow-400/10 rounded-sm">
-        {"BEFORE // BLUEPRINT_RAW"}
+
+      {/* BEFORE badge */}
+      <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 pointer-events-none">
+        <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 inline-block" />
+        <span className="text-[7px] font-mono tracking-[0.25em] text-zinc-300/80 uppercase">Before</span>
       </div>
 
       {/* After Image (Foreground, clipped) */}
-      <div 
+      <div
         className="absolute inset-0 pointer-events-none"
         style={{ clipPath: `polygon(0 0, ${sliderVal}% 0, ${sliderVal}% 100%, 0 100%)` }}
       >
-        <img 
-          src={afterImage} 
-          alt={`${title} After`} 
-          className="absolute inset-0 w-full h-full object-cover opacity-85"
+        <img
+          src={afterImage}
+          alt={`${title} After`}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: 'brightness(1.02) saturate(1.05)' }}
           draggable="false"
+          loading="lazy"
         />
-      </div>
-      <div className="absolute top-4 right-4 text-[8px] font-mono tracking-widest text-yellow-400 bg-black/85 px-2.5 py-1 border border-yellow-400/20 rounded-sm font-semibold pointer-events-none">
-        {"AFTER // ARCHITECTED"}
-      </div>
-
-      {/* Divider Bar */}
-      <div 
-        className="absolute inset-y-0 w-[1px] bg-yellow-400/80 pointer-events-none"
-        style={{ left: `${sliderVal}%` }}
-      >
-        {/* Glow effect on the line */}
-        <div className="absolute inset-y-0 -left-[1px] w-[3px] bg-yellow-400/30 blur-[2px]" />
-        
-        {/* Central sliding badge */}
-        <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-zinc-950 border border-yellow-400/40 flex items-center justify-center shadow-2xl">
-          <span className="text-yellow-400 text-[8px] font-bold">↔</span>
+        {/* AFTER badge — only visible when in the revealed area */}
+        <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 pointer-events-none">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FFEA0A] inline-block" />
+          <span className="text-[7px] font-mono tracking-[0.25em] text-[#FFEA0A] uppercase">After</span>
         </div>
       </div>
 
-      {/* Aspect Label */}
-      <span className="absolute bottom-4 left-4 text-[9px] font-mono tracking-widest text-yellow-400 bg-black/85 px-3 py-1 border border-yellow-400/20 rounded-sm font-semibold pointer-events-none">
+      {/* Divider line */}
+      <div
+        className="absolute inset-y-0 w-px pointer-events-none"
+        style={{
+          left: `${sliderVal}%`,
+          background: 'linear-gradient(to bottom, transparent, rgba(255,234,10,0.9) 20%, rgba(255,234,10,0.9) 80%, transparent)',
+          boxShadow: '0 0 8px rgba(255,234,10,0.4)'
+        }}
+      >
+        {/* Drag handle */}
+        <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-zinc-950/90 border border-[#FFEA0A]/50 flex items-center justify-center shadow-xl"
+          style={{ backdropFilter: 'blur(4px)' }}
+        >
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+            <path d="M1 4h10M4 1L1 4l3 3M8 1l3 3-3 3" stroke="#FFEA0A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      {/* Aspect Label bottom right */}
+      <span className="absolute bottom-3 right-3 text-[7px] font-mono tracking-widest text-[#FFEA0A]/70 bg-black/70 px-2 py-0.5 border border-[#FFEA0A]/15 pointer-events-none"
+        style={{ backdropFilter: 'blur(4px)' }}
+      >
         {aspect}
       </span>
     </div>
@@ -113,57 +122,60 @@ function BeforeAfterSlider({ beforeImage, afterImage, title, aspect }) {
 }
 
 export default function FluidMediaField({ onSelectProject }) {
-  const containerRef = useRef(null);
   const cardsRef = useRef([]);
 
   const projects = [
     {
       id: 1,
-      num: "01",
-      title: "Cogen Energy Complex",
-      tag: "Project 01 / Heavy Build",
-      beforeImage: "/assets/images/44ee9b52-459f-4c74-bd5d-6467e42583f7.webp",
-      afterImage: "/assets/images/a792ceff-b679-4879-b1d3-9032d7dac3d1.webp",
-      desc: "Isolated structural foundation matrices for thermodynamic piping loops and massive civil concrete grids.",
-      aspect: "[ COGEN CORES ]",
-      location: "Whitefield, IN",
-      coords: "13.0640° N, 80.2460° E"
+      num: '01',
+      title: 'Cogen Energy Complex',
+      tag: 'Heavy Build',
+      beforeImage: '/assets/images/landmarks/cogen_before.webp',
+      afterImage: '/assets/images/landmarks/cogen_after.webp',
+      desc: 'From barren excavated terrain to a fully operational co-generation energy complex — thermodynamic piping loops, civil concrete grids, and structural foundation matrices delivered to industrial grade.',
+      aspect: '[ COGEN CORES ]',
+      location: 'Whitefield, IN',
+      coords: '13.0640° N, 80.2460° E',
+      metric: '1,200T Steel · M50 Grade'
     },
     {
       id: 2,
-      num: "02",
-      title: "Solitaire Valleys",
-      tag: "Project 02 / Real Estate",
-      beforeImage: "/assets/images/ad6b12eb-3d97-499e-83a4-a20a0bb2193c.webp",
-      afterImage: "/assets/images/ae311553-a439-4cab-8da6-632d9881d2a6.webp",
-      desc: "Strategic land acquisition and premium residential valley plot mappings overlooking municipal green zones.",
-      aspect: "[ RIDGE ESTATES ]",
-      location: "Nandi Foothills, IN",
-      coords: "13.0980° N, 80.2920° E"
+      num: '02',
+      title: 'Solitaire Valleys',
+      tag: 'Real Estate',
+      beforeImage: '/assets/images/landmarks/solitaire_before.webp',
+      afterImage: '/assets/images/landmarks/solitaire_after.webp',
+      desc: 'Raw scrubland hillside transformed into a premium residential valley — strategic land acquisition, luxury villa typologies, winding roads, and municipal green zones meticulously plotted.',
+      aspect: '[ RIDGE ESTATES ]',
+      location: 'Nandi Foothills, IN',
+      coords: '13.0980° N, 80.2920° E',
+      metric: '48 Luxury Plots · 12 Acres'
     },
     {
       id: 3,
-      num: "03",
-      title: "Orion Glass Villa",
-      tag: "Project 03 / Engineering",
-      beforeImage: "/assets/images/e05bf928-1b34-4f37-a4ac-1f2b93aa09f6.webp",
-      afterImage: "/assets/images/f0e62086-9165-468b-b56f-7ddfedefefa0.webp",
-      desc: "Suspended steel-lattice core configured via genetic structural shear mapping and glass architectural extensions.",
-      aspect: "[ STRUCTURAL ARCS ]",
-      location: "Beverly Hills, CA",
-      coords: "34.0736° N, 118.4004° W"
+      num: '03',
+      title: 'Orion Glass Villa',
+      tag: 'Engineering',
+      beforeImage: '/assets/images/landmarks/orion_before.webp',
+      afterImage: '/assets/images/landmarks/orion_after.webp',
+      desc: 'Exposed steel skeleton raised into a suspended lattice-core glass villa — genetic structural shear mapping, cantilevered volumes, and double-glazed acoustic extensions engineered to perfection.',
+      aspect: '[ STRUCTURAL ARCS ]',
+      location: 'Beverly Hills, CA',
+      coords: '34.0736° N, 118.4004° W',
+      metric: '82% Acoustic Seal · Grade Fe 550'
     },
     {
       id: 4,
-      num: "04",
-      title: "Calacatta Penthouse",
-      tag: "Project 04 / Curation",
-      beforeImage: "/assets/images/photo-1500004621732-74cd4ad4d53e.webp",
-      afterImage: "/assets/images/083e604b-244e-447c-a7bf-d645a12a3a88.webp",
-      desc: "Bespoke Italian stone surfaces and smoked wood carpentries tailored for ultra-high-net-worth turnkey estates.",
-      aspect: "[ TURNKEY INTERIOR ]",
-      location: "Aspen Heights, CO",
-      coords: "39.1911° N, 106.8175° W"
+      num: '04',
+      title: 'Calacatta Penthouse',
+      tag: 'Curation',
+      beforeImage: '/assets/images/landmarks/calacatta_before.webp',
+      afterImage: '/assets/images/landmarks/calacatta_after.webp',
+      desc: 'Bare concrete shell elevated to an ultra-high-net-worth turnkey residence — Italian Calacatta stone surfaces, smoked oak joinery, brass hardware, and bespoke furnishings curated for elite living.',
+      aspect: '[ TURNKEY INTERIOR ]',
+      location: 'Aspen Heights, CO',
+      coords: '39.1911° N, 106.8175° W',
+      metric: '100% Structural Sign-off'
     }
   ];
 
@@ -171,24 +183,23 @@ export default function FluidMediaField({ onSelectProject }) {
     if (typeof window === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
 
-    const cards = cardsRef.current;
-    
-    // Stacking animation logic
+    const cards = cardsRef.current.filter(Boolean);
     cards.forEach((card, i) => {
-      const nextCard = cards[i + 1];
-      if (nextCard && card) {
-        gsap.to(card.querySelector('.card-inner'), {
-          scale: 0.94,
-          opacity: 0.45, 
-          ease: "none",
+      gsap.fromTo(card,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: 'power3.out',
+          delay: (i % 2) * 0.15, // stagger within the same row
           scrollTrigger: {
-            trigger: nextCard,
-            start: "top bottom", 
-            end: "top 10vh",    
-            scrub: true
+            trigger: card,
+            start: 'top bottom-=80px',
+            toggleActions: 'play none none none'
           }
-        });
-      }
+        }
+      );
     });
 
     return () => {
@@ -197,70 +208,63 @@ export default function FluidMediaField({ onSelectProject }) {
   }, []);
 
   return (
-    <div 
-      ref={containerRef}
-      className="relative w-full max-w-5xl mx-auto px-4 overflow-visible flex flex-col py-12"
-    >
-      <div className="flex flex-col gap-24 w-full relative overflow-visible">
+    <div className="relative w-full max-w-6xl mx-auto px-4 md:px-6">
+      {/* 2-column grid: 1 col on mobile, 2 cols on md+ */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 w-full">
         {projects.map((p, idx) => (
-          <div 
+          <div
             key={p.id}
             ref={(el) => (cardsRef.current[idx] = el)}
-            className="card-item sticky top-[8vh] md:top-[10vh] h-auto min-h-[75vh] md:h-[80vh] w-full flex items-center justify-center mb-10 md:mb-16 overflow-visible"
+            className="w-full flex flex-col bg-[#1e1e1e] border border-[#FFEA0A]/10 overflow-hidden"
+            style={{ willChange: 'transform, opacity' }}
           >
-            <div 
-              className="card-inner w-full h-full bg-[#424242] border border-[#FFEA0A]/15 rounded-sm shadow-2xl shadow-black/95 overflow-hidden flex flex-col relative"
-              style={{ willChange: 'transform, opacity' }}
-            >
-              {/* Top - Image Before/After Slider */}
-              <div className="relative w-full aspect-[16/10] md:h-[55%] md:aspect-auto overflow-hidden border-b border-[#FFEA0A]/10">
-                <BeforeAfterSlider 
-                  beforeImage={p.beforeImage} 
-                  afterImage={p.afterImage} 
-                  title={p.title} 
-                  aspect={p.aspect} 
-                />
+            {/* Image — Before/After Slider */}
+            <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
+              <BeforeAfterSlider
+                beforeImage={p.beforeImage}
+                afterImage={p.afterImage}
+                title={p.title}
+                aspect={p.aspect}
+              />
+            </div>
+
+            {/* Metadata footer */}
+            <div className="flex flex-col flex-grow p-5 md:p-6 text-left bg-[#1a1a1a]">
+              {/* Index + tag row */}
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-[#FFEA0A]/40 font-mono text-[8px] uppercase tracking-widest">
+                  {`// ${p.num}`}
+                </span>
+                <span className="text-[#FFEA0A]/50 font-mono text-[7px] uppercase tracking-widest border border-[#FFEA0A]/10 px-2 py-0.5">
+                  {p.tag}
+                </span>
               </div>
 
-              {/* Bottom - Metadata & Wording (with plenty of breathing room) */}
-              <div className="w-full flex-grow md:h-[45%] flex flex-col justify-between p-5 md:p-8 lg:p-10 text-left bg-[#424242]">
-                <div>
-                  <div className="flex justify-between items-center w-full mb-3 md:mb-4">
-                    <span className="text-[#FFEA0A]/40 font-mono text-[9px] uppercase tracking-widest block">
-                      {"// SYSTEM_INDEX: "}{p.num}
-                    </span>
-                    <span className="text-[#FFEA0A]/35 font-mono text-[7px]">
-                      GPS: {p.coords}
-                    </span>
-                  </div>
+              {/* Project title */}
+              <h3 className="text-white font-bold text-lg md:text-xl uppercase tracking-wide leading-tight mb-2 font-sans">
+                <span className="text-[#FFEA0A]">{p.title.split(' ')[0]}</span>
+                {' '}
+                <span className="font-light text-white/90">{p.title.split(' ').slice(1).join(' ')}</span>
+              </h3>
 
-                  <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-3">
-                    <h3 className="text-white font-extrabold text-xl md:text-2xl lg:text-3xl uppercase leading-none font-sans tracking-wide">
-                      <span className="text-[#FFEA0A] tracking-[0.05em] mr-2">{p.title.split(' ')[0]} /</span>
-                      <span className="font-serif-luxury italic text-white lowercase first-letter:uppercase tracking-[0.05em] font-normal">
-                        {p.title.split(' ').slice(1).join(' ')}
-                      </span>
-                    </h3>
-                    <span className="text-[#FFEA0A] font-mono text-[9px] uppercase tracking-widest block font-medium">
-                      {p.tag}
-                    </span>
-                  </div>
+              <div className="h-px bg-[#FFEA0A]/8 w-full mb-3" />
 
-                  <div className="h-px bg-[#FFEA0A]/10 w-full mb-4" />
+              {/* Description */}
+              <p className="text-zinc-400 font-sans font-light text-[11px] md:text-[12px] leading-relaxed flex-grow">
+                {p.desc}
+              </p>
 
-                  <p className="text-gray-350 font-sans font-light text-[12px] md:text-[13px] lg:text-[14px] leading-relaxed max-w-3xl">
-                    {p.desc}
-                  </p>
+              {/* Footer row */}
+              <div className="mt-4 pt-3 border-t border-[#FFEA0A]/8 flex items-center justify-between">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-zinc-500 font-mono text-[7px] uppercase tracking-widest">Location</span>
+                  <span className="text-zinc-300 text-[10px] font-medium font-sans uppercase">{p.location}</span>
                 </div>
-
-                <div className="mt-4 flex flex-row items-center justify-between w-full border-t border-[#FFEA0A]/10 pt-4">
-                  <div className="flex flex-col">
-                    <span className="text-gray-400 font-mono text-[7px] uppercase tracking-widest">Location</span>
-                    <span className="text-gray-200 text-[11px] font-medium font-sans uppercase mt-1">{p.location}</span>
-                  </div>
-                  <button 
+                <div className="flex items-center gap-3">
+                  <span className="text-zinc-600 font-mono text-[7px] hidden md:block">{p.coords}</span>
+                  <button
                     onClick={() => onSelectProject && onSelectProject(p)}
-                    className="border border-[#FFEA0A]/30 text-[#FFEA0A] hover:bg-[#FFEA0A] hover:text-[#424242] transition-colors duration-300 px-6 py-2 uppercase text-[9px] tracking-widest font-semibold rounded-sm"
+                    className="border border-[#FFEA0A]/25 text-[#FFEA0A] hover:bg-[#FFEA0A] hover:text-[#1a1a1a] transition-all duration-300 px-4 py-1.5 uppercase text-[8px] tracking-widest font-semibold"
                     data-interactive
                   >
                     View Details

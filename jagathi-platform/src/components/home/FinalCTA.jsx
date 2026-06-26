@@ -304,9 +304,14 @@ export default function FinalCTA() {
     >
       <div className="w-full max-w-6xl mx-auto px-6 flex flex-col items-center text-center overflow-visible">
         {/* Living Blueprint Headline */}
-        <h2 
-          className="text-[#424242] font-black text-3xl md:text-5xl lg:text-[2.65rem] uppercase tracking-wider leading-tight text-center w-full select-none overflow-visible flex flex-wrap justify-center items-center gap-x-[0.3em] gap-y-[0.1em] font-sans"
-          style={{ letterSpacing: '0.05em', fontFamily: '"Basement Grotesque", "Syncopate", sans-serif' }}
+        <h2
+          className="text-[#424242] text-3xl md:text-5xl lg:text-[2.65rem] uppercase text-center w-full select-none overflow-visible flex flex-wrap justify-center items-center gap-x-[0.3em] gap-y-[0.1em]"
+          style={{
+            fontFamily: '"Outfit", sans-serif',
+            fontWeight: 600,
+            letterSpacing: '0.025em',
+            lineHeight: 1.15
+          }}
         >
           {wordsData.map((wData, wIdx) => (
             <Word 
