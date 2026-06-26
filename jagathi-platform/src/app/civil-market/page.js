@@ -222,15 +222,15 @@ export default function CivilMarketPage() {
             <h2 className="font-bold text-3xl md:text-6xl uppercase tracking-tight">LAND ZONE PORTFOLIO</h2>
           </div>
 
-          <div className="relative flex flex-col gap-[12vh] w-full items-center">
+          <div className="relative w-full pb-[25vh]">
             {zoneTypes.map((zone, i) => (
               <div
                 key={i}
-                className="sticky top-[15vh] mx-auto self-center w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[45vh] md:min-h-[55vh] text-white z-10 mb-[5vh]"
+                className="sticky top-[15vh] mx-auto w-[96%] md:w-[85%] max-w-[1100px] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[50vh] md:h-[52vh] md:min-h-[480px] text-white z-10 mb-[12vh]"
               >
                 
                 {/* Left Column: Centered Details */}
-                <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center md:col-span-7">
+                <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center md:col-span-7 md:h-full">
                   <div className="flex flex-col items-center">
                     <span className="text-[#FFEA0A] font-mono text-[9px] bg-white/5 border border-[#FFEA0A]/20 px-2.5 py-1 tracking-wider mb-4">{zone.tag}</span>
                     <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{zone.title}</h3>

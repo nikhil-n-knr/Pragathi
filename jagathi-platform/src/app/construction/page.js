@@ -250,17 +250,17 @@ export default function ConstructionPage() {
             <h2 className="font-bold text-3xl md:text-6xl uppercase tracking-tight">OUR BUILD PROCESS</h2>
           </div>
 
-          <div className="relative flex flex-col gap-[12vh] w-full items-center">
+          <div className="relative w-full pb-[25vh]">
             {processSteps.map((step, i) => {
               const rowDirection = i % 2 === 1 ? 'flex-col md:flex-row-reverse' : 'flex-col md:flex-row';
               return (
                 <div
                   key={i}
-                  className={`sticky top-[15vh] mx-auto self-center w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[45vh] md:min-h-[55vh] text-white z-10 mb-[5vh]`}
+                  className={`sticky top-[15vh] mx-auto w-[96%] md:w-[85%] max-w-[1100px] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[50vh] md:h-[52vh] md:min-h-[480px] text-white z-10 mb-[12vh]`}
                 >
                   
                   {/* Details Column */}
-                  <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center w-full md:w-[60%] flex-shrink-0">
+                  <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center w-full md:w-[60%] flex-shrink-0 md:h-full">
                     <div className="flex flex-col items-center w-full">
                       <span className="text-[#FFEA0A] font-mono text-[11px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 flex-shrink-0 tracking-widest mb-4">
                         {step.num}
@@ -279,7 +279,7 @@ export default function ConstructionPage() {
                   </div>
 
                   {/* Image Column */}
-                  <div className="relative w-full h-[30vh] md:h-auto md:w-[40%] overflow-hidden group flex-shrink-0">
+                  <div className="relative w-full h-[30vh] md:h-full md:w-[40%] overflow-hidden group flex-shrink-0">
                     <img
                       src={step.image}
                       alt={step.title}
