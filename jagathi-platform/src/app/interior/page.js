@@ -21,7 +21,7 @@ const processStages = [
 ];
 
 const swatches = [
-  { tag: '[ CALACATTA HONED ]', label: 'Texture 01 / Italian Stone', title: 'Dark Veined Marble', desc: 'Deep charcoal marble surfaces with structural golden veins, hone finished for luxury tactility.', image: '/assets/images/modern-room-with-wooden-staircase-daytime_181624-11447.webp' },
+  { tag: '[ CALACATTA HONED ]', label: 'Texture 01 / Italian Stone', title: 'Dark Veined Marble', desc: 'Deep charcoal marble surfaces with structural golden veins, honed white Calacatta finish for luxury tactility.', image: '/assets/images/landmarks/calacatta_after.webp' },
   { tag: '[ SMOKED OAK ]', label: 'Texture 02 / Hardwood', title: 'Bespoke Smoked Joinery', desc: 'Stained smoked oak features designed for floating sideboard cabinetry and wall paneling.', image: '/assets/images/modern-wooden-sauna-geometric-interior-stylish-relaxation-space_169016-68903.webp' },
   { tag: '[ TACTILE BOUCLÉ ]', label: 'Texture 03 / Upholstery', title: 'Bouclé Lounge Curation', desc: 'High-tactility bouclé fabric selected for parametric furniture curations and lounge seating.', image: '/assets/images/photo-1616611213095-58abb651f70c.webp' },
 ];
@@ -93,7 +93,7 @@ export default function InteriorPage() {
       </div>
 
       {/* ── Hero ─────────────────────────────────── */}
-      <section className="relative w-full h-screen overflow-hidden flex flex-col justify-between z-10 border-b border-[#424242]/10">
+      <section className="relative w-full h-screen overflow-hidden flex flex-col justify-center items-center z-10 border-b border-[#424242]/10 text-center px-6 md:px-16 lg:px-24">
         <div className="absolute inset-0 z-0">
           <img
             src="/assets/images/interior/penthouse.webp"
@@ -101,44 +101,43 @@ export default function InteriorPage() {
             className="w-full h-full object-cover object-center"
             style={{ filter: 'brightness(0.35) saturate(0.7)' }}
           />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.2) 70%, transparent 100%)' }} />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 50%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.4) 60%, rgba(10,10,10,0.85) 100%)' }} />
         </div>
-
-        {/* Spacer */}
-        <div className="w-full py-8" />
-
-        <div className="flex-grow flex flex-col justify-end px-6 md:px-16 lg:px-24 pb-12 relative w-full">
-          {/* Right-aligned glassmorphic card */}
-          <div className="absolute top-[15%] md:top-auto md:bottom-[30%] right-6 md:right-16 lg:right-24 w-[90%] md:w-[32rem] p-8 md:p-10 border border-white/10 rounded-sm z-20"
-               style={{ background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}>
+        
+        {/* Centered Content Area */}
+        <div className="relative z-10 max-w-4xl flex flex-col items-center justify-center">
+          <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.35em] mb-6 block">{'// Pillar 02 / Interspace Design'}</span>
+          
+          <h1 className="font-bold text-white uppercase leading-none mb-6 tracking-tight" style={{ fontSize: 'clamp(2.5rem, 7.5vw, 7.5rem)', letterSpacing: '-0.02em' }}>
+            SPATIAL SYSTEMS
+          </h1>
+          
+          <div className="h-px w-20 bg-[#FFEA0A] mb-8" />
+          
+          {/* Centered glassmorphic card */}
+          <div className="p-8 md:p-10 border border-white/10 rounded-sm w-full max-w-2xl bg-white/5 backdrop-blur-md">
             <span className="text-[#FFEA0A] font-mono text-[9px] uppercase tracking-[0.3em] block mb-4">{'// Design Philosophy'}</span>
             <p className="text-white/90 font-light leading-relaxed text-sm md:text-base" style={{ fontFamily: '"Outfit", sans-serif' }}>
               We design and execute flawless interior spaces. From master planning and bespoke carpentry to structural lighting and texture curation — every square inch managed in-house, concept to handover.
             </p>
           </div>
-
-          {/* Left-aligned bold brand title */}
-          <div className="relative mt-auto pointer-events-none select-none z-10 max-w-4xl">
-            <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.35em] mb-4 block">{'// Pillar 02 / Spatial Systems'}</span>
-            <h1 className="font-bold text-white uppercase leading-[0.85]" style={{ fontSize: 'clamp(2.5rem, 8vw, 8.5rem)', letterSpacing: '-0.03em' }}>
-              INTERIORS
-            </h1>
-          </div>
         </div>
       </section>
 
-      {/* ── Space Types (Transparent with floating cards) ── */}
-      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent">
-        <div className="max-w-[1600px] mx-auto">
+      {/* Spacer after Hero */}
+      <div className="h-28 md:h-44" />
+
+      {/* ── Space Types (Transparent with centered card layouts) ── */}
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent text-center flex flex-col items-center">
+        <div className="max-w-[1400px] w-full flex flex-col items-center">
           <div className="text-center mb-20 ir-reveal">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Space Typologies'}</span>
             <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight">Environments We Curate</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 lg:gap-20 w-full">
             {spaceTypes.map((space, i) => (
-              <div key={i} className="ir-reveal group overflow-hidden border border-[#424242]/12 bg-white/20 hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between">
-                <div>
+              <div key={i} className="ir-reveal group overflow-hidden border border-[#424242]/12 bg-white/20 hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center">
+                <div className="w-full flex flex-col items-center">
                   <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
                     <img
                       src={space.image}
@@ -147,11 +146,11 @@ export default function InteriorPage() {
                       style={{ filter: 'brightness(0.9)' }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
-                    <span className="absolute bottom-3 left-4 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2.5 py-1 border border-[#FFEA0A]/20">{space.tag}</span>
+                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2.5 py-1 border border-[#FFEA0A]/20">{space.tag}</span>
                   </div>
-                  <div className="p-8">
+                  <div className="p-8 md:p-10 flex flex-col items-center">
                     <h3 className="font-bold text-lg uppercase tracking-wide mb-3">{space.label}</h3>
-                    <p className="text-[#424242]/75 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{space.desc}</p>
+                    <p className="text-[#424242]/75 font-light text-xs md:text-sm leading-relaxed max-w-xs" style={{ fontFamily: '"Outfit", sans-serif' }}>{space.desc}</p>
                   </div>
                 </div>
               </div>
@@ -160,34 +159,37 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* ── Spatial Planning & Workflow (Editorial Double Column - Solid Gray Block) ── */}
-      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-white border-t border-[#424242]/10">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32">
+      {/* Spacer after Space Types */}
+      <div className="h-28 md:h-44" />
+
+      {/* ── Spatial Planning & Workflow (Editorial Centered Grid - Solid White Block) ── */}
+      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-white border-t border-[#424242]/10 text-center flex flex-col items-center">
+        <div className="max-w-[1400px] w-full flex flex-col items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 lg:gap-32 w-full">
             
             {/* Left Column: Spatial Planning */}
-            <div className="ir-reveal">
+            <div className="ir-reveal flex flex-col items-center">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Design Clusters'}</span>
-              <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-8">Spatial Planning</h2>
-              <div className="flex flex-col gap-10">
+              <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-8">Spatial Planning</h2>
+              <div className="flex flex-col gap-10 w-full">
                 {planningItems.map((item, i) => (
-                  <div key={i} className="border-t border-[#424242]/15 pt-6 hover:bg-[#424242]/5 px-4 -mx-4 rounded-sm transition-all duration-300">
+                  <div key={i} className="border-t border-[#424242]/15 pt-6 hover:bg-[#424242]/5 px-6 py-6 rounded-sm transition-all duration-300 flex flex-col items-center">
                     <h4 className="font-bold text-base uppercase tracking-wider mb-2">{item.title}</h4>
-                    <p className="text-[#424242]/70 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
+                    <p className="text-[#424242]/70 font-light text-xs md:text-sm leading-relaxed max-w-sm" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Right Column: Turnkey Workflow */}
-            <div className="ir-reveal mt-20 lg:mt-0">
+            <div className="ir-reveal flex flex-col items-center mt-20 md:mt-0">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Curation Process'}</span>
-              <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-8">Turnkey Workflow</h2>
-              <div className="flex flex-col gap-10">
+              <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-8">Turnkey Workflow</h2>
+              <div className="flex flex-col gap-10 w-full">
                 {workflowItems.map((item, i) => (
-                  <div key={i} className="border-t border-[#424242]/15 pt-6 hover:bg-[#424242]/5 px-4 -mx-4 rounded-sm transition-all duration-300">
+                  <div key={i} className="border-t border-[#424242]/15 pt-6 hover:bg-[#424242]/5 px-6 py-6 rounded-sm transition-all duration-300 flex flex-col items-center">
                     <h4 className="font-bold text-base uppercase tracking-wider mb-2">{item.title}</h4>
-                    <p className="text-[#424242]/70 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
+                    <p className="text-[#424242]/70 font-light text-xs md:text-sm leading-relaxed max-w-sm" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -197,34 +199,35 @@ export default function InteriorPage() {
         </div>
       </section>
 
+      {/* Spacer after Workflow */}
+      <div className="h-28 md:h-44" />
+
       {/* ── Our Design Process (Sticky Card Stack Section) ── */}
-      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent border-t border-[#424242]/10">
-        <div className="max-w-[1400px] mx-auto relative">
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10">
+        <div className="max-w-[1400px] mx-auto relative flex flex-col items-center">
           <div className="mb-24 ir-reveal text-center">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Concept to Fitting'}</span>
             <h2 className="font-bold text-3xl md:text-6xl uppercase tracking-tight">OUR DESIGN PROCESS</h2>
           </div>
 
-          <div className="relative flex flex-col gap-[10vh]">
+          <div className="relative flex flex-col gap-[12vh] w-full items-center">
             {processStages.map((stage, i) => (
               <div
                 key={i}
                 className="sticky top-[15vh] w-full flex items-center justify-center mb-[5vh] z-10"
               >
-                <div className="w-[96%] md:w-[90%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl p-8 md:p-14 min-h-[40vh] md:min-h-[50vh] flex flex-col justify-between text-white transition-all duration-500">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/10 pb-6 mb-6">
-                    <div className="flex items-center gap-4">
-                      <span className="text-[#FFEA0A] font-mono text-[11px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 flex-shrink-0 tracking-widest">{stage.num}</span>
-                      <h3 className="font-bold text-lg md:text-2xl uppercase tracking-wide text-white">{stage.title}</h3>
-                    </div>
-                    <span className="font-mono text-[8px] tracking-[0.3em] text-[#FFEA0A] mt-2 md:mt-0 uppercase">{'// INTERSPACE_0' + (i+1)}</span>
+                <div className="w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl p-8 md:p-16 min-h-[40vh] md:min-h-[50vh] flex flex-col justify-between text-white text-center items-center">
+                  <div className="flex flex-col items-center justify-center border-b border-white/10 pb-6 mb-6 w-full">
+                    <span className="text-[#FFEA0A] font-mono text-[10px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 inline-block tracking-widest mb-4">{stage.num}</span>
+                    <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{stage.title}</h3>
+                    <span className="font-mono text-[8px] tracking-[0.3em] text-[#FFEA0A] uppercase mt-2">{'// INTERSPACE_0' + (i+1)}</span>
                   </div>
 
-                  <p className="text-white/60 font-light text-sm md:text-lg leading-relaxed max-w-3xl" style={{ fontFamily: '"Outfit", sans-serif' }}>
+                  <p className="text-white/60 font-light text-sm md:text-lg leading-relaxed max-w-2xl" style={{ fontFamily: '"Outfit", sans-serif' }}>
                     {stage.desc}
                   </p>
 
-                  <div className="flex justify-end mt-8">
+                  <div className="flex justify-center mt-8 w-full border-t border-white/5 pt-4">
                     <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">JAGATHI SPATIAL / QUALITY GUARANTEED</span>
                   </div>
                 </div>
@@ -234,17 +237,20 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* ── Material Swatches (Transparent Grid) ── */}
-      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent border-t border-[#424242]/10">
-        <div className="max-w-[1600px] mx-auto">
+      {/* Spacer after Design Process */}
+      <div className="h-28 md:h-44" />
+
+      {/* ── Material Swatches (Transparent Grid - Centered cards) ── */}
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10 text-center flex flex-col items-center">
+        <div className="max-w-[1600px] w-full flex flex-col items-center">
           <div className="text-center mb-20 ir-reveal">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Material Language'}</span>
             <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight">Material Swatches & Finishes</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 w-full">
             {swatches.map((s, i) => (
-              <div key={i} className="ir-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between">
-                <div>
+              <div key={i} className="ir-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center">
+                <div className="w-full flex flex-col items-center">
                   <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
                     <img
                       src={s.image}
@@ -253,12 +259,12 @@ export default function InteriorPage() {
                       style={{ filter: 'brightness(0.88)' }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                    <span className="absolute bottom-3 left-4 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2.5 py-1 border border-[#FFEA0A]/20">{s.tag}</span>
+                    <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2.5 py-1 border border-[#FFEA0A]/20">{s.tag}</span>
                   </div>
-                  <div className="p-8">
+                  <div className="p-8 md:p-10 flex flex-col items-center">
                     <span className="text-[#424242]/50 font-mono text-[8px] uppercase tracking-widest block mb-2">{s.label}</span>
                     <h3 className="font-bold text-[15px] md:text-[17px] uppercase tracking-wide mb-3">{s.title}</h3>
-                    <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{s.desc}</p>
+                    <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed max-w-xs" style={{ fontFamily: '"Outfit", sans-serif' }}>{s.desc}</p>
                   </div>
                 </div>
               </div>
@@ -267,22 +273,25 @@ export default function InteriorPage() {
         </div>
       </section>
 
+      {/* Spacer before CTA */}
+      <div className="h-28 md:h-44" />
+
       {/* ── CTA (Glassmorphic Box) ── */}
-      <section className="relative z-10 w-full py-32 md:py-48 px-6 bg-transparent border-t border-[#424242]/10">
-        <div className="max-w-3xl mx-auto text-center"
-             style={{ background: 'rgba(255, 255, 255, 0.04)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', padding: '5rem 2rem' }}>
-          <span className="text-[#424242]/45 font-mono text-[10px] uppercase tracking-[0.3em] block mb-5">{'// Custom Spaces'}</span>
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 bg-transparent border-t border-[#424242]/10 flex flex-col items-center">
+        <div className="max-w-3xl w-full text-center"
+             style={{ background: 'rgba(255, 255, 255, 0.04)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', padding: '6rem 3rem' }}>
+          <span className="text-[#424242]/45 font-mono text-[10px] uppercase tracking-[0.3em] block mb-6">{'// Custom Spaces'}</span>
           <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-5 leading-tight">
             Consult our Turnkey<br />Design Team.
           </h2>
           <p className="text-[#424242]/60 font-light text-sm md:text-base leading-relaxed mb-10 max-w-xl mx-auto" style={{ fontFamily: '"Outfit", sans-serif' }}>
             From preliminary layouts to fabric selection and installation, we manage the entire spatial lifecycle. Book a concept meeting today.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="mailto:design@jagathi.com" className="inline-flex items-center justify-center gap-2 bg-[#424242] text-[#FFEA0A] px-8 py-4 text-xs tracking-[0.2em] uppercase font-bold hover:bg-[#333] transition-colors" data-interactive>
+          <div className="flex flex-col sm:flex-row justify-center gap-6">
+            <a href="mailto:design@jagathi.com" className="inline-flex items-center justify-center gap-2 bg-[#424242] text-[#FFEA0A] px-10 py-5 text-xs tracking-[0.2em] uppercase font-bold hover:bg-[#333] transition-colors" data-interactive>
               Consult Turnkey Planner <span>→</span>
             </a>
-            <a href="#catalog" className="inline-flex items-center justify-center gap-2 border border-[#424242]/25 text-[#424242] px-8 py-4 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-[#424242] hover:text-[#FFEA0A] transition-all duration-300" data-interactive>
+            <a href="#catalog" className="inline-flex items-center justify-center gap-2 border border-[#424242]/25 text-[#424242] px-10 py-5 text-xs tracking-[0.2em] uppercase font-semibold hover:bg-[#424242] hover:text-[#FFEA0A] transition-all duration-300" data-interactive>
               Explore Catalog <span>→</span>
             </a>
           </div>

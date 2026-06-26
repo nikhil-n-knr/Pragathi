@@ -147,6 +147,9 @@ export default function ConstructionPage() {
         </div>
       </section>
 
+      {/* Spacer after Hero */}
+      <div className="h-28 md:h-44" />
+
       {/* ── Stats Strip (Solid Block) ────────────── */}
       <section id="con-stats" className="relative z-10 w-full bg-[#1E1E1E]">
         <div className="w-full max-w-[1600px] mx-auto">
@@ -166,8 +169,11 @@ export default function ConstructionPage() {
         </div>
       </section>
 
+      {/* Spacer after Stats */}
+      <div className="h-28 md:h-44" />
+
       {/* ── Capability Clusters (Centered Layout with Large Spacing) ── */}
-      <section className="relative z-10 w-full py-36 md:py-52 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent text-center flex flex-col items-center">
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent text-center flex flex-col items-center">
         <div className="max-w-[1400px] w-full flex flex-col items-center">
           <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Scope of Operations'}</span>
           <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-16">CAPABILITY CLUSTERS</h2>
@@ -184,6 +190,9 @@ export default function ConstructionPage() {
         </div>
       </section>
 
+      {/* Spacer after Capabilities */}
+      <div className="h-28 md:h-44" />
+
       {/* ── Centered Wide Image Banner ── */}
       <section className="relative z-10 w-full px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent">
         <div className="max-w-[1600px] mx-auto h-[40vh] md:h-[60vh] border border-[#424242]/10 overflow-hidden relative group rounded-sm shadow-xl">
@@ -195,8 +204,11 @@ export default function ConstructionPage() {
         </div>
       </section>
 
+      {/* Spacer after Image 1 */}
+      <div className="h-28 md:h-44" />
+
       {/* ── Scientific Approach (Centered Grid) ── */}
-      <section className="relative z-10 w-full py-36 md:py-52 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent text-center flex flex-col items-center">
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent text-center flex flex-col items-center">
         <div className="max-w-[1400px] w-full flex flex-col items-center">
           <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Engineering Rigor'}</span>
           <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-16">SCIENTIFIC APPROACH</h2>
@@ -213,8 +225,11 @@ export default function ConstructionPage() {
         </div>
       </section>
 
+      {/* Spacer after Science */}
+      <div className="h-28 md:h-44" />
+
       {/* ── Centered Wide Image Banner 2 ── */}
-      <section className="relative z-10 w-full px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent pb-12">
+      <section className="relative z-10 w-full px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent">
         <div className="max-w-[1600px] mx-auto h-[40vh] md:h-[60vh] border border-[#424242]/10 overflow-hidden relative group rounded-sm shadow-xl">
           <img
             src="/assets/images/construction/highrise.webp"
@@ -224,8 +239,11 @@ export default function ConstructionPage() {
         </div>
       </section>
 
-      {/* ── Build Process (Sticky Card Stack Section - Centered content inside cards) ── */}
-      <section className="relative z-10 w-full py-36 md:py-52 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10">
+      {/* Spacer after Image 2 */}
+      <div className="h-28 md:h-44" />
+
+      {/* ── Build Process (Sticky Card Stack Section) ── */}
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10">
         <div className="max-w-[1400px] mx-auto relative flex flex-col items-center">
           <div className="mb-24 cr-reveal text-center">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Delivery Method'}</span>
@@ -262,8 +280,11 @@ export default function ConstructionPage() {
         </div>
       </section>
 
+      {/* Spacer after Build Process */}
+      <div className="h-28 md:h-44" />
+
       {/* ── Materials Science (Solid charcoal block - Centered cards) ── */}
-      <section className="relative z-10 w-full py-36 md:py-52 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-[#1E1E1E] text-center flex flex-col items-center">
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-[#1E1E1E] text-center flex flex-col items-center">
         <div className="max-w-[1600px] w-full flex flex-col items-center">
           <div className="mb-24 cr-reveal">
             <span className="text-[#FFEA0A]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Material Standards'}</span>
@@ -284,8 +305,11 @@ export default function ConstructionPage() {
         </div>
       </section>
 
+      {/* Spacer after Materials */}
+      <div className="h-28 md:h-44" />
+
       {/* ── Signature Outcomes (Centered Cards & text) ── */}
-      <section className="relative z-10 w-full py-36 md:py-52 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10 text-center flex flex-col items-center">
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10 text-center flex flex-col items-center">
         <div className="max-w-[1600px] w-full flex flex-col items-center">
           <div className="mb-24 cr-reveal">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Signature Outcomes'}</span>
@@ -319,8 +343,11 @@ export default function ConstructionPage() {
         </div>
       </section>
 
+      {/* Spacer before CTA */}
+      <div className="h-28 md:h-44" />
+
       {/* ── CTA (Centered glassmorphic container) ── */}
-      <section className="relative z-10 w-full py-36 md:py-52 px-6 bg-transparent border-t border-[#424242]/10 flex flex-col items-center">
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 bg-transparent border-t border-[#424242]/10 flex flex-col items-center">
         <div className="max-w-3xl w-full text-center"
              style={{ background: 'rgba(255, 255, 255, 0.04)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', padding: '6rem 3rem' }}>
           <span className="text-[#424242]/45 font-mono text-[10px] uppercase tracking-[0.3em] block mb-6">{'// Monolithic Handover'}</span>
