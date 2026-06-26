@@ -181,7 +181,7 @@ export default function CivilMarketPage() {
       </section>
 
       {/* Spacer after Hero */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Investment Metrics Bar (Solid Block) ───────────────── */}
       <section id="cm-stats" className="relative z-10 w-full px-6 md:px-12 lg:px-20 xl:px-24 -mt-10 md:-mt-12">
@@ -212,7 +212,7 @@ export default function CivilMarketPage() {
       </section>
 
       {/* Spacer after Metrics */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Land Zone Portfolio (Sticky Card Stack Section) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent">
@@ -248,11 +248,11 @@ export default function CivilMarketPage() {
                   </div>
 
                   {/* Right Column: Wide Aerial Image */}
-                  <div className="relative w-full h-[30vh] md:h-full md:col-span-5 overflow-hidden">
+                  <div className="relative w-full h-[30vh] md:h-full md:col-span-5 overflow-hidden group">
                     <img
                       src={zone.image}
                       alt={zone.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#1E1E1E] via-transparent to-transparent hidden md:block" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E] via-transparent to-transparent md:hidden" />
@@ -266,15 +266,15 @@ export default function CivilMarketPage() {
       </section>
 
       {/* Spacer after Zone Stack */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
-      {/* ── Land Intelligence & Investor Logic (Editorial Centered Grid - Solid White Panel) ── */}
-      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-white border-t border-[#424242]/10 text-center flex flex-col items-center">
+      {/* ── Land Intelligence & Investor Logic (Editorial Centered Grid - Transparent Background) ── */}
+      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10 text-center flex flex-col items-center">
         <div className="max-w-[1400px] w-full flex flex-col items-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 lg:gap-32 w-full">
+          <div className="flex flex-wrap justify-center gap-16 md:gap-24 lg:gap-32 w-full">
             
             {/* Left Column: Land Intelligence */}
-            <div className="cm-reveal flex flex-col items-center">
+            <div className="cm-reveal flex flex-col items-center w-full md:w-[45%] max-w-xl">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Curation Logic'}</span>
               <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-8">Land Intelligence</h2>
               <div className="flex flex-col gap-10 w-full">
@@ -292,7 +292,7 @@ export default function CivilMarketPage() {
             </div>
 
             {/* Right Column: Investor Logic */}
-            <div className="cm-reveal flex flex-col items-center mt-20 lg:mt-0">
+            <div className="cm-reveal flex flex-col items-center mt-20 lg:mt-0 w-full md:w-[45%] max-w-xl">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Investor Framework'}</span>
               <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-8">Investor Logic</h2>
               <div className="flex flex-col gap-10 w-full">
@@ -314,7 +314,7 @@ export default function CivilMarketPage() {
       </section>
 
       {/* Spacer after Intelligence */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Why Jagathi Lands / Trust Pillars (Solid Charcoal Block) ────── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-[#1E1E1E] text-center flex flex-col items-center">
@@ -324,9 +324,9 @@ export default function CivilMarketPage() {
             <h2 className="font-bold text-white text-2xl md:text-4xl uppercase tracking-tight">Why Jagathi Lands</h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-12 w-full">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12 w-full max-w-[1400px]">
             {trustPillars.map((pillar, i) => (
-              <div key={i} className="cm-reveal border border-white/5 p-8 hover:border-[#FFEA0A]/30 transition-all duration-350 bg-white/[0.02] flex flex-col items-center text-center">
+              <div key={i} className="cm-reveal border border-white/5 p-8 hover:border-[#FFEA0A]/30 transition-all duration-350 bg-white/[0.02] flex flex-col items-center text-center w-full sm:w-[calc(50%-2rem)] max-w-md">
                 <div className="text-[#FFEA0A] text-2xl mb-4 font-mono">{pillar.icon}</div>
                 <h3 className="text-white font-bold text-base uppercase tracking-wide mb-3">{pillar.title}</h3>
                 <p className="text-white/40 font-light text-xs md:text-sm leading-relaxed max-w-md" style={{ fontFamily: '"Outfit", sans-serif' }}>{pillar.desc}</p>
@@ -337,7 +337,7 @@ export default function CivilMarketPage() {
       </section>
 
       {/* Spacer after Trust Pillars */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Plotted Premium Civil Inventory (Transparent - Centered cards) ──────── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10 text-center flex flex-col items-center">
@@ -347,15 +347,15 @@ export default function CivilMarketPage() {
             <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight">Plotted Premium Civil Inventory</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 w-full">
+          <div className="flex flex-wrap justify-center gap-12 md:gap-16 w-full max-w-[1400px]">
             {assetDossiers.map((asset, i) => (
-              <div key={i} className="cm-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center">
+              <div key={i} className="cm-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center w-full sm:w-[calc(50%-2rem)] md:w-[calc(33.33%-2.5rem)] max-w-sm">
                 <div className="w-full flex flex-col items-center">
                   <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
                     <img
                       src={asset.image}
                       alt={asset.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
                     <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#1E1E1E] px-2.5 py-1">
@@ -375,7 +375,7 @@ export default function CivilMarketPage() {
       </section>
 
       {/* Spacer before CTA */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── CTA Section (Glassmorphic Box) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 bg-transparent border-t border-[#424242]/10 px-6 flex flex-col items-center">

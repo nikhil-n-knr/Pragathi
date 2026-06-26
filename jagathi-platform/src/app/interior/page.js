@@ -125,7 +125,7 @@ export default function InteriorPage() {
       </section>
 
       {/* Spacer after Hero */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Space Types (Transparent with centered card layouts) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent text-center flex flex-col items-center">
@@ -134,15 +134,15 @@ export default function InteriorPage() {
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Space Typologies'}</span>
             <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight">Environments We Curate</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 lg:gap-20 w-full">
+          <div className="flex flex-wrap justify-center gap-12 md:gap-16 lg:gap-20 w-full">
             {spaceTypes.map((space, i) => (
-              <div key={i} className="ir-reveal group overflow-hidden border border-[#424242]/12 bg-white/20 hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center">
+              <div key={i} className="ir-reveal group overflow-hidden border border-[#424242]/12 bg-white/20 hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center w-full sm:w-[calc(50%-2rem)] md:w-[calc(33.33%-2.5rem)] max-w-sm">
                 <div className="w-full flex flex-col items-center">
                   <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
                     <img
                       src={space.image}
                       alt={space.label}
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                       style={{ filter: 'brightness(0.9)' }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
@@ -160,15 +160,15 @@ export default function InteriorPage() {
       </section>
 
       {/* Spacer after Space Types */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
-      {/* ── Spatial Planning & Workflow (Editorial Centered Grid - Solid White Block) ── */}
-      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-white border-t border-[#424242]/10 text-center flex flex-col items-center">
+      {/* ── Spatial Planning & Workflow (Editorial Centered Grid - Transparent Background) ── */}
+      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10 text-center flex flex-col items-center">
         <div className="max-w-[1400px] w-full flex flex-col items-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 lg:gap-32 w-full">
+          <div className="flex flex-wrap justify-center gap-16 md:gap-24 lg:gap-32 w-full">
             
             {/* Left Column: Spatial Planning */}
-            <div className="ir-reveal flex flex-col items-center">
+            <div className="ir-reveal flex flex-col items-center w-full md:w-[45%] max-w-xl">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Design Clusters'}</span>
               <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-8">Spatial Planning</h2>
               <div className="flex flex-col gap-10 w-full">
@@ -182,7 +182,7 @@ export default function InteriorPage() {
             </div>
 
             {/* Right Column: Turnkey Workflow */}
-            <div className="ir-reveal flex flex-col items-center mt-20 md:mt-0">
+            <div className="ir-reveal flex flex-col items-center mt-20 md:mt-0 w-full md:w-[45%] max-w-xl">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Curation Process'}</span>
               <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-8">Turnkey Workflow</h2>
               <div className="flex flex-col gap-10 w-full">
@@ -200,7 +200,7 @@ export default function InteriorPage() {
       </section>
 
       {/* Spacer after Workflow */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Our Design Process (Sticky Card Stack Section) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10">
@@ -238,7 +238,7 @@ export default function InteriorPage() {
       </section>
 
       {/* Spacer after Design Process */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Material Swatches (Transparent Grid - Centered cards) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10 text-center flex flex-col items-center">
@@ -247,15 +247,15 @@ export default function InteriorPage() {
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Material Language'}</span>
             <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight">Material Swatches & Finishes</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 w-full">
+          <div className="flex flex-wrap justify-center gap-12 md:gap-16 w-full max-w-[1400px]">
             {swatches.map((s, i) => (
-              <div key={i} className="ir-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center">
+              <div key={i} className="ir-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center w-full sm:w-[calc(50%-2rem)] md:w-[calc(33.33%-2.5rem)] max-w-sm">
                 <div className="w-full flex flex-col items-center">
                   <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
                     <img
                       src={s.image}
                       alt={s.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                       style={{ filter: 'brightness(0.88)' }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
@@ -274,7 +274,7 @@ export default function InteriorPage() {
       </section>
 
       {/* Spacer before CTA */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── CTA (Glassmorphic Box) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 bg-transparent border-t border-[#424242]/10 flex flex-col items-center">

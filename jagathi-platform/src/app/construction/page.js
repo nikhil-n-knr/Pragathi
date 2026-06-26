@@ -95,7 +95,7 @@ export default function ConstructionPage() {
   }, []);
 
   return (
-    <div ref={scrollContainerRef} className="w-full relative min-h-screen text-[#424242] bg-transparent">
+    <div ref={scrollContainerRef} className="w-full relative min-h-screen text-[#424242] bg-transparent flex flex-col items-center">
 
       {/* ── 3D Canvas Background ── */}
       <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
@@ -148,7 +148,7 @@ export default function ConstructionPage() {
       </section>
 
       {/* Spacer after Hero */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Stats Strip (Solid Block) ────────────── */}
       <section id="con-stats" className="relative z-10 w-full bg-[#1E1E1E]">
@@ -170,7 +170,7 @@ export default function ConstructionPage() {
       </section>
 
       {/* Spacer after Stats */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Capability Clusters (Centered Layout with Large Spacing) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent text-center flex flex-col items-center">
@@ -178,9 +178,9 @@ export default function ConstructionPage() {
           <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Scope of Operations'}</span>
           <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-16">CAPABILITY CLUSTERS</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 lg:gap-20 w-full">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12 w-full max-w-[1400px]">
             {capabilities.map((item, i) => (
-              <div key={i} className="border-t border-[#424242]/15 pt-8 hover:bg-[#424242]/5 px-6 py-8 rounded-sm transition-all duration-300 flex flex-col items-center">
+              <div key={i} className="border-t border-[#424242]/15 pt-8 hover:bg-[#424242]/5 px-6 py-8 rounded-sm transition-all duration-300 flex flex-col items-center text-center w-full md:w-[calc(33.33%-2rem)] max-w-sm">
                 <span className="text-[#424242]/30 font-mono text-[9px] uppercase tracking-widest block mb-4">{'[ CAPABILITY 0' + (i+1) + ' ]'}</span>
                 <h4 className="font-bold text-lg uppercase tracking-wider mb-4">{item.title}</h4>
                 <p className="text-[#424242]/75 font-light text-xs md:text-sm leading-relaxed max-w-xs" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
@@ -191,21 +191,21 @@ export default function ConstructionPage() {
       </section>
 
       {/* Spacer after Capabilities */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Centered Wide Image Banner ── */}
-      <section className="relative z-10 w-full px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent">
-        <div className="max-w-[1600px] mx-auto h-[40vh] md:h-[60vh] border border-[#424242]/10 overflow-hidden relative group rounded-sm shadow-xl">
+      <section className="relative z-10 w-full px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent flex flex-col items-center justify-center">
+        <div className="max-w-[1600px] w-full h-[40vh] md:h-[60vh] border border-[#424242]/10 overflow-hidden relative group rounded-sm shadow-xl">
           <img
             src="/assets/images/construction/industrial.webp"
-            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.03] filter brightness-95"
+            className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-[1.03] filter brightness-95"
             alt="Heavy Industrial Infrastructure"
           />
         </div>
       </section>
 
       {/* Spacer after Image 1 */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Scientific Approach (Centered Grid) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent text-center flex flex-col items-center">
@@ -213,9 +213,9 @@ export default function ConstructionPage() {
           <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Engineering Rigor'}</span>
           <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-16">SCIENTIFIC APPROACH</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 lg:gap-20 w-full">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12 w-full max-w-[1400px]">
             {science.map((item, i) => (
-              <div key={i} className="border-t border-[#424242]/15 pt-8 hover:bg-[#424242]/5 px-6 py-8 rounded-sm transition-all duration-300 flex flex-col items-center">
+              <div key={i} className="border-t border-[#424242]/15 pt-8 hover:bg-[#424242]/5 px-6 py-8 rounded-sm transition-all duration-300 flex flex-col items-center text-center w-full md:w-[calc(33.33%-2rem)] max-w-sm">
                 <span className="text-[#424242]/30 font-mono text-[9px] uppercase tracking-widest block mb-4">{'[ METHOD 0' + (i+1) + ' ]'}</span>
                 <h4 className="font-bold text-lg uppercase tracking-wider mb-4">{item.title}</h4>
                 <p className="text-[#424242]/75 font-light text-xs md:text-sm leading-relaxed max-w-xs" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
@@ -226,21 +226,21 @@ export default function ConstructionPage() {
       </section>
 
       {/* Spacer after Science */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Centered Wide Image Banner 2 ── */}
-      <section className="relative z-10 w-full px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent">
-        <div className="max-w-[1600px] mx-auto h-[40vh] md:h-[60vh] border border-[#424242]/10 overflow-hidden relative group rounded-sm shadow-xl">
+      <section className="relative z-10 w-full px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent flex flex-col items-center justify-center">
+        <div className="max-w-[1600px] w-full h-[40vh] md:h-[60vh] border border-[#424242]/10 overflow-hidden relative group rounded-sm shadow-xl">
           <img
             src="/assets/images/construction/highrise.webp"
-            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.03] filter brightness-95"
+            className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-[1.03] filter brightness-95"
             alt="Commercial Highrise Tower Core"
           />
         </div>
       </section>
 
       {/* Spacer after Image 2 */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Build Process (Sticky Card Stack Section) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10">
@@ -281,7 +281,7 @@ export default function ConstructionPage() {
       </section>
 
       {/* Spacer after Build Process */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Materials Science (Solid charcoal block - Centered cards) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-[#1E1E1E] text-center flex flex-col items-center">
@@ -291,9 +291,9 @@ export default function ConstructionPage() {
             <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight text-white">Materials Science</h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 lg:gap-20 w-full">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12 w-full max-w-[1400px]">
             {materials.map((m, i) => (
-              <div key={i} className="cr-reveal group border border-white/5 p-8 md:p-10 hover:border-[#FFEA0A]/30 transition-all duration-350 bg-white/[0.02] flex flex-col items-center text-center">
+              <div key={i} className="cr-reveal group border border-white/5 p-8 md:p-10 hover:border-[#FFEA0A]/30 transition-all duration-350 bg-white/[0.02] flex flex-col items-center text-center w-full md:w-[calc(33.33%-2rem)] max-w-sm">
                 <span className="text-[#FFEA0A]/40 font-mono text-[8px] tracking-[0.3em] block mb-6 uppercase">{m.code}</span>
                 <h3 className="text-white font-bold text-lg uppercase tracking-wide mb-3 group-hover:text-[#FFEA0A] transition-colors duration-300">{m.name}</h3>
                 <span className="text-[#FFEA0A]/50 font-mono text-[9px] uppercase tracking-wider block mb-6">{m.spec}</span>
@@ -306,7 +306,7 @@ export default function ConstructionPage() {
       </section>
 
       {/* Spacer after Materials */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── Signature Outcomes (Centered Cards & text) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10 text-center flex flex-col items-center">
@@ -316,15 +316,15 @@ export default function ConstructionPage() {
             <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight">Signature Civil Outcomes</h2>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-12 w-full max-w-[1400px]">
             {portfolioCards.map((card, i) => (
-              <div key={i} className="cr-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center">
+              <div key={i} className="cr-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between text-center items-center w-full sm:w-[calc(50%-2rem)] lg:w-[calc(33.33%-2rem)] max-w-sm">
                 <div className="w-full flex flex-col items-center">
                   <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16/11' }}>
                     <img
                       src={card.image}
                       alt={card.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                     <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-[9px] font-mono tracking-[0.25em] text-[#FFEA0A] bg-[#424242] px-3 py-1 border border-[#FFEA0A]/20">
@@ -344,7 +344,7 @@ export default function ConstructionPage() {
       </section>
 
       {/* Spacer before CTA */}
-      <div className="h-28 md:h-44" />
+      <div className="h-28 md:h-44 w-full" />
 
       {/* ── CTA (Centered glassmorphic container) ── */}
       <section className="relative z-10 w-full py-28 md:py-36 px-6 bg-transparent border-t border-[#424242]/10 flex flex-col items-center">
