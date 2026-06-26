@@ -46,6 +46,7 @@ export default function ConstructionPage() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    document.body.classList.add('home-theme-yellow-gray');
     gsap.registerPlugin(ScrollTrigger);
 
     /* Scroll reveals */
@@ -71,11 +72,14 @@ export default function ConstructionPage() {
       }
     });
 
-    return () => ScrollTrigger.getAll().forEach(t => t.kill());
+    return () => {
+      document.body.classList.remove('home-theme-yellow-gray');
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
   }, []);
 
   return (
-    <div className="w-full min-h-screen text-[#424242]" style={{ fontFamily: '"Outfit", sans-serif', backgroundColor: '#F8F7F4' }}>
+    <div className="w-full min-h-screen text-[#424242]" style={{ backgroundColor: '#FFEA0A' }}>
 
       {/* ── Hero ─────────────────────────────────── */}
       <section className="relative w-full overflow-hidden" style={{ minHeight: '88vh' }}>
@@ -85,21 +89,21 @@ export default function ConstructionPage() {
             src="/assets/images/construction/bridge.webp"
             alt="Construction"
             className="w-full h-full object-cover object-center"
-            style={{ filter: 'brightness(0.42) saturate(0.7)' }}
+            style={{ filter: 'brightness(0.4) saturate(0.7)' }}
           />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.3) 60%, transparent 100%)' }} />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 55%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.3) 70%, transparent 100%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.75) 0%, transparent 55%)' }} />
         </div>
 
         {/* Text */}
         <div className="relative z-10 flex flex-col justify-end h-full w-full px-6 md:px-16 lg:px-24 pb-16 md:pb-24" style={{ minHeight: '88vh' }}>
           <span className="text-white/50 font-mono text-[10px] uppercase tracking-[0.35em] mb-5 block">{'// Pillar 01 / Construction & Land Development'}</span>
-          <h1 className="font-bold text-white uppercase leading-none mb-6" style={{ fontFamily: '"Outfit", sans-serif', fontWeight: 700, fontSize: 'clamp(2.6rem, 7vw, 7rem)', letterSpacing: '-0.02em' }}>
+          <h1 className="font-bold text-white uppercase leading-none mb-6" style={{ fontSize: 'clamp(2.6rem, 7vw, 7rem)', letterSpacing: '-0.02em' }}>
             Construction<br />
             <span style={{ fontWeight: 300, opacity: 0.75, fontSize: '0.65em', letterSpacing: '0.02em' }}>& Land Development</span>
           </h1>
           <div className="h-px w-12 bg-[#FFEA0A] mb-6" />
-          <p className="text-white/60 font-light leading-relaxed max-w-lg" style={{ fontSize: 'clamp(0.8rem, 1.5vw, 1rem)' }}>
+          <p className="text-white/60 font-light leading-relaxed max-w-lg" style={{ fontFamily: '"Outfit", sans-serif', fontSize: 'clamp(0.8rem, 1.5vw, 1rem)' }}>
             We manage the entire lifecycle of heavy civil, land development, and commercial infrastructure — anchored in mathematical precision, strict structural integrity, and zero-compromise execution.
           </p>
           <div className="flex items-center gap-3 mt-8">
@@ -129,29 +133,29 @@ export default function ConstructionPage() {
       </section>
 
       {/* ── Capability Clusters ───────────────────── */}
-      <section className="w-full py-20 md:py-28 px-6 md:px-12 lg:px-20 xl:px-24 bg-[#F8F7F4]">
+      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#FFEA0A]">
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 lg:gap-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 lg:gap-32">
             <div className="cr-reveal">
-              <span className="text-[#424242]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// What We Build'}</span>
-              <h2 className="font-bold text-2xl md:text-3xl uppercase tracking-tight mb-8" style={{ fontFamily: '"Outfit", sans-serif' }}>Capability Clusters</h2>
-              <div className="flex flex-col gap-6">
+              <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// What We Build'}</span>
+              <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-8">Capability Clusters</h2>
+              <div className="flex flex-col gap-8">
                 {capabilities.map((item, i) => (
-                  <div key={i} className="border-l-2 border-[#424242]/15 pl-5 hover:border-[#424242]/60 transition-colors duration-300">
-                    <h4 className="font-semibold text-sm uppercase tracking-wide mb-1.5">{item.title}</h4>
-                    <p className="text-[#424242]/55 font-light text-[13px] leading-relaxed">{item.desc}</p>
+                  <div key={i} className="border-l-2 border-[#424242]/20 pl-6 hover:border-[#424242] transition-colors duration-300">
+                    <h4 className="font-bold text-sm md:text-base uppercase tracking-wider mb-2">{item.title}</h4>
+                    <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
             <div className="cr-reveal">
-              <span className="text-[#424242]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Engineering Discipline'}</span>
-              <h2 className="font-bold text-2xl md:text-3xl uppercase tracking-tight mb-8" style={{ fontFamily: '"Outfit", sans-serif' }}>Scientific Approach</h2>
-              <div className="flex flex-col gap-6">
+              <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Engineering Discipline'}</span>
+              <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-8">Scientific Approach</h2>
+              <div className="flex flex-col gap-8">
                 {science.map((item, i) => (
-                  <div key={i} className="border-l-2 border-[#424242]/15 pl-5 hover:border-[#424242]/60 transition-colors duration-300">
-                    <h4 className="font-semibold text-sm uppercase tracking-wide mb-1.5">{item.title}</h4>
-                    <p className="text-[#424242]/55 font-light text-[13px] leading-relaxed">{item.desc}</p>
+                  <div key={i} className="border-l-2 border-[#424242]/20 pl-6 hover:border-[#424242] transition-colors duration-300">
+                    <h4 className="font-bold text-sm md:text-base uppercase tracking-wider mb-2">{item.title}</h4>
+                    <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -161,20 +165,20 @@ export default function ConstructionPage() {
       </section>
 
       {/* ── Process Timeline ──────────────────────── */}
-      <section className="w-full py-20 md:py-28 px-6 md:px-12 lg:px-20 xl:px-24 border-t border-[#424242]/8" style={{ backgroundColor: '#ffffff' }}>
+      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 border-t border-[#424242]/10 bg-[#FFEA0A]">
         <div className="max-w-[1600px] mx-auto">
-          <div className="text-center mb-14 cr-reveal">
-            <span className="text-[#424242]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Delivery Method'}</span>
-            <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight" style={{ fontFamily: '"Outfit", sans-serif' }}>Our Build Process</h2>
+          <div className="text-center mb-20 cr-reveal">
+            <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Delivery Method'}</span>
+            <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight">Our Build Process</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             {processSteps.map((step, i) => (
-              <div key={i} className="cr-reveal group border border-[#424242]/10 bg-[#F8F7F4] p-7 hover:border-[#424242]/30 hover:shadow-md transition-all duration-300">
-                <div className="flex items-center gap-3 mb-4">
+              <div key={i} className="cr-reveal group border border-[#424242]/15 bg-white/20 p-8 hover:border-[#424242]/35 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center gap-4 mb-4">
                   <span className="text-[#FFEA0A] font-mono text-[10px] bg-[#424242] px-2.5 py-1 flex-shrink-0 tracking-widest">{step.num}</span>
-                  <h3 className="font-semibold text-sm uppercase tracking-wide">{step.title}</h3>
+                  <h3 className="font-bold text-sm md:text-base uppercase tracking-wide">{step.title}</h3>
                 </div>
-                <p className="text-[#424242]/50 font-light text-[13px] leading-relaxed">{step.desc}</p>
+                <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{step.desc}</p>
               </div>
             ))}
           </div>
@@ -182,52 +186,53 @@ export default function ConstructionPage() {
       </section>
 
       {/* ── Materials Science ─────────────────────── */}
-      <section className="w-full py-20 md:py-28 px-6 md:px-12 lg:px-20 xl:px-24 bg-[#424242]">
+      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#424242]">
         <div className="max-w-[1600px] mx-auto">
-          <div className="text-center mb-14 cr-reveal">
+          <div className="text-center mb-20 cr-reveal">
             <span className="text-[#FFEA0A]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Material Standards'}</span>
-            <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight text-white" style={{ fontFamily: '"Outfit", sans-serif' }}>Materials Science</h2>
+            <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight text-white">Materials Science</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {materials.map((m, i) => (
-              <div key={i} className="cr-reveal group border border-white/8 p-7 hover:border-[#FFEA0A]/30 transition-all duration-300">
+              <div key={i} className="cr-reveal group border border-white/8 p-8 hover:border-[#FFEA0A]/30 transition-all duration-300 bg-white/[0.01]">
                 <span className="text-[#FFEA0A]/40 font-mono text-[8px] tracking-[0.3em] block mb-5 uppercase">{m.code}</span>
                 <h3 className="text-white font-bold text-base uppercase tracking-wide mb-2 group-hover:text-[#FFEA0A] transition-colors duration-300">{m.name}</h3>
                 <span className="text-[#FFEA0A]/50 font-mono text-[9px] uppercase tracking-wider block mb-5">{m.spec}</span>
                 <div className="h-px bg-white/8 mb-5" />
-                <p className="text-white/40 font-light text-[13px] leading-relaxed">{m.desc}</p>
+                <p className="text-white/40 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{m.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Portfolio Cards ───────────────────────── */}
-      <section className="w-full py-20 md:py-28 px-6 md:px-12 lg:px-20 xl:px-24 bg-[#F8F7F4]">
+      {/* ── Signature Outcomes ────────────────────── */}
+      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#FFEA0A] border-t border-[#424242]/10">
         <div className="max-w-[1600px] mx-auto">
-          <div className="text-center mb-14 cr-reveal">
-            <span className="text-[#424242]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Signature Outcomes'}</span>
-            <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight" style={{ fontFamily: '"Outfit", sans-serif' }}>Signature Civil Outcomes</h2>
+          <div className="text-center mb-20 cr-reveal">
+            <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Signature Outcomes'}</span>
+            <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight">Signature Civil Outcomes</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             {portfolioCards.map((card, i) => (
-              <div key={i} className="cr-reveal group border border-[#424242]/10 bg-white overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500">
-                <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                  <img
-                    src={card.image}
-                    alt={card.title}
-                    className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
-                    style={{ filter: 'brightness(0.88)' }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                  <span className="absolute bottom-3 left-3 text-[8px] font-mono tracking-[0.25em] text-[#FFEA0A] bg-[#424242] px-2.5 py-1 border border-[#FFEA0A]/20">
-                    {card.tag}
-                  </span>
-                </div>
-                <div className="p-6">
-                  <span className="text-[#424242]/40 font-mono text-[8px] uppercase tracking-widest block mb-2">{card.sector}</span>
-                  <h3 className="font-bold text-[15px] uppercase tracking-wide mb-2">{card.title}</h3>
-                  <p className="text-[#424242]/50 font-light text-[13px] leading-relaxed">{card.desc}</p>
+              <div key={i} className="cr-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between">
+                <div>
+                  <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                    <span className="absolute bottom-3 left-4 text-[9px] font-mono tracking-[0.25em] text-[#FFEA0A] bg-[#424242] px-2.5 py-1 border border-[#FFEA0A]/20">
+                      {card.tag}
+                    </span>
+                  </div>
+                  <div className="p-6 md:p-8">
+                    <span className="text-[#424242]/50 font-mono text-[9px] uppercase tracking-widest block mb-2">{card.sector}</span>
+                    <h3 className="font-bold text-lg uppercase tracking-wide mb-3">{card.title}</h3>
+                    <p className="text-[#424242]/75 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{card.desc}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -236,13 +241,13 @@ export default function ConstructionPage() {
       </section>
 
       {/* ── CTA ──────────────────────────────────── */}
-      <section className="w-full py-20 md:py-28 px-6 border-t border-[#424242]/10 bg-white">
+      <section className="w-full py-28 md:py-40 px-6 bg-white border-t border-[#424242]/10">
         <div className="max-w-2xl mx-auto text-center">
           <span className="text-[#424242]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-5">{'// Monolithic Handover'}</span>
-          <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-5 leading-tight" style={{ fontFamily: '"Outfit", sans-serif' }}>
+          <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-5 leading-tight">
             Compliance. Durability.<br />Scale-Readiness.
           </h2>
-          <p className="text-[#424242]/55 font-light text-sm md:text-base leading-relaxed mb-10 max-w-xl mx-auto">
+          <p className="text-[#424242]/60 font-light text-sm md:text-base leading-relaxed mb-10 max-w-xl mx-auto" style={{ fontFamily: '"Outfit", sans-serif' }}>
             From geotech planning to concrete sign-offs, we hold a zero-tolerance margin. Start coordinating with our senior structural planners today.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
