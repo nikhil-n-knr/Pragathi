@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import HomeScene from '../../components/scenes/HomeScene';
 
 /* ─── Data ─────────────────────────────────────── */
 const spaceTypes = [
@@ -38,10 +40,24 @@ const workflowItems = [
 
 /* ─── Component ─────────────────────────────────── */
 export default function InteriorPage() {
+  const scrollProgress = useRef(0);
+  const scrollContainerRef = useRef(null);
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     document.body.classList.add('home-theme-yellow-gray');
     gsap.registerPlugin(ScrollTrigger);
+
+    /* Scroll progress tracker for 3D Camera fly-through */
+    const scrollTracker = ScrollTrigger.create({
+      trigger: scrollContainerRef.current,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+      onUpdate: (self) => {
+        scrollProgress.current = self.progress;
+      }
+    });
 
     const revealEls = gsap.utils.toArray('.ir-reveal');
     revealEls.forEach((el) => {
@@ -55,15 +71,29 @@ export default function InteriorPage() {
 
     return () => {
       document.body.classList.remove('home-theme-yellow-gray');
+      scrollTracker.kill();
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
 
   return (
-    <div className="w-full min-h-screen text-[#424242]" style={{ backgroundColor: '#FFEA0A' }}>
+    <div ref={scrollContainerRef} className="w-full relative min-h-screen text-[#424242] bg-transparent">
+
+      {/* ── 3D Canvas Background ── */}
+      <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
+        <Canvas
+          camera={{ position: [0, 0, 6], fov: 55 }}
+          gl={{ antialias: true, alpha: true, stencil: false, depth: true, powerPreference: "high-performance" }}
+          dpr={[1, 1.5]}
+        >
+          <ambientLight intensity={0.15} />
+          <directionalLight position={[2, 6, 4]} intensity={0.7} />
+          <HomeScene scrollProgress={scrollProgress} />
+        </Canvas>
+      </div>
 
       {/* ── Hero ─────────────────────────────────── */}
-      <section className="relative w-full overflow-hidden" style={{ minHeight: '88vh' }}>
+      <section className="relative w-full overflow-hidden z-10" style={{ minHeight: '88vh' }}>
         <div className="absolute inset-0 z-0">
           <img
             src="/assets/images/interior/penthouse.webp"
@@ -78,7 +108,7 @@ export default function InteriorPage() {
           <span className="text-white/50 font-mono text-[10px] uppercase tracking-[0.35em] mb-5 block">{'// Pillar 02 / Interspace Design'}</span>
           <h1 className="font-bold text-white uppercase leading-none mb-6" style={{ fontSize: 'clamp(2.6rem, 7vw, 7rem)', letterSpacing: '-0.02em' }}>
             Spatial<br />
-            <span style={{ fontWeight: 300, opacity: 0.75, fontSize: '0.65em', letterSpacing: '0.02em' }}>Systems</span>
+            <span style={{ fontWeight: 300, opacity: 0.75, fontSize: '0.65em', letterSpacing: '0.02em' }}>& Systems</span>
           </h1>
           <div className="h-px w-12 bg-[#FFEA0A] mb-6" />
           <p className="text-white/60 font-light leading-relaxed max-w-lg" style={{ fontFamily: '"Outfit", sans-serif', fontSize: 'clamp(0.8rem, 1.5vw, 1rem)' }}>
@@ -87,8 +117,8 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* ── Space Types ───────────────────────────── */}
-      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#FFEA0A]">
+      {/* ── Space Types (Transparent to let 3D background show) ── */}
+      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-20 ir-reveal">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Space Typologies'}</span>
@@ -119,8 +149,8 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* ── Spatial Planning & Workflow ───────────── */}
-      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-white border-t border-[#424242]/10">
+      {/* ── Spatial Planning & Workflow (Solid white block) ── */}
+      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-white border-t border-[#424242]/10">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 lg:gap-32 mb-24">
             <div className="ir-reveal">
@@ -162,8 +192,8 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* ── Material Swatches ─────────────────────── */}
-      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#FFEA0A] border-t border-[#424242]/10">
+      {/* ── Material Swatches (Transparent to let 3D background show) ── */}
+      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent border-t border-[#424242]/10">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-20 ir-reveal">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Material Language'}</span>
@@ -193,8 +223,8 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* ── CTA ──────────────────────────────────── */}
-      <section className="w-full py-28 md:py-40 px-6 border-t border-[#424242]/10 bg-white">
+      {/* ── CTA (Solid white background block) ── */}
+      <section className="relative z-10 w-full py-28 md:py-40 px-6 border-t border-[#424242]/10 bg-white">
         <div className="max-w-2xl mx-auto text-center">
           <span className="text-[#424242]/45 font-mono text-[10px] uppercase tracking-[0.3em] block mb-5">{'// Custom Spaces'}</span>
           <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-5 leading-tight">

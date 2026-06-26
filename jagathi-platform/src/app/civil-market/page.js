@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import HomeScene from '../../components/scenes/HomeScene';
 
 /* ─── Data ─────────────────────────────────────── */
 const investmentMetrics = [
@@ -72,6 +74,8 @@ const assetDossiers = [
 
 /* ─── Component ─────────────────────────────────── */
 export default function CivilMarketPage() {
+  const scrollProgress = useRef(0);
+  const scrollContainerRef = useRef(null);
   const stat1 = useRef(null);
   const stat2 = useRef(null);
   const stat3 = useRef(null);
@@ -81,6 +85,17 @@ export default function CivilMarketPage() {
     if (typeof window === 'undefined') return;
     document.body.classList.add('home-theme-yellow-gray');
     gsap.registerPlugin(ScrollTrigger);
+
+    /* Scroll progress tracker for 3D Camera fly-through */
+    const scrollTracker = ScrollTrigger.create({
+      trigger: scrollContainerRef.current,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+      onUpdate: (self) => {
+        scrollProgress.current = self.progress;
+      }
+    });
 
     // Scroll reveals
     const revealEls = gsap.utils.toArray('.cm-reveal');
@@ -108,15 +123,29 @@ export default function CivilMarketPage() {
 
     return () => {
       document.body.classList.remove('home-theme-yellow-gray');
+      scrollTracker.kill();
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
 
   return (
-    <div className="w-full min-h-screen text-[#424242]" style={{ backgroundColor: '#FFEA0A' }}>
+    <div ref={scrollContainerRef} className="w-full relative min-h-screen text-[#424242] bg-transparent">
+
+      {/* ── 3D Canvas Background ── */}
+      <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
+        <Canvas
+          camera={{ position: [0, 0, 6], fov: 55 }}
+          gl={{ antialias: true, alpha: true, stencil: false, depth: true, powerPreference: "high-performance" }}
+          dpr={[1, 1.5]}
+        >
+          <ambientLight intensity={0.15} />
+          <directionalLight position={[2, 6, 4]} intensity={0.7} />
+          <HomeScene scrollProgress={scrollProgress} />
+        </Canvas>
+      </div>
 
       {/* ── Hero ─────────────────────────────────── */}
-      <section className="relative w-full overflow-hidden" style={{ minHeight: '88vh' }}>
+      <section className="relative w-full overflow-hidden z-10" style={{ minHeight: '88vh' }}>
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <img
@@ -143,7 +172,7 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── Investment Metrics Bar ───────────────── */}
+      {/* ── Investment Metrics Bar (Solid Block) ── */}
       <section id="cm-stats" className="relative z-10 w-full px-6 md:px-12 lg:px-20 xl:px-24 -mt-10 md:-mt-12">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 border border-white/5 divide-x divide-white/5 bg-[#1E1E1E] shadow-2xl">
@@ -171,8 +200,8 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── Land Zone Portfolio ─────────────────── */}
-      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#FFEA0A]">
+      {/* ── Land Zone Portfolio (Transparent to show 3D background) ── */}
+      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-20 cm-reveal">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Zone Categories'}</span>
@@ -210,8 +239,8 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── Land Intelligence & Investor Logic ──── */}
-      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-white border-t border-[#424242]/10">
+      {/* ── Land Intelligence & Investor Logic (Solid white block) ── */}
+      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-white border-t border-[#424242]/10">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 lg:gap-32">
             
@@ -255,8 +284,8 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── Why Jagathi Lands / Trust Pillars ────── */}
-      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#1E1E1E]">
+      {/* ── Why Jagathi Lands / Trust Pillars (Solid charcoal block) ── */}
+      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#1E1E1E]">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-20 cm-reveal">
             <span className="text-[#FFEA0A]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Trust Foundation'}</span>
@@ -275,8 +304,8 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── Plotted Premium Civil Inventory ──────── */}
-      <section className="w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#FFEA0A] border-t border-[#424242]/10">
+      {/* ── Plotted Premium Civil Inventory (Transparent to let 3D background show) ── */}
+      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent border-t border-[#424242]/10">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-20 cm-reveal">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Civil Assets'}</span>
@@ -308,8 +337,8 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── CTA Section ──────────────────────────── */}
-      <section className="w-full py-28 md:py-40 bg-white border-t border-[#424242]/10">
+      {/* ── CTA Section (Solid white background block) ── */}
+      <section className="relative z-10 w-full py-28 md:py-40 bg-white border-t border-[#424242]/10">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <span className="text-[#424242]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-5">{'// Strategic Security'}</span>
           <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-6 leading-tight">
