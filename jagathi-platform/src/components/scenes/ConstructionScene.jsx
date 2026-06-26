@@ -43,6 +43,19 @@ export default function ConstructionScene({ scrollProgress }) {
     { id: 'handover', label: 'Handover Quality', pos: [0.0, 2.5, 0.0], metric: '100% Structural Sign-off' }
   ], []);
 
+  // Pre-allocate materials to reuse them instead of instantiating inside the components loop
+  const materials = useMemo(() => ({
+    concrete: new THREE.MeshStandardMaterial({ color: "#8c8d8f", roughness: 0.8, metalness: 0.2 }),
+    plaster: new THREE.MeshStandardMaterial({ color: "#f3f3f0", roughness: 0.9, metalness: 0.0 }),
+    metal: new THREE.MeshStandardMaterial({ color: "#2c2c2c", roughness: 0.3, metalness: 0.8 }),
+    wood: new THREE.MeshStandardMaterial({ color: "#b58c4c", roughness: 0.5, metalness: 0.1 }),
+    glass: new THREE.MeshStandardMaterial({ color: "#a9c8cc", roughness: 0.15, metalness: 0.9, transparent: true, opacity: 0.35 }),
+    pool: new THREE.MeshStandardMaterial({ color: "#2c7b8c", roughness: 0.1, metalness: 0.9, transparent: true, opacity: 0.75 }),
+    sofa: new THREE.MeshStandardMaterial({ color: "#dcd7c9", roughness: 0.85, metalness: 0.0 }),
+    light: new THREE.MeshBasicMaterial({ color: "#ffe3a8" }),
+    brass: new THREE.MeshStandardMaterial({ color: "#c5a059", roughness: 0.2, metalness: 0.9 })
+  }), []);
+
   // Building components that assemble a modern procedural villa
   const components = useMemo(() => {
     const list = [];
@@ -623,77 +636,12 @@ export default function ConstructionScene({ scrollProgress }) {
             key={idx} 
             position={c.pos} 
             userData={{ startDelay: c.startDelay, originalY: c.pos[1] }}
+            material={materials[c.mat]}
           >
             {c.type === 'cylinder' ? (
               <cylinderGeometry args={[c.size[0], c.size[0], c.size[1], c.size[2] || 8]} />
             ) : (
               <boxGeometry args={c.size} />
-            )}
-            
-            {c.mat === 'concrete' && (
-              <meshStandardMaterial 
-                color="#8c8d8f" 
-                roughness={0.8} 
-                metalness={0.2} 
-              />
-            )}
-            {c.mat === 'plaster' && (
-              <meshStandardMaterial 
-                color="#f3f3f0" 
-                roughness={0.9} 
-                metalness={0.0} 
-              />
-            )}
-            {c.mat === 'metal' && (
-              <meshStandardMaterial 
-                color="#2c2c2c" 
-                roughness={0.3} 
-                metalness={0.8} 
-              />
-            )}
-            {c.mat === 'wood' && (
-              <meshStandardMaterial 
-                color="#b58c4c" 
-                roughness={0.5} 
-                metalness={0.1} 
-              />
-            )}
-            {c.mat === 'glass' && (
-              <meshStandardMaterial 
-                color="#a9c8cc" 
-                roughness={0.15} 
-                metalness={0.9}
-                transparent={true}
-                opacity={0.35}
-              />
-            )}
-            {c.mat === 'pool' && (
-              <meshStandardMaterial 
-                color="#2c7b8c" 
-                roughness={0.1} 
-                metalness={0.9}
-                transparent={true}
-                opacity={0.75}
-              />
-            )}
-            {c.mat === 'sofa' && (
-              <meshStandardMaterial 
-                color="#dcd7c9" 
-                roughness={0.85} 
-                metalness={0.0} 
-              />
-            )}
-            {c.mat === 'light' && (
-              <meshBasicMaterial 
-                color="#ffe3a8" 
-              />
-            )}
-            {c.mat === 'brass' && (
-              <meshStandardMaterial 
-                color="#c5a059" 
-                roughness={0.2} 
-                metalness={0.9} 
-              />
             )}
           </mesh>
         ))}

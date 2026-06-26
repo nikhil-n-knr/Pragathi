@@ -25,6 +25,7 @@ export default function Home() {
   const scrollContainerRef = useRef(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [preloaderDone, setPreloaderDone] = useState(false);
+  const [isInView, setIsInView] = useState(true);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -72,6 +73,11 @@ export default function Home() {
       scrub: true,
       onUpdate: (self) => {
         scrollProgress.current = self.progress;
+        const currentInView = self.progress <= 0.45;
+        setIsInView((prev) => {
+          if (prev !== currentInView) return currentInView;
+          return prev;
+        });
       }
     });
 
@@ -135,9 +141,9 @@ export default function Home() {
       <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
         <Canvas
           camera={{ position: [0, 0, 6], fov: 55 }}
-          gl={{ antialias: true, alpha: true, stencil: false, depth: true }}
+          gl={{ antialias: true, alpha: true, stencil: false, depth: true, powerPreference: "high-performance" }}
           dpr={[1, 1.5]}
-          frameloop={preloaderDone ? 'always' : 'never'}
+          frameloop={preloaderDone && isInView ? 'always' : 'never'}
         >
           <ambientLight intensity={0.15} />
           <directionalLight position={[2, 6, 4]} intensity={0.7} />

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -11,6 +11,7 @@ import MediaFloat from '../../components/MediaFloat';
 export default function InteriorPage() {
   const scrollProgress = useRef(0);
   const scrollContainerRef = useRef(null);
+  const [isInView, setIsInView] = useState(true);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -25,6 +26,11 @@ export default function InteriorPage() {
       scrub: true,
       onUpdate: (self) => {
         scrollProgress.current = self.progress; // 0.0 to 1.0
+        const currentInView = self.progress <= 0.45;
+        setIsInView((prev) => {
+          if (prev !== currentInView) return currentInView;
+          return prev;
+        });
       }
     });
 
@@ -39,16 +45,17 @@ export default function InteriorPage() {
       ref={scrollContainerRef}
       className="relative min-h-[300vh] bg-transparent text-[#424242] font-sans overflow-x-hidden w-full flex flex-col items-center"
     >
-      {/* 1. Page-Specific Local WebGL Background Canvas (Hidden per request) */}
+      {/* 1. Page-Specific Local WebGL Background Canvas */}
       <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
-        {/* <Canvas
+        <Canvas
           camera={{ position: [2.0, -60.2, 4.8], fov: 60 }}
-          gl={{ antialias: true, alpha: true, stencil: true, depth: true }}
+          gl={{ antialias: true, alpha: true, stencil: true, depth: true, powerPreference: "high-performance" }}
           dpr={[1, 1.5]}
+          frameloop={isInView ? 'always' : 'never'}
         >
           <ambientLight intensity={0.1} />
           <InteriorScene scrollProgress={scrollProgress} />
-        </Canvas> */}
+        </Canvas>
       </div>
 
       {/* 2. Hero Section */}

@@ -8,16 +8,6 @@ import { useFluid } from '../../context/FluidContext';
 // Position of interior scene: Y = -62
 const centerY = -62;
 
-// Material shaders shared across solid room elements to compute masking
-const maskUniforms = {
-  uTime: { value: 0 },
-  uBulbPos: { value: new THREE.Vector3(0, centerY + 2.5, 0) },
-  uLightConeDir: { value: new THREE.Vector3(0, -1, 0) },
-  uConeAngleCos: { value: Math.cos(30 * Math.PI / 180) }, // 30 degrees cone
-  uLightOn: { value: 0.0 }, // 0 = off, 1 = on
-  uOpacity: { value: 0.0 }
-};
-
 export default function InteriorScene({ scrollProgress }) {
   const sceneRef = useRef();
   const bulbRef = useRef();
@@ -37,93 +27,17 @@ export default function InteriorScene({ scrollProgress }) {
     restY: centerY + 2.5 // height of the hanging bulb
   });
 
-  useFrame((state) => {
-    const p = scrollProgress && typeof scrollProgress === 'object' && 'current' in scrollProgress ? scrollProgress.current : Number(scrollProgress);
+  // 1. Unified uniforms declaration to prevent memory leaks and duplicate allocations
+  const uniforms = useMemo(() => ({
+    uTime: { value: 0 },
+    uBulbPos: { value: new THREE.Vector3(0, centerY + 2.5, 0) },
+    uLightConeDir: { value: new THREE.Vector3(0, -1, 0) },
+    uConeAngleCos: { value: Math.cos(30 * Math.PI / 180) }, // 30 degrees cone
+    uLightOn: { value: 0.0 }, // 0 = off, 1 = on
+    uOpacity: { value: 0.0 }
+  }), []);
 
-    const sceneOpacity = 1.0;
-    if (sceneRef.current) {
-      sceneRef.current.visible = true;
-    }
-
-    // Set camera position and lookAt target locally
-    const camera = state.camera;
-    // Slow camera zoom-in inspection pan across the room on scroll
-    camera.position.x = 2.0 - p * 0.9;
-    camera.position.z = 4.8;
-    camera.position.y = centerY + 1.8 + p * 0.35;
-    camera.lookAt(0.2, centerY + 1.0, 0);
-
-    maskUniforms.uOpacity.value = sceneOpacity;
-    maskUniforms.uTime.value = state.clock.getElapsedTime();
-
-    // Bulb descent animation on scroll (bulb drops down from ceiling between local scroll 0.0 and 0.4)
-    let dropProgress = 1.0;
-    if (p < 0.4) {
-      dropProgress = THREE.MathUtils.clamp(p / 0.4, 0.0, 1.0);
-    }
-    const currentRestY = centerY + 4.5 - dropProgress * 2.0;
-    bulbPhysics.current.restY = currentRestY;
-
-    // Swing physics: Mouse velocity pushes the bulb
-    const phys = bulbPhysics.current;
-    
-    // Add mouse velocity impulses if hovering or moving fast
-    const speed = mouseVel.current.speed;
-    if (speed > 0.05 && p >= 0.0 && p <= 0.95) {
-      phys.velX += mouseVel.current.x * 0.05;
-      phys.velZ += mouseVel.current.y * 0.05;
-    }
-
-    // Pendulum gravity pull and friction damping
-    const gravity = 0.035;
-    const friction = 0.96;
-
-    phys.velX += -phys.angleX * gravity;
-    phys.velZ += -phys.angleZ * gravity;
-
-    phys.velX *= friction;
-    phys.velZ *= friction;
-
-    phys.angleX += phys.velX;
-    phys.angleZ += phys.velZ;
-
-    // Compute actual bulb coordinates based on string length (L = 2.0)
-    const L = 2.0;
-    const bulbX = L * Math.sin(phys.angleX);
-    const bulbZ = L * Math.sin(phys.angleZ);
-    const bulbY = currentRestY - L * Math.cos(phys.angleX) * Math.cos(phys.angleZ);
-
-    if (bulbRef.current) {
-      bulbRef.current.position.set(bulbX, bulbY, bulbZ);
-    }
-
-    // Set uniform coordinates for masking
-    maskUniforms.uBulbPos.value.set(bulbX, bulbY, bulbZ);
-
-    // Compute light cone direction: points down from bulb along cord
-    const dir = new THREE.Vector3(-bulbX, currentRestY - bulbY, -bulbZ).normalize();
-    maskUniforms.uLightConeDir.value.copy(dir);
-
-    // Dynamic volumetric light cone scale/position/rotation
-    if (lightConeRef.current) {
-      lightConeRef.current.position.set(bulbX, bulbY - 1.5, bulbZ);
-      
-      // Rotate cone to align with swinging direction
-      const angle = Math.atan2(bulbX, currentRestY - bulbY);
-      lightConeRef.current.rotation.z = -phys.angleX;
-      lightConeRef.current.rotation.x = phys.angleZ;
-      
-      // Bulb glow intensity transition
-      const targetConeOpacity = lightOn ? 0.35 * sceneOpacity : 0.0;
-      lightConeRef.current.material.uniforms.uOpacity.value += (targetConeOpacity - lightConeRef.current.material.uniforms.uOpacity.value) * 0.15;
-    }
-
-    // Animate shader uniform representing light state
-    const targetLightOnVal = lightOn ? 1.0 : 0.0;
-    maskUniforms.uLightOn.value += (targetLightOnVal - maskUniforms.uLightOn.value) * 0.15;
-  });
-
-  // Custom Shader: Procedural Texturing + Cone Masking Fragment Shader
+  // 2. Custom Shader: Procedural Texturing + Cone Masking Shaders
   const maskShader = useMemo(() => ({
     vertexShader: `
       varying vec3 vWorldPosition;
@@ -220,7 +134,18 @@ export default function InteriorScene({ scrollProgress }) {
     `
   }), []);
 
-  // Volumetric yellow cone shader
+  // 3. Shared compiled shader material to avoid state changes and duplicate compilation
+  const sharedMaskMaterial = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      vertexShader: maskShader.vertexShader,
+      fragmentShader: maskShader.fragmentShader,
+      uniforms: uniforms,
+      transparent: true,
+      depthWrite: true
+    });
+  }, [uniforms, maskShader]);
+
+  // 4. Volumetric yellow cone shader
   const coneShader = useMemo(() => ({
     vertexShader: `
       varying vec3 vPosition;
@@ -251,6 +176,107 @@ export default function InteriorScene({ scrollProgress }) {
       }
     `
   }), []);
+
+  const sharedConeUniforms = useMemo(() => ({
+    uOpacity: { value: 0.0 }
+  }), []);
+
+  const sharedConeMaterial = useMemo(() => {
+    return new THREE.ShaderMaterial({
+      vertexShader: coneShader.vertexShader,
+      fragmentShader: coneShader.fragmentShader,
+      uniforms: sharedConeUniforms,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide
+    });
+  }, [coneShader, sharedConeUniforms]);
+
+  // Physics and coordinates frame loop updates
+  useFrame((state) => {
+    const p = scrollProgress && typeof scrollProgress === 'object' && 'current' in scrollProgress ? scrollProgress.current : Number(scrollProgress);
+
+    const sceneOpacity = 1.0;
+    if (sceneRef.current) {
+      sceneRef.current.visible = true;
+    }
+
+    // Set camera position and lookAt target locally
+    const camera = state.camera;
+    camera.position.x = 2.0 - p * 0.9;
+    camera.position.z = 4.8;
+    camera.position.y = centerY + 1.8 + p * 0.35;
+    camera.lookAt(0.2, centerY + 1.0, 0);
+
+    uniforms.uOpacity.value = sceneOpacity;
+    uniforms.uTime.value = state.clock.getElapsedTime();
+
+    // Bulb descent animation on scroll (bulb drops down from ceiling between local scroll 0.0 and 0.4)
+    let dropProgress = 1.0;
+    if (p < 0.4) {
+      dropProgress = THREE.MathUtils.clamp(p / 0.4, 0.0, 1.0);
+    }
+    const currentRestY = centerY + 4.5 - dropProgress * 2.0;
+    bulbPhysics.current.restY = currentRestY;
+
+    // Swing physics: Mouse velocity pushes the bulb
+    const phys = bulbPhysics.current;
+    
+    // Add mouse velocity impulses if hovering or moving fast
+    const speed = mouseVel.current.speed;
+    if (speed > 0.05 && p >= 0.0 && p <= 0.95) {
+      phys.velX += mouseVel.current.x * 0.05;
+      phys.velZ += mouseVel.current.y * 0.05;
+    }
+
+    // Pendulum gravity pull and friction damping
+    const gravity = 0.035;
+    const friction = 0.96;
+
+    phys.velX += -phys.angleX * gravity;
+    phys.velZ += -phys.angleZ * gravity;
+
+    phys.velX *= friction;
+    phys.velZ *= friction;
+
+    phys.angleX += phys.velX;
+    phys.angleZ += phys.velZ;
+
+    // Compute actual bulb coordinates based on string length (L = 2.0)
+    const L = 2.0;
+    const bulbX = L * Math.sin(phys.angleX);
+    const bulbZ = L * Math.sin(phys.angleZ);
+    const bulbY = currentRestY - L * Math.cos(phys.angleX) * Math.cos(phys.angleZ);
+
+    if (bulbRef.current) {
+      bulbRef.current.position.set(bulbX, bulbY, bulbZ);
+    }
+
+    // Set uniform coordinates for masking
+    uniforms.uBulbPos.value.set(bulbX, bulbY, bulbZ);
+
+    // Compute light cone direction: points down from bulb along cord
+    const dir = new THREE.Vector3(-bulbX, currentRestY - bulbY, -bulbZ).normalize();
+    uniforms.uLightConeDir.value.copy(dir);
+
+    // Dynamic volumetric light cone scale/position/rotation
+    if (lightConeRef.current) {
+      lightConeRef.current.position.set(bulbX, bulbY - 1.5, bulbZ);
+      
+      // Rotate cone to align with swinging direction
+      lightConeRef.current.rotation.z = -phys.angleX;
+      lightConeRef.current.rotation.x = phys.angleZ;
+      
+      // Bulb glow intensity transition
+      const targetConeOpacity = lightOn ? 0.35 * sceneOpacity : 0.0;
+      sharedConeUniforms.uOpacity.value += (targetConeOpacity - sharedConeUniforms.uOpacity.value) * 0.15;
+    }
+
+    // Animate shader uniform representing light state
+    const targetLightOnVal = lightOn ? 1.0 : 0.0;
+    uniforms.uLightOn.value += (targetLightOnVal - uniforms.uLightOn.value) * 0.15;
+  });
 
   return (
     <group ref={sceneRef}>
@@ -315,59 +341,49 @@ export default function InteriorScene({ scrollProgress }) {
         </group>
       </group>
 
-      {/* 2. Solid Meshes with Texture Masking shader (Overlapping the wireframes) */}
+      {/* 2. Solid Meshes with Texture Masking shader (Overlapping the wireframes - sharing one compiled material) */}
       <group>
         {/* Floor solid */}
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, centerY, 0]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, centerY, 0]} material={sharedMaskMaterial}>
           <planeGeometry args={[6, 6, 2, 2]} />
-          <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} depthWrite={true} />
         </mesh>
 
         {/* Back wall solid */}
-        <mesh position={[0, centerY + 2.0, -3.0]}>
+        <mesh position={[0, centerY + 2.0, -3.0]} material={sharedMaskMaterial}>
           <planeGeometry args={[6, 4, 2, 2]} />
-          <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} depthWrite={true} />
         </mesh>
 
         {/* Side wall solid */}
-        <mesh rotation={[0, Math.PI / 2, 0]} position={[-3.0, centerY + 2.0, 0]}>
+        <mesh rotation={[0, Math.PI / 2, 0]} position={[-3.0, centerY + 2.0, 0]} material={sharedMaskMaterial}>
           <planeGeometry args={[6, 4, 2, 2]} />
-          <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} depthWrite={true} />
         </mesh>
 
         {/* Table solid */}
         <group position={[0.5, centerY, 0]}>
-          <mesh position={[0, 0.75, 0]}>
+          <mesh position={[0, 0.75, 0]} material={sharedMaskMaterial}>
             <boxGeometry args={[2.0, 0.08, 1.2]} />
-            <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} />
           </mesh>
-          <mesh position={[-0.9, 0.375, -0.5]}>
+          <mesh position={[-0.9, 0.375, -0.5]} material={sharedMaskMaterial}>
             <boxGeometry args={[0.08, 0.75, 0.08]} />
-            <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} />
           </mesh>
-          <mesh position={[0.9, 0.375, -0.5]}>
+          <mesh position={[0.9, 0.375, -0.5]} material={sharedMaskMaterial}>
             <boxGeometry args={[0.08, 0.75, 0.08]} />
-            <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} />
           </mesh>
-          <mesh position={[-0.9, 0.375, 0.5]}>
+          <mesh position={[-0.9, 0.375, 0.5]} material={sharedMaskMaterial}>
             <boxGeometry args={[0.08, 0.75, 0.08]} />
-            <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} />
           </mesh>
-          <mesh position={[0.9, 0.375, 0.5]}>
+          <mesh position={[0.9, 0.375, 0.5]} material={sharedMaskMaterial}>
             <boxGeometry args={[0.08, 0.75, 0.08]} />
-            <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} />
           </mesh>
         </group>
 
         {/* Chair solid */}
         <group position={[-0.8, centerY, 0.2]} rotation={[0, 0.3, 0]}>
-          <mesh position={[0, 0.45, 0]}>
+          <mesh position={[0, 0.45, 0]} material={sharedMaskMaterial}>
             <boxGeometry args={[0.5, 0.05, 0.5]} />
-            <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} />
           </mesh>
-          <mesh position={[0.2, 0.85, 0]}>
+          <mesh position={[0.2, 0.85, 0]} material={sharedMaskMaterial}>
             <boxGeometry args={[0.05, 0.8, 0.5]} />
-            <shaderMaterial vertexShader={maskShader.vertexShader} fragmentShader={maskShader.fragmentShader} uniforms={maskUniforms} transparent={true} />
           </mesh>
         </group>
       </group>
@@ -376,19 +392,9 @@ export default function InteriorScene({ scrollProgress }) {
       <mesh
         ref={lightConeRef}
         position={[0, centerY + 1.0, 0]}
+        material={sharedConeMaterial}
       >
         <coneGeometry args={[1.7, 3.0, 32, 1, true]} />
-        <shaderMaterial
-          vertexShader={coneShader.vertexShader}
-          fragmentShader={coneShader.fragmentShader}
-          uniforms={{
-            uOpacity: { value: 0 }
-          }}
-          transparent={true}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-          side={THREE.DoubleSide}
-        />
       </mesh>
 
       {/* 4. Hanging Cord & Interactive Light Bulb */}

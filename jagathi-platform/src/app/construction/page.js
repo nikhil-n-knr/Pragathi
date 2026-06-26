@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -11,6 +11,7 @@ import MediaFloat from '../../components/MediaFloat';
 export default function ConstructionPage() {
   const scrollContainerRef = useRef(null);
   const scrollProgress = useRef(0);
+  const [isInView, setIsInView] = useState(true);
   
   // Metric counter refs
   const stat1 = useRef(null);
@@ -30,6 +31,11 @@ export default function ConstructionPage() {
       scrub: true,
       onUpdate: (self) => {
         scrollProgress.current = self.progress; // 0.0 to 1.0
+        const currentInView = self.progress <= 0.45;
+        setIsInView((prev) => {
+          if (prev !== currentInView) return currentInView;
+          return prev;
+        });
       }
     });
 
@@ -84,21 +90,20 @@ export default function ConstructionPage() {
       ref={scrollContainerRef}
       className="relative min-h-[300vh] bg-transparent text-[#424242] font-sans overflow-x-hidden w-full flex flex-col items-center"
     >
-      {/* 1. Page-Specific Local WebGL Background Canvas (temporarily hidden) */}
-      {false && (
+      {/* 1. Page-Specific Local WebGL Background Canvas */}
       <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
         <Canvas
           style={{ pointerEvents: 'none' }}
           camera={{ position: [0, 0, 7], fov: 60 }}
-          gl={{ antialias: true, alpha: true, stencil: false, depth: true }}
+          gl={{ antialias: true, alpha: true, stencil: false, depth: true, powerPreference: "high-performance" }}
           dpr={[1, 1.5]}
+          frameloop={isInView ? 'always' : 'never'}
         >
           <ambientLight intensity={0.15} />
           <directionalLight position={[5, 10, 7]} intensity={0.8} />
           <ConstructionScene scrollProgress={scrollProgress} />
         </Canvas>
       </div>
-      )}
 
       {/* 2. Hero Section */}
       <section className="relative h-screen flex flex-col justify-center items-start px-8 md:px-24 z-10 pointer-events-none max-w-4xl">
