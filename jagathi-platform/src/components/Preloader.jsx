@@ -295,7 +295,7 @@ export default function Preloader({ onComplete }) {
 
       {/* 4b. Jagathi Brand Kit Badge (appears centered below the logo) */}
       <div className="preloader-brand-badge-5 absolute z-[100001]" style={{ top: '50%', marginTop: '-40px', left: '50%', transform: 'translateX(-50%)', opacity: 0, pointerEvents: 'none' }}>
-        <img src="/assets/brand/5.webp" alt="Brand element" style={{ width: '408px', height: 'auto', opacity: 0.9 }} decoding="async" />
+        <img src="/assets/brand/5.webp" alt="Brand element" style={{ width: 'min(408px, 90vw)', height: 'auto', opacity: 0.9 }} decoding="async" />
       </div>
 
       {/* 4c. JAGATHI Logo Badge (renders logo/image.png) */}

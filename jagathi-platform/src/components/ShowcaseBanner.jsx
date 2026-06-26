@@ -202,10 +202,24 @@ export default function ShowcaseBanner({ onPlayReel }) {
       ══════════════════════════════════════════ */}
       <div className="relative z-10 flex flex-col md:flex-row flex-1 items-stretch" style={{ paddingBottom: '5rem' }}>
 
+        {/* MOBILE ONLY: compact image strip above tabs */}
+        <div className="block md:hidden w-full relative overflow-hidden" style={{ height: '220px' }}>
+          {showcaseItems.map(({ index, image, title, kenBurns }) => (
+            <div key={index} className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+              style={{ opacity: activeTab === index ? 1 : 0, zIndex: activeTab === index ? 2 : 1 }}>
+              <img src={image} alt={title}
+                className={`w-full h-full object-cover block ${activeTab === index ? kenBurns : ''}`}
+                style={{ filter: 'brightness(0.78) contrast(1.05)' }} />
+            </div>
+          ))}
+          <div className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
+            style={{ background: 'linear-gradient(to top, #424242 0%, transparent 100%)' }} />
+        </div>
+
         {/* LEFT: Accordion tabs */}
         <div
-          className="flex-shrink-0 flex flex-col justify-center"
-          style={{ width: 'clamp(300px, 30vw, 460px)', paddingLeft: 'clamp(2.5rem, 5vw, 6rem)', paddingRight: '2rem', paddingBottom: '4rem' }}
+          className="flex-shrink-0 flex flex-col justify-center w-full md:w-auto"
+          style={{ maxWidth: '460px', paddingLeft: 'clamp(1.25rem, 5vw, 6rem)', paddingRight: 'clamp(1rem, 2vw, 2rem)', paddingBottom: '4rem', paddingTop: '1.5rem' }}
         >
           {showcaseItems.map(({ index, label, title, subtitle, description }) => {
             const isActive = activeTab === index;
@@ -256,8 +270,8 @@ export default function ShowcaseBanner({ onPlayReel }) {
           })}
         </div>
 
-        {/* RIGHT: Image — fills to right edge */}
-        <div className="flex-1 relative overflow-hidden rounded-tl-[20px] rounded-bl-[20px]">
+        {/* RIGHT: Image — fills to right edge — desktop only */}
+        <div className="hidden md:block flex-1 relative overflow-hidden rounded-tl-[20px] rounded-bl-[20px]">
           {/* Left blend */}
           <div className="absolute left-0 inset-y-0 w-24 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to right, #424242 0%, transparent 100%)' }} />

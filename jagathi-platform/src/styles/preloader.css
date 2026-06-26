@@ -71,8 +71,8 @@ body.preloader-active {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 340px;
-  height: 340px;
+  width: min(340px, 82vw);
+  height: min(340px, 82vw);
   z-index: 100000;
   pointer-events: none;
   display: flex;
@@ -177,8 +177,8 @@ body.preloader-active {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  height: 300px;
+  width: min(300px, 68vw);
+  height: min(300px, 68vw);
   z-index: 100000;
   transform-origin: center;
   pointer-events: none;
@@ -194,8 +194,8 @@ body.preloader-active {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 300px;
-  height: 300px;
+  width: min(300px, 68vw);
+  height: min(300px, 68vw);
   transform: translate(-50%, -50%);
   transform-origin: 50% 50%;
 }

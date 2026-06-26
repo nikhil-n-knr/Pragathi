@@ -208,9 +208,9 @@ export default function FluidMediaField({ onSelectProject }) {
   }, []);
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto px-4 md:px-6">
+    <div className="relative w-full px-4 md:px-8 lg:px-12 xl:px-16 max-w-[1600px] mx-auto">
       {/* 2-column grid: 1 col on mobile, 2 cols on md+ */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 w-full">
         {projects.map((p, idx) => (
           <div
             key={p.id}

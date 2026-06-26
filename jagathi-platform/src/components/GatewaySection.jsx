@@ -159,7 +159,7 @@ export default function GatewaySection() {
           return (
             <div
               key={index}
-              className="gateway-card-item sticky top-[12vh] md:top-[14vh] w-full min-h-[68vh] md:h-[80vh] flex items-center justify-center mb-[16vh] md:mb-[20vh]"
+              className="gateway-card-item sticky top-[8vh] md:top-[14vh] w-full md:h-[80vh] flex items-center justify-center mb-[12vh] md:mb-[20vh]"
               style={{ zIndex }}
             >
               <div
@@ -169,7 +169,7 @@ export default function GatewaySection() {
                 onClick={() => router.push(href)}
               >
                 {/* ── Image / Video Panel ── */}
-                <div className="w-full md:w-[50%] h-[44vw] md:h-full relative overflow-hidden flex-shrink-0">
+                <div className="w-full md:w-[50%] h-[56vw] sm:h-[44vw] md:h-full relative overflow-hidden flex-shrink-0">
                   <DisciplineVideo
                     imageSrc={image}
                     videoSrcWebm={videoWebm}
@@ -199,9 +199,9 @@ export default function GatewaySection() {
                 {/* ── Text Panel ── */}
                 <div
                   className={`
-                    w-full md:w-[50%] h-full flex flex-col justify-center items-start text-left font-sans
-                    px-8 md:px-12 lg:px-16 xl:px-20
-                    py-10 md:py-14 lg:py-18 xl:py-20
+                    w-full md:w-[50%] flex flex-col justify-center items-start text-left font-sans
+                    px-5 md:px-12 lg:px-16 xl:px-20
+                    py-7 md:py-14 lg:py-18 xl:py-20
                     ${reverse
                       ? 'border-r-0 md:border-r border-[#FFEA0A]/10'
                       : 'border-l-0 md:border-l border-[#FFEA0A]/10'}
