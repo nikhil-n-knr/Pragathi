@@ -28,14 +28,14 @@ const swatches = [
 
 const planningItems = [
   { title: 'Layout & Circulation Logic', desc: 'Analyzing functional zones, movement vectors, and sightlines to maximize ergonomics and spatial flow.' },
-  { title: 'Execution Scope', desc: 'Full-scale electrical-light sync, custom false ceilings, custom carpentry integration, and structural partition walls.' },
+  { title: 'Execution Scope Analysis', desc: 'Full-scale electrical-light sync, custom false ceilings, custom carpentry integration, and structural partition walls.' },
   { title: 'Signature Environments', desc: 'Curating premium hospitality lounges, retail showrooms, corporate director suites, and luxury penthouses.' },
 ];
 
 const workflowItems = [
-  { title: 'Stage 01 / Material Selection', desc: 'Choosing stones, fine hardwoods, structural metal finishes, and textiles from our physical materials lab.' },
-  { title: 'Stage 02 / In-house Fabrication', desc: 'Precision carpentry, cladding prep, and customized light fittings built in our dedicated fabrication centers.' },
-  { title: 'Stage 03 / Delivery & Fitting', desc: 'One point of contact managing assembly, light installation, joinery alignments, and final surface curations.' },
+  { title: 'Stage 01 / Material Lab', desc: 'Choosing stones, fine hardwoods, structural metal finishes, and textiles from our physical materials lab.' },
+  { title: 'Stage 02 / CNC Carpentry', desc: 'Precision carpentry, cladding prep, and customized light fittings built in our dedicated fabrication centers.' },
+  { title: 'Stage 03 / Surface Curation', desc: 'One point of contact managing assembly, light installation, joinery alignments, and final surface curations.' },
 ];
 
 /* ─── Component ─────────────────────────────────── */
@@ -93,31 +93,42 @@ export default function InteriorPage() {
       </div>
 
       {/* ── Hero ─────────────────────────────────── */}
-      <section className="relative w-full overflow-hidden z-10" style={{ minHeight: '88vh' }}>
+      <section className="relative w-full h-screen overflow-hidden flex flex-col justify-between z-10 border-b border-[#424242]/10">
         <div className="absolute inset-0 z-0">
           <img
             src="/assets/images/interior/penthouse.webp"
             alt="Interior Design"
             className="w-full h-full object-cover object-center"
-            style={{ filter: 'brightness(0.38) saturate(0.75)' }}
+            style={{ filter: 'brightness(0.35) saturate(0.7)' }}
           />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.80) 0%, rgba(10,10,10,0.25) 70%, transparent 100%)' }} />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.65) 0%, transparent 55%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.2) 70%, transparent 100%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 50%)' }} />
         </div>
-        <div className="relative z-10 flex flex-col justify-end h-full w-full px-6 md:px-16 lg:px-24 pb-16 md:pb-24" style={{ minHeight: '88vh' }}>
-          <span className="text-white/50 font-mono text-[10px] uppercase tracking-[0.35em] mb-5 block">{'// Pillar 02 / Interspace Design'}</span>
-          <h1 className="font-bold text-white uppercase leading-none mb-6" style={{ fontSize: 'clamp(2.6rem, 7vw, 7rem)', letterSpacing: '-0.02em' }}>
-            Spatial<br />
-            <span style={{ fontWeight: 300, opacity: 0.75, fontSize: '0.65em', letterSpacing: '0.02em' }}>& Systems</span>
-          </h1>
-          <div className="h-px w-12 bg-[#FFEA0A] mb-6" />
-          <p className="text-white/60 font-light leading-relaxed max-w-lg" style={{ fontFamily: '"Outfit", sans-serif', fontSize: 'clamp(0.8rem, 1.5vw, 1rem)' }}>
-            We design and execute flawless interior spaces. From master planning and bespoke carpentry to structural lighting and texture curation — every square inch managed in-house, concept to handover.
-          </p>
+
+        {/* Spacer */}
+        <div className="w-full py-8" />
+
+        <div className="flex-grow flex flex-col justify-end px-6 md:px-16 lg:px-24 pb-12 relative w-full">
+          {/* Right-aligned glassmorphic card */}
+          <div className="absolute top-[15%] md:top-auto md:bottom-[30%] right-6 md:right-16 lg:right-24 w-[90%] md:w-[32rem] p-8 md:p-10 border border-white/10 rounded-sm z-20"
+               style={{ background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}>
+            <span className="text-[#FFEA0A] font-mono text-[9px] uppercase tracking-[0.3em] block mb-4">{'// Design Philosophy'}</span>
+            <p className="text-white/90 font-light leading-relaxed text-sm md:text-base" style={{ fontFamily: '"Outfit", sans-serif' }}>
+              We design and execute flawless interior spaces. From master planning and bespoke carpentry to structural lighting and texture curation — every square inch managed in-house, concept to handover.
+            </p>
+          </div>
+
+          {/* Left-aligned bold brand title */}
+          <div className="relative mt-auto pointer-events-none select-none z-10 max-w-4xl">
+            <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.35em] mb-4 block">{'// Pillar 02 / Spatial Systems'}</span>
+            <h1 className="font-bold text-white uppercase leading-[0.85]" style={{ fontSize: 'clamp(2.5rem, 8vw, 8.5rem)', letterSpacing: '-0.03em' }}>
+              INTERIORS
+            </h1>
+          </div>
         </div>
       </section>
 
-      {/* ── Space Types (Transparent to let 3D background show) ── */}
+      {/* ── Space Types (Transparent with floating cards) ── */}
       <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-20 ir-reveal">
@@ -138,7 +149,7 @@ export default function InteriorPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
                     <span className="absolute bottom-3 left-4 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2.5 py-1 border border-[#FFEA0A]/20">{space.tag}</span>
                   </div>
-                  <div className="p-6 md:p-8">
+                  <div className="p-8">
                     <h3 className="font-bold text-lg uppercase tracking-wide mb-3">{space.label}</h3>
                     <p className="text-[#424242]/75 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{space.desc}</p>
                   </div>
@@ -149,50 +160,81 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* ── Spatial Planning & Workflow (Solid white block) ── */}
-      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-white border-t border-[#424242]/10">
+      {/* ── Spatial Planning & Workflow (Editorial Double Column - Solid Gray Block) ── */}
+      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-white border-t border-[#424242]/10">
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 lg:gap-32 mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32">
+            
+            {/* Left Column: Spatial Planning */}
             <div className="ir-reveal">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Design Clusters'}</span>
-              <h2 className="font-bold text-2xl md:text-3xl uppercase tracking-tight mb-8">Spatial Planning</h2>
-              <div className="flex flex-col gap-8">
+              <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-8">Spatial Planning</h2>
+              <div className="flex flex-col gap-10">
                 {planningItems.map((item, i) => (
-                  <div key={i} className="border-l-2 border-[#424242]/20 pl-6 hover:border-[#424242] transition-colors duration-300">
-                    <h4 className="font-bold text-sm md:text-base uppercase tracking-wider mb-2">{item.title}</h4>
-                    <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
+                  <div key={i} className="border-t border-[#424242]/15 pt-6 hover:bg-[#424242]/5 px-4 -mx-4 rounded-sm transition-all duration-300">
+                    <h4 className="font-bold text-base uppercase tracking-wider mb-2">{item.title}</h4>
+                    <p className="text-[#424242]/70 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="ir-reveal">
+
+            {/* Right Column: Turnkey Workflow */}
+            <div className="ir-reveal mt-20 lg:mt-0">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Curation Process'}</span>
-              <h2 className="font-bold text-2xl md:text-3xl uppercase tracking-tight mb-8">Turnkey Workflow</h2>
-              <div className="flex flex-col gap-8">
+              <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-8">Turnkey Workflow</h2>
+              <div className="flex flex-col gap-10">
                 {workflowItems.map((item, i) => (
-                  <div key={i} className="border-l-2 border-[#424242]/20 pl-6 hover:border-[#424242] transition-colors duration-300">
-                    <h4 className="font-bold text-sm md:text-base uppercase tracking-wider mb-2">{item.title}</h4>
-                    <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
+                  <div key={i} className="border-t border-[#424242]/15 pt-6 hover:bg-[#424242]/5 px-4 -mx-4 rounded-sm transition-all duration-300">
+                    <h4 className="font-bold text-base uppercase tracking-wider mb-2">{item.title}</h4>
+                    <p className="text-[#424242]/70 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── Our Design Process (Sticky Card Stack Section) ── */}
+      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent border-t border-[#424242]/10">
+        <div className="max-w-[1400px] mx-auto relative">
+          <div className="mb-24 ir-reveal text-center">
+            <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Concept to Fitting'}</span>
+            <h2 className="font-bold text-3xl md:text-6xl uppercase tracking-tight">OUR DESIGN PROCESS</h2>
           </div>
 
-          {/* Process Stage Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+          <div className="relative flex flex-col gap-[10vh]">
             {processStages.map((stage, i) => (
-              <div key={i} className="ir-reveal group border border-[#424242]/12 bg-[#FFEA0A]/20 p-8 hover:border-[#424242]/35 hover:shadow-md transition-all duration-300">
-                <span className="text-[#FFEA0A] font-mono text-[10px] bg-[#424242] px-2.5 py-1 inline-block tracking-widest mb-5">{stage.num}</span>
-                <h3 className="font-bold text-sm md:text-base uppercase tracking-wide mb-3">{stage.title}</h3>
-                <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{stage.desc}</p>
+              <div
+                key={i}
+                className="sticky top-[15vh] w-full flex items-center justify-center mb-[5vh] z-10"
+              >
+                <div className="w-[96%] md:w-[90%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl p-8 md:p-14 min-h-[40vh] md:min-h-[50vh] flex flex-col justify-between text-white transition-all duration-500">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/10 pb-6 mb-6">
+                    <div className="flex items-center gap-4">
+                      <span className="text-[#FFEA0A] font-mono text-[11px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 flex-shrink-0 tracking-widest">{stage.num}</span>
+                      <h3 className="font-bold text-lg md:text-2xl uppercase tracking-wide text-white">{stage.title}</h3>
+                    </div>
+                    <span className="font-mono text-[8px] tracking-[0.3em] text-[#FFEA0A] mt-2 md:mt-0 uppercase">{'// INTERSPACE_0' + (i+1)}</span>
+                  </div>
+
+                  <p className="text-white/60 font-light text-sm md:text-lg leading-relaxed max-w-3xl" style={{ fontFamily: '"Outfit", sans-serif' }}>
+                    {stage.desc}
+                  </p>
+
+                  <div className="flex justify-end mt-8">
+                    <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">JAGATHI SPATIAL / QUALITY GUARANTEED</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Material Swatches (Transparent to let 3D background show) ── */}
+      {/* ── Material Swatches (Transparent Grid) ── */}
       <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent border-t border-[#424242]/10">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-20 ir-reveal">
@@ -201,21 +243,23 @@ export default function InteriorPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
             {swatches.map((s, i) => (
-              <div key={i} className="ir-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500">
-                <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                  <img
-                    src={s.image}
-                    alt={s.title}
-                    className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
-                    style={{ filter: 'brightness(0.88)' }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                  <span className="absolute bottom-3 left-4 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2.5 py-1 border border-[#FFEA0A]/20">{s.tag}</span>
-                </div>
-                <div className="p-6 md:p-8">
-                  <span className="text-[#424242]/50 font-mono text-[8px] uppercase tracking-widest block mb-2">{s.label}</span>
-                  <h3 className="font-bold text-[15px] md:text-[17px] uppercase tracking-wide mb-3">{s.title}</h3>
-                  <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{s.desc}</p>
+              <div key={i} className="ir-reveal group border border-[#424242]/12 bg-white/20 overflow-hidden hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between">
+                <div>
+                  <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                    <img
+                      src={s.image}
+                      alt={s.title}
+                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                      style={{ filter: 'brightness(0.88)' }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                    <span className="absolute bottom-3 left-4 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#424242] px-2.5 py-1 border border-[#FFEA0A]/20">{s.tag}</span>
+                  </div>
+                  <div className="p-8">
+                    <span className="text-[#424242]/50 font-mono text-[8px] uppercase tracking-widest block mb-2">{s.label}</span>
+                    <h3 className="font-bold text-[15px] md:text-[17px] uppercase tracking-wide mb-3">{s.title}</h3>
+                    <p className="text-[#424242]/75 font-light text-[13px] md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{s.desc}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -223,9 +267,10 @@ export default function InteriorPage() {
         </div>
       </section>
 
-      {/* ── CTA (Solid white background block) ── */}
-      <section className="relative z-10 w-full py-28 md:py-40 px-6 border-t border-[#424242]/10 bg-white">
-        <div className="max-w-2xl mx-auto text-center">
+      {/* ── CTA (Glassmorphic Box) ── */}
+      <section className="relative z-10 w-full py-32 md:py-48 px-6 bg-transparent border-t border-[#424242]/10">
+        <div className="max-w-3xl mx-auto text-center"
+             style={{ background: 'rgba(255, 255, 255, 0.04)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', padding: '5rem 2rem' }}>
           <span className="text-[#424242]/45 font-mono text-[10px] uppercase tracking-[0.3em] block mb-5">{'// Custom Spaces'}</span>
           <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-5 leading-tight">
             Consult our Turnkey<br />Design Team.

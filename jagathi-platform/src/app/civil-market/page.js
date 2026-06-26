@@ -19,25 +19,28 @@ const zoneTypes = [
     tag: '[ RESIDENTIAL ZONE ]',
     title: 'Premium Residential',
     subtitle: 'Plotted luxury estates',
-    desc: 'Gated residential communities with clubhouse amenities, green belt perimeters, and all municipal clearances secured. Ideal for individual villa construction.',
+    desc: 'Gated residential communities with clubhouse amenities, green belt perimeters, and all municipal clearances secured. Ideal for individual villa construction and premium family estates.',
     image: '/assets/images/civil/residential.webp',
     stat: '48 Active Plots · 12–25 Acres',
+    phase: 'PHASE_01'
   },
   {
     tag: '[ INDUSTRIAL ZONE ]',
     title: 'Industrial Smart Zone',
     subtitle: 'Warehouse & logistics',
-    desc: 'State-of-the-art industrial hubs with grid-connected power, water treatment, wide 40ft roads, and solar-ready roof structures. Ideal for manufacturing and logistics.',
+    desc: 'State-of-the-art industrial hubs with grid-connected power, water treatment, wide 40ft roads, and solar-ready roof structures. Vetted for manufacturing, assembly, and heavy logistics operations.',
     image: '/assets/images/civil/industrial.webp',
     stat: '8–180 Acres Available',
+    phase: 'PHASE_02'
   },
   {
     tag: '[ COMMERCIAL ZONE ]',
     title: 'Commercial Corridor',
     subtitle: 'Retail & mixed-use',
-    desc: 'Prime commercial corridor plots with arterial road connectivity, high footfall catchment areas, and favorable mixed-use zoning for retail, hospitality and offices.',
+    desc: 'Prime commercial corridor plots with arterial road connectivity, high footfall catchment areas, and favorable mixed-use zoning. Fully cleared for retail spaces, hotel development, and office centers.',
     image: '/assets/images/civil/residential.webp', // fallback to residential aerial
     stat: '5–30 Acres · High ROI',
+    phase: 'PHASE_03'
   },
 ];
 
@@ -145,34 +148,44 @@ export default function CivilMarketPage() {
       </div>
 
       {/* ── Hero ─────────────────────────────────── */}
-      <section className="relative w-full overflow-hidden z-10" style={{ minHeight: '88vh' }}>
+      <section className="relative w-full h-screen overflow-hidden flex flex-col justify-between z-10 border-b border-[#424242]/10">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <img
             src="/assets/images/civil_market_discipline.webp"
             alt="Civil Market"
             className="w-full h-full object-cover object-center"
-            style={{ filter: 'brightness(0.4) saturate(0.8)' }}
+            style={{ filter: 'brightness(0.38) saturate(0.8)' }}
           />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.3) 70%, transparent 100%)' }} />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.75) 0%, transparent 55%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.2) 70%, transparent 100%)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 50%)' }} />
         </div>
 
-        {/* Text */}
-        <div className="relative z-10 flex flex-col justify-end h-full w-full px-6 md:px-16 lg:px-24 pb-16 md:pb-24" style={{ minHeight: '88vh' }}>
-          <span className="text-white/50 font-mono text-[10px] uppercase tracking-[0.35em] mb-5 block">{'// Pillar 03 / Civil Market & Assets'}</span>
-          <h1 className="font-bold text-white uppercase leading-none mb-6" style={{ fontSize: 'clamp(2.6rem, 7vw, 7rem)', letterSpacing: '-0.02em' }}>
-            Civil Market<br />
-            <span style={{ fontWeight: 300, opacity: 0.75, fontSize: '0.65em', letterSpacing: '0.02em' }}>& Asset Portfolios</span>
-          </h1>
-          <div className="h-px w-12 bg-[#FFEA0A] mb-6" />
-          <p className="text-white/60 font-light leading-relaxed max-w-lg" style={{ fontFamily: '"Outfit", sans-serif', fontSize: 'clamp(0.8rem, 1.5vw, 1rem)' }}>
-            Securing premium industrial zones, plotted inventories, and commercial growth corridors. Our civil market portfolios are engineered around absolute title security, geotech clearance, and high capital growth trajectories.
-          </p>
+        {/* Top Spacer */}
+        <div className="w-full py-8" />
+
+        {/* Main Content Area */}
+        <div className="flex-grow flex flex-col justify-end px-6 md:px-16 lg:px-24 pb-12 relative w-full">
+          {/* Right-aligned glassmorphic card */}
+          <div className="absolute top-[15%] md:top-auto md:bottom-[30%] right-6 md:right-16 lg:right-24 w-[90%] md:w-[32rem] p-8 md:p-10 border border-white/10 rounded-sm z-20"
+               style={{ background: 'rgba(255, 255, 255, 0.05)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}>
+            <span className="text-[#FFEA0A] font-mono text-[9px] uppercase tracking-[0.3em] block mb-4">{'// Market Vetting'}</span>
+            <p className="text-white/90 font-light leading-relaxed text-sm md:text-base" style={{ fontFamily: '"Outfit", sans-serif' }}>
+              Securing premium industrial zones, plotted inventories, and commercial growth corridors. Our civil market portfolios are engineered around absolute title security, geotech clearance, and high capital growth trajectories.
+            </p>
+          </div>
+
+          {/* Left-aligned bold brand title */}
+          <div className="relative mt-auto pointer-events-none select-none z-10 max-w-4xl">
+            <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.35em] mb-4 block">{'// Pillar 03 / Land Asset Corridors'}</span>
+            <h1 className="font-bold text-white uppercase leading-[0.85]" style={{ fontSize: 'clamp(2.5rem, 8vw, 8.5rem)', letterSpacing: '-0.03em' }}>
+              CIVIL MARKET
+            </h1>
+          </div>
         </div>
       </section>
 
-      {/* ── Investment Metrics Bar (Solid Block) ── */}
+      {/* ── Investment Metrics Bar (Solid Block) ───────────────── */}
       <section id="cm-stats" className="relative z-10 w-full px-6 md:px-12 lg:px-20 xl:px-24 -mt-10 md:-mt-12">
         <div className="max-w-[1600px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 border border-white/5 divide-x divide-white/5 bg-[#1E1E1E] shadow-2xl">
@@ -200,38 +213,53 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── Land Zone Portfolio (Transparent to show 3D background) ── */}
-      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="text-center mb-20 cm-reveal">
+      {/* ── Land Zone Portfolio (Sticky Card Stack Section) ── */}
+      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent">
+        <div className="max-w-[1400px] mx-auto relative">
+          <div className="mb-24 cm-reveal text-center">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Zone Categories'}</span>
-            <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight">Land Zone Portfolio</h2>
+            <h2 className="font-bold text-3xl md:text-6xl uppercase tracking-tight">LAND ZONE PORTFOLIO</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="relative flex flex-col gap-[10vh]">
             {zoneTypes.map((zone, i) => (
-              <div key={i} className="cm-reveal group overflow-hidden border border-[#424242]/12 bg-white/20 hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between">
-                <div>
-                  <div className="relative w-full overflow-hidden" style={{ aspectRatio: '16/10' }}>
+              <div
+                key={i}
+                className="sticky top-[15vh] w-full flex items-center justify-center mb-[5vh] z-10"
+              >
+                {/* Horizontal split card layout inspired by Dubai card grid template */}
+                <div className="w-[96%] md:w-[90%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[45vh] md:min-h-[55vh] text-white">
+                  
+                  {/* Left Column: Details (Col-span 7) */}
+                  <div className="p-8 md:p-12 flex flex-col justify-between md:col-span-7">
+                    <div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <span className="text-[#FFEA0A] font-mono text-[9px] bg-white/5 border border-[#FFEA0A]/20 px-2 py-1 tracking-wider">{zone.tag}</span>
+                      </div>
+                      <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{zone.title}</h3>
+                      <span className="text-white/40 font-mono text-[9px] uppercase tracking-wider block mb-5">{zone.subtitle}</span>
+                      <p className="text-white/60 font-light text-xs md:text-sm leading-relaxed max-w-xl" style={{ fontFamily: '"Outfit", sans-serif' }}>
+                        {zone.desc}
+                      </p>
+                    </div>
+
+                    <div className="border-t border-white/5 pt-6 mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <span className="text-[#FFEA0A] font-mono text-[10px] tracking-widest uppercase">{zone.stat}</span>
+                      <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">{zone.phase}</span>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Wide Aerial Image (Col-span 5) */}
+                  <div className="relative w-full h-[30vh] md:h-full md:col-span-5 overflow-hidden">
                     <img
                       src={zone.image}
                       alt={zone.title}
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                    <span className="absolute bottom-3 left-4 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#1E1E1E] px-2.5 py-1">
-                      {zone.tag}
-                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#1E1E1E] via-transparent to-transparent hidden md:block" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E] via-transparent to-transparent md:hidden" />
                   </div>
-                  <div className="p-6 md:p-8">
-                    <h3 className="font-bold text-lg uppercase tracking-wide mb-3">{zone.title}</h3>
-                    <span className="text-[#424242]/50 font-mono text-[9px] uppercase tracking-widest block mb-4">{zone.subtitle}</span>
-                    <p className="text-[#424242]/75 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{zone.desc}</p>
-                  </div>
-                </div>
-                <div className="px-6 md:px-8 pb-6 md:pb-8">
-                  <div className="h-px bg-[#424242]/10 mb-4" />
-                  <span className="text-[#424242] font-mono text-[9px] tracking-widest uppercase">{zone.stat}</span>
+
                 </div>
               </div>
             ))}
@@ -239,42 +267,42 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── Land Intelligence & Investor Logic (Solid white block) ── */}
-      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-white border-t border-[#424242]/10">
+      {/* ── Land Intelligence & Investor Logic (Editorial Split Columns - Solid White Panel) ── */}
+      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-white border-t border-[#424242]/10">
         <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 lg:gap-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32">
             
-            {/* Land Intelligence */}
+            {/* Left Column: Land Intelligence */}
             <div className="cm-reveal">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Curation Logic'}</span>
-              <h2 className="font-bold text-2xl md:text-3xl uppercase tracking-tight mb-8">Land Intelligence</h2>
-              <div className="flex flex-col gap-8">
+              <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-8">Land Intelligence</h2>
+              <div className="flex flex-col gap-10">
                 {[
                   { title: 'Growth Corridor Mapping', desc: 'We screen plot appreciation patterns, transit loops, and arterial connectivity matrices to isolate high-potential zones before market saturation.' },
                   { title: 'Regulatory / Zoning Clearance', desc: 'Complete zoning clearance, title search verification, environmental compliance, and structural build permission audits — done before you sign.' },
                   { title: 'Micro-Infrastructure Ready', desc: 'Every asset we list is equipped with dedicated grid access, baseline drainage setups, and boundary structural retaining systems.' }
                 ].map((item, i) => (
-                  <div key={i} className="border-l border-[#424242]/20 hover:border-[#424242] pl-6 transition-colors duration-300">
-                    <h4 className="font-bold text-sm md:text-base uppercase tracking-wider mb-2">{item.title}</h4>
-                    <p className="text-[#424242]/75 font-light text-xs md:text-sm mt-2 leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
+                  <div key={i} className="border-t border-[#424242]/15 pt-6 hover:bg-[#424242]/5 px-4 -mx-4 rounded-sm transition-all duration-300">
+                    <h4 className="font-bold text-base uppercase tracking-wider mb-2">{item.title}</h4>
+                    <p className="text-[#424242]/70 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Investor Logic */}
-            <div className="cm-reveal">
+            {/* Right Column: Investor Logic */}
+            <div className="cm-reveal mt-20 lg:mt-0">
               <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Investor Framework'}</span>
-              <h2 className="font-bold text-2xl md:text-3xl uppercase tracking-tight mb-8">Investor Logic</h2>
-              <div className="flex flex-col gap-8">
+              <h2 className="font-bold text-3xl md:text-5xl uppercase tracking-tight mb-8">Investor Logic</h2>
+              <div className="flex flex-col gap-10">
                 {[
                   { title: 'Liquidity Horizon Modeling', desc: 'Analysis matching your capitalization model with appreciation velocity metrics — short vs long-term horizons.' },
                   { title: 'Advisory Screen Process', desc: 'One-on-one consultation aligning portfolio allocations with verified structural assets and growth projections.' },
                   { title: 'Appreciation Analytics', desc: 'Historical zone performance audits and projection reports driven by spatial industrial expansions and transit planning.' }
                 ].map((item, i) => (
-                  <div key={i} className="border-l border-[#424242]/20 hover:border-[#424242] pl-6 transition-colors duration-300">
-                    <h4 className="font-bold text-sm md:text-base uppercase tracking-wider mb-2">{item.title}</h4>
-                    <p className="text-[#424242]/75 font-light text-xs md:text-sm mt-2 leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
+                  <div key={i} className="border-t border-[#424242]/15 pt-6 hover:bg-[#424242]/5 px-4 -mx-4 rounded-sm transition-all duration-300">
+                    <h4 className="font-bold text-base uppercase tracking-wider mb-2">{item.title}</h4>
+                    <p className="text-[#424242]/70 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -284,8 +312,8 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── Why Jagathi Lands / Trust Pillars (Solid charcoal block) ── */}
-      <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#1E1E1E]">
+      {/* ── Why Jagathi Lands / Trust Pillars (Solid Charcoal Block) ────── */}
+      <section className="relative z-10 w-full py-32 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-[#1E1E1E]">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-20 cm-reveal">
             <span className="text-[#FFEA0A]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Trust Foundation'}</span>
@@ -296,7 +324,7 @@ export default function CivilMarketPage() {
             {trustPillars.map((pillar, i) => (
               <div key={i} className="cm-reveal border border-white/5 p-8 hover:border-[#FFEA0A]/30 transition-all duration-350 bg-white/[0.02] flex flex-col justify-start">
                 <div className="text-[#FFEA0A] text-2xl mb-4 font-mono">{pillar.icon}</div>
-                <h3 className="text-white font-bold text-sm md:text-base uppercase tracking-wide mb-3">{pillar.title}</h3>
+                <h3 className="text-white font-bold text-base uppercase tracking-wide mb-3">{pillar.title}</h3>
                 <p className="text-white/40 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{pillar.desc}</p>
               </div>
             ))}
@@ -304,7 +332,7 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── Plotted Premium Civil Inventory (Transparent to let 3D background show) ── */}
+      {/* ── Plotted Premium Civil Inventory (Transparent) ──────── */}
       <section className="relative z-10 w-full py-28 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-36 bg-transparent border-t border-[#424242]/10">
         <div className="max-w-[1600px] mx-auto">
           <div className="text-center mb-20 cm-reveal">
@@ -314,22 +342,24 @@ export default function CivilMarketPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {assetDossiers.map((asset, i) => (
-              <div key={i} className="cm-reveal group overflow-hidden border border-[#424242]/12 bg-white/20 hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500">
-                <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                  <img
-                    src={asset.image}
-                    alt={asset.title}
-                    className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                  <span className="absolute bottom-3 left-4 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#1E1E1E] px-2.5 py-1">
-                    {asset.tag}
-                  </span>
-                </div>
-                <div className="p-6 md:p-8">
-                  <span className="text-[#424242]/50 font-mono text-[9px] uppercase tracking-widest block mb-2">{asset.sector}</span>
-                  <h3 className="font-bold text-base uppercase tracking-wide mb-3">{asset.title}</h3>
-                  <p className="text-[#424242]/75 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{asset.desc}</p>
+              <div key={i} className="cm-reveal group overflow-hidden border border-[#424242]/12 bg-white/20 hover:border-[#424242]/25 hover:shadow-xl transition-all duration-500 flex flex-col justify-between">
+                <div>
+                  <div className="relative w-full overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                    <img
+                      src={asset.image}
+                      alt={asset.title}
+                      className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                    <span className="absolute bottom-3 left-4 text-[9px] font-mono tracking-widest text-[#FFEA0A] bg-[#1E1E1E] px-2.5 py-1">
+                      {asset.tag}
+                    </span>
+                  </div>
+                  <div className="p-8">
+                    <span className="text-[#424242]/50 font-mono text-[9px] uppercase tracking-widest block mb-2">{asset.sector}</span>
+                    <h3 className="font-bold text-lg uppercase tracking-wide mb-3">{asset.title}</h3>
+                    <p className="text-[#424242]/75 font-light text-xs md:text-sm leading-relaxed" style={{ fontFamily: '"Outfit", sans-serif' }}>{asset.desc}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -337,9 +367,10 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
-      {/* ── CTA Section (Solid white background block) ── */}
-      <section className="relative z-10 w-full py-28 md:py-40 bg-white border-t border-[#424242]/10">
-        <div className="max-w-3xl mx-auto px-6 text-center">
+      {/* ── CTA Section (Glassmorphic Box) ── */}
+      <section className="relative z-10 w-full py-32 md:py-48 bg-transparent border-t border-[#424242]/10 px-6">
+        <div className="max-w-3xl mx-auto text-center"
+             style={{ background: 'rgba(255, 255, 255, 0.04)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.06)', padding: '5rem 2rem' }}>
           <span className="text-[#424242]/40 font-mono text-[10px] uppercase tracking-[0.3em] block mb-5">{'// Strategic Security'}</span>
           <h2 className="font-bold text-2xl md:text-4xl uppercase tracking-tight mb-6 leading-tight">
             Secure Premium<br />Civil Assets
