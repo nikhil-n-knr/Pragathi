@@ -203,20 +203,20 @@ export default function InteriorPage() {
       <div className="h-28 md:h-44 w-full" />
 
       {/* ── Our Design Process (Sticky Card Stack Section) ── */}
-      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10">
-        <div className="max-w-[1400px] mx-auto relative flex flex-col items-center">
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent border-t border-[#424242]/10 flex flex-col items-center">
+        <div className="w-full max-w-[1400px] mx-auto relative flex flex-col items-center">
           <div className="mb-24 ir-reveal text-center">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Concept to Fitting'}</span>
             <h2 className="font-bold text-3xl md:text-6xl uppercase tracking-tight">OUR DESIGN PROCESS</h2>
           </div>
 
-          <div className="relative w-full pb-[25vh]">
+          <div className="relative w-full pb-[25vh] flex flex-col items-center">
             {processStages.map((stage, i) => {
               const rowDirection = i % 2 === 1 ? 'flex-col md:flex-row-reverse' : 'flex-col md:flex-row';
               return (
                 <div
                   key={i}
-                  className={`sticky top-[15vh] mx-auto w-[96%] md:w-[85%] max-w-[1100px] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[50vh] md:h-[52vh] md:min-h-[480px] text-white z-10 mb-[12vh]`}
+                  className={`sticky top-[15vh] w-[96%] md:w-[85%] max-w-[1100px] self-center bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[50vh] md:h-[52vh] md:min-h-[480px] text-white z-10 mb-[12vh]`}
                 >
                   
                   {/* Details Column */}

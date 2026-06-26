@@ -215,18 +215,18 @@ export default function CivilMarketPage() {
       <div className="h-28 md:h-44 w-full" />
 
       {/* ── Land Zone Portfolio (Sticky Card Stack Section) ── */}
-      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent">
-        <div className="max-w-[1400px] mx-auto relative flex flex-col items-center">
+      <section className="relative z-10 w-full py-28 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 xl:px-40 bg-transparent flex flex-col items-center">
+        <div className="w-full max-w-[1400px] mx-auto relative flex flex-col items-center">
           <div className="mb-24 cm-reveal text-center">
             <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block mb-4">{'// Zone Categories'}</span>
             <h2 className="font-bold text-3xl md:text-6xl uppercase tracking-tight">LAND ZONE PORTFOLIO</h2>
           </div>
 
-          <div className="relative w-full pb-[25vh]">
+          <div className="relative w-full pb-[25vh] flex flex-col items-center">
             {zoneTypes.map((zone, i) => (
               <div
                 key={i}
-                className="sticky top-[15vh] mx-auto w-[96%] md:w-[85%] max-w-[1100px] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[50vh] md:h-[52vh] md:min-h-[480px] text-white z-10 mb-[12vh]"
+                className="sticky top-[15vh] w-[96%] md:w-[85%] max-w-[1100px] self-center bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[50vh] md:h-[52vh] md:min-h-[480px] text-white z-10 mb-[12vh]"
               >
                 
                 {/* Left Column: Centered Details */}
