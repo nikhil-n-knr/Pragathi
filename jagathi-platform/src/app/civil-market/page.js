@@ -226,39 +226,37 @@ export default function CivilMarketPage() {
             {zoneTypes.map((zone, i) => (
               <div
                 key={i}
-                className="sticky top-[15vh] w-full flex items-center justify-center mb-[5vh] z-10"
+                className="sticky top-[15vh] w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[45vh] md:min-h-[55vh] text-white z-10 mb-[5vh]"
               >
-                <div className="w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[45vh] md:min-h-[55vh] text-white">
-                  
-                  {/* Left Column: Centered Details */}
-                  <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center md:col-span-7">
-                    <div className="flex flex-col items-center">
-                      <span className="text-[#FFEA0A] font-mono text-[9px] bg-white/5 border border-[#FFEA0A]/20 px-2.5 py-1 tracking-wider mb-4">{zone.tag}</span>
-                      <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{zone.title}</h3>
-                      <span className="text-white/40 font-mono text-[9px] uppercase tracking-wider block mb-4">{zone.subtitle}</span>
-                      <p className="text-white/60 font-light text-xs md:text-sm leading-relaxed max-w-md" style={{ fontFamily: '"Outfit", sans-serif' }}>
-                        {zone.desc}
-                      </p>
-                    </div>
-
-                    <div className="border-t border-white/5 pt-6 mt-8 flex flex-col items-center gap-2 w-full">
-                      <span className="text-[#FFEA0A] font-mono text-[10px] tracking-widest uppercase">{zone.stat}</span>
-                      <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">{zone.phase}</span>
-                    </div>
+                
+                {/* Left Column: Centered Details */}
+                <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center md:col-span-7">
+                  <div className="flex flex-col items-center">
+                    <span className="text-[#FFEA0A] font-mono text-[9px] bg-white/5 border border-[#FFEA0A]/20 px-2.5 py-1 tracking-wider mb-4">{zone.tag}</span>
+                    <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{zone.title}</h3>
+                    <span className="text-white/40 font-mono text-[9px] uppercase tracking-wider block mb-4">{zone.subtitle}</span>
+                    <p className="text-white/60 font-light text-xs md:text-sm leading-relaxed max-w-md" style={{ fontFamily: '"Outfit", sans-serif' }}>
+                      {zone.desc}
+                    </p>
                   </div>
 
-                  {/* Right Column: Wide Aerial Image */}
-                  <div className="relative w-full h-[30vh] md:h-full md:col-span-5 overflow-hidden group">
-                    <img
-                      src={zone.image}
-                      alt={zone.title}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#1E1E1E] via-transparent to-transparent hidden md:block" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E] via-transparent to-transparent md:hidden" />
+                  <div className="border-t border-white/5 pt-6 mt-8 flex flex-col items-center gap-2 w-full">
+                    <span className="text-[#FFEA0A] font-mono text-[10px] tracking-widest uppercase">{zone.stat}</span>
+                    <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">{zone.phase}</span>
                   </div>
-
                 </div>
+
+                {/* Right Column: Wide Aerial Image */}
+                <div className="relative w-full h-[30vh] md:h-full md:col-span-5 overflow-hidden group">
+                  <img
+                    src={zone.image}
+                    alt={zone.title}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#1E1E1E] via-transparent to-transparent hidden md:block" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E] via-transparent to-transparent md:hidden" />
+                </div>
+
               </div>
             ))}
           </div>

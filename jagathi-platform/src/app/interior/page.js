@@ -216,38 +216,36 @@ export default function InteriorPage() {
               return (
                 <div
                   key={i}
-                  className="sticky top-[15vh] w-full flex items-center justify-center mb-[5vh] z-10"
+                  className={`sticky top-[15vh] w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[45vh] md:min-h-[55vh] text-white z-10 mb-[5vh]`}
                 >
-                  <div className={`w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[45vh] md:min-h-[55vh] text-white`}>
-                    
-                    {/* Details Column */}
-                    <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center w-full md:w-[60%] flex-shrink-0">
-                      <div className="flex flex-col items-center w-full">
-                        <span className="text-[#FFEA0A] font-mono text-[10px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 inline-block tracking-widest mb-4">{stage.num}</span>
-                        <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{stage.title}</h3>
-                        <span className="font-mono text-[8px] tracking-[0.3em] text-[#FFEA0A] uppercase mt-2">{'// INTERSPACE_0' + (i+1)}</span>
-                      </div>
-
-                      <p className="text-white/60 font-light text-sm md:text-base leading-relaxed max-w-xl mt-6" style={{ fontFamily: '"Outfit", sans-serif' }}>
-                        {stage.desc}
-                      </p>
-
-                      <div className="flex justify-center mt-8 w-full border-t border-white/5 pt-4">
-                        <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">JAGATHI SPATIAL / QUALITY GUARANTEED</span>
-                      </div>
+                  
+                  {/* Details Column */}
+                  <div className="p-8 md:p-12 flex flex-col justify-between items-center text-center w-full md:w-[60%] flex-shrink-0">
+                    <div className="flex flex-col items-center w-full">
+                      <span className="text-[#FFEA0A] font-mono text-[10px] bg-white/5 border border-[#FFEA0A]/20 px-3 py-1.5 inline-block tracking-widest mb-4">{stage.num}</span>
+                      <h3 className="font-bold text-xl md:text-3xl uppercase tracking-wide text-white mb-2">{stage.title}</h3>
+                      <span className="font-mono text-[8px] tracking-[0.3em] text-[#FFEA0A] uppercase mt-2">{'// INTERSPACE_0' + (i+1)}</span>
                     </div>
 
-                    {/* Image Column */}
-                    <div className="relative w-full h-[30vh] md:h-auto md:w-[40%] overflow-hidden group flex-shrink-0">
-                      <img
-                        src={stage.image}
-                        alt={stage.title}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E]/80 via-transparent to-transparent pointer-events-none" />
-                    </div>
+                    <p className="text-white/60 font-light text-sm md:text-base leading-relaxed max-w-xl mt-6" style={{ fontFamily: '"Outfit", sans-serif' }}>
+                      {stage.desc}
+                    </p>
 
+                    <div className="flex justify-center mt-8 w-full border-t border-white/5 pt-4">
+                      <span className="text-white/20 font-mono text-[8px] uppercase tracking-widest">JAGATHI SPATIAL / QUALITY GUARANTEED</span>
+                    </div>
                   </div>
+
+                  {/* Image Column */}
+                  <div className="relative w-full h-[30vh] md:h-auto md:w-[40%] overflow-hidden group flex-shrink-0">
+                    <img
+                      src={stage.image}
+                      alt={stage.title}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E]/80 via-transparent to-transparent pointer-events-none" />
+                  </div>
+
                 </div>
               );
             })}
