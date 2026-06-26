@@ -256,7 +256,7 @@ export default function ConstructionPage() {
               return (
                 <div
                   key={i}
-                  className={`sticky top-[15vh] w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[45vh] md:min-h-[55vh] text-white z-10 mb-[5vh]`}
+                  className={`sticky top-[15vh] mx-auto self-center w-[96%] md:w-[85%] bg-[#1E1E1E] border border-white/10 rounded-sm shadow-2xl overflow-hidden flex ${rowDirection} items-stretch justify-between gap-0 min-h-[45vh] md:min-h-[55vh] text-white z-10 mb-[5vh]`}
                 >
                   
                   {/* Details Column */}
