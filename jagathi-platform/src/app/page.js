@@ -50,8 +50,8 @@ export default function Home() {
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 2.0
+      wheelMultiplier: 0.75,
+      touchMultiplier: 1.5
     });
 
     // Sync GSAP ScrollTrigger updates with Lenis scroll

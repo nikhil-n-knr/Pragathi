@@ -211,7 +211,7 @@ export default function ConstructionPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group pointer-events-auto">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="/assets/images/a0b767e2-9bd9-41f9-bd8c-ee49850132dc.jpeg" 
+                  src="/assets/images/a0b767e2-9bd9-41f9-bd8c-ee49850132dc.webp" 
                   alt="Silicon Arc Dome"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -234,7 +234,7 @@ export default function ConstructionPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group pointer-events-auto">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="/assets/images/a45ec4af-97ec-4f9b-8d22-1fa789968062.jpeg" 
+                  src="/assets/images/a45ec4af-97ec-4f9b-8d22-1fa789968062.webp" 
                   alt="Cogen Plant B"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -257,7 +257,7 @@ export default function ConstructionPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group pointer-events-auto">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="/assets/images/aa8a58a1-23eb-4674-a0b4-e3cbf6217898.jpeg" 
+                  src="/assets/images/aa8a58a1-23eb-4674-a0b4-e3cbf6217898.webp" 
                   alt="Orion Link Bridge"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />

@@ -16,12 +16,12 @@ export default function Preloader({ onComplete }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const logoImg = new Image();
-    logoImg.src = "/assets/branding/logo.png?v=2";
+    logoImg.src = "/assets/branding/logo.webp";
     if (logoImg.decode) {
       logoImg.decode().catch(() => {});
     }
     const badgeImg = new Image();
-    badgeImg.src = "/assets/brand/5.png";
+    badgeImg.src = "/assets/brand/5.webp";
     if (badgeImg.decode) {
       badgeImg.decode().catch(() => {});
     }
@@ -295,14 +295,14 @@ export default function Preloader({ onComplete }) {
 
       {/* 4b. Jagathi Brand Kit Badge (appears centered below the logo) */}
       <div className="preloader-brand-badge-5 absolute z-[100001]" style={{ top: '50%', marginTop: '-40px', left: '50%', transform: 'translateX(-50%)', opacity: 0, pointerEvents: 'none' }}>
-        <img src="/assets/brand/5.png" alt="Brand element" style={{ width: '408px', height: 'auto', opacity: 0.9 }} decoding="async" />
+        <img src="/assets/brand/5.webp" alt="Brand element" style={{ width: '408px', height: 'auto', opacity: 0.9 }} decoding="async" />
       </div>
 
       {/* 4c. JAGATHI Logo Badge (renders logo/image.png) */}
       <div className="preloader-logo-badge" style={{ opacity: 0 }}>
         <img 
           className="preloader-logo-image" 
-          src="/assets/branding/logo.png?v=2" 
+          src="/assets/branding/logo.webp" 
           alt="Jagathi Logo" 
           decoding="async"
         />

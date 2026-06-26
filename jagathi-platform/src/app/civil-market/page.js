@@ -139,7 +139,7 @@ export default function CivilMarketPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="/assets/images/3b077e58-5a29-436c-b927-cd27d6b12948.jpeg" 
+                  src="/assets/images/3b077e58-5a29-436c-b927-cd27d6b12948.webp" 
                   alt="Industrial Zone Hub"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -162,7 +162,7 @@ export default function CivilMarketPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="/assets/images/6a35eb17-d080-4a95-a7b4-877a2f58e914.jpeg" 
+                  src="/assets/images/6a35eb17-d080-4a95-a7b4-877a2f58e914.webp" 
                   alt="Solitaire Ridge"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -185,7 +185,7 @@ export default function CivilMarketPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="/assets/images/9373d4ee-6453-4600-9e02-3fc7cb704741.jpeg" 
+                  src="/assets/images/9373d4ee-6453-4600-9e02-3fc7cb704741.webp" 
                   alt="Nexus Edge Plot"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />

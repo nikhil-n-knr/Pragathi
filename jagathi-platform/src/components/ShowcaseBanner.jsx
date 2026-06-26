@@ -74,7 +74,7 @@ const showcaseItems = [
     title: 'The Jagathi Standard',
     subtitle: 'Quality without compromise',
     description: "Every project we touch carries one non-negotiable — it must outlast the generation that built it. No shortcuts in material selection, no tolerance for misaligned joints, no acceptance of 'good enough'. The Jagathi Standard is a singular commitment to permanence.",
-    image: '/assets/images/showcase_jagathi_standard.png',
+    image: '/assets/images/showcase_jagathi_standard.webp',
     kenBurns: styles.kenBurns0,
   },
   {
@@ -82,7 +82,7 @@ const showcaseItems = [
     title: 'The Full Lifecycle',
     subtitle: 'Land to living — one team',
     description: "We acquire the land. We design the structure. We build the shell. We finish the interior. No gaps, no handoffs, no version loss between disciplines. When Jagathi takes a project from brief to handover, every phase is owned in-house.",
-    image: '/assets/images/showcase_full_lifecycle.png',
+    image: '/assets/images/showcase_full_lifecycle.webp',
     kenBurns: styles.kenBurns1,
   },
   {
@@ -90,7 +90,7 @@ const showcaseItems = [
     title: '35 Years. Still Building.',
     subtitle: 'A legacy measured in skylines',
     description: "Since 1989, we have completed projects that define the skylines and communities of the regions we build in. Thirty-five years of earned trust, delivered on deadline, built on honesty. The benchmark is not the industry average — it is the last project we completed.",
-    image: '/assets/images/showcase_35_years.png',
+    image: '/assets/images/showcase_35_years.webp',
     kenBurns: styles.kenBurns2,
   },
   {
@@ -98,7 +98,7 @@ const showcaseItems = [
     title: 'The Promise Delivered',
     subtitle: 'Every handover. On time.',
     description: "A build is only as strong as the trust that surrounds it. Jagathi's track record of on-time, on-spec delivery has made us the first call for clients who cannot afford surprises. We sign on accountability and we follow through — every single time.",
-    image: '/assets/images/showcase_the_promise.png',
+    image: '/assets/images/showcase_the_promise.webp',
     kenBurns: styles.kenBurns0,
   },
   {
@@ -106,7 +106,7 @@ const showcaseItems = [
     title: 'Precision at Every Level',
     subtitle: 'Engineered to the millimetre',
     description: "From the reinforcement spacing in a load-bearing column to the flush alignment of a door frame — Jagathi's quality process operates at a resolution that most developers never reach. Precision is not an attribute here. It is the baseline.",
-    image: '/assets/images/showcase_precision.png',
+    image: '/assets/images/showcase_precision.webp',
     kenBurns: styles.kenBurns1,
   },
 ];

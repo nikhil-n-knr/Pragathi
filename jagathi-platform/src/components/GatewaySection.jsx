@@ -14,7 +14,7 @@ const disciplines = [
     subtitle: 'Heavy civil & land development',
     description:
       'Delivering master-scale concrete cores, structural lattices, and industrial complexes built to endure generations.',
-    image: '/assets/images/construction_discipline.png',
+    image: '/assets/images/construction_discipline.webp',
     videoWebm: '/assets/videos/construction_loop.webm',
     videoMp4: '/assets/videos/construction_loop.mp4',
     alt: 'Construction & Land Development',
@@ -30,7 +30,7 @@ const disciplines = [
     subtitle: 'Turnkey bespoke spaces',
     description:
       'Every square inch managed seamlessly — from raw architectural layouts and custom millwork to absolute lighting design.',
-    image: '/assets/images/interiors_discipline.png',
+    image: '/assets/images/interiors_discipline.webp',
     videoWebm: '/assets/videos/interiors_loop.webm',
     videoMp4: '/assets/videos/interiors_loop.mp4',
     alt: 'Interiors',
@@ -46,7 +46,7 @@ const disciplines = [
     subtitle: 'Lands & plotted assets',
     description:
       'Vetting and securing high-potential growth corridors, industrial smart-zones, and premium plotted inventories.',
-    image: '/assets/images/civil_market_discipline.png',
+    image: '/assets/images/civil_market_discipline.webp',
     videoWebm: '/assets/videos/civil_market_loop.webm',
     videoMp4: '/assets/videos/civil_market_loop.mp4',
     alt: 'Civil Market',

@@ -138,7 +138,7 @@ export default function InteriorPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="/assets/images/modern-room-with-wooden-staircase-daytime_181624-11447.avif" 
+                  src="/assets/images/modern-room-with-wooden-staircase-daytime_181624-11447.webp" 
                   alt="Dark Veined Marble"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -161,7 +161,7 @@ export default function InteriorPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="/assets/images/modern-wooden-sauna-geometric-interior-stylish-relaxation-space_169016-68903.avif" 
+                  src="/assets/images/modern-wooden-sauna-geometric-interior-stylish-relaxation-space_169016-68903.webp" 
                   alt="Bespoke Smoked Joinery"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
@@ -184,7 +184,7 @@ export default function InteriorPage() {
             <div className="border border-[#424242]/20 bg-[#424242]/5 p-6 flex flex-col justify-between h-[360px] rounded-sm group">
               <div className="relative h-44 w-full bg-zinc-900 border border-[#424242]/20 overflow-hidden group/img">
                 <img 
-                  src="/assets/images/photo-1616611213095-58abb651f70c.avif" 
+                  src="/assets/images/photo-1616611213095-58abb651f70c.webp" 
                   alt="Bouclé Lounge Curation"
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover/img:opacity-100 group-hover/img:scale-105 transition-all duration-[1.2s] ease-out"
                 />
