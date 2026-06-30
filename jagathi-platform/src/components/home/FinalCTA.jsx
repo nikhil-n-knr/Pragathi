@@ -64,6 +64,8 @@ export default function FinalCTA() {
           src="/assets/images/finalcta_bg.webp"
           alt=""
           aria-hidden="true"
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover object-center"
           style={{ filter: 'brightness(0.22) saturate(0.6) contrast(1.1)' }}
         />

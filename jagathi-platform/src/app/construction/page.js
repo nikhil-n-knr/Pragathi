@@ -116,6 +116,7 @@ export default function ConstructionPage() {
           <img
             src="/assets/images/construction/bridge.webp"
             alt="Construction"
+            decoding="async"
             className="w-full h-full object-cover object-center"
             style={{ filter: 'brightness(0.35) saturate(0.7)' }}
           />
@@ -198,6 +199,8 @@ export default function ConstructionPage() {
         <div className="max-w-[1600px] w-full h-[40vh] md:h-[60vh] border border-[#424242]/10 overflow-hidden relative group rounded-sm shadow-xl">
           <img
             src="/assets/images/construction/industrial.webp"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-[1.03] filter brightness-95"
             alt="Heavy Industrial Infrastructure"
           />
@@ -233,6 +236,8 @@ export default function ConstructionPage() {
         <div className="max-w-[1600px] w-full h-[40vh] md:h-[60vh] border border-[#424242]/10 overflow-hidden relative group rounded-sm shadow-xl">
           <img
             src="/assets/images/construction/highrise.webp"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-[1.03] filter brightness-95"
             alt="Commercial Highrise Tower Core"
           />
@@ -283,6 +288,8 @@ export default function ConstructionPage() {
                     <img
                       src={step.image}
                       alt={step.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E]/80 via-transparent to-transparent pointer-events-none" />
@@ -339,6 +346,8 @@ export default function ConstructionPage() {
                     <img
                       src={card.image}
                       alt={card.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />

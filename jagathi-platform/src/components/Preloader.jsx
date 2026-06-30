@@ -70,13 +70,13 @@ export default function Preloader({ onComplete }) {
       }
     });
 
-    // Trigger main layout fade-in and page entrance events at 12.0s (when exit is almost complete)
+    // Trigger main layout fade-in and page entrance events at 11.0s (when exit is almost complete)
     tl.call(() => {
       window.dispatchEvent(new Event('preloaderComplete'));
       if (onCompleteRef.current) {
         onCompleteRef.current();
       }
-    }, null, 12.0);
+    }, null, 11.0);
 
     // Phase 1: Loader at Center, Counter at Bottom-Left (0.0s to 1.8s)
     const counterObj = { val: 1900 };
@@ -223,33 +223,33 @@ export default function Preloader({ onComplete }) {
       7.6
     );
 
-    // Phase 5 Exit: Conclude by fading/scaling everything out (at 11.0s)
+    // Phase 5 Exit: Conclude by fading/scaling everything out (at 10.0s)
     tl.to('.preloader-logo-badge', {
       scale: 1.12,
       opacity: 0, // Smoothly fade out logo badge
       duration: 1.3,
       ease: "power2.inOut"
-    }, 11.0);
+    }, 10.0);
 
     tl.to('.preloader-brand-badge-5', {
       scale: 1.12,
       opacity: 0, // Smoothly fade out brand badge
       duration: 1.3,
       ease: "power2.inOut"
-    }, 11.0);
+    }, 10.0);
 
     tl.to('.preloader-svg-container', {
       opacity: 0, // Smoothly fade out ripple outlines container
       duration: 1.3,
       ease: "power3.inOut"
-    }, 11.0);
+    }, 10.0);
 
     // Fade out overlay background to reveal the main website (all nested children fade out automatically with parent opacity)
     tl.to('#preloader-overlay', {
       opacity: 0,
       duration: 1.3,
       ease: "power3.inOut"
-    }, 11.0);
+    }, 10.0);
 
     return () => {
       tl.kill();
@@ -294,7 +294,7 @@ export default function Preloader({ onComplete }) {
       </div>
 
       {/* 4b. Jagathi Brand Kit Badge (appears centered below the logo) */}
-      <div className="preloader-brand-badge-5 absolute z-[100001]" style={{ top: '50%', marginTop: '-40px', left: '50%', transform: 'translateX(-50%)', opacity: 0, pointerEvents: 'none' }}>
+      <div className="preloader-brand-badge-5 absolute z-[100001] preloader-brand-badge-5-margin" style={{ top: '50%', left: '50%', transform: 'translateX(-50%)', opacity: 0, pointerEvents: 'none' }}>
         <img src="/assets/brand/5.webp" alt="Brand element" style={{ width: 'min(408px, 90vw)', height: 'auto', opacity: 0.9 }} decoding="async" />
       </div>
 

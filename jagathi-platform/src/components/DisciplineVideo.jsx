@@ -70,6 +70,7 @@ export default function DisciplineVideo({ imageSrc, videoSrcWebm, videoSrcMp4, a
       <img
         src={imageSrc}
         alt={alt}
+        decoding="async"
         className={`absolute inset-0 w-full h-full object-cover block ${kenBurnsClass}`}
         style={{
           filter: isActive ? 'brightness(1.06)' : 'brightness(0.92)',

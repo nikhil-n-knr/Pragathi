@@ -190,6 +190,17 @@ body.preloader-active {
   will-change: transform, opacity;
 }
 
+.preloader-brand-badge-5-margin {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .preloader-brand-badge-5-margin {
+    display: block !important;
+    margin-top: -40px;
+  }
+}
+
 .preloader-logo-image {
   position: absolute;
   left: 50%;

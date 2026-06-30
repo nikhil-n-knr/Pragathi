@@ -29,6 +29,7 @@ export default function ProjectOverlay({ selectedProject, onClose }) {
           <img 
             src={selectedProject.image} 
             alt={selectedProject.title} 
+            decoding="async"
             className="w-full h-full object-cover opacity-35 filter brightness-75 scale-105"
           />
         ) : (

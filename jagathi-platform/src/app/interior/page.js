@@ -98,6 +98,7 @@ export default function InteriorPage() {
           <img
             src="/assets/images/interior/penthouse.webp"
             alt="Interior Design"
+            decoding="async"
             className="w-full h-full object-cover object-center"
             style={{ filter: 'brightness(0.35) saturate(0.7)' }}
           />
@@ -142,6 +143,8 @@ export default function InteriorPage() {
                     <img
                       src={space.image}
                       alt={space.label}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                       style={{ filter: 'brightness(0.9)' }}
                     />
@@ -241,6 +244,8 @@ export default function InteriorPage() {
                     <img
                       src={stage.image}
                       alt={stage.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1E1E1E]/80 via-transparent to-transparent pointer-events-none" />
@@ -271,6 +276,8 @@ export default function InteriorPage() {
                     <img
                       src={s.image}
                       alt={s.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                       style={{ filter: 'brightness(0.88)' }}
                     />

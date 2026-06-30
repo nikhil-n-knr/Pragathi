@@ -64,6 +64,7 @@ function BeforeAfterSlider({ beforeImage, afterImage, title, aspect }) {
         style={{ filter: 'grayscale(0.65) brightness(0.75) contrast(1.1)' }}
         draggable="false"
         loading="lazy"
+        decoding="async"
       />
 
       {/* BEFORE badge */}
@@ -84,6 +85,7 @@ function BeforeAfterSlider({ beforeImage, afterImage, title, aspect }) {
           style={{ filter: 'brightness(1.02) saturate(1.05)' }}
           draggable="false"
           loading="lazy"
+          decoding="async"
         />
         {/* AFTER badge — only visible when in the revealed area */}
         <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 pointer-events-none">

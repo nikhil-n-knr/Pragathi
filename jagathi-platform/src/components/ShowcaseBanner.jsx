@@ -175,6 +175,8 @@ export default function ShowcaseBanner({ onPlayReel }) {
           <div key={index} className="absolute inset-0 transition-opacity duration-900 ease-in-out"
             style={{ opacity: activeTab === index ? 1 : 0 }}>
             <img src={image} alt="" aria-hidden="true"
+              loading="lazy"
+              decoding="async"
               className={`w-full h-full object-cover block ${activeTab === index ? kenBurns : ''}`}
               style={{ filter: 'brightness(0.18) saturate(0.5)' }} />
           </div>
@@ -208,6 +210,8 @@ export default function ShowcaseBanner({ onPlayReel }) {
             <div key={index} className="absolute inset-0 transition-opacity duration-700 ease-in-out"
               style={{ opacity: activeTab === index ? 1 : 0, zIndex: activeTab === index ? 2 : 1 }}>
               <img src={image} alt={title}
+                loading="lazy"
+                decoding="async"
                 className={`w-full h-full object-cover block ${activeTab === index ? kenBurns : ''}`}
                 style={{ filter: 'brightness(0.78) contrast(1.05)' }} />
             </div>
@@ -284,6 +288,8 @@ export default function ShowcaseBanner({ onPlayReel }) {
             <div key={index} className="absolute inset-0 transition-opacity duration-700 ease-in-out"
               style={{ opacity: activeTab === index ? 1 : 0, zIndex: activeTab === index ? 2 : 1 }}>
               <img src={image} alt={title}
+                loading="lazy"
+                decoding="async"
                 className={`w-full h-full object-cover block ${activeTab === index ? kenBurns : ''}`}
                 style={{ filter: 'brightness(0.88) contrast(1.05)' }} />
             </div>

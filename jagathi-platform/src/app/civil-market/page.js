@@ -154,6 +154,7 @@ export default function CivilMarketPage() {
           <img
             src="/assets/images/civil_market_discipline.webp"
             alt="Civil Market"
+            decoding="async"
             className="w-full h-full object-cover object-center"
             style={{ filter: 'brightness(0.38) saturate(0.8)' }}
           />
@@ -251,6 +252,8 @@ export default function CivilMarketPage() {
                   <img
                     src={zone.image}
                     alt={zone.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-[#1E1E1E] via-transparent to-transparent hidden md:block" />
@@ -353,6 +356,8 @@ export default function CivilMarketPage() {
                     <img
                       src={asset.image}
                       alt={asset.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-center group-hover:scale-[1.04] transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
