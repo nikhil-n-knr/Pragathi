@@ -21,7 +21,7 @@ export default function KineticHeadline() {
     {
       ref: rail1Ref,
       parentRef: parent1Ref,
-      speed: 28, // seconds for full loop
+      speed: 60, // Slowed down further (more than 50% slower than original 28s)
       direction: 'left',
       words: [
         { text: "INFRASTRUCTURE", path: "/construction" },
@@ -33,7 +33,7 @@ export default function KineticHeadline() {
     {
       ref: rail2Ref,
       parentRef: parent2Ref,
-      speed: 36, // slower speed going opposite
+      speed: 80, // Slowed down further (more than 50% slower than original 36s)
       direction: 'right',
       words: [
         { text: "ESTABLISHED 1989", path: "/legacy-home" },
@@ -77,28 +77,34 @@ export default function KineticHeadline() {
 
       tweens.push({ tween, target });
 
-      // Add mouseover listeners to slow down rail speed to 35% when cursor enters it
+      // Attach mouseover listeners to stationary parent to prevent moving-target glitching
+      const parent = rail.parentRef.current;
+      if (!parent) return;
+
       const onMouseEnter = () => {
-        gsap.to(tween, { timeScale: 0.35, duration: 0.4, overwrite: 'auto' });
+        gsap.to(tween, { timeScale: 0.0, duration: 0.4, overwrite: 'auto' });
       };
 
       const onMouseLeave = () => {
         gsap.to(tween, { timeScale: 1.0, duration: 0.6, overwrite: 'auto' });
       };
 
-      target.addEventListener('mouseenter', onMouseEnter);
-      target.addEventListener('mouseleave', onMouseLeave);
+      parent.addEventListener('mouseenter', onMouseEnter);
+      parent.addEventListener('mouseleave', onMouseLeave);
 
-      target._cleanMarquee = () => {
-        target.removeEventListener('mouseenter', onMouseEnter);
-        target.removeEventListener('mouseleave', onMouseLeave);
+      parent._cleanMarquee = () => {
+        parent.removeEventListener('mouseenter', onMouseEnter);
+        parent.removeEventListener('mouseleave', onMouseLeave);
       };
     });
 
     return () => {
       tweens.forEach(({ tween, target }) => {
         tween.kill();
-        if (target._cleanMarquee) target._cleanMarquee();
+        const parent = target.parentElement;
+        if (parent && parent._cleanMarquee) {
+          parent._cleanMarquee();
+        }
       });
     };
   }, []);

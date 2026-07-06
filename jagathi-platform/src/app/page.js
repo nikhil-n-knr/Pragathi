@@ -8,7 +8,7 @@ import { AnimatePresence } from 'framer-motion';
 import Lenis from 'lenis';
 import HomeScene from '../components/scenes/HomeScene';
 import KineticHeadline from '../components/KineticHeadline';
-// import Footer from '../components/Footer';
+import Footer from '../components/Footer';
 import FluidMediaField from '../components/FluidMediaField';
 import ShowcaseBanner from '../components/ShowcaseBanner';
 import GatewaySection from '../components/GatewaySection';
@@ -198,7 +198,7 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Footer */}
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

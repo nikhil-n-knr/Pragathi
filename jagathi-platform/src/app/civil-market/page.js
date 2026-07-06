@@ -5,6 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import HomeScene from '../../components/scenes/HomeScene';
+import Footer from '../../components/Footer';
 
 /* ─── Data ─────────────────────────────────────── */
 const investmentMetrics = [
@@ -406,6 +407,7 @@ export default function CivilMarketPage() {
         </div>
       </section>
 
+      <Footer />
     </div>
   );
 }

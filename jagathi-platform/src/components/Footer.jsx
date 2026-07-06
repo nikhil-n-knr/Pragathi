@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import Link from 'next/link';
 
-// Port of InteractiveFooter class from footer.js
+// ─── WebGL Interactive Text ────────────────────────────────────────────
 class InteractiveFooter {
   constructor(container, canvas) {
     this.container = container;
@@ -14,7 +14,6 @@ class InteractiveFooter {
     this.width = this.container.clientWidth || window.innerWidth || 1920;
     this.height = this.container.clientHeight || window.innerHeight || 800;
 
-    // Simulation settings
     this.fluidRes = 512;
     this.targetMouseX = this.width / 2;
     this.targetMouseY = this.height / 2;
@@ -22,26 +21,23 @@ class InteractiveFooter {
     this.brushY = this.height / 2;
     this.prevBrushX = this.width / 2;
     this.prevBrushY = this.height / 2;
-    
+
     this.isMouseMoving = false;
     this.mouseTimer = null;
     this.distortionStrength = 0.0;
     this.easedDistortion = 0.0;
 
-    // Spring Physics & Inertia States
+    // Spring Physics — smoother, less aggressive
     this.springVal = new THREE.Vector2(0, 0);
     this.springVel = new THREE.Vector2(0, 0);
     this.mouseVelocity = new THREE.Vector2(0, 0);
     this.easedMouseVelocity = new THREE.Vector2(0, 0);
 
-    // Render loop state
     this.isVisible = false;
     this.animationFrameId = null;
     this.time = 0;
-
     this.listeners = [];
 
-    // Initialize systems
     this.setupThree();
     this.setupFluidSim();
     this.setupTextTexture();
@@ -53,7 +49,7 @@ class InteractiveFooter {
   setupThree() {
     this.scene = new THREE.Scene();
     this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    
+
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: false,
@@ -70,9 +66,7 @@ class InteractiveFooter {
     this.fluidCanvas.width = this.fluidRes;
     this.fluidCanvas.height = this.fluidRes;
     this.fluidCtx = this.fluidCanvas.getContext('2d');
-
     this.clearFluidCanvas();
-
     this.fluidTexture = new THREE.CanvasTexture(this.fluidCanvas);
     this.fluidTexture.minFilter = THREE.LinearFilter;
     this.fluidTexture.magFilter = THREE.LinearFilter;
@@ -84,7 +78,7 @@ class InteractiveFooter {
   }
 
   updateFluidSim() {
-    const ease = 0.08;
+    const ease = 0.06; // softer brush tracking
     this.brushX += (this.targetMouseX - this.brushX) * ease;
     this.brushY += (this.targetMouseY - this.brushY) * ease;
 
@@ -93,17 +87,30 @@ class InteractiveFooter {
     const speed = Math.sqrt(dx * dx + dy * dy);
 
     const vx = this.width > 0 ? dx / this.width : 0;
-    const vy = this.height > 0 ? -dy / this.height : 0; 
-    
-    this.fluidCtx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    const vy = this.height > 0 ? -dy / this.height : 0;
+
+    // Shift the fluid canvas content upward (smoke drifts up) and fade out
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = this.fluidRes;
+    tempCanvas.height = this.fluidRes;
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCtx.drawImage(this.fluidCanvas, 0, 0);
+
+    this.fluidCtx.fillStyle = '#000000';
     this.fluidCtx.fillRect(0, 0, this.fluidRes, this.fluidRes);
 
+    this.fluidCtx.globalAlpha = 0.94; // fade rate
+    const wobble = Math.sin(this.time * 6.0) * 0.4;
+    this.fluidCtx.drawImage(tempCanvas, wobble, -2.5); // shift up
+    this.fluidCtx.globalAlpha = 1.0;
+
     if (this.isMouseMoving && speed > 0.01) {
-      this.distortionStrength = Math.min(speed * 0.20, 0.85);
+      // 50% reduced distortion cap: was 0.85 → 0.42
+      this.distortionStrength = Math.min(speed * 0.10, 0.42);
       this.mouseVelocity.set(vx, vy);
     } else {
-      this.distortionStrength = THREE.MathUtils.lerp(this.distortionStrength, 0.0, 0.08);
-      this.mouseVelocity.lerp(new THREE.Vector2(0, 0), 0.08);
+      this.distortionStrength = THREE.MathUtils.lerp(this.distortionStrength, 0.0, 0.05);
+      this.mouseVelocity.lerp(new THREE.Vector2(0, 0), 0.05);
     }
 
     const prevCx = this.width > 0 ? (this.prevBrushX / this.width) * this.fluidRes : this.fluidRes / 2;
@@ -112,10 +119,10 @@ class InteractiveFooter {
     const cy = this.height > 0 ? (this.brushY / this.height) * this.fluidRes : this.fluidRes / 2;
 
     const distCanvas = Math.hypot(cx - prevCx, cy - prevCy);
-    const steps = Math.max(1, Math.floor(distCanvas / 2.0));
+    const steps = Math.max(1, Math.floor(distCanvas / 2.5));
 
-    const radius = 3.5 + Math.min(speed * 0.1, 6.0); 
-    const baseOpacity = Math.min(0.12 + speed * 0.02, 0.45); 
+    const radius = 4.0 + Math.min(speed * 0.08, 5.0);
+    const baseOpacity = Math.min(0.10 + speed * 0.015, 0.35);
     const stepOpacity = baseOpacity / Math.sqrt(steps);
 
     for (let i = 0; i <= steps; i++) {
@@ -126,7 +133,6 @@ class InteractiveFooter {
       const grad = this.fluidCtx.createRadialGradient(x, y, 0, x, y, radius);
       grad.addColorStop(0, `rgba(255, 255, 255, ${stepOpacity})`);
       grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
       this.fluidCtx.fillStyle = grad;
       this.fluidCtx.beginPath();
       this.fluidCtx.arc(x, y, radius, 0, Math.PI * 2);
@@ -135,7 +141,6 @@ class InteractiveFooter {
 
     this.prevBrushX = this.brushX;
     this.prevBrushY = this.brushY;
-
     this.fluidTexture.needsUpdate = true;
   }
 
@@ -144,30 +149,26 @@ class InteractiveFooter {
     this.textCanvas.width = 2048;
     this.textCanvas.height = 512;
     this.textCtx = this.textCanvas.getContext('2d');
-
     this.textTexture = new THREE.CanvasTexture(this.textCanvas);
     this.textTexture.minFilter = THREE.LinearFilter;
     this.textTexture.magFilter = THREE.LinearFilter;
-
     this.drawText();
     if (typeof document !== 'undefined' && document.fonts) {
-      document.fonts.ready.then(() => {
-        this.drawText();
-      });
+      document.fonts.ready.then(() => { this.drawText(); });
     }
   }
 
   drawText() {
     const w = this.textCanvas.width;
     const h = this.textCanvas.height;
-
     this.textCtx.clearRect(0, 0, w, h);
-
-    this.textCtx.font = 'condensed 340px Anton, Impact, sans-serif';
+    this.textCtx.font = '900 240px "Basement Grotesque", "Syncopate", sans-serif';
+    if ('letterSpacing' in this.textCtx) {
+      this.textCtx.letterSpacing = '14px';
+    }
     this.textCtx.fillStyle = '#ffffff';
     this.textCtx.textAlign = 'center';
     this.textCtx.textBaseline = 'middle';
-
     this.textCtx.fillText('JAGATHI', w / 2, h / 2 + 25);
     this.textTexture.needsUpdate = true;
   }
@@ -175,13 +176,13 @@ class InteractiveFooter {
   setupShaderMesh() {
     this.shaderMaterial = new THREE.ShaderMaterial({
       uniforms: {
-        tText: { value: this.textTexture },
-        tFluid: { value: this.fluidTexture },
-        uTime: { value: 0.0 },
+        tText:       { value: this.textTexture },
+        tFluid:      { value: this.fluidTexture },
+        uTime:       { value: 0.0 },
         uDistortion: { value: 0.0 },
-        uVelocity: { value: new THREE.Vector2(0, 0) },
-        uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-        uAspect: { value: this.width / this.height }
+        uVelocity:   { value: new THREE.Vector2(0, 0) },
+        uMouse:      { value: new THREE.Vector2(0.5, 0.5) },
+        uAspect:     { value: this.width / this.height }
       },
       vertexShader: `
         uniform vec2 uVelocity;
@@ -197,13 +198,12 @@ class InteractiveFooter {
 
           vec2 mouseMesh = uMouse * 2.0 - 1.0;
           vec2 diff = pos.xy - mouseMesh;
-          
+
           vec2 diffCorrected = diff;
           diffCorrected.x *= uAspect;
-          
+
           float dist = length(diffCorrected);
-          
-          float radius = 0.68;
+          float radius = 0.70;
           float influence = smoothstep(radius, 0.0, dist);
 
           float speed = length(uVelocity);
@@ -212,32 +212,37 @@ class InteractiveFooter {
             vec2 velDir = uVelocity / speed;
             vec2 perpDir = vec2(-velDir.y, velDir.x);
 
-            pos.xy += uVelocity * influence * 0.40;
+            // ── REDUCED 50%: was 0.40 → 0.20
+            pos.xy += uVelocity * influence * 0.20;
 
-            float proj = dot(diffCorrected, velDir);
+            float proj     = dot(diffCorrected, velDir);
             float projPerp = dot(diffCorrected, perpDir);
 
-            vec2 stretchOffset = velDir * proj * speed * 0.75 * influence;
-            vec2 squeezeOffset = perpDir * projPerp * speed * 0.38 * influence;
+            // ── REDUCED 50%: was 0.75 → 0.375, was 0.38 → 0.19
+            vec2 stretchOffset = velDir * proj * speed * 0.375 * influence;
+            vec2 squeezeOffset = perpDir * projPerp * speed * 0.19 * influence;
             pos.xy += (stretchOffset - squeezeOffset);
 
-            float angle = speed * 1.8 * influence * (1.0 - (dist / radius));
-            float cosA = cos(angle);
-            float sinA = sin(angle);
+            // ── REDUCED 50%: was 1.8 → 0.9
+            float angle = speed * 0.9 * influence * (1.0 - (dist / radius));
+            float cosA  = cos(angle);
+            float sinA  = sin(angle);
             vec2 rotatedDiff = vec2(
               diff.x * cosA - diff.y * sinA,
               diff.x * sinA + diff.y * cosA
             );
             pos.xy = mouseMesh + rotatedDiff;
 
-            float ripple = sin(dist * 18.0 - uTime * 25.0) * speed * 0.09 * influence;
+            // ── REDUCED 50%: ripple was 0.09 → 0.045, 0.03 → 0.015
+            float ripple = sin(dist * 16.0 - uTime * 20.0) * speed * 0.045 * influence;
             pos.y += ripple;
-            pos.x += cos(dist * 18.0 - uTime * 25.0) * speed * 0.03 * influence;
+            pos.x += cos(dist * 16.0 - uTime * 20.0) * speed * 0.015 * influence;
           }
 
           if (influence > 0.0) {
             float dx = pos.x - mouseMesh.x;
-            float localBend = cos(clamp(dx * 4.5, -1.570796, 1.570796)) * uVelocity.y * 0.42 * influence;
+            // ── REDUCED 50%: was 0.42 → 0.21
+            float localBend = cos(clamp(dx * 4.2, -1.570796, 1.570796)) * uVelocity.y * 0.21 * influence;
             pos.y += localBend;
           }
 
@@ -257,7 +262,6 @@ class InteractiveFooter {
         float hash(vec2 p) {
           return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
         }
-
         float noise(vec2 p) {
           vec2 i = floor(p);
           vec2 f = fract(p);
@@ -268,7 +272,6 @@ class InteractiveFooter {
           float d = hash(i + vec2(1.0, 1.0));
           return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
         }
-
         float fbm(vec2 p) {
           float v = 0.0;
           float a = 0.5;
@@ -283,44 +286,58 @@ class InteractiveFooter {
         }
 
         void main() {
-          vec2 flowUv = vScreenUv * 6.0 - vec2(uTime * 0.25, uTime * 0.75);
+          vec2 flowUv = vScreenUv * 5.5 - vec2(uTime * 0.18, uTime * 0.60);
           float flowX = fbm(flowUv) - 0.5;
           float flowY = fbm(flowUv + vec2(43.12, 79.34)) - 0.5;
-          
-          vec2 distortedScreenUv = vScreenUv + vec2(flowX, flowY) * 0.052;
+          vec2 distortedScreenUv = vScreenUv + vec2(flowX, flowY) * 0.038;
 
-          float t = texture2D(tFluid, distortedScreenUv).r;
-
+          float t        = texture2D(tFluid, distortedScreenUv).r;
           vec2 texelSize = vec2(1.0 / 512.0);
-          float t_left = texture2D(tFluid, distortedScreenUv - vec2(texelSize.x, 0.0)).r;
-          float t_right = texture2D(tFluid, distortedScreenUv + vec2(texelSize.x, 0.0)).r;
-          float t_up = texture2D(tFluid, distortedScreenUv + vec2(0.0, texelSize.y)).r;
-          float t_down = texture2D(tFluid, distortedScreenUv - vec2(0.0, texelSize.y)).r;
+          float t_left   = texture2D(tFluid, distortedScreenUv - vec2(texelSize.x, 0.0)).r;
+          float t_right  = texture2D(tFluid, distortedScreenUv + vec2(texelSize.x, 0.0)).r;
+          float t_up     = texture2D(tFluid, distortedScreenUv + vec2(0.0, texelSize.y)).r;
+          float t_down   = texture2D(tFluid, distortedScreenUv - vec2(0.0, texelSize.y)).r;
 
-          vec2 displacement = vec2(t_right - t_left, t_up - t_down) * 0.075 * uDistortion;
+          // REDUCED: was 0.075 → 0.040
+          vec2 displacement = vec2(t_right - t_left, t_up - t_down) * 0.040 * uDistortion;
 
-          vec2 smokeUv = vScreenUv * 14.0 - vec2(0.0, uTime * 1.2);
-          float smokeNoise = fbm(smokeUv) - 0.5;
-          
-          displacement += vec2(smokeNoise, -smokeNoise) * 0.016 * t * uDistortion;
+          vec2 smokeUv   = vScreenUv * 12.0 - vec2(0.0, uTime * 0.9);
+          float smokeN   = fbm(smokeUv) - 0.5;
+          displacement  += vec2(smokeN, -smokeN) * 0.010 * t * uDistortion;
 
-          float r = texture2D(tText, vUv - displacement * 2.2).a;
-          float g = texture2D(tText, vUv - displacement * 1.1).a;
-          float b = texture2D(tText, vUv + displacement * 0.2).a;
+          // ── Chromatic Aberration: BRIGHT WHITE on both edges ──
+          // Like the cursor glow — both leading and trailing fringe are pure white.
+          // Creates a hot white bloom/aura around letters when they dance.
 
-          vec3 textCol = vec3(r, g, b);
-          vec3 bgCol = vec3(255.0 / 255.0, 234.0 / 255.0, 10.0 / 255.0);
-          vec3 finalColor = mix(bgCol, vec3(0.02, 0.02, 0.03), textCol);
+          float tLead   = texture2D(tText, vUv - displacement * 3.5).a; // leading
+          float tCenter = texture2D(tText, vUv).a;                        // core
+          float tTrail  = texture2D(tText, vUv + displacement * 3.0).a;  // trailing
 
-          vec3 smokeCol = vec3(0.05, 0.05, 0.08);
-          finalColor = mix(finalColor, smokeCol, t * 0.22);
+          // Isolate edge-only fringes
+          float leadFringe  = clamp(tLead  - tCenter, 0.0, 1.0);
+          float trailFringe = clamp(tTrail - tCenter, 0.0, 1.0);
+
+          vec3 bgCol    = vec3(255.0/255.0, 234.0/255.0, 10.0/255.0); // yellow
+          vec3 textDark = vec3(0.02, 0.02, 0.03);                      // charcoal
+          vec3 whiteGlow = vec3(1.0, 1.0, 1.0);                        // pure bright white
+
+          // Core text
+          vec3 finalColor = mix(bgCol, textDark, tCenter);
+
+          // Both fringes — same bright white (like the cursor border glow)
+          float fringe = clamp((leadFringe + trailFringe) * uDistortion * 6.0, 0.0, 1.0);
+          finalColor = mix(finalColor, whiteGlow, fringe);
+
+          // Smoke tint: bright white smoke generated by the cursor movement
+          vec3 smokeCol = vec3(1.0, 1.0, 1.0);
+          finalColor = mix(finalColor, smokeCol, t * 0.48);
 
           gl_FragColor = vec4(finalColor, 1.0);
         }
       `
     });
 
-    const geom = new THREE.PlaneGeometry(2, 2, 64, 16);
+    const geom = new THREE.PlaneGeometry(2, 2, 72, 18);
     this.mesh = new THREE.Mesh(geom, this.shaderMaterial);
     this.scene.add(this.mesh);
   }
@@ -328,28 +345,17 @@ class InteractiveFooter {
   setupEvents() {
     const handleMove = (clientX, clientY) => {
       const rect = this.container.getBoundingClientRect();
-      
       this.targetMouseX = clientX - rect.left;
       this.targetMouseY = clientY - rect.top;
-
       this.isMouseMoving = true;
-
       clearTimeout(this.mouseTimer);
-      this.mouseTimer = setTimeout(() => {
-        this.isMouseMoving = false;
-      }, 30);
+      this.mouseTimer = setTimeout(() => { this.isMouseMoving = false; }, 40);
     };
 
-    const mouseMoveListener = (e) => {
-      handleMove(e.clientX, e.clientY);
-    };
-
+    const mouseMoveListener = (e) => { handleMove(e.clientX, e.clientY); };
     const touchMoveListener = (e) => {
-      if (e.touches && e.touches[0]) {
-        handleMove(e.touches[0].clientX, e.touches[0].clientY);
-      }
+      if (e.touches && e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY);
     };
-
     const resizeListener = () => this.resize();
 
     window.addEventListener('mousemove', mouseMoveListener, { passive: true });
@@ -367,7 +373,6 @@ class InteractiveFooter {
     if (!this.container) return;
     this.width = this.container.clientWidth || window.innerWidth || 1920;
     this.height = this.container.clientHeight || window.innerHeight || 800;
-
     this.renderer.setSize(this.width, this.height);
     if (this.shaderMaterial) {
       this.shaderMaterial.uniforms.uAspect.value = this.width / this.height;
@@ -379,10 +384,7 @@ class InteractiveFooter {
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          if (!this.isVisible) {
-            this.isVisible = true;
-            this.animate();
-          }
+          if (!this.isVisible) { this.isVisible = true; this.animate(); }
         } else {
           this.isVisible = false;
           if (this.animationFrameId) {
@@ -391,56 +393,49 @@ class InteractiveFooter {
           }
         }
       });
-    }, {
-      root: null,
-      threshold: 0.02
-    });
-
+    }, { root: null, threshold: 0.02 });
     this.observer.observe(this.container);
   }
 
   animate() {
     if (!this.isVisible) return;
-
     this.animationFrameId = requestAnimationFrame(() => this.animate());
-
-    this.time += 0.01;
+    this.time += 0.008; // slightly slower time to feel calmer
     this.updateFluidSim();
 
-    const k = 0.06;
-    const mass = 1.0;
-    const damping = 0.82;
+    // Spring physics — smoother: higher damping, lower drag force
+    const k       = 0.04;  // was 0.06
+    const mass    = 1.0;
+    const damping = 0.88;  // was 0.82 — more decay
 
     const forceX = -k * this.springVal.x;
     const forceY = -k * this.springVal.y;
 
-    const dragForceX = this.mouseVelocity.x * 2.2;
-    const dragForceY = this.mouseVelocity.y * 2.2;
+    // Drag reduced 50%: was 2.2 → 1.1
+    const dragForceX = this.mouseVelocity.x * 1.1;
+    const dragForceY = this.mouseVelocity.y * 1.1;
 
     const accelX = (forceX + dragForceX) / mass;
     const accelY = (forceY + dragForceY) / mass;
 
     this.springVel.x += accelX;
     this.springVel.y += accelY;
-    
     this.springVel.x *= damping;
     this.springVel.y *= damping;
 
     this.springVal.x += this.springVel.x;
     this.springVal.y += this.springVel.y;
 
-    if (this.mesh) {
-      this.mesh.position.set(0.0, 0.0, 0.0);
-    }
+    if (this.mesh) this.mesh.position.set(0.0, 0.0, 0.0);
 
-    this.easedDistortion = THREE.MathUtils.lerp(this.easedDistortion, this.distortionStrength, 0.08);
-    this.easedMouseVelocity.lerp(this.springVal, 0.08);
+    this.easedDistortion = THREE.MathUtils.lerp(this.easedDistortion, this.distortionStrength, 0.06);
+    this.easedMouseVelocity.lerp(this.springVal, 0.06);
 
-    const normBrushX = this.width > 0 ? this.brushX / this.width : 0.5;
+    const normBrushX = this.width  > 0 ? this.brushX / this.width  : 0.5;
     const normBrushY = this.height > 0 ? 1.0 - (this.brushY / this.height) : 0.5;
 
-    this.shaderMaterial.uniforms.uTime.value = this.time;
-    this.shaderMaterial.uniforms.uDistortion.value = this.easedDistortion;
+    this.shaderMaterial.uniforms.uTime.value       = this.time;
+    this.shaderMaterial.uniforms.uDistortion.value  = this.easedDistortion;
     this.shaderMaterial.uniforms.uVelocity.value.copy(this.easedMouseVelocity);
     this.shaderMaterial.uniforms.uMouse.value.set(normBrushX, normBrushY);
 
@@ -449,20 +444,11 @@ class InteractiveFooter {
 
   destroy() {
     this.isVisible = false;
-    if (this.animationFrameId) {
-      cancelAnimationFrame(this.animationFrameId);
-    }
-    
-    // Remove all event listeners
+    if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
     this.listeners.forEach(({ type, target, handler }) => {
       target.removeEventListener(type, handler);
     });
-
-    if (this.observer) {
-      this.observer.disconnect();
-    }
-
-    // Dispose Three.js objects
+    if (this.observer) this.observer.disconnect();
     if (this.mesh) {
       this.scene.remove(this.mesh);
       if (this.mesh.geometry) this.mesh.geometry.dispose();
@@ -475,5 +461,81 @@ class InteractiveFooter {
 }
 
 export default function Footer() {
-  return null;
+  const containerRef  = useRef(null);
+  const canvasRef     = useRef(null);
+
+  useEffect(() => {
+    const container   = containerRef.current;
+    const canvas      = canvasRef.current;
+    if (!container || !canvas) return;
+
+    const footerInstance = new InteractiveFooter(container, canvas);
+
+    const ro = new ResizeObserver(() => {
+      if (containerRef.current) {
+        footerInstance.resize();
+      }
+    });
+    ro.observe(container);
+
+    return () => {
+      footerInstance.destroy();
+      ro.disconnect();
+    };
+  }, []);
+
+  return (
+    <section className="section-panel" id="interactive-footer" ref={containerRef}>
+      {/* WebGL canvas for interactive text */}
+      <div className="footer-canvas-container">
+        <canvas id="footer-canvas" ref={canvasRef}></canvas>
+      </div>
+
+
+
+      {/* Content overlay */}
+      <div className="footer-overlay">
+        {/* ── Top: Nav columns ── */}
+        <div className="footer-cols">
+          <div className="footer-col">
+            <h4>Pillar 01 / Build</h4>
+            <Link href="/construction" className="select-anchor">Construction Projects</Link>
+            <Link href="/coming-soon"  className="select-anchor">Consultation <span className="footer-tag">Soon</span></Link>
+          </div>
+          <div className="footer-col">
+            <h4>Pillar 02 / Secure</h4>
+            <Link href="/civil-market" className="select-anchor">Civil Market</Link>
+            <Link href="/coming-soon"  className="select-anchor">Real Estate Portfolio <span className="footer-tag">Soon</span></Link>
+            <Link href="/coming-soon"  className="select-anchor">Advisory Desk <span className="footer-tag">Soon</span></Link>
+          </div>
+          <div className="footer-col">
+            <h4>Pillar 03 / Curate</h4>
+            <Link href="/interior"    className="select-anchor">Interior Systems</Link>
+            <a href="mailto:info@jagathi.com" className="select-anchor">Contact Jagathi</a>
+          </div>
+        </div>
+
+        {/* ── Bottom bar ── */}
+        <div className="footer-bottom-bar">
+          <div className="footer-copy">
+            <span className="footer-brand-word">JAGATHI</span>
+            <span className="footer-divider">·</span>
+            <span>&copy; 2026 All rights reserved</span>
+            <span className="footer-divider">·</span>
+            <span>Designed by&nbsp;
+              <a
+                href="https://pisparrow.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-pisparrow-link"
+              >
+                Pisparrow
+              </a>
+            </span>
+          </div>
+         
+        </div>
+      </div>
+    </section>
+  );
 }

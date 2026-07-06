@@ -5,6 +5,7 @@ import { FluidProvider } from '../context/FluidContext';
 
 import Preloader from '../components/Preloader';
 import Header from '../components/Header';
+import CustomCursor from '../components/CustomCursor';
 
 export default function MainLayout({ children }) {
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -29,7 +30,8 @@ export default function MainLayout({ children }) {
       {/* 1. Black & Yellow Cinematic Preloader Sequence */}
       <Preloader onComplete={() => setLoadingComplete(true)} />
 
-      {/* 2. Custom Dual-Stage Spring Cursor (Removed per user request to use default browser cursor) */}
+      {/* 2. Custom Dual-Stage Spring Cursor */}
+      <CustomCursor />
 
       {/* 4. Global SVG Melting & Silk Displacement Filters */}
       <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden="true">

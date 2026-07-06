@@ -22,17 +22,17 @@
   --mouse-x: 50%;
   --mouse-y: 50%;
 
-  /* Default custom cursor theme (yellow) */
-  --cursor-dot: #FFEA0A;
-  --cursor-border: #FFEA0A;
-  --cursor-bg: rgba(255, 234, 10, 0.02);
-  --cursor-glow: rgba(255, 234, 10, 0.15);
-  --cursor-border-hover: #FFEA0A;
-  --cursor-bg-hover: rgba(255, 234, 10, 0.08);
-  --cursor-glow-hover: rgba(255, 234, 10, 0.3);
-  --cursor-border-click: #FFEA0A;
-  --cursor-bg-click: rgba(255, 234, 10, 0.18);
-  --cursor-glow-click: rgba(255, 234, 10, 0.25);
+  /* Custom cursor — white bordered arrow (consistent across all pages) */
+  --cursor-dot: #ffffff;
+  --cursor-border: #ffffff;
+  --cursor-bg: rgba(255, 255, 255, 0.04);
+  --cursor-glow: rgba(255, 255, 255, 0.18);
+  --cursor-border-hover: #ffffff;
+  --cursor-bg-hover: rgba(255, 255, 255, 0.10);
+  --cursor-glow-hover: rgba(255, 255, 255, 0.35);
+  --cursor-border-click: #ffffff;
+  --cursor-bg-click: rgba(255, 255, 255, 0.20);
+  --cursor-glow-click: rgba(255, 255, 255, 0.28);
 
   /* Default header theme (dark transparent) */
   --header-bg: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
@@ -48,17 +48,17 @@ body.home-theme-yellow-gray {
   --text-gray: #555555;
   --brand-yellow-glow: rgba(66, 66, 66, 0.05);
 
-  /* Homepage-specific custom cursor theme (charcoal gray) */
-  --cursor-dot: #424242;
-  --cursor-border: #424242;
-  --cursor-bg: rgba(66, 66, 66, 0.02);
-  --cursor-glow: rgba(66, 66, 66, 0.15);
-  --cursor-border-hover: #424242;
-  --cursor-bg-hover: rgba(66, 66, 66, 0.08);
-  --cursor-glow-hover: rgba(66, 66, 66, 0.3);
-  --cursor-border-click: #424242;
-  --cursor-bg-click: rgba(66, 66, 66, 0.18);
-  --cursor-glow-click: rgba(66, 66, 66, 0.25);
+  /* Homepage yellow-bg: keep white cursor so it contrasts against yellow */
+  --cursor-dot: #ffffff;
+  --cursor-border: #ffffff;
+  --cursor-bg: rgba(255, 255, 255, 0.04);
+  --cursor-glow: rgba(255, 255, 255, 0.18);
+  --cursor-border-hover: #ffffff;
+  --cursor-bg-hover: rgba(255, 255, 255, 0.10);
+  --cursor-glow-hover: rgba(255, 255, 255, 0.35);
+  --cursor-border-click: #ffffff;
+  --cursor-bg-click: rgba(255, 255, 255, 0.20);
+  --cursor-glow-click: rgba(255, 255, 255, 0.28);
 
   /* Homepage-specific header theme */
   --header-bg: transparent;

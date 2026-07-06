@@ -48,15 +48,15 @@ export default function Preloader({ onComplete }) {
         { 
           scale: targetScale, 
           svgOrigin: '0 0', 
-          duration: 6.5, // Slower ripple (graceful motion)
+          duration: 7.5, // slightly slower per ripple
           ease: 'power1.out',
-          force3D: true, // GPU acceleration for buttery smoothness
+          force3D: true,
           keyframes: [
-            { opacity: 0.45, duration: 1.2 }, // reaches a softer max opacity of 45%
-            { opacity: 0, duration: 5.3 }   // fades out completely as it moves further away
+            { opacity: 0.30, duration: 1.4 }, // softer peak opacity
+            { opacity: 0, duration: 6.1 }     // fade out
           ]
         },
-        i * 0.25 // Smooth stagger for 12 outlines
+        i * 0.40 // wider stagger since only 6 outlines now
       );
     });
 
@@ -70,13 +70,7 @@ export default function Preloader({ onComplete }) {
       }
     });
 
-    // Trigger main layout fade-in and page entrance events at 11.0s (when exit is almost complete)
-    tl.call(() => {
-      window.dispatchEvent(new Event('preloaderComplete'));
-      if (onCompleteRef.current) {
-        onCompleteRef.current();
-      }
-    }, null, 11.0);
+    // preloaderComplete fires when the overlay begins fading — calculated below after phase4Start is set
 
     // Phase 1: Loader at Center, Counter at Bottom-Left (0.0s to 1.8s)
     const counterObj = { val: 1900 };
@@ -165,95 +159,148 @@ export default function Preloader({ onComplete }) {
     );
 
     // Stagger character entrance in REVERSE order (from end to start):
+    // Slower & smoother: duration 0.95s, stagger 0.10s per char
     tl.fromTo('.preloader-char',
-      { y: 120, opacity: 0 },
+      { y: 110, opacity: 0 },
       { 
         y: 0, 
         opacity: 1, 
-        duration: 0.65, 
+        duration: 0.95, 
         stagger: {
-          each: 0.06,
+          each: 0.10,
           from: "end"
         }, 
-        ease: "power3.out", 
+        ease: "power2.out", 
         immediateRender: false 
       },
       5.2
     );
 
-    // Border Reveal & Blinking (starts at 5.85s, right as letters finish rising)
-    // Blinks between transparent and solid brand charcoal (#424242) exactly 3 times
+    // ── Stepwise 3-ring border blink sequence ─────────────────────────
+    // Letters finish at ~5.2 + 0.10*6 + 0.95 = ~6.75s → blinks start at 6.8s
+    // Each ring blinks exactly 3 times (on→off = 1 cycle, 3 cycles = repeat:5, yoyo:true)
+    // Step timing: each ring gets 0.72s (3 blinks × 0.24s each)
+    // Order: INNER (current box border) → MIDDLE ring → OUTER ring
+    const blinkDur   = 0.12; // half-period: on for 0.12s, off for 0.12s → 0.24s per blink
+    const blinkStart = 6.8;
+    const ringGap    = 0.72; // 3 blinks × 2 × 0.12 s = 0.72s per ring
+
+    // Ring 1 – inner (the text-box border itself)
+    tl.set('.preloader-text-box', { borderColor: 'transparent' }, blinkStart);
     tl.to('.preloader-text-box', {
-      borderColor: "#424242",
-      duration: 0.1,
-      repeat: 4, // 5 states: solid -> trans -> solid -> trans -> solid
+      borderColor: '#424242',
+      duration: blinkDur,
+      repeat: 5,   // 6 states alternating → 3 full on-off cycles
       yoyo: true,
-      ease: "none"
-    }, 5.85);
+      ease: 'none'
+    }, blinkStart);
 
-    // Phase 4 Transition: Reveal Logo Badge & Wave Outlines (at 6.5s)
-    // Fade out the wordmark box a bit early
-    tl.to('.preloader-text-box', {
+    // Ring 2 – middle (starts after ring 1 finishes)
+    tl.set('.preloader-ring-mid', { opacity: 0, borderColor: 'transparent' }, blinkStart + ringGap);
+    tl.to('.preloader-ring-mid', {
+      borderColor: '#424242',
+      opacity: 1,
+      duration: blinkDur,
+      repeat: 5,
+      yoyo: true,
+      ease: 'none'
+    }, blinkStart + ringGap);
+
+    // Ring 3 – outer (starts after ring 2 finishes)
+    tl.set('.preloader-ring-out', { opacity: 0, borderColor: 'transparent' }, blinkStart + ringGap * 2);
+    tl.to('.preloader-ring-out', {
+      borderColor: '#424242',
+      opacity: 1,
+      duration: blinkDur,
+      repeat: 5,
+      yoyo: true,
+      ease: 'none'
+    }, blinkStart + ringGap * 2);
+
+    // After all blinks, hold all three borders solid for a beat before Phase 4
+    tl.set('.preloader-text-box', { borderColor: '#424242' }, blinkStart + ringGap * 3);
+    tl.set('.preloader-ring-mid', { borderColor: '#424242', opacity: 1 }, blinkStart + ringGap * 3);
+    tl.set('.preloader-ring-out', { borderColor: '#424242', opacity: 1 }, blinkStart + ringGap * 3);
+
+    // Phase 4 Transition: Reveal Logo Badge & Wave Outlines
+    // Increased hold to 1.8s so the full 3-ring composition has time to read
+    const phase4Start = blinkStart + ringGap * 3 + 1.8;
+    tl.to(['.preloader-text-box', '.preloader-ring-mid', '.preloader-ring-out'], {
       opacity: 0,
-      scale: 0.85,
-      duration: 0.5,
-      ease: "power2.inOut"
-    }, 6.5);
-    tl.set('.preloader-text-box', { display: 'none' }, 7.0);
+      scale: 0.90,
+      duration: 0.55,
+      ease: "power2.inOut",
+      stagger: 0.08
+    }, phase4Start);
+    tl.set('.preloader-text-box', { display: 'none' }, phase4Start + 0.6);
 
-    // Reveal SVG Outlines (fade opacity to 1)
-    tl.to('.preloader-svg-container', { opacity: 1, duration: 0.4 }, 6.8);
+    // Reveal SVG Outlines (fade opacity to 1) – pushed slightly later
+    tl.to('.preloader-svg-container', { opacity: 1, duration: 0.4 }, phase4Start + 0.3);
 
-    // Start the infinite looping ripples at 6.8s
+    // Start the infinite looping ripples after phase 4 begins
     tl.call(() => {
       rippleTl.play();
-    }, null, 6.8);
+    }, null, phase4Start + 0.3);
 
     // Central logo badge scales/fades in slowly and majestically (overlapping crossfade)
     tl.fromTo('.preloader-logo-badge',
       { scale: 0.7, opacity: 0 },
       { scale: 1.0, opacity: 1, duration: 1.6, ease: "power2.out", immediateRender: false },
-      6.8
+      phase4Start + 0.3
     );
 
     // Brand kit 5 badge fades in underneath the logo badge shortly AFTER the logo appears
     tl.fromTo('.preloader-brand-badge-5',
       { opacity: 0, y: 15 },
       { opacity: 1, y: 0, duration: 1.2, ease: "power2.out", immediateRender: false },
-      7.6
+      phase4Start + 1.2
     );
 
-    // Phase 5 Exit: Conclude by fading/scaling everything out (at 10.0s)
+    // ── Phase 5 Exit ──────────────────────────────────────────────────
+    // Logo fades in at phase4Start + 0.3 (duration 1.6s → fully in at phase4Start + 1.9)
+    // Brand badge in at phase4Start + 1.2 (duration 1.2s → fully in at phase4Start + 2.4)
+    // Give the full composition 2.5s to breathe before exiting
+    const exitStart = phase4Start + 4.2; // logo fully in at +1.9, breathe 2.3s more
+
     tl.to('.preloader-logo-badge', {
-      scale: 1.12,
-      opacity: 0, // Smoothly fade out logo badge
-      duration: 1.3,
+      scale: 1.06,
+      opacity: 0,
+      duration: 1.2,
       ease: "power2.inOut"
-    }, 10.0);
+    }, exitStart);
 
     tl.to('.preloader-brand-badge-5', {
-      scale: 1.12,
-      opacity: 0, // Smoothly fade out brand badge
-      duration: 1.3,
+      scale: 1.06,
+      opacity: 0,
+      duration: 1.2,
       ease: "power2.inOut"
-    }, 10.0);
+    }, exitStart);
 
     tl.to('.preloader-svg-container', {
-      opacity: 0, // Smoothly fade out ripple outlines container
-      duration: 1.3,
+      opacity: 0,
+      duration: 1.2,
       ease: "power3.inOut"
-    }, 10.0);
+    }, exitStart);
 
-    // Fade out overlay background to reveal the main website (all nested children fade out automatically with parent opacity)
+    // Overlay fades 0.8s after elements begin exiting
+    const overlayFadeAt = exitStart + 0.8;
     tl.to('#preloader-overlay', {
       opacity: 0,
-      duration: 1.3,
+      duration: 1.4,
       ease: "power3.inOut"
-    }, 10.0);
+    }, overlayFadeAt);
+
+    // Fire preloaderComplete so main layout begins fading in as overlay exits
+    tl.call(() => {
+      window.dispatchEvent(new Event('preloaderComplete'));
+      if (onCompleteRef.current) {
+        onCompleteRef.current();
+      }
+    }, null, overlayFadeAt + 0.3);
 
     return () => {
       tl.kill();
-      rippleTl.kill(); // clean up infinite loop on unmount
+      rippleTl.kill();
       document.body.classList.remove('preloader-active');
     };
   }, []);
@@ -282,8 +329,14 @@ export default function Preloader({ onComplete }) {
         </svg>
       </div>
 
-      {/* 4. Typography Box for 'JAGATHI' */}
+      {/* 4. Typography Box for 'JAGATHI'
+          The two concentric rings are CHILDREN of the text-box so they
+          use inset to expand outward relative to it. */}
       <div className="preloader-text-box" style={{ display: 'none', opacity: 0 }}>
+        {/* Middle ring: 8px border, 20px gap outside the 14px inner border */}
+        <div className="preloader-ring-mid" style={{ opacity: 0, borderColor: 'transparent' }} />
+        {/* Outer ring: 4px border, 20px gap outside the 8px middle border */}
+        <div className="preloader-ring-out" style={{ opacity: 0, borderColor: 'transparent' }} />
         <div className="preloader-text">
           {"JAGATHI".split("").map((char, i) => (
             <span key={i} className="preloader-char" style={{ display: 'inline-block' }}>
@@ -319,7 +372,8 @@ export default function Preloader({ onComplete }) {
               <path d={badgePath} />
             </g>
           </defs>
-          {Array.from({ length: 12 }).map((_, i) => (
+          {/* 6 outlines — reduced from 12 for cleaner, less cluttered ripple */}
+          {Array.from({ length: 6 }).map((_, i) => (
             <path 
               key={i} 
               d={badgePath} 

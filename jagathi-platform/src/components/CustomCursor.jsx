@@ -4,10 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from '../styles/cursor.module.css';
 
 export default function CustomCursor() {
-  const dotRef = useRef(null);
   const ringRef = useRef(null);
-  
-  // Track cursor interactive hover state
+
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
 
@@ -18,25 +16,19 @@ export default function CustomCursor() {
     document.body.classList.add('custom-cursor-active');
 
     const mouse = { x: -100, y: -100 };
-    const pos = { x: -100, y: -100 };
-    
+    const pos   = { x: -100, y: -100 };
+
     const onMouseMove = (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
     };
 
-    // Smooth spring interpolation loop for the dual elements
     let rAfId;
     const updateCursor = () => {
-      // 1. Move raw 4px yellow dot instantly
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0) translate(-50%, -50%)`;
-      }
-
-      // 2. Lerp the spring-physics 40px outer halo ring
-      const easeFactor = 0.095; // elegant spring lag
-      pos.x += (mouse.x - pos.x) * easeFactor;
-      pos.y += (mouse.y - pos.y) * easeFactor;
+      // Spring-lerp the arrow ring with elegant lag
+      const ease = 0.095;
+      pos.x += (mouse.x - pos.x) * ease;
+      pos.y += (mouse.y - pos.y) * ease;
 
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) translate(-50%, -50%)`;
@@ -83,29 +75,23 @@ export default function CustomCursor() {
 
   return (
     <div className={styles.cursorWrapper}>
-      {/* Raw 4px Solid Yellow Dot (Exact hotspot) */}
-      <div 
-        ref={dotRef}
-        className={styles.cursorDot}
-      />
-      
-      {/* Trailing Spring-Physics SVG Arrow Pointer */}
-      <div 
-        ref={ringRef} 
+      {/* Spring-physics SVG arrow — white bordered, no dot */}
+      <div
+        ref={ringRef}
         className={`${styles.cursorRing} ${
           clicked ? styles.cursorRingClick : hovered ? styles.cursorRingHover : ''
-        }`} 
+        }`}
       >
-        <svg 
-          width="28" 
-          height="28" 
-          viewBox="0 0 24 24" 
-          fill="none" 
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
           className={styles.arrowSvg}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path 
-            d="M4.5 3L19.5 12L12.5 14L10.5 21L4.5 3Z" 
+          <path
+            d="M4.5 3L19.5 12L12.5 14L10.5 21L4.5 3Z"
             className={styles.arrowPath}
           />
         </svg>
