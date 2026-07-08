@@ -143,7 +143,7 @@ export default function KineticHeadline() {
 
   return (
     <div 
-      className="w-full pt-12 pb-18 overflow-hidden bg-[#424242] border-y border-[#FFEA0A]/20 select-none flex flex-col gap-6 relative z-10 shadow-2xl"
+      className="w-full pt-12 pb-18 overflow-hidden bg-[#1C1C1C] border-y border-[#FFEA0A]/20 select-none flex flex-col gap-6 relative z-10 shadow-2xl"
       style={{ transform: 'skewY(-1.8deg)' }} // Technical slanted grid alignment
     >
       {railData.map((rail, railIdx) => {

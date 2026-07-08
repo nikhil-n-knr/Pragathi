@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;600;900&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@700;800&family=Outfit:wght@300;400;600;900&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 @font-face {
   font-family: 'Basement Grotesque';
@@ -186,5 +186,13 @@ html.lenis, html.lenis body {
 #process-stack .sticky {
   will-change: transform;
   transform: translate3d(0, 0, 0);
+}
+
+/* Global Mobile Layout Padding Override to give spacious margins on all sections */
+@media (max-width: 768px) {
+  .px-6, .px-5 {
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
+  }
 }
 

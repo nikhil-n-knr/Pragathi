@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { FluidProvider } from '../context/FluidContext';
 
 import Preloader from '../components/Preloader';
@@ -9,6 +10,8 @@ import CustomCursor from '../components/CustomCursor';
 import Tracker from '../components/Tracker';
 
 export default function MainLayout({ children }) {
+  const pathname = usePathname();
+  const isLogoDemo = pathname === '/logo-demo';
   const [loadingComplete, setLoadingComplete] = useState(false);
 
   useEffect(() => {
@@ -83,7 +86,7 @@ export default function MainLayout({ children }) {
         <div className="noise-overlay" />
         
         <Tracker />
-        <Header />
+        {!isLogoDemo && <Header />}
         <main className="flex-grow w-full flex flex-col items-stretch">
           {children}
         </main>

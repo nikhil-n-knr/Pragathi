@@ -5,24 +5,28 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import styles from '../styles/kenBurns.module.css';
 
-/* ─────────────────────────────────────
-   Hover-triggered count-up stat block
-───────────────────────────────────────*/
 function HoverStat({ registryId, target, suffix, isDecimal, label, coord }) {
-  const [display, setDisplay] = useState(isDecimal ? target.toFixed(1) : String(target));
+  const [display, setDisplay] = useState('0');
   const [hovered, setHovered] = useState(false);
   const timerRef = useRef(null);
+  const intervalRef = useRef(null);
+  const elementRef = useRef(null);
 
   const runCounter = useCallback(() => {
-    setHovered(true);
     clearInterval(timerRef.current);
+    clearInterval(intervalRef.current);
+    
+    // Set up auto re-run interval of 20s
+    intervalRef.current = setInterval(() => {
+      runCounter();
+    }, 20000);
+
     const steps = 60;
     const duration = 1400;
     let step = 0;
     timerRef.current = setInterval(() => {
       step++;
       const progress = step / steps;
-      // ease-out curve
       const eased = 1 - Math.pow(1 - progress, 3);
       const current = target * eased;
       if (step >= steps) {
@@ -34,12 +38,40 @@ function HoverStat({ registryId, target, suffix, isDecimal, label, coord }) {
     }, duration / steps);
   }, [target, isDecimal]);
 
-  useEffect(() => () => clearInterval(timerRef.current), []);
+  useEffect(() => {
+    // Start interval
+    intervalRef.current = setInterval(() => {
+      runCounter();
+    }, 20000);
+
+    // Run when scrolled into view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          runCounter();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      clearInterval(timerRef.current);
+      clearInterval(intervalRef.current);
+      observer.disconnect();
+    };
+  }, [runCounter]);
 
   return (
     <div
+      ref={elementRef}
       className="flex flex-col items-center px-4 py-8 md:py-10 cursor-default select-none"
-      onMouseEnter={runCounter}
+      onMouseEnter={() => {
+        setHovered(true);
+        runCounter();
+      }}
       onMouseLeave={() => setHovered(false)}
     >
       <div
@@ -60,8 +92,8 @@ function HoverStat({ registryId, target, suffix, isDecimal, label, coord }) {
 
 const stats = [
   { registryId: 'NODE_REGISTRY_01', target: 35,  suffix: '+',  isDecimal: false, label: 'Years of Legacy',   coord: 'LAT: 12.9716° N'    },
-  { registryId: 'NODE_REGISTRY_02', target: 450, suffix: '+',  isDecimal: false, label: 'Delivered Assets',  coord: 'LNG: 77.5946° E'    },
-  { registryId: 'NODE_REGISTRY_03', target: 1.2, suffix: 'M+', isDecimal: true,  label: 'Sq. Ft. Completed', coord: 'ALT: 920.0 METERS'   },
+  { registryId: 'NODE_REGISTRY_02', target: 75,  suffix: '+',  isDecimal: false, label: 'Delivered Assets',  coord: 'LNG: 77.5946° E'    },
+  { registryId: 'NODE_REGISTRY_03', target: 3,   suffix: 'M+', isDecimal: false, label: 'Sq. Ft. Completed', coord: 'ALT: 920.0 METERS'   },
   { registryId: 'NODE_REGISTRY_04', target: 100, suffix: '%',  isDecimal: false, label: 'Compliance Rating', coord: 'STATUS: COMPLIANT_OK' },
 ];
 
@@ -165,7 +197,7 @@ export default function ShowcaseBanner({ onPlayReel }) {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#424242] overflow-hidden flex flex-col"
+      className="relative w-full bg-[#1C1C1C] overflow-hidden flex flex-col"
       style={{ fontFamily: '"Outfit", sans-serif', minHeight: '100vh' }}
       onMouseLeave={handleSectionLeave}
     >
@@ -181,13 +213,13 @@ export default function ShowcaseBanner({ onPlayReel }) {
               style={{ filter: 'brightness(0.18) saturate(0.5)' }} />
           </div>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#424242] via-[#424242]/60 to-[#424242]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1C1C1C] via-[#1C1C1C]/60 to-[#1C1C1C]" />
       </div>
 
       {/* ══════════════════════════════
           TOP: Centered title
       ══════════════════════════════ */}
-      <div className="sc-reveal relative z-10 w-full text-center pt-24 md:pt-32 pb-14 md:pb-20 px-6">
+      <div className="sc-reveal relative z-10 w-full text-center pt-24 md:pt-32 pb-14 md:pb-20 px-10">
         <span className="block text-[#FFEA0A]/70 font-mono text-xs md:text-sm uppercase tracking-[0.45em] font-semibold mb-6">
           {'// Who We Are'}
         </span>
@@ -217,7 +249,7 @@ export default function ShowcaseBanner({ onPlayReel }) {
             </div>
           ))}
           <div className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
-            style={{ background: 'linear-gradient(to top, #424242 0%, transparent 100%)' }} />
+            style={{ background: 'linear-gradient(to top, #1C1C1C 0%, transparent 100%)' }} />
         </div>
 
         {/* LEFT: Accordion tabs */}
@@ -278,10 +310,10 @@ export default function ShowcaseBanner({ onPlayReel }) {
         <div className="hidden md:block flex-1 relative overflow-hidden rounded-tl-[20px] rounded-bl-[20px]">
           {/* Left blend */}
           <div className="absolute left-0 inset-y-0 w-24 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to right, #424242 0%, transparent 100%)' }} />
+            style={{ background: 'linear-gradient(to right, #1C1C1C 0%, transparent 100%)' }} />
           {/* Bottom blend */}
           <div className="absolute inset-x-0 bottom-0 h-40 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to top, #424242 0%, transparent 100%)' }} />
+            style={{ background: 'linear-gradient(to top, #1C1C1C 0%, transparent 100%)' }} />
 
           {/* Images */}
           {showcaseItems.map(({ index, image, title, kenBurns }) => (

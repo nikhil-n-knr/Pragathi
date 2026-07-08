@@ -141,17 +141,17 @@ export default function GatewaySection() {
       }}
     >
       {/* ── Section Header ── */}
-      <div className="flex flex-col items-center text-center px-6 max-w-5xl mx-auto w-full mb-6">
-        <span className="rise-target text-[#424242]/70 font-mono text-xs uppercase tracking-widest block text-center mb-3 font-semibold">
+      <div className="flex flex-col items-center text-center px-10 max-w-5xl mx-auto w-full mb-6">
+        <span className="rise-target text-[#1C1C1C]/70 font-mono text-xs uppercase tracking-widest block text-center mb-3 font-semibold">
           {'// Gateway Portals'}
         </span>
-        <h2 className="rise-target text-[#424242] font-black text-4xl md:text-6xl lg:text-7xl uppercase tracking-wider mt-2 text-center w-full leading-none font-basement">
+        <h2 className="rise-target text-[#1C1C1C] font-black text-4xl md:text-6xl lg:text-7xl uppercase tracking-wider mt-2 text-center w-full leading-none font-basement">
           One Group. Three Disciplines.
         </h2>
       </div>
 
       {/* ── Cards Stack ── */}
-      <div className="gateway-stack-container w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-16 flex flex-col gap-0 relative overflow-visible mt-14 md:mt-24 lg:mt-32">
+      <div className="gateway-stack-container w-full max-w-[1600px] mx-auto px-10 md:px-12 lg:px-16 flex flex-col gap-0 relative overflow-visible mt-14 md:mt-24 lg:mt-32">
         {disciplines.map(({ portal, title, subtitle, description, image, videoWebm, videoMp4, alt, href, index, reverse, zIndex, kenBurns }) => {
           const isActive = getIsActive(index);
           const rowDirection = reverse ? 'flex-col md:flex-row-reverse' : 'flex-col md:flex-row';
@@ -163,7 +163,7 @@ export default function GatewaySection() {
               style={{ zIndex }}
             >
               <div
-                className={`gateway-card-inner w-full h-full bg-[#424242] border border-[#FFEA0A]/10 rounded-[36px] flex ${rowDirection} items-stretch justify-between gap-0 shadow-[0_45px_90px_-25px_rgba(0,0,0,0.40)] overflow-hidden cursor-pointer`}
+                className={`gateway-card-inner w-full h-full bg-[#1C1C1C] border border-[#FFEA0A]/10 flex ${rowDirection} items-stretch justify-between gap-0 shadow-[0_45px_90px_-25px_rgba(0,0,0,0.40)] overflow-hidden cursor-pointer`}
                 onMouseEnter={() => setHoveredRow(index)}
                 onMouseLeave={() => setHoveredRow(null)}
                 onClick={() => router.push(href)}
@@ -183,15 +183,15 @@ export default function GatewaySection() {
                     className="absolute inset-0 pointer-events-none z-10"
                     style={{
                       background: reverse
-                        ? 'linear-gradient(to left, rgba(66,66,66,0.60) 0%, transparent 42%)'
-                        : 'linear-gradient(to right, rgba(66,66,66,0.60) 0%, transparent 42%)',
+                        ? 'linear-gradient(to left, rgba(28,28,28,0.60) 0%, transparent 42%)'
+                        : 'linear-gradient(to right, rgba(28,28,28,0.60) 0%, transparent 42%)',
                     }}
                   />
                   {/* Bottom fade */}
                   <div
                     className="absolute inset-x-0 bottom-0 h-20 pointer-events-none z-10"
                     style={{
-                      background: 'linear-gradient(to top, rgba(66,66,66,0.45) 0%, transparent 100%)',
+                      background: 'linear-gradient(to top, rgba(28,28,28,0.45) 0%, transparent 100%)',
                     }}
                   />
                 </div>
@@ -200,7 +200,7 @@ export default function GatewaySection() {
                 <div
                   className={`
                     w-full md:w-[50%] flex flex-col justify-center items-start text-left font-sans
-                    px-5 md:px-12 lg:px-16 xl:px-20
+                    px-10 md:px-12 lg:px-16 xl:px-20
                     py-7 md:py-14 lg:py-18 xl:py-20
                     ${reverse
                       ? 'border-r-0 md:border-r border-[#FFEA0A]/10'

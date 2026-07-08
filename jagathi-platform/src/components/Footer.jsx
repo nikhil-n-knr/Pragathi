@@ -164,7 +164,7 @@ class InteractiveFooter {
     this.textCtx.clearRect(0, 0, w, h);
     this.textCtx.font = '900 240px "Basement Grotesque", "Syncopate", sans-serif';
     if ('letterSpacing' in this.textCtx) {
-      this.textCtx.letterSpacing = '14px';
+      this.textCtx.letterSpacing = '64px';
     }
     this.textCtx.fillStyle = '#ffffff';
     this.textCtx.textAlign = 'center';
@@ -212,19 +212,19 @@ class InteractiveFooter {
             vec2 velDir = uVelocity / speed;
             vec2 perpDir = vec2(-velDir.y, velDir.x);
 
-            // ── REDUCED 50%: was 0.40 → 0.20
-            pos.xy += uVelocity * influence * 0.20;
+            // ── REDUCED FURTHER: was 0.20 → 0.08
+            pos.xy += uVelocity * influence * 0.08;
 
             float proj     = dot(diffCorrected, velDir);
             float projPerp = dot(diffCorrected, perpDir);
 
-            // ── REDUCED 50%: was 0.75 → 0.375, was 0.38 → 0.19
-            vec2 stretchOffset = velDir * proj * speed * 0.375 * influence;
-            vec2 squeezeOffset = perpDir * projPerp * speed * 0.19 * influence;
+            // ── REDUCED FURTHER: was 0.375 → 0.15, was 0.19 → 0.08
+            vec2 stretchOffset = velDir * proj * speed * 0.15 * influence;
+            vec2 squeezeOffset = perpDir * projPerp * speed * 0.08 * influence;
             pos.xy += (stretchOffset - squeezeOffset);
 
-            // ── REDUCED 50%: was 1.8 → 0.9
-            float angle = speed * 0.9 * influence * (1.0 - (dist / radius));
+            // ── REDUCED FURTHER: was 0.9 → 0.35
+            float angle = speed * 0.35 * influence * (1.0 - (dist / radius));
             float cosA  = cos(angle);
             float sinA  = sin(angle);
             vec2 rotatedDiff = vec2(
@@ -233,16 +233,16 @@ class InteractiveFooter {
             );
             pos.xy = mouseMesh + rotatedDiff;
 
-            // ── REDUCED 50%: ripple was 0.09 → 0.045, 0.03 → 0.015
-            float ripple = sin(dist * 16.0 - uTime * 20.0) * speed * 0.045 * influence;
+            // ── REDUCED FURTHER: was 0.045 → 0.015, was 0.015 → 0.005
+            float ripple = sin(dist * 16.0 - uTime * 20.0) * speed * 0.015 * influence;
             pos.y += ripple;
-            pos.x += cos(dist * 16.0 - uTime * 20.0) * speed * 0.015 * influence;
+            pos.x += cos(dist * 16.0 - uTime * 20.0) * speed * 0.005 * influence;
           }
 
           if (influence > 0.0) {
             float dx = pos.x - mouseMesh.x;
-            // ── REDUCED 50%: was 0.42 → 0.21
-            float localBend = cos(clamp(dx * 4.2, -1.570796, 1.570796)) * uVelocity.y * 0.21 * influence;
+            // ── REDUCED FURTHER: was 0.21 → 0.08
+            float localBend = cos(clamp(dx * 4.2, -1.570796, 1.570796)) * uVelocity.y * 0.08 * influence;
             pos.y += localBend;
           }
 
@@ -256,6 +256,7 @@ class InteractiveFooter {
         uniform sampler2D tFluid;
         uniform float uTime;
         uniform float uDistortion;
+        uniform float uAspect;
         varying vec2 vUv;
         varying vec2 vScreenUv;
 
@@ -298,20 +299,22 @@ class InteractiveFooter {
           float t_up     = texture2D(tFluid, distortedScreenUv + vec2(0.0, texelSize.y)).r;
           float t_down   = texture2D(tFluid, distortedScreenUv - vec2(0.0, texelSize.y)).r;
 
-          // REDUCED: was 0.075 → 0.040
-          vec2 displacement = vec2(t_right - t_left, t_up - t_down) * 0.040 * uDistortion;
+          // REDUCED FURTHER: was 0.040 → 0.018
+          vec2 displacement = vec2(t_right - t_left, t_up - t_down) * 0.018 * uDistortion;
 
           vec2 smokeUv   = vScreenUv * 12.0 - vec2(0.0, uTime * 0.9);
           float smokeN   = fbm(smokeUv) - 0.5;
-          displacement  += vec2(smokeN, -smokeN) * 0.010 * t * uDistortion;
+          // REDUCED FURTHER: was 0.010 → 0.004
+          displacement  += vec2(smokeN, -smokeN) * 0.004 * t * uDistortion;
 
           // ── Chromatic Aberration: BRIGHT WHITE on both edges ──
           // Like the cursor glow — both leading and trailing fringe are pure white.
           // Creates a hot white bloom/aura around letters when they dance.
 
-          float tLead   = texture2D(tText, vUv - displacement * 3.5).a; // leading
+          // Reverted height stretch using vUv directly on both desktop and mobile
+          float tLead   = texture2D(tText, vUv - displacement * 1.5).a; // leading
           float tCenter = texture2D(tText, vUv).a;                        // core
-          float tTrail  = texture2D(tText, vUv + displacement * 3.0).a;  // trailing
+          float tTrail  = texture2D(tText, vUv + displacement * 1.2).a;  // trailing
 
           // Isolate edge-only fringes
           float leadFringe  = clamp(tLead  - tCenter, 0.0, 1.0);
@@ -319,14 +322,19 @@ class InteractiveFooter {
 
           vec3 bgCol    = vec3(255.0/255.0, 234.0/255.0, 10.0/255.0); // yellow
           vec3 textDark = vec3(0.02, 0.02, 0.03);                      // charcoal
+
+          // Darkened back the text contrast globally to 0.88 for strong contrast
+          float textContrast = 0.88;
+          vec3 blendedText = mix(bgCol, textDark, tCenter * textContrast);
+
           vec3 whiteGlow = vec3(1.0, 1.0, 1.0);                        // pure bright white
 
-          // Core text
-          vec3 finalColor = mix(bgCol, textDark, tCenter);
+          // Core text with watermark blending
+          vec3 finalColor = blendedText;
 
           // Both fringes — same bright white (like the cursor border glow)
           float fringe = clamp((leadFringe + trailFringe) * uDistortion * 6.0, 0.0, 1.0);
-          finalColor = mix(finalColor, whiteGlow, fringe);
+          finalColor = mix(finalColor, whiteGlow, fringe * textContrast);
 
           // Smoke tint: bright white smoke generated by the cursor movement
           vec3 smokeCol = vec3(1.0, 1.0, 1.0);
@@ -485,9 +493,9 @@ export default function Footer() {
   }, []);
 
   return (
-    <section className="section-panel" id="interactive-footer" ref={containerRef}>
+    <section className="section-panel" id="interactive-footer">
       {/* WebGL canvas for interactive text */}
-      <div className="footer-canvas-container">
+      <div className="footer-canvas-container" ref={containerRef}>
         <canvas id="footer-canvas" ref={canvasRef}></canvas>
       </div>
 

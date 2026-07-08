@@ -174,12 +174,12 @@ export default function Home() {
 
         {/* 6. Featured Media Strip — 2-column Before/After Grid */}
         <section className="relative z-10 w-full overflow-visible flex flex-col items-center" style={{ paddingTop: 'clamp(4rem, 8vw, 10rem)', paddingBottom: 'clamp(5rem, 10vw, 12rem)' }}>
-          <div className="flex flex-col items-center text-center mb-10 md:mb-14 w-full px-6">
-            <span className="text-[#424242]/50 font-mono text-[10px] uppercase tracking-[0.3em] block text-center mb-3">{"// Featured Work"}</span>
-            <h2 className="text-[#424242] font-bold text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight text-center w-full leading-none" style={{ fontFamily: '"Outfit", sans-serif', letterSpacing: '0.02em' }}>
+          <div className="flex flex-col items-center text-center mb-10 md:mb-14 w-full px-10">
+            <span className="text-[#1C1C1C]/50 font-mono text-[10px] uppercase tracking-[0.3em] block text-center mb-3">{"// Featured Work"}</span>
+            <h2 className="text-[#1C1C1C] font-bold text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight text-center w-full leading-none" style={{ fontFamily: '"Outfit", sans-serif', letterSpacing: '0.02em' }}>
               Landmarks of Distinction
             </h2>
-            <p className="text-[#424242]/50 font-sans font-light text-xs md:text-sm mt-4 max-w-lg text-center leading-relaxed">
+            <p className="text-[#1C1C1C]/60 font-sans font-light text-xs md:text-sm mt-4 max-w-lg text-center leading-relaxed">
               Four transformations. Every detail engineered, every surface curated, every deadline met.
             </p>
           </div>

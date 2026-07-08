@@ -39,7 +39,8 @@ export default function Preloader({ onComplete }) {
     const maxRadius = Math.sqrt(vw * vw + vh * vh) / 2;
     const targetScale = (maxRadius / 200) * 1.5; // Scale increased to cover complete screen (was 0.45)
 
-    // Build the infinite looping timeline for topographic ripple waves
+    // Build the infinite looping timeline for topographic ripple waves (Disabled per requirement)
+    /*
     const outlines = document.querySelectorAll('.preloader-scallop-outline');
     const rippleTl = gsap.timeline({ repeat: -1, paused: true });
     outlines.forEach((outline, i) => {
@@ -59,6 +60,7 @@ export default function Preloader({ onComplete }) {
         i * 0.40 // wider stagger since only 6 outlines now
       );
     });
+    */
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -188,7 +190,7 @@ export default function Preloader({ onComplete }) {
     // Ring 1 – inner (the text-box border itself)
     tl.set('.preloader-text-box', { borderColor: 'transparent' }, blinkStart);
     tl.to('.preloader-text-box', {
-      borderColor: '#424242',
+      borderColor: '#1C1C1C',
       duration: blinkDur,
       repeat: 5,   // 6 states alternating → 3 full on-off cycles
       yoyo: true,
@@ -198,7 +200,7 @@ export default function Preloader({ onComplete }) {
     // Ring 2 – middle (starts after ring 1 finishes)
     tl.set('.preloader-ring-mid', { opacity: 0, borderColor: 'transparent' }, blinkStart + ringGap);
     tl.to('.preloader-ring-mid', {
-      borderColor: '#424242',
+      borderColor: '#1C1C1C',
       opacity: 1,
       duration: blinkDur,
       repeat: 5,
@@ -209,7 +211,7 @@ export default function Preloader({ onComplete }) {
     // Ring 3 – outer (starts after ring 2 finishes)
     tl.set('.preloader-ring-out', { opacity: 0, borderColor: 'transparent' }, blinkStart + ringGap * 2);
     tl.to('.preloader-ring-out', {
-      borderColor: '#424242',
+      borderColor: '#1C1C1C',
       opacity: 1,
       duration: blinkDur,
       repeat: 5,
@@ -217,14 +219,9 @@ export default function Preloader({ onComplete }) {
       ease: 'none'
     }, blinkStart + ringGap * 2);
 
-    // After all blinks, hold all three borders solid for a beat before Phase 4
-    tl.set('.preloader-text-box', { borderColor: '#424242' }, blinkStart + ringGap * 3);
-    tl.set('.preloader-ring-mid', { borderColor: '#424242', opacity: 1 }, blinkStart + ringGap * 3);
-    tl.set('.preloader-ring-out', { borderColor: '#424242', opacity: 1 }, blinkStart + ringGap * 3);
-
     // Phase 4 Transition: Reveal Logo Badge & Wave Outlines
-    // Increased hold to 1.8s so the full 3-ring composition has time to read
-    const phase4Start = blinkStart + ringGap * 3 + 1.8;
+    // Start Phase 4 immediately after blinking loop finishes (no solid hold beat)
+    const phase4Start = blinkStart + ringGap * 3;
     tl.to(['.preloader-text-box', '.preloader-ring-mid', '.preloader-ring-out'], {
       opacity: 0,
       scale: 0.90,
@@ -234,13 +231,13 @@ export default function Preloader({ onComplete }) {
     }, phase4Start);
     tl.set('.preloader-text-box', { display: 'none' }, phase4Start + 0.6);
 
-    // Reveal SVG Outlines (fade opacity to 1) – pushed slightly later
-    tl.to('.preloader-svg-container', { opacity: 1, duration: 0.4 }, phase4Start + 0.3);
+    // Reveal SVG Outlines (Disabled per requirement)
+    // tl.to('.preloader-svg-container', { opacity: 1, duration: 0.4 }, phase4Start + 0.3);
 
-    // Start the infinite looping ripples after phase 4 begins
-    tl.call(() => {
-      rippleTl.play();
-    }, null, phase4Start + 0.3);
+    // Start the infinite looping ripples (Disabled per requirement)
+    // tl.call(() => {
+    //   rippleTl.play();
+    // }, null, phase4Start + 0.3);
 
     // Central logo badge scales/fades in slowly and majestically (overlapping crossfade)
     tl.fromTo('.preloader-logo-badge',
@@ -276,11 +273,13 @@ export default function Preloader({ onComplete }) {
       ease: "power2.inOut"
     }, exitStart);
 
+    /*
     tl.to('.preloader-svg-container', {
       opacity: 0,
       duration: 1.2,
       ease: "power3.inOut"
     }, exitStart);
+    */
 
     // Overlay fades 0.8s after elements begin exiting
     const overlayFadeAt = exitStart + 0.8;
@@ -300,7 +299,7 @@ export default function Preloader({ onComplete }) {
 
     return () => {
       tl.kill();
-      rippleTl.kill();
+      // rippleTl.kill(); // Disabled per requirement
       document.body.classList.remove('preloader-active');
     };
   }, []);

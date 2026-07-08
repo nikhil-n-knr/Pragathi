@@ -30,7 +30,7 @@ body.preloader-active {
   display: flex;
   align-items: center;
   font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
-  color: #424242; /* Brand charcoal gray */
+  color: #1C1C1C; /* Brand charcoal gray */
   font-size: clamp(1.5rem, 3.5vw, 2.5rem);
   font-weight: 900;
   letter-spacing: 0.05em;
@@ -50,7 +50,7 @@ body.preloader-active {
 }
 
 .preloader-ampersand {
-  border-bottom: 1.5px solid #424242; /* Thinner underline */
+  border-bottom: 3.5px solid #1C1C1C; /* Thicker underline */
   padding-bottom: 1px; /* Tighter padding so it matches the other text height */
   display: inline-block;
   line-height: 1.0;
@@ -87,13 +87,13 @@ body.preloader-active {
 
 .preloader-loader-bg-path {
   fill: none;
-  stroke: rgba(66, 66, 66, 0.15); /* Brand charcoal background path */
+  stroke: rgba(28, 28, 28, 0.15); /* Brand charcoal background path */
   stroke-width: 4px;
 }
 
 .preloader-loader-path {
   fill: none;
-  stroke: #424242; /* Brand charcoal active path */
+  stroke: #1C1C1C; /* Brand charcoal active path */
   stroke-width: 32px;
   stroke-linecap: round;
 }
@@ -105,7 +105,7 @@ body.preloader-active {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) translateZ(0);
-  border: 14px solid #424242;
+  border: 14px solid #1C1C1C;
   padding: clamp(0.8rem, 1.8vw, 1.4rem) clamp(1.2rem, 3vw, 2.6rem);
   background: transparent;
   transform-origin: center;
@@ -145,12 +145,12 @@ body.preloader-active {
   font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
   font-size: clamp(2.1rem, 7.5vw, 7rem); /* Increased font size with safe bounds */
   font-weight: 900;
-  color: #424242;
-  letter-spacing: 0.04em;
+  color: #1C1C1C;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   line-height: 1.1;
   text-align: center;
-  margin-right: -0.04em; /* Offset letter-spacing of last character */
+  margin-right: -0.18em; /* Offset letter-spacing of last character */
   white-space: nowrap; /* Ensure text never wraps on any viewport */
   overflow: hidden; /* horizontal baseline wrapper */
   padding: 0.2rem 0;
@@ -187,7 +187,7 @@ body.preloader-active {
 
 .preloader-scallop-outline {
   fill: none;
-  stroke: #424242;
+  stroke: #1C1C1C;
   stroke-width: 1px;
   stroke-linejoin: round;
   stroke-linecap: round;
@@ -238,7 +238,48 @@ body.preloader-active {
 
 .preloader-loader-dot-path {
   fill: none;
-  stroke: #424242;
+  stroke: #1C1C1C;
   stroke-width: 32px;
   stroke-linecap: round;
 }
+
+@media (max-width: 768px) {
+  .preloader-text {
+    font-size: clamp(1.8rem, 6.5vw, 3.2rem);
+    letter-spacing: 0.12em;
+    margin-right: -0.12em;
+  }
+  .preloader-text-box {
+    border-width: 8px;
+    padding: 0.6rem 1.4rem;
+  }
+  .preloader-ring-mid {
+    inset: -22px;
+    border-width: 5px;
+  }
+  .preloader-ring-out {
+    inset: -38px;
+    border-width: 2.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .preloader-text {
+    font-size: clamp(1.3rem, 5.8vw, 1.8rem);
+    letter-spacing: 0.08em;
+    margin-right: -0.08em;
+  }
+  .preloader-text-box {
+    border-width: 5px;
+    padding: 0.4rem 0.8rem;
+  }
+  .preloader-ring-mid {
+    inset: -14px;
+    border-width: 3px;
+  }
+  .preloader-ring-out {
+    inset: -24px;
+    border-width: 1.5px;
+  }
+}
+

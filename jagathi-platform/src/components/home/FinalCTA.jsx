@@ -1,15 +1,108 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import Link from 'next/link';
 
 const stats = [
-  { value: '35+', label: 'Years of Legacy' },
-  { value: '450+', label: 'Projects Delivered' },
-  { value: '1.2M+', label: 'Sq. Ft. Completed' },
+  { target: 35,  suffix: '+',  isDecimal: false, label: 'Years of Legacy' },
+  { target: 75,  suffix: '+',  isDecimal: false, label: 'Projects Delivered' },
+  { target: 3,   suffix: 'M+', isDecimal: false, label: 'Sq. Ft. Completed' },
 ];
+
+function CTAStat({ target, suffix, isDecimal, label }) {
+  const [display, setDisplay] = useState('0');
+  const [hovered, setHovered] = useState(false);
+  const timerRef = useRef(null);
+  const intervalRef = useRef(null);
+  const elementRef = useRef(null);
+
+  const runCounter = useCallback(() => {
+    clearInterval(timerRef.current);
+    clearInterval(intervalRef.current);
+    
+    // Set up auto re-run interval of 20s
+    intervalRef.current = setInterval(() => {
+      runCounter();
+    }, 20000);
+
+    const steps = 60;
+    const duration = 1400;
+    let step = 0;
+    timerRef.current = setInterval(() => {
+      step++;
+      const progress = step / steps;
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = target * eased;
+      if (step >= steps) {
+        setDisplay(isDecimal ? target.toFixed(1) : String(Math.floor(target)));
+        clearInterval(timerRef.current);
+      } else {
+        setDisplay(isDecimal ? current.toFixed(1) : String(Math.floor(current)));
+      }
+    }, duration / steps);
+  }, [target, isDecimal]);
+
+  useEffect(() => {
+    // Start interval
+    intervalRef.current = setInterval(() => {
+      runCounter();
+    }, 20000);
+
+    // Run when scrolled into view
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          runCounter();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      clearInterval(timerRef.current);
+      clearInterval(intervalRef.current);
+      observer.disconnect();
+    };
+  }, [runCounter]);
+
+  return (
+    <div
+      ref={elementRef}
+      className="stat-item flex flex-col items-center justify-center py-6 md:py-8 px-3 opacity-0 select-none cursor-default"
+      onMouseEnter={() => {
+        setHovered(true);
+        runCounter();
+      }}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div
+        className="font-bold leading-none mb-2 transition-colors duration-200"
+        style={{
+          fontFamily: '"Outfit", sans-serif',
+          fontWeight: 700,
+          fontSize: 'clamp(1.5rem, 4vw, 3rem)',
+          color: hovered ? '#FFEA0A' : '#ffffff'
+        }}
+      >
+        {display}{suffix}
+      </div>
+      <div
+        className="uppercase tracking-widest font-mono transition-colors duration-200"
+        style={{
+          fontSize: 'clamp(6px, 1.5vw, 10px)',
+          color: hovered ? '#FFEA0A' : 'rgba(255,255,255,0.5)'
+        }}
+      >
+        {label}
+      </div>
+    </div>
+  );
+}
 
 export default function FinalCTA() {
   const sectionRef = useRef(null);
@@ -82,7 +175,7 @@ export default function FinalCTA() {
       </div>
 
       {/* ── Content ── */}
-      <div className="relative z-10 flex flex-col justify-center flex-1 w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 xl:px-24 pt-20 md:pt-28 pb-40 md:pb-52">
+      <div className="relative z-10 flex flex-col justify-center flex-1 w-full max-w-[1600px] mx-auto px-10 md:px-12 lg:px-20 xl:px-24 pt-20 md:pt-28 pb-40 md:pb-52">
 
         {/* Mono label */}
         <span className="text-[#FFEA0A]/60 font-mono text-[10px] md:text-xs uppercase tracking-[0.35em] mb-8 md:mb-10 block">
@@ -185,25 +278,10 @@ export default function FinalCTA() {
           style={{ background: 'rgba(10,10,10,0.82)', backdropFilter: 'blur(12px)' }}
         >
           {stats.map((s, i) => (
-            <div
+            <CTAStat
               key={i}
-              className="stat-item flex flex-col items-center justify-center py-6 md:py-8 px-3 opacity-0 select-none"
-            >
-              <div
-                className="font-bold text-[#FFEA0A] leading-none mb-2"
-                style={{
-                  fontFamily: '"Outfit", sans-serif',
-                  fontWeight: 700,
-                  fontSize: 'clamp(1.5rem, 4vw, 3rem)'
-                }}
-              >
-                {s.value}
-              </div>
-              <div className="text-white/50 uppercase tracking-widest font-mono"
-                style={{ fontSize: 'clamp(6px, 1.5vw, 10px)' }}>
-                {s.label}
-              </div>
-            </div>
+              {...s}
+            />
           ))}
         </div>
       </div>

@@ -8,9 +8,26 @@ export default function CustomCursor() {
 
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+
+    // Detect touch device or screen size <= 1024px
+    const checkIsTouchMobile = () => {
+      const isTouch = window.matchMedia('(pointer: coarse)').matches || 
+                      'ontouchstart' in window || 
+                      navigator.maxTouchPoints > 0 ||
+                      window.innerWidth <= 1024;
+      return isTouch;
+    };
+
+    if (checkIsTouchMobile()) {
+      setIsVisible(false);
+      return;
+    }
+
+    setIsVisible(true);
 
     // Add active class to body to hide the default browser cursor
     document.body.classList.add('custom-cursor-active');
@@ -25,8 +42,8 @@ export default function CustomCursor() {
 
     let rAfId;
     const updateCursor = () => {
-      // Spring-lerp the arrow ring with elegant lag
-      const ease = 0.095;
+      // Spring-lerp the arrow ring with elegant snappy lag (increased from 0.095)
+      const ease = 0.16;
       pos.x += (mouse.x - pos.x) * ease;
       pos.y += (mouse.y - pos.y) * ease;
 
@@ -72,6 +89,8 @@ export default function CustomCursor() {
       cancelAnimationFrame(rAfId);
     };
   }, []);
+
+  if (!isVisible) return null;
 
   return (
     <div className={styles.cursorWrapper}>

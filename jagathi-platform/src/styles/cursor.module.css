@@ -61,3 +61,10 @@
   fill: var(--cursor-bg-click, rgba(255, 255, 255, 0.20));
   stroke: var(--cursor-border-click, #ffffff);
 }
+
+@media (max-width: 1024px) or (pointer: coarse) {
+  .cursorWrapper {
+    display: none !important;
+  }
+}
+
