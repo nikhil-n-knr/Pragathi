@@ -31,6 +31,7 @@ export default function Header() {
     { name: 'Construction & Land Development', path: '/construction' },
     { name: 'Interior', path: '/interior' },
     { name: 'Civil Market', path: '/civil-market' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   return (

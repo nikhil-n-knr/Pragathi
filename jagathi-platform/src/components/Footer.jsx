@@ -511,7 +511,7 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Pillar 03 / Curate</h4>
             <Link href="/interior"    className="select-anchor">Interior Systems</Link>
-            <a href="mailto:info@jagathi.com" className="select-anchor">Contact Jagathi</a>
+            <Link href="/contact" className="select-anchor">Contact Jagathi</Link>
           </div>
         </div>
 

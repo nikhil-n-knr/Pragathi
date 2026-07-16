@@ -6,6 +6,7 @@ import { FluidProvider } from '../context/FluidContext';
 import Preloader from '../components/Preloader';
 import Header from '../components/Header';
 import CustomCursor from '../components/CustomCursor';
+import Tracker from '../components/Tracker';
 
 export default function MainLayout({ children }) {
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -81,6 +82,7 @@ export default function MainLayout({ children }) {
         {/* Global Grain Texture Overlay */}
         <div className="noise-overlay" />
         
+        <Tracker />
         <Header />
         <main className="flex-grow w-full flex flex-col items-center">
           {children}
