@@ -84,7 +84,7 @@ export default function MainLayout({ children }) {
         
         <Tracker />
         <Header />
-        <main className="flex-grow w-full flex flex-col items-center">
+        <main className="flex-grow w-full flex flex-col items-stretch">
           {children}
         </main>
       </div>

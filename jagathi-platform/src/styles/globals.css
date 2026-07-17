@@ -176,3 +176,15 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
+/* Performance & Hardware compositing acceleration overrides */
+.cr-reveal {
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+#process-stack .sticky {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+

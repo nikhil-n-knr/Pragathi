@@ -1,0 +1,797 @@
+<html lang="en" class="scroll-smooth bg-[#111213]"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Northline is an independent creative studio shaping distinctive brands, digital products, and campaigns.">
+<title>Northline — Independent Creative Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script><!-- aura-ga4-start -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2M6V79H761"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2M6V79H761');
+</script>
+<!-- aura-ga4-end -->
+</head>
+
+<body class="min-h-screen overflow-x-hidden bg-[#111213] font-['Inter'] text-[#f4f2ed] antialiased selection:bg-[#ff6a1a] selection:text-black">
+  <a href="#main-content" class="fixed left-4 top-4 z-[100] -translate-y-24 rounded-md bg-white px-4 py-3 text-sm font-medium text-black transition-transform focus:translate-y-0">
+    Skip to content
+  </a>
+
+  <header id="site-header" class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-all duration-200">
+    <div class="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <a href="#home" aria-label="Northline home" class="group inline-flex items-center gap-2 rounded-sm focus:outline-none focus:ring-2 focus:ring-[#ff6a1a] focus:ring-offset-4 focus:ring-offset-black">
+        <svg viewBox="0 0 34 34" class="h-7 w-7" aria-hidden="true">
+          <rect x="1" y="1" width="32" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+          <path d="M9 24V10l16 14V10" fill="none" stroke="currentColor" stroke-width="2"></path>
+        </svg>
+        <span class="text-lg font-medium tracking-tight">Northline</span>
+      </a>
+
+      <nav aria-label="Primary navigation" class="hidden items-center gap-7 md:flex">
+        <a href="#work" data-nav="work" class="relative py-2 text-sm text-white/70 transition-colors duration-200 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-right after:scale-x-0 after:bg-white after:transition-transform hover:text-white hover:after:origin-left hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Work</a>
+        <a href="#services" data-nav="services" class="relative py-2 text-sm text-white/70 transition-colors duration-200 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-right after:scale-x-0 after:bg-white after:transition-transform hover:text-white hover:after:origin-left hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Capabilities</a>
+        <a href="#process" data-nav="process" class="relative py-2 text-sm text-white/70 transition-colors duration-200 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-right after:scale-x-0 after:bg-white after:transition-transform hover:text-white hover:after:origin-left hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Process</a>
+        <a href="#journal" data-nav="journal" class="relative py-2 text-sm text-white/70 transition-colors duration-200 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-right after:scale-x-0 after:bg-white after:transition-transform hover:text-white hover:after:origin-left hover:after:scale-x-100 focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Journal</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="group hidden min-h-11 items-center gap-2 rounded-md bg-[#ff6a1a] px-5 text-sm font-medium text-black transition-colors duration-200 hover:bg-[#ff8444] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black sm:inline-flex">
+          Start a project
+          <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+        </a>
+        <button id="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu" class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-white/20 text-white transition-colors hover:border-white/50 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#ff6a1a] md:hidden">
+          <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-menu" class="fixed inset-0 z-40 hidden bg-[#111213]/98 px-5 pb-8 pt-24 backdrop-blur-md md:hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+    <nav class="flex h-full flex-col" aria-label="Mobile navigation">
+      <div class="flex flex-col border-t border-white/15">
+        <a href="#work" class="mobile-link flex min-h-16 items-center justify-between border-b border-white/15 text-2xl tracking-tight">
+          Work <i data-lucide="arrow-right" class="h-5 w-5"></i>
+        </a>
+        <a href="#services" class="mobile-link flex min-h-16 items-center justify-between border-b border-white/15 text-2xl tracking-tight">
+          Capabilities <i data-lucide="arrow-right" class="h-5 w-5"></i>
+        </a>
+        <a href="#process" class="mobile-link flex min-h-16 items-center justify-between border-b border-white/15 text-2xl tracking-tight">
+          Process <i data-lucide="arrow-right" class="h-5 w-5"></i>
+        </a>
+        <a href="#journal" class="mobile-link flex min-h-16 items-center justify-between border-b border-white/15 text-2xl tracking-tight">
+          Journal <i data-lucide="arrow-right" class="h-5 w-5"></i>
+        </a>
+      </div>
+      <a href="#contact" class="mobile-link mt-auto inline-flex min-h-14 items-center justify-center gap-2 rounded-md bg-[#ff6a1a] px-5 text-base font-medium text-black">
+        Start a project <i data-lucide="arrow-up-right" class="h-5 w-5"></i>
+      </a>
+    </nav>
+  </div>
+
+  <main id="main-content">
+    <section id="home" data-section="home" class="relative min-h-screen overflow-hidden bg-[#f06a18]">
+      <div class="absolute inset-0">
+        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/94254a28-7bab-493b-a4b9-ada7cff23f8c_3840w.png" alt="Profile of a creative director in warm studio light" class="h-full w-full object-cover object-center mix-blend-multiply" fetchpriority="high">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/40"></div>
+      </div>
+
+      <div class="relative mx-auto flex min-h-screen max-w-screen-2xl flex-col justify-end px-4 pb-8 pt-28 sm:px-6 sm:pb-10 lg:px-8">
+        <div class="max-w-5xl">
+          <p data-hero="" class="mb-5 translate-y-6 text-sm font-medium text-white/80 opacity-0">
+            Independent creative studio · London / Everywhere
+          </p>
+          <h1 data-hero="" class="max-w-5xl translate-y-6 text-5xl font-medium leading-[0.92] tracking-tight text-white opacity-0 sm:text-7xl lg:text-8xl">
+            We make brands impossible to overlook.
+          </h1>
+          <div class="mt-7 grid gap-6 border-t border-white/35 pt-6 md:grid-cols-12 md:items-end">
+            <p data-hero="" class="translate-y-6 text-lg leading-relaxed text-white/90 opacity-0 md:col-span-6 lg:col-span-5">
+              Strategy, identity, digital experiences, and campaigns for ambitious teams moving culture forward.
+            </p>
+            <div data-hero="" class="flex translate-y-6 flex-col gap-3 opacity-0 sm:flex-row md:col-span-6 md:justify-end">
+              <a href="#work" class="group inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-white px-6 text-sm font-medium text-black transition-colors hover:bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-[#f06a18]">
+                Explore selected work
+                <i data-lucide="arrow-down-right" class="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:translate-y-1"></i>
+              </a>
+              <a href="#contact" class="inline-flex min-h-12 items-center justify-center rounded-md border border-white/50 px-6 text-sm font-medium text-white transition-colors hover:border-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white">
+                Discuss a brief
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div data-hero="" class="mt-9 flex translate-y-6 items-center justify-between text-xs text-white/70 opacity-0">
+          <span>Brand systems built for change</span>
+          <a href="#proof" class="inline-flex min-h-11 items-center gap-2 transition-colors hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
+            Scroll to discover
+            <i data-lucide="arrow-down" class="h-4 w-4"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="proof" class="border-b border-white/15 bg-[#111213]">
+      <div class="mx-auto grid max-w-screen-2xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-4 lg:px-8">
+        <div data-reveal="">
+          <p class="text-xs text-white/45">Years independent</p>
+          <p class="mt-2 text-3xl font-medium tracking-tight">11</p>
+        </div>
+        <div data-reveal="">
+          <p class="text-xs text-white/45">Launches delivered</p>
+          <p class="mt-2 text-3xl font-medium tracking-tight">74</p>
+        </div>
+        <div data-reveal="">
+          <p class="text-xs text-white/45">Long-term partnerships</p>
+          <p class="mt-2 text-3xl font-medium tracking-tight">86%</p>
+        </div>
+        <div data-reveal="">
+          <p class="text-xs text-white/45">Working across</p>
+          <p class="mt-2 text-3xl font-medium tracking-tight">9 markets</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" data-section="services" class="bg-[#111213] py-20 sm:py-28">
+      <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div data-reveal="" class="grid gap-8 border-b border-white/15 pb-12 lg:grid-cols-12">
+          <div class="lg:col-span-4">
+            <p class="text-sm text-[#ff6a1a]">What we build</p>
+          </div>
+          <div class="lg:col-span-8">
+            <h2 class="max-w-4xl text-4xl font-medium leading-tight tracking-tight sm:text-6xl">
+              One team from the first sharp question to the final polished detail.
+            </h2>
+          </div>
+        </div>
+
+        <div class="mt-12 grid gap-4 lg:grid-cols-2">
+          <article data-reveal="" class="group relative min-h-80 overflow-hidden rounded-md border border-white/15 bg-[#191a1b] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#ff6a1a]/70 sm:p-8">
+            <div class="flex items-start justify-between">
+              <span class="text-sm text-white/45">01</span>
+              <i data-lucide="scan-text" class="h-7 w-7 text-[#ff6a1a]"></i>
+            </div>
+            <div class="absolute inset-x-6 bottom-6 sm:inset-x-8 sm:bottom-8">
+              <h3 class="text-3xl font-medium tracking-tight">Brand foundations</h3>
+              <p class="mt-4 max-w-xl text-lg leading-relaxed text-white/60">
+                Positioning, audience insight, naming, messaging, and a clear creative direction that gives every decision a reason.
+              </p>
+              <p class="mt-5 text-sm text-white/40">Strategy · Verbal identity · Architecture</p>
+            </div>
+          </article>
+
+          <article data-reveal="" class="group relative min-h-80 overflow-hidden rounded-md border border-white/15 bg-[#f0ede5] p-6 text-black transition duration-300 hover:-translate-y-1 hover:border-[#ff6a1a] sm:p-8">
+            <div class="flex items-start justify-between">
+              <span class="text-sm text-black/45">02</span>
+              <i data-lucide="shapes" class="h-7 w-7 text-[#e9540d]"></i>
+            </div>
+            <div class="absolute inset-x-6 bottom-6 sm:inset-x-8 sm:bottom-8">
+              <h3 class="text-3xl font-medium tracking-tight">Identity systems</h3>
+              <p class="mt-4 max-w-xl text-lg leading-relaxed text-black/60">
+                Distinctive visual languages designed to remain coherent across products, places, campaigns, and teams.
+              </p>
+              <p class="mt-5 text-sm text-black/45">Identity · Art direction · Guidelines</p>
+            </div>
+          </article>
+
+          <article data-reveal="" class="group relative min-h-80 overflow-hidden rounded-md border border-white/15 bg-[#143a45] p-6 transition duration-300 hover:-translate-y-1 hover:border-cyan-300/70 sm:p-8">
+            <div class="flex items-start justify-between">
+              <span class="text-sm text-white/45">03</span>
+              <i data-lucide="panels-top-left" class="h-7 w-7 text-cyan-200"></i>
+            </div>
+            <div class="absolute inset-x-6 bottom-6 sm:inset-x-8 sm:bottom-8">
+              <h3 class="text-3xl font-medium tracking-tight">Digital experiences</h3>
+              <p class="mt-4 max-w-xl text-lg leading-relaxed text-white/65">
+                Editorial websites and useful products that turn a strong identity into a fast, accessible experience.
+              </p>
+              <p class="mt-5 text-sm text-white/45">UX · Interface design · Development</p>
+            </div>
+          </article>
+
+          <article data-reveal="" class="group relative min-h-80 overflow-hidden rounded-md border border-white/15 bg-[#a91f18] p-6 transition duration-300 hover:-translate-y-1 hover:border-red-200/70 sm:p-8">
+            <div class="flex items-start justify-between">
+              <span class="text-sm text-white/50">04</span>
+              <i data-lucide="aperture" class="h-7 w-7 text-red-100"></i>
+            </div>
+            <div class="absolute inset-x-6 bottom-6 sm:inset-x-8 sm:bottom-8">
+              <h3 class="text-3xl font-medium tracking-tight">Campaign worlds</h3>
+              <p class="mt-4 max-w-xl text-lg leading-relaxed text-white/70">
+                Flexible concepts, image systems, motion, and launch materials that earn attention without losing meaning.
+              </p>
+              <p class="mt-5 text-sm text-white/50">Campaigns · Motion · Production</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" data-section="work" class="bg-[#e9e7e1] py-20 text-[#111213] sm:py-28">
+      <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div data-reveal="" class="flex flex-col justify-between gap-7 border-b border-black/20 pb-10 sm:flex-row sm:items-end">
+          <div>
+            <p class="text-sm text-black/50">Selected collaborations</p>
+            <h2 class="mt-3 text-5xl font-medium tracking-tight sm:text-7xl">Work with evidence.</h2>
+          </div>
+          <a href="#project-index" class="group inline-flex min-h-11 items-center gap-2 self-start text-sm font-medium underline decoration-black/30 underline-offset-8 transition hover:decoration-black sm:self-auto">
+            View project index
+            <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
+          </a>
+        </div>
+
+        <div class="mt-10 grid gap-x-5 gap-y-14 lg:grid-cols-12">
+          <a href="#contact" data-reveal="" class="group block focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-4 focus:ring-offset-[#e9e7e1] lg:col-span-7">
+            <div class="relative aspect-[4/3] overflow-hidden rounded-md bg-[#c9c8c3]">
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/014a3e34-6fdb-4303-a428-f3bb3685bb1a_3840w.png" alt="Editorial portrait for an independent arts publication" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+              <div class="absolute inset-0 bg-black/5 transition-colors group-hover:bg-black/15"></div>
+              <span class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-md bg-black px-3 py-2 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                View project <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+              </span>
+            </div>
+            <div class="mt-4 flex items-start justify-between gap-5">
+              <div>
+                <h3 class="text-xl font-medium">Common Ground</h3>
+                <p class="mt-1 text-sm text-black/50">Cultural identity and editorial platform</p>
+              </div>
+              <span class="text-sm text-black/45">2026</span>
+            </div>
+          </a>
+
+          <a href="#contact" data-reveal="" class="group block self-end focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-4 focus:ring-offset-[#e9e7e1] lg:col-span-5 lg:pt-24">
+            <div class="relative aspect-square overflow-hidden rounded-md bg-[#6bd3ed]">
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/77183135-d1e2-4da9-a0a9-2ceb4f5956eb_3840w.png" alt="Abstract blue landscape used in a climate technology identity" loading="lazy" class="h-full w-full object-cover saturate-150 transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+              <div class="absolute inset-0 bg-cyan-500/20 mix-blend-color"></div>
+              <span class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-md bg-black px-3 py-2 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                View project <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+              </span>
+            </div>
+            <div class="mt-4 flex items-start justify-between gap-5">
+              <div>
+                <h3 class="text-xl font-medium">Tidal Energy</h3>
+                <p class="mt-1 text-sm text-black/50">Brand system and digital launch</p>
+              </div>
+              <span class="text-sm text-black/45">2025</span>
+            </div>
+          </a>
+
+          <a href="#contact" data-reveal="" class="group block focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-4 focus:ring-offset-[#e9e7e1] lg:col-span-5">
+            <div class="relative aspect-[4/5] overflow-hidden rounded-md bg-red-700">
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4412dbbc-be73-4cc3-b3ea-42afa81cafa9_3840w.png" alt="Fashion campaign photographed in a vivid urban setting" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+              <div class="absolute inset-0 bg-red-600/20 mix-blend-multiply"></div>
+              <span class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-md bg-black px-3 py-2 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                View project <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+              </span>
+            </div>
+            <div class="mt-4 flex items-start justify-between gap-5">
+              <div>
+                <h3 class="text-xl font-medium">After Hours</h3>
+                <p class="mt-1 text-sm text-black/50">Seasonal campaign and art direction</p>
+              </div>
+              <span class="text-sm text-black/45">2025</span>
+            </div>
+          </a>
+
+          <a href="#contact" data-reveal="" class="group block self-center focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-4 focus:ring-offset-[#e9e7e1] lg:col-span-7 lg:pl-16">
+            <div class="relative aspect-[16/10] overflow-hidden rounded-md bg-white">
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/8d569664-1175-477d-8acb-2ebad5543789_3840w.png" alt="Transparent glass forms for a sustainable materials brand" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+              <span class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-md bg-black px-3 py-2 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                View project <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+              </span>
+            </div>
+            <div class="mt-4 flex items-start justify-between gap-5">
+              <div>
+                <h3 class="text-xl font-medium">Clear Matter</h3>
+                <p class="mt-1 text-sm text-black/50">Strategy, packaging, and commerce</p>
+              </div>
+              <span class="text-sm text-black/45">2024</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" data-section="process" class="bg-[#111213] py-20 sm:py-28">
+      <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-12 lg:grid-cols-12">
+          <div data-reveal="" class="lg:col-span-5">
+            <div class="lg:sticky lg:top-28">
+              <p class="text-sm text-[#ff6a1a]">How we work</p>
+              <h2 class="mt-4 text-5xl font-medium tracking-tight sm:text-6xl">
+                Clear stages.<br>Fewer surprises.
+              </h2>
+              <p class="mt-6 max-w-md text-lg leading-relaxed text-white/60">
+                Senior people stay close throughout. Decisions are visible, feedback has structure, and every stage ends with something useful.
+              </p>
+              <a href="#contact" class="group mt-8 inline-flex min-h-12 items-center gap-2 rounded-md border border-white/25 px-5 text-sm font-medium transition-colors hover:border-white hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">
+                Ask about our approach
+                <i data-lucide="arrow-up-right" class="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <button data-process-button="" aria-expanded="true" class="process-step w-full border-t border-white/20 py-8 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#ff6a1a]">
+              <div class="grid gap-5 sm:grid-cols-[4rem_1fr_auto] sm:items-start">
+                <span class="text-sm text-[#ff6a1a]">01</span>
+                <div>
+                  <h3 class="text-3xl font-medium tracking-tight">Find the useful tension</h3>
+                  <div class="process-detail overflow-hidden">
+                    <p class="mt-4 max-w-xl text-lg leading-relaxed text-white/55">
+                      We interview, audit, and map the landscape to isolate the challenge worth solving and the opportunity only you can own.
+                    </p>
+                    <p class="mt-5 text-sm text-white/35">Output: strategic brief and creative territory</p>
+                  </div>
+                </div>
+                <i data-lucide="minus" class="process-icon h-5 w-5"></i>
+              </div>
+            </button>
+
+            <button data-process-button="" aria-expanded="false" class="process-step w-full border-t border-white/20 py-8 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#ff6a1a]">
+              <div class="grid gap-5 sm:grid-cols-[4rem_1fr_auto] sm:items-start">
+                <span class="text-sm text-white/35">02</span>
+                <div>
+                  <h3 class="text-3xl font-medium tracking-tight">Build the system</h3>
+                  <div class="process-detail hidden overflow-hidden">
+                    <p class="mt-4 max-w-xl text-lg leading-relaxed text-white/55">
+                      We turn the direction into a connected language of words, images, motion, interaction, and practical design rules.
+                    </p>
+                    <p class="mt-5 text-sm text-white/35">Output: identity system and prototypes</p>
+                  </div>
+                </div>
+                <i data-lucide="plus" class="process-icon h-5 w-5"></i>
+              </div>
+            </button>
+
+            <button data-process-button="" aria-expanded="false" class="process-step w-full border-y border-white/20 py-8 text-left focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#ff6a1a]">
+              <div class="grid gap-5 sm:grid-cols-[4rem_1fr_auto] sm:items-start">
+                <span class="text-sm text-white/35">03</span>
+                <div>
+                  <h3 class="text-3xl font-medium tracking-tight">Launch and strengthen</h3>
+                  <div class="process-detail hidden overflow-hidden">
+                    <p class="mt-4 max-w-xl text-lg leading-relaxed text-white/55">
+                      We deliver core expressions, support rollout, equip internal teams, and refine the system using real-world response.
+                    </p>
+                    <p class="mt-5 text-sm text-white/35">Output: launch toolkit and ongoing partnership</p>
+                  </div>
+                </div>
+                <i data-lucide="plus" class="process-icon h-5 w-5"></i>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#ff6a1a] py-20 text-black sm:py-28">
+      <div data-reveal="" class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-12">
+          <i data-lucide="quote" class="h-10 w-10 lg:col-span-2"></i>
+          <blockquote class="lg:col-span-9">
+            <p class="text-4xl font-medium leading-tight tracking-tight sm:text-6xl">
+              “Northline gave us more than a new identity. They gave our whole organization a clearer way to make decisions.”
+            </p>
+            <footer class="mt-10 border-t border-black/25 pt-5">
+              <p class="text-base font-medium">Mara Chen</p>
+              <p class="mt-1 text-sm text-black/60">Chief Growth Officer, Oriole Works</p>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section id="project-index" class="bg-[#111213] py-20 sm:py-28">
+      <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div data-reveal="" class="flex items-end justify-between border-b border-white/20 pb-6">
+          <div>
+            <p class="text-sm text-white/45">Recent engagements</p>
+            <h2 class="mt-3 text-4xl font-medium tracking-tight sm:text-5xl">Project index</h2>
+          </div>
+          <span class="text-lg text-white/45">(08)</span>
+        </div>
+
+        <div class="divide-y divide-white/15">
+          <a href="#contact" data-reveal="" class="group grid min-h-16 items-center gap-2 py-4 text-sm transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#ff6a1a] sm:grid-cols-4">
+            <span class="font-medium">Common Ground</span><span class="text-white/45 group-hover:text-[#ff6a1a]/70">Civic Culture</span><span class="text-white/45 group-hover:text-[#ff6a1a]/70">Identity, Editorial</span><span class="flex justify-between text-white/45 group-hover:text-[#ff6a1a]/70">2026 <i data-lucide="arrow-up-right" class="h-4 w-4"></i></span>
+          </a>
+          <a href="#contact" data-reveal="" class="group grid min-h-16 items-center gap-2 py-4 text-sm transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#ff6a1a] sm:grid-cols-4">
+            <span class="font-medium">Tidal Energy</span><span class="text-white/45 group-hover:text-[#ff6a1a]/70">Climate Technology</span><span class="text-white/45 group-hover:text-[#ff6a1a]/70">Strategy, Digital</span><span class="flex justify-between text-white/45 group-hover:text-[#ff6a1a]/70">2025 <i data-lucide="arrow-up-right" class="h-4 w-4"></i></span>
+          </a>
+          <a href="#contact" data-reveal="" class="group grid min-h-16 items-center gap-2 py-4 text-sm transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#ff6a1a] sm:grid-cols-4">
+            <span class="font-medium">Clear Matter</span><span class="text-white/45 group-hover:text-[#ff6a1a]/70">Material Science</span><span class="text-white/45 group-hover:text-[#ff6a1a]/70">Brand, Commerce</span><span class="flex justify-between text-white/45 group-hover:text-[#ff6a1a]/70">2024 <i data-lucide="arrow-up-right" class="h-4 w-4"></i></span>
+          </a>
+          <a href="#contact" data-reveal="" class="group grid min-h-16 items-center gap-2 py-4 text-sm transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#ff6a1a] sm:grid-cols-4">
+            <span class="font-medium">Field Notes</span><span class="text-white/45 group-hover:text-[#ff6a1a]/70">Publishing</span><span class="text-white/45 group-hover:text-[#ff6a1a]/70">Digital Product</span><span class="flex justify-between text-white/45 group-hover:text-[#ff6a1a]/70">2024 <i data-lucide="arrow-up-right" class="h-4 w-4"></i></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="border-y border-white/15 bg-[#111213] py-20 sm:py-28">
+      <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div data-reveal="" class="grid gap-10 lg:grid-cols-12">
+          <div class="lg:col-span-4">
+            <p class="text-sm text-[#ff6a1a]">Ways to work together</p>
+            <h2 class="mt-4 text-4xl font-medium tracking-tight sm:text-5xl">Built around the moment you’re in.</h2>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2 lg:col-span-8">
+            <article class="rounded-md border border-white/15 p-6">
+              <p class="text-xs text-white/40">Focused engagement</p>
+              <h3 class="mt-5 text-2xl font-medium tracking-tight">Brand Sprint</h3>
+              <p class="mt-3 text-base leading-relaxed text-white/55">A compact strategic and creative engagement for teams needing direction before a pivotal move.</p>
+              <p class="mt-8 text-sm text-white/45">Typically 3–5 weeks</p>
+            </article>
+            <article class="rounded-md border border-[#ff6a1a] bg-[#ff6a1a] p-6 text-black">
+              <p class="text-xs text-black/55">Most comprehensive</p>
+              <h3 class="mt-5 text-2xl font-medium tracking-tight">Full Partnership</h3>
+              <p class="mt-3 text-base leading-relaxed text-black/65">Strategy through launch for a new venture, transformation, or ambitious next chapter.</p>
+              <p class="mt-8 text-sm text-black/55">Typically 10–18 weeks</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="journal" data-section="journal" class="bg-[#111213] py-20 sm:py-28">
+      <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div data-reveal="" class="flex items-end justify-between border-b border-white/15 pb-8">
+          <div>
+            <p class="text-sm text-white/45">Ideas from the studio</p>
+            <h2 class="mt-3 text-5xl font-medium tracking-tight">Journal</h2>
+          </div>
+          <span class="text-lg text-white/45">(03)</span>
+        </div>
+
+        <div class="mt-8 grid gap-5 md:grid-cols-3">
+          <a href="#contact" data-reveal="" class="group focus:outline-none focus:ring-2 focus:ring-[#ff6a1a] focus:ring-offset-4 focus:ring-offset-[#111213]">
+            <div class="aspect-[4/3] overflow-hidden rounded-md bg-white/10">
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/8b996c29-965a-48b9-a059-b98d2db9ce6b_3840w.png" alt="Sketchbook and writing tools on a desk" loading="lazy" class="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0">
+            </div>
+            <p class="mt-4 text-xs text-white/40">Perspective · 7 min</p>
+            <h3 class="mt-2 text-lg font-medium leading-snug">Why a useful identity begins before the logo</h3>
+          </a>
+          <a href="#contact" data-reveal="" class="group focus:outline-none focus:ring-2 focus:ring-[#ff6a1a] focus:ring-offset-4 focus:ring-offset-[#111213]">
+            <div class="aspect-[4/3] overflow-hidden rounded-md bg-white/10">
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/cf08ff57-e591-426c-b7b6-d1afd6eb1849_3840w.png" alt="Creative team working in a light-filled studio" loading="lazy" class="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0">
+            </div>
+            <p class="mt-4 text-xs text-white/40">Practice · 5 min</p>
+            <h3 class="mt-2 text-lg font-medium leading-snug">Designing decisions, not presentation theatre</h3>
+          </a>
+          <a href="#contact" data-reveal="" class="group focus:outline-none focus:ring-2 focus:ring-[#ff6a1a] focus:ring-offset-4 focus:ring-offset-[#111213]">
+            <div class="aspect-[4/3] overflow-hidden rounded-md bg-white/10">
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/dc65737f-0adf-4cec-8f3b-a26476e71be4_3840w.png" alt="Designer reviewing a responsive digital interface" loading="lazy" class="h-full w-full object-cover grayscale transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0">
+            </div>
+            <p class="mt-4 text-xs text-white/40">Technology · 8 min</p>
+            <h3 class="mt-2 text-lg font-medium leading-snug">How brand systems stay coherent in motion</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#e9e7e1] py-20 text-black sm:py-28">
+      <div class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div data-reveal="" class="grid gap-12 lg:grid-cols-12">
+          <div class="lg:col-span-5">
+            <p class="text-sm text-black/50">Questions before starting</p>
+            <h2 class="mt-4 text-5xl font-medium tracking-tight">A few direct answers.</h2>
+          </div>
+          <div class="divide-y divide-black/20 border-y border-black/20 lg:col-span-7">
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-button flex min-h-20 w-full items-center justify-between gap-5 text-left text-lg font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-black">
+                When should we bring you in?
+                <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 transition-transform duration-200"></i>
+              </button>
+              <div class="faq-answer hidden overflow-hidden pb-6 pr-10 text-base leading-relaxed text-black/60">
+                Ideally before the solution has been decided. We are most useful when there is a meaningful business shift, launch, audience challenge, or creative opportunity to frame together.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-button flex min-h-20 w-full items-center justify-between gap-5 text-left text-lg font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-black">
+                Do you work with internal teams?
+                <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 transition-transform duration-200"></i>
+              </button>
+              <div class="faq-answer hidden overflow-hidden pb-6 pr-10 text-base leading-relaxed text-black/60">
+                Yes. We frequently partner with founders, brand leaders, designers, engineers, and external production teams. Responsibilities are made explicit at the start.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-button flex min-h-20 w-full items-center justify-between gap-5 text-left text-lg font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-black">
+                Can the studio support implementation?
+                <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 transition-transform duration-200"></i>
+              </button>
+              <div class="faq-answer hidden overflow-hidden pb-6 pr-10 text-base leading-relaxed text-black/60">
+                We can design, direct, build, and support rollout across digital, campaign, and launch touchpoints. Where specialist production is needed, we assemble a trusted team.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" class="faq-button flex min-h-20 w-full items-center justify-between gap-5 text-left text-lg font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-black">
+                What happens after launch?
+                <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 transition-transform duration-200"></i>
+              </button>
+              <div class="faq-answer hidden overflow-hidden pb-6 pr-10 text-base leading-relaxed text-black/60">
+                Some clients take full ownership while others retain us for campaigns, product evolution, governance, or quarterly creative direction. The arrangement follows the need.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="bg-[#ff6a1a] py-20 text-black sm:py-28">
+      <div data-reveal="" class="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <p class="text-sm text-black/55">Have a meaningful challenge?</p>
+        <div class="mt-5 flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+          <h2 class="max-w-5xl text-5xl font-medium leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
+            Let’s make the next move count.
+          </h2>
+          <a href="mailto:hello@northline.studio" class="group inline-flex min-h-14 shrink-0 items-center justify-center gap-3 self-start rounded-md bg-black px-7 text-base font-medium text-white transition-colors hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#ff6a1a] lg:self-auto">
+            hello@northline.studio
+            <i data-lucide="arrow-up-right" class="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"></i>
+          </a>
+        </div>
+        <div class="mt-14 flex flex-col gap-3 border-t border-black/25 pt-6 text-sm text-black/60 sm:flex-row sm:items-center sm:justify-between">
+          <span>New collaborations begin with a short, candid conversation.</span>
+          <span>Replies usually arrive within two working days.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-[#111213]">
+    <div class="mx-auto max-w-screen-2xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="grid gap-10 border-b border-white/15 pb-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <p class="text-sm font-medium">Northline Studio</p>
+          <p class="mt-4 max-w-xs text-sm leading-relaxed text-white/45">
+            Independent strategy and design for organizations building a more interesting future.
+          </p>
+        </div>
+        <div>
+          <p class="text-xs text-white/35">Explore</p>
+          <div class="mt-4 flex flex-col items-start gap-3 text-sm">
+            <a href="#work" class="transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Selected work</a>
+            <a href="#services" class="transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Capabilities</a>
+            <a href="#process" class="transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Process</a>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs text-white/35">Studio</p>
+          <div class="mt-4 flex flex-col items-start gap-3 text-sm">
+            <a href="#journal" class="transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Journal</a>
+            <a href="#contact" class="transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">New business</a>
+            <a href="mailto:careers@northline.studio" class="transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Careers</a>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs text-white/35">Follow</p>
+          <div class="mt-4 flex flex-col items-start gap-3 text-sm">
+            <a href="#contact" aria-label="Northline on Instagram" class="inline-flex items-center gap-2 transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Instagram <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i></a>
+            <a href="#contact" aria-label="Northline on LinkedIn" class="inline-flex items-center gap-2 transition-colors hover:text-[#ff6a1a] focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">LinkedIn <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-8 pt-8">
+        <div class="flex flex-col gap-3 text-xs text-white/35 sm:flex-row sm:items-center sm:justify-between">
+          <p>© 2026 Northline Studio. All rights reserved.</p>
+          <div class="flex gap-5">
+            <a href="#contact" class="hover:text-white focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Privacy</a>
+            <a href="#contact" class="hover:text-white focus:outline-none focus:ring-2 focus:ring-[#ff6a1a]">Accessibility</a>
+          </div>
+        </div>
+        <p class="break-words text-5xl font-medium leading-none tracking-tight sm:text-7xl lg:text-8xl">Northline®</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons({ attrs: { "stroke-width": 1.5 } });
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const header = document.getElementById("site-header");
+    const menuButton = document.getElementById("menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const mobileLinks = [...document.querySelectorAll(".mobile-link")];
+    let lastFocusedElement = null;
+
+    function updateHeader() {
+      const scrolled = window.scrollY > 100;
+      header.classList.toggle("bg-[#111213]/90", scrolled);
+      header.classList.toggle("backdrop-blur-md", scrolled);
+      header.classList.toggle("border-white/15", scrolled);
+      header.classList.toggle("shadow-lg", scrolled);
+      header.classList.toggle("shadow-black/10", scrolled);
+    }
+
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+
+    function openMenu() {
+      lastFocusedElement = document.activeElement;
+      mobileMenu.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+      menuButton.setAttribute("aria-expanded", "true");
+      menuButton.setAttribute("aria-label", "Close navigation");
+      menuButton.innerHTML = '<i data-lucide="x" class="h-5 w-5"></i>';
+      lucide.createIcons({ attrs: { "stroke-width": 1.5 } });
+      mobileLinks[0].focus();
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.add("hidden");
+      document.body.classList.remove("overflow-hidden");
+      menuButton.setAttribute("aria-expanded", "false");
+      menuButton.setAttribute("aria-label", "Open navigation");
+      menuButton.innerHTML = '<i data-lucide="menu" class="h-5 w-5"></i>';
+      lucide.createIcons({ attrs: { "stroke-width": 1.5 } });
+      if (lastFocusedElement) lastFocusedElement.focus();
+    }
+
+    menuButton.addEventListener("click", () => {
+      menuButton.getAttribute("aria-expanded") === "true" ? closeMenu() : openMenu();
+    });
+
+    mobileLinks.forEach(link => link.addEventListener("click", closeMenu));
+
+    mobileMenu.addEventListener("click", event => {
+      if (event.target === mobileMenu) closeMenu();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") closeMenu();
+
+      if (event.key === "Tab" && menuButton.getAttribute("aria-expanded") === "true") {
+        const focusable = [menuButton, ...mobileLinks];
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    const heroElements = [...document.querySelectorAll("[data-hero]")];
+
+    if (reducedMotion) {
+      heroElements.forEach(element => {
+        element.classList.remove("translate-y-6", "opacity-0");
+      });
+    } else {
+      heroElements.forEach((element, index) => {
+        element.animate(
+          [
+            { opacity: 0, transform: "translateY(24px)", filter: "blur(4px)" },
+            { opacity: 1, transform: "translateY(0)", filter: "blur(0)" }
+          ],
+          {
+            duration: 760,
+            delay: 120 + index * 105,
+            easing: "cubic-bezier(.22,.61,.36,1)",
+            fill: "forwards"
+          }
+        );
+      });
+    }
+
+    const revealElements = [...document.querySelectorAll("[data-reveal]")];
+
+    if (reducedMotion) {
+      revealElements.forEach(element => {
+        element.style.opacity = "1";
+        element.style.transform = "none";
+      });
+    } else {
+      revealElements.forEach(element => {
+        element.style.opacity = "0";
+        element.style.transform = "translateY(22px)";
+      });
+
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.animate(
+            [
+              { opacity: 0, transform: "translateY(22px)" },
+              { opacity: 1, transform: "translateY(0)" }
+            ],
+            {
+              duration: 560,
+              easing: "cubic-bezier(.22,.61,.36,1)",
+              fill: "forwards"
+            }
+          );
+          revealObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.18 });
+
+      revealElements.forEach(element => revealObserver.observe(element));
+    }
+
+    const sections = [...document.querySelectorAll("[data-section]")];
+    const navigationLinks = [...document.querySelectorAll("[data-nav]")];
+
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const activeId = entry.target.dataset.section;
+
+        navigationLinks.forEach(link => {
+          const active = link.dataset.nav === activeId;
+          link.setAttribute("aria-current", active ? "page" : "false");
+          link.classList.toggle("text-white", active);
+          link.classList.toggle("text-white/70", !active);
+        });
+      });
+    }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    document.querySelectorAll("[data-process-button]").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-process-button]").forEach(other => {
+          const isCurrent = other === button;
+          const detail = other.querySelector(".process-detail");
+          const icon = other.querySelector(".process-icon");
+          const number = other.querySelector("span");
+          other.setAttribute("aria-expanded", isCurrent ? "true" : "false");
+          detail.classList.toggle("hidden", !isCurrent);
+          number.classList.toggle("text-[#ff6a1a]", isCurrent);
+          number.classList.toggle("text-white/35", !isCurrent);
+          icon.setAttribute("data-lucide", isCurrent ? "minus" : "plus");
+        });
+        lucide.createIcons({ attrs: { "stroke-width": 1.5 } });
+      });
+    });
+
+    document.querySelectorAll(".faq-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const answer = item.querySelector(".faq-answer");
+        const icon = item.querySelector(".faq-icon");
+        const opening = button.getAttribute("aria-expanded") !== "true";
+
+        document.querySelectorAll(".faq-item").forEach(otherItem => {
+          const otherButton = otherItem.querySelector(".faq-button");
+          const otherAnswer = otherItem.querySelector(".faq-answer");
+          const otherIcon = otherItem.querySelector(".faq-icon");
+          otherButton.setAttribute("aria-expanded", "false");
+          otherAnswer.classList.add("hidden");
+          otherIcon.setAttribute("data-lucide", "plus");
+        });
+
+        if (opening) {
+          button.setAttribute("aria-expanded", "true");
+          answer.classList.remove("hidden");
+          icon.setAttribute("data-lucide", "minus");
+
+          if (!reducedMotion) {
+            answer.animate(
+              [
+                { opacity: 0, transform: "translateY(-8px)" },
+                { opacity: 1, transform: "translateY(0)" }
+              ],
+              { duration: 210, easing: "ease-out" }
+            );
+          }
+        }
+
+        lucide.createIcons({ attrs: { "stroke-width": 1.5 } });
+      });
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768 && menuButton.getAttribute("aria-expanded") === "true") {
+        closeMenu();
+      }
+    });
+  </script>
+
+
+</body></html>

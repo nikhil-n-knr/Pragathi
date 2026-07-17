@@ -81,6 +81,58 @@ try {
         UNIQUE(session_id, url, section_name)
     )");
 
+    // Projects table
+    $db->exec("CREATE TABLE IF NOT EXISTS projects (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        sector TEXT NOT NULL,
+        spec TEXT NOT NULL,
+        year TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )");
+
+    // Feedbacks table
+    $db->exec("CREATE TABLE IF NOT EXISTS feedbacks (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        quote TEXT NOT NULL,
+        author TEXT NOT NULL,
+        role TEXT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )");
+
+    // Default project seed
+    $pCount = $db->query("SELECT COUNT(*) FROM projects")->fetchColumn();
+    if ($pCount == 0) {
+        $initialProjects = [
+            ['Orion Link Bridge', 'Civic Infrastructure', 'Cable-stayed steel arc', '2026'],
+            ['Silicon Arc Tower', 'Commercial Office', 'Core shear wall core', '2025'],
+            ['Cogen Industrial Complex', 'Industrial Plant', 'Vibration isolated vaults', '2025'],
+            ['Jayanagar Hub', 'Urban Commercial', 'Reinforced concrete frame', '2024'],
+            ['Calicut Estate', 'High-End Residential', 'Architectural structural frame', '2024'],
+            ['Kochi Marine Terminal', 'Marine Infrastructure', 'Hydrostatic-tested piles', '2023']
+        ];
+        $stmt = $db->prepare("INSERT INTO projects (name, sector, spec, year) VALUES (?, ?, ?, ?)");
+        foreach ($initialProjects as $ip) {
+            $stmt->execute($ip);
+        }
+    }
+
+    // Default feedback seed
+    $fCount = $db->query("SELECT COUNT(*) FROM feedbacks")->fetchColumn();
+    if ($fCount == 0) {
+        $initialFeedbacks = [
+            [
+                'Jagathi delivered more than structural compliance. They gave our whole organization a clearer way to build for scale.',
+                'Infrastructure Partner',
+                'Urban Development Group'
+            ]
+        ];
+        $stmt = $db->prepare("INSERT INTO feedbacks (quote, author, role) VALUES (?, ?, ?)");
+        foreach ($initialFeedbacks as $if) {
+            $stmt->execute($if);
+        }
+    }
+
     $dbReady = true;
 } catch (PDOException $e) {
     $dbErr = $e->getMessage();
@@ -111,6 +163,49 @@ if ($isAuthed && isset($_GET['export']) && $_GET['export'] === 'analytics' && $d
         fputcsv($out, [$row['session_id'], $row['url'], $row['referrer'], $row['screen_resolution'], $row['ip'], $row['page_time'], $row['updated_at']]);
     }
     fclose($out);
+    exit;
+}
+
+// ── Admin Action: Projects ───────────────────────────────────────────────────
+if ($isAuthed && isset($_POST['action']) && $_POST['action'] === 'add_project' && $dbReady) {
+    $name = $_POST['name'] ?? '';
+    $sector = $_POST['sector'] ?? '';
+    $spec = $_POST['spec'] ?? '';
+    $year = $_POST['year'] ?? '';
+    if ($name && $sector && $spec && $year) {
+        $stmt = $db->prepare("INSERT INTO projects (name, sector, spec, year) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$name, $sector, $spec, $year]);
+    }
+    header('Location: admin.php');
+    exit;
+}
+
+if ($isAuthed && isset($_GET['delete_project']) && $dbReady) {
+    $id = (int) $_GET['delete_project'];
+    $stmt = $db->prepare("DELETE FROM projects WHERE id = ?");
+    $stmt->execute([$id]);
+    header('Location: admin.php');
+    exit;
+}
+
+// ── Admin Action: Feedback ───────────────────────────────────────────────────
+if ($isAuthed && isset($_POST['action']) && $_POST['action'] === 'add_feedback' && $dbReady) {
+    $quote = $_POST['quote'] ?? '';
+    $author = $_POST['author'] ?? '';
+    $role = $_POST['role'] ?? '';
+    if ($quote && $author && $role) {
+        $stmt = $db->prepare("INSERT INTO feedbacks (quote, author, role) VALUES (?, ?, ?)");
+        $stmt->execute([$quote, $author, $role]);
+    }
+    header('Location: admin.php');
+    exit;
+}
+
+if ($isAuthed && isset($_GET['delete_feedback']) && $dbReady) {
+    $id = (int) $_GET['delete_feedback'];
+    $stmt = $db->prepare("DELETE FROM feedbacks WHERE id = ?");
+    $stmt->execute([$id]);
+    header('Location: admin.php');
     exit;
 }
 
@@ -496,6 +591,8 @@ if ($isAuthed && $dbReady) {
         <button class="nav-btn" onclick="showPanel(event,'sections')">Section Dwell</button>
         <button class="nav-btn" onclick="showPanel(event,'ips')">IP Analysis</button>
         <button class="nav-btn" onclick="showPanel(event,'predictions')">Predictions</button>
+        <button class="nav-btn" onclick="showPanel(event,'projects')">Projects Desk</button>
+        <button class="nav-btn" onclick="showPanel(event,'feedback')">Feedback Desk</button>
     </aside>
 
     <div class="workspace">
@@ -950,6 +1047,142 @@ if (empty($freq_data)) {
                 </div>
 
             </div><!-- /.algo-grid -->
+        </div>
+
+        <!-- ══════ PANEL: PROJECTS ══════ -->
+        <div id="projects" class="panel">
+            <div class="panel-title">
+                Construction Projects Index
+            </div>
+
+            <!-- Add project form -->
+            <div style="background: var(--surface); border: 1px solid var(--border); padding: 24px; border-radius: 6px; margin-bottom: 28px;">
+                <h3 style="color: var(--yellow); font-size: 12px; font-family: 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Add New Project</h3>
+                <form method="POST" action="admin.php" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <input type="hidden" name="action" value="add_project">
+                    <div>
+                        <label style="display: block; font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px;">Project Name</label>
+                        <input type="text" name="name" class="login-input" style="margin-bottom:0;" required placeholder="e.g. Orion Link Bridge">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px;">Sector / Category</label>
+                        <input type="text" name="sector" class="login-input" style="margin-bottom:0;" required placeholder="e.g. Civic Infrastructure">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px;">Technical Specifications</label>
+                        <input type="text" name="spec" class="login-input" style="margin-bottom:0;" required placeholder="e.g. Cable-stayed steel arc">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px;">Completion Year</label>
+                        <input type="text" name="year" class="login-input" style="margin-bottom:0;" required placeholder="e.g. 2026">
+                    </div>
+                    <div style="grid-column: span 2; text-align: right; margin-top: 8px;">
+                        <button type="submit" class="btn">Add Project Record</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- List projects -->
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Project Name</th>
+                            <th>Sector</th>
+                            <th>Technical Specifications</th>
+                            <th>Year</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $projectsList = $db->query("SELECT * FROM projects ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+                    if (empty($projectsList)): ?>
+                        <tr><td colspan="6" class="empty-state"><strong>–</strong>No projects added yet.</td></tr>
+                    <?php else: foreach ($projectsList as $p): ?>
+                        <tr>
+                            <td>#PRJ-<?= $p['id'] ?></td>
+                            <td><strong><?= htmlspecialchars($p['name']) ?></strong></td>
+                            <td><?= htmlspecialchars($p['sector']) ?></td>
+                            <td><?= htmlspecialchars($p['spec']) ?></td>
+                            <td><?= htmlspecialchars($p['year']) ?></td>
+                            <td>
+                                <a href="admin.php?delete_project=<?= $p['id'] ?>" class="map-link" style="background: rgba(239,68,68,.1); color: var(--red);" onclick="return confirm('Are you sure you want to delete this project?');">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ══════ PANEL: FEEDBACK ══════ -->
+        <div id="feedback" class="panel">
+            <div class="panel-title">
+                Client Feedback Desk
+            </div>
+
+            <!-- Add feedback form -->
+            <div style="background: var(--surface); border: 1px solid var(--border); padding: 24px; border-radius: 6px; margin-bottom: 28px;">
+                <h3 style="color: var(--yellow); font-size: 12px; font-family: 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Add New Client Feedback</h3>
+                <form method="POST" action="admin.php" style="display: flex; flex-direction: column; gap: 16px; width: 100%;">
+                    <input type="hidden" name="action" value="add_feedback">
+                    <div style="width: 100%;">
+                        <label style="display: block; font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px;">Quote / Testimonial</label>
+                        <textarea name="quote" class="login-input" style="width: 100%; min-height: 100px; font-family: sans-serif; resize: vertical;" required placeholder="e.g. Jagathi delivered more than structural compliance..."></textarea>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%;">
+                        <div>
+                            <label style="display: block; font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px;">Author Designation</label>
+                            <input type="text" name="author" class="login-input" style="margin-bottom:0;" required placeholder="e.g. Infrastructure Partner">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; letter-spacing: 1px;">Company / Group Name</label>
+                            <input type="text" name="role" class="login-input" style="margin-bottom:0;" required placeholder="e.g. Urban Development Group">
+                        </div>
+                    </div>
+                    <div style="width: 100%; text-align: right; margin-top: 8px;">
+                        <button type="submit" class="btn">Add Feedback Entry</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- List feedbacks -->
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Quote</th>
+                            <th>Author</th>
+                            <th>Role / Company</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $feedbacksList = $db->query("SELECT * FROM feedbacks ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+                    if (empty($feedbacksList)): ?>
+                        <tr><td colspan="5" class="empty-state"><strong>–</strong>No feedback added yet.</td></tr>
+                    <?php else: foreach ($feedbacksList as $f): ?>
+                        <tr>
+                            <td>#FDB-<?= $f['id'] ?></td>
+                            <td style="max-width: 400px; font-style: italic;">"<?= htmlspecialchars($f['quote']) ?>"</td>
+                            <td><strong><?= htmlspecialchars($f['author']) ?></strong></td>
+                            <td><?= htmlspecialchars($f['role']) ?></td>
+                            <td>
+                                <a href="admin.php?delete_feedback=<?= $f['id'] ?>" class="map-link" style="background: rgba(239,68,68,.1); color: var(--red);" onclick="return confirm('Are you sure you want to delete this feedback?');">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <?php endif; // $dbReady ?>
