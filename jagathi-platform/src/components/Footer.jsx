@@ -162,14 +162,53 @@ class InteractiveFooter {
     const w = this.textCanvas.width;
     const h = this.textCanvas.height;
     this.textCtx.clearRect(0, 0, w, h);
-    this.textCtx.font = '900 240px "Basement Grotesque", "Syncopate", sans-serif';
+    this.textCtx.font = '900 288px "Basement Grotesque", "Syncopate", sans-serif';
     if ('letterSpacing' in this.textCtx) {
-      this.textCtx.letterSpacing = '64px';
+      this.textCtx.letterSpacing = '76.8px';
     }
     this.textCtx.fillStyle = '#ffffff';
     this.textCtx.textAlign = 'center';
     this.textCtx.textBaseline = 'middle';
-    this.textCtx.fillText('JAGATHI', w / 2, h / 2 + 25);
+    this.textCtx.fillText('JAGATHI', w / 2 + 38.4, h / 2 + 18);
+    
+    // Draw single border box around JAGATHI matching the preloader style (scaled up by 20%)
+    const boxWidth = 2016;
+    const boxHeight = 372;
+    
+    // Calculate aspect ratio correction to enforce uniform on-screen border thickness
+    const targetOnScreenThickness = 14; 
+    const stretchX = this.width / 2048;
+    const stretchY = this.height / 512;
+    
+    const strokeWidthX = targetOnScreenThickness / (stretchX || 1.0); // For vertical lines
+    const strokeWidthY = targetOnScreenThickness / (stretchY || 1.0); // For horizontal lines
+    
+    this.textCtx.strokeStyle = '#ffffff';
+    
+    // Draw horizontal lines (top and bottom)
+    this.textCtx.lineWidth = strokeWidthY;
+    this.textCtx.beginPath();
+    this.textCtx.moveTo(w / 2 - boxWidth / 2 - strokeWidthX / 2, h / 2 - boxHeight / 2 + 18);
+    this.textCtx.lineTo(w / 2 + boxWidth / 2 + strokeWidthX / 2, h / 2 - boxHeight / 2 + 18);
+    this.textCtx.stroke();
+    
+    this.textCtx.beginPath();
+    this.textCtx.moveTo(w / 2 - boxWidth / 2 - strokeWidthX / 2, h / 2 + boxHeight / 2 + 18);
+    this.textCtx.lineTo(w / 2 + boxWidth / 2 + strokeWidthX / 2, h / 2 + boxHeight / 2 + 18);
+    this.textCtx.stroke();
+    
+    // Draw vertical lines (left and right)
+    this.textCtx.lineWidth = strokeWidthX;
+    this.textCtx.beginPath();
+    this.textCtx.moveTo(w / 2 - boxWidth / 2, h / 2 - boxHeight / 2 + 18 - strokeWidthY / 2);
+    this.textCtx.lineTo(w / 2 - boxWidth / 2, h / 2 + boxHeight / 2 + 18 + strokeWidthY / 2);
+    this.textCtx.stroke();
+    
+    this.textCtx.beginPath();
+    this.textCtx.moveTo(w / 2 + boxWidth / 2, h / 2 - boxHeight / 2 + 18 - strokeWidthY / 2);
+    this.textCtx.lineTo(w / 2 + boxWidth / 2, h / 2 + boxHeight / 2 + 18 + strokeWidthY / 2);
+    this.textCtx.stroke();
+    
     this.textTexture.needsUpdate = true;
   }
 
@@ -494,15 +533,7 @@ export default function Footer() {
 
   return (
     <section className="section-panel" id="interactive-footer">
-      {/* WebGL canvas for interactive text */}
-      <div className="footer-canvas-container" ref={containerRef}>
-        <canvas id="footer-canvas" ref={canvasRef}></canvas>
-      </div>
-
-
-
-      {/* Content overlay */}
-      <div className="footer-overlay">
+      <div className="footer-content-wrapper">
         {/* ── Top: Nav columns ── */}
         <div className="footer-cols">
           <div className="footer-col">
@@ -523,6 +554,11 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* ── Middle: WebGL canvas for interactive text ── */}
+        <div className="footer-canvas-container" ref={containerRef}>
+          <canvas id="footer-canvas" ref={canvasRef}></canvas>
+        </div>
+
         {/* ── Bottom bar ── */}
         <div className="footer-bottom-bar">
           <div className="footer-copy">
@@ -541,7 +577,6 @@ export default function Footer() {
               </a>
             </span>
           </div>
-         
         </div>
       </div>
     </section>

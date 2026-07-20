@@ -51,16 +51,40 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen flex flex-col justify-center items-center text-center px-10 z-10 pointer-events-none">
-      <div className="max-w-4xl flex flex-col items-center">
-        <h1 className="hero-title text-[#1C1C1C] font-extrabold tracking-[0.1em] sm:tracking-[0.22em] text-4xl sm:text-5xl md:text-8xl leading-none uppercase overflow-hidden select-text h-[1.1em] flex items-center justify-center">
+      <div style={{ maxWidth: '890px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <h1 className="hero-title text-[#1C1C1C] font-extrabold text-4xl sm:text-5xl md:text-8xl leading-none uppercase overflow-hidden select-text h-[1.15em] flex items-center justify-center" style={{ letterSpacing: '0.22em' }}>
           <span className="hero-title-reveal inline-block transform translate-y-full will-change-transform">
             JAGATHI
           </span>
         </h1>
-        <h2 className="hero-subtitle text-[#1C1C1C]/80 font-sans font-light tracking-[0.2em] sm:tracking-[0.3em] text-xs sm:text-sm md:text-lg uppercase mt-6 select-text opacity-0">
+        <h2 
+          className="hero-subtitle uppercase select-text opacity-0" 
+          style={{ 
+            fontFamily: '"Outfit", sans-serif', 
+            fontWeight: 300, 
+            fontSize: 'clamp(11px, 1.5vw, 18px)',
+            color: 'rgba(28, 28, 28, 0.8)', 
+            marginTop: '2rem',
+            letterSpacing: '0.45em'
+          }}
+        >
           Built for Legacies
         </h2>
-        <p className="hero-desc text-gray-600 font-sans font-light text-[10px] sm:text-xs md:text-sm mt-6 max-w-xl leading-relaxed select-text opacity-0 px-6">
+        <p 
+          className="hero-desc select-text opacity-0" 
+          style={{ 
+            fontFamily: '"Outfit", sans-serif', 
+            fontWeight: 300, 
+            fontSize: 'clamp(10px, 1.2vw, 14px)',
+            color: '#4a4a4a', 
+            marginTop: '2rem', 
+            maxWidth: '36rem', 
+            paddingLeft: '1.5rem', 
+            paddingRight: '1.5rem', 
+            lineHeight: '1.8',
+            letterSpacing: '0.05em'
+          }}
+        >
           We engineer landmark infrastructure, develop high-yield land, and design flawless, turnkey interior spaces from A to Z.
         </p>
       </div>

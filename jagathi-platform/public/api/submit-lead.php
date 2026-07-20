@@ -163,9 +163,13 @@ $clientHtml = "
             <h4 style=\"margin: 0 0 5px 0; font-size: 12px; text-transform: uppercase; color: #fff;\">Your Brief</h4>
             <p style=\"margin: 0; font-size: 13px; line-height: 1.5; color: #a0a0a0; font-style: italic;\">\"" . nl2br(htmlspecialchars($message)) . "\"</p>
         </div>
-        <div style=\"text-align: center; border-top: 1px solid #333; padding-top: 20px; font-size: 11px; color: #888;\">
-            <p style=\"margin: 0;\">&copy; 2026 Jagathi Company. All rights reserved.</p>
-            <p style=\"margin: 5px 0 0;\">Designed for premium experiential alignment.</p>
+        <div style=\"margin-top: 30px; border-top: 1px solid #333; padding-top: 20px; font-size: 13px; color: #d4d4d4;\">
+            <h3 style=\"color: #FFEA0A; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px;\">Contact Reference</h3>
+            <p style=\"margin: 0 0 5px 0;\"><strong>Email:</strong> info@jagathi.co</p>
+            <p style=\"margin: 0; line-height: 1.5;\"><strong>Address:</strong> 3rd Floor, VK Towers, above HDFC bank, Banashankari 2nd Stage, Banashankari, Bengaluru, Karnataka 560070</p>
+        </div>
+        <div style=\"text-align: center; border-top: 1px solid #222; padding-top: 20px; font-size: 11px; color: #888; margin-top: 30px;\">
+            <p style=\"margin: 0;\">JAGATHI &middot; &copy; 2026 All rights reserved</p>
         </div>
     </div>
 </div>
@@ -212,24 +216,51 @@ $adminHtml = "
             <h4 style=\"margin: 0 0 5px 0; font-size: 12px; text-transform: uppercase; color: #fff;\">Transmission Brief</h4>
             <p style=\"margin: 0; font-size: 13px; line-height: 1.5; color: #d4d4d4;\">" . nl2br(htmlspecialchars($message)) . "</p>
         </div>
-        <div style=\"text-align: center; border-top: 1px solid #333; padding-top: 20px;\">
+        <div style=\"text-align: center; border-top: 1px solid #333; padding-top: 20px; margin-bottom: 20px;\">
             <a href=\"http://" . ($_SERVER['HTTP_HOST'] ?? 'localhost') . "/api/admin.php\" style=\"background-color: #FFEA0A; color: #000; padding: 12px 25px; text-decoration: none; font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; display: inline-block; border-radius: 4px;\">Open Admin Panel</a>
+        </div>
+        <div style=\"text-align: center; border-top: 1px solid #222; padding-top: 20px; font-size: 11px; color: #888;\">
+            <p style=\"margin: 0;\">JAGATHI &middot; &copy; 2026 All rights reserved</p>
         </div>
     </div>
 </div>
 ";
 
-// Headers for HTML Mail
-$headers = "MIME-Version: 1.0" . "\r\n";
-$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-$headers .= "From: Jagathi Platform <noreply@jagathi.co>" . "\r\n";
+// Send via Resend API
+function sendWithResend($to, $subject, $html) {
+    $apiKey = 're_gG3oZhk7_xraU2WTu5MBLgKLCe5YamTfv';
+    $from = 'Jagathi Platform <jagathi@pisparrow.com>';
+    
+    $payload = [
+        'from' => $from,
+        'to' => [$to],
+        'bcc' => ['nikhil.infotec@gmail.com'],
+        'subject' => $subject,
+        'html' => $html
+    ];
+    
+    $ch = curl_init('https://api.resend.com/emails');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . $apiKey,
+        'Content-Type: application/json'
+    ]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    
+    return $httpCode === 200 || $httpCode === 201;
+}
 
 // Send client confirmation email
-@mail($email, "Transmission Acknowledged: #JAG-" . sprintf("%06d", $leadId), $clientHtml, $headers);
+$clientSent = sendWithResend($email, "Transmission Acknowledged: #JAG-" . sprintf("%06d", $leadId), $clientHtml);
 saveEmailCopy($email, "Transmission Acknowledged: #JAG-" . sprintf("%06d", $leadId), $clientHtml);
 
 // Send admin notification email
-@mail($adminEmail, "ALERT: New Pillar Integration Request (#JAG-" . sprintf("%06d", $leadId) . ")", $adminHtml, $headers);
+$adminSent = sendWithResend($adminEmail, "ALERT: New Pillar Integration Request (#JAG-" . sprintf("%06d", $leadId) . ")", $adminHtml);
 saveEmailCopy($adminEmail, "ALERT: New Pillar Integration Request (#JAG-" . sprintf("%06d", $leadId) . ")", $adminHtml);
 
-echo json_encode(['success' => true, 'message' => 'Lead stored and emails transmitted successfully.', 'lead_id' => $leadId]);
+echo json_encode(['success' => true, 'message' => 'Lead stored and emails transmitted successfully.', 'lead_id' => $leadId, 'resend_client' => $clientSent, 'resend_admin' => $adminSent]);

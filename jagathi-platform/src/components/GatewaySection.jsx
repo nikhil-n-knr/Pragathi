@@ -141,11 +141,30 @@ export default function GatewaySection() {
       }}
     >
       {/* ── Section Header ── */}
-      <div className="flex flex-col items-center text-center px-10 max-w-5xl mx-auto w-full mb-6">
-        <span className="rise-target text-[#1C1C1C]/70 font-mono text-xs uppercase tracking-widest block text-center mb-3 font-semibold">
+      <div 
+        className="flex flex-col items-center text-center mx-auto w-full"
+        style={{
+          paddingLeft: '2.5rem',
+          paddingRight: '2.5rem',
+          maxWidth: '1200px',
+          marginBottom: '2.5rem',
+          boxSizing: 'border-box'
+        }}
+      >
+        <span 
+          className="rise-target text-[#1C1C1C]/70 font-mono text-xs uppercase block text-center font-semibold" 
+          style={{ letterSpacing: '0.4em', marginBottom: '1.25rem' }}
+        >
           {'// Gateway Portals'}
         </span>
-        <h2 className="rise-target text-[#1C1C1C] font-black text-4xl md:text-6xl lg:text-7xl uppercase tracking-wider mt-2 text-center w-full leading-none font-basement">
+        <h2 
+          className="rise-target text-[#1C1C1C] font-black uppercase text-center w-full leading-none font-basement" 
+          style={{ 
+            letterSpacing: '0.08em', 
+            fontSize: 'clamp(2.5rem, 5.5vw, 5.5rem)',
+            marginTop: '0.5rem' 
+          }}
+        >
           One Group. Three Disciplines.
         </h2>
       </div>

@@ -40,7 +40,7 @@ export default function ConstructionCTA() {
 
         {/* Centered Button Link */}
         <a
-          href="mailto:hello@jagathi.co"
+          href="mailto:info@jagathi.co"
           className="group inline-flex min-h-16 items-center justify-center gap-3 px-10 text-base font-bold uppercase text-[#121315] bg-[#FFEA0A] hover:bg-white hover:text-[#121315] rounded-none transition-colors duration-300 shadow-xl cursor-pointer"
           style={{
             fontFamily: '"Basement Grotesque", sans-serif',
@@ -49,7 +49,7 @@ export default function ConstructionCTA() {
           }}
           data-interactive
         >
-          <span>hello@jagathi.co</span>
+          <span>info@jagathi.co</span>
           <span style={{ fontSize: '1.25rem' }}>↗</span>
         </a>
 

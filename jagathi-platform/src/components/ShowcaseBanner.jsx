@@ -234,7 +234,10 @@ export default function ShowcaseBanner({ onPlayReel }) {
       {/* ══════════════════════════════════════════
           MIDDLE: Tabs left | Image bleeds right
       ══════════════════════════════════════════ */}
-      <div className="relative z-10 flex flex-col md:flex-row flex-1 items-stretch" style={{ paddingBottom: '5rem' }}>
+      <div 
+        className="relative z-10 flex flex-col md:flex-row flex-1 items-stretch w-full max-w-[1200px] mx-auto" 
+        style={{ paddingBottom: '5rem', paddingLeft: '1.5rem', paddingRight: '1.5rem', boxSizing: 'border-box' }}
+      >
 
         {/* MOBILE ONLY: compact image strip above tabs */}
         <div className="block md:hidden w-full relative overflow-hidden" style={{ height: '220px' }}>
@@ -255,7 +258,7 @@ export default function ShowcaseBanner({ onPlayReel }) {
         {/* LEFT: Accordion tabs */}
         <div
           className="flex-shrink-0 flex flex-col justify-center w-full md:w-auto"
-          style={{ maxWidth: '460px', paddingLeft: 'clamp(1.25rem, 5vw, 6rem)', paddingRight: 'clamp(1rem, 2vw, 2rem)', paddingBottom: '4rem', paddingTop: '1.5rem' }}
+          style={{ maxWidth: '460px', paddingLeft: '0px', paddingRight: '1.5rem', paddingBottom: '4rem', paddingTop: '1.5rem', boxSizing: 'border-box' }}
         >
           {showcaseItems.map(({ index, label, title, subtitle, description }) => {
             const isActive = activeTab === index;
@@ -271,13 +274,16 @@ export default function ShowcaseBanner({ onPlayReel }) {
                   style={{ height: isActive ? '100%' : '0%' }} />
 
                 {/* Header */}
-                <div className="flex items-center gap-5 py-6 pl-14 pr-4">
+                <div className="flex items-center gap-5 py-8 pl-14 pr-4">
                   <span className="font-mono text-sm font-bold tracking-[0.3em] flex-shrink-0 transition-colors duration-300"
                     style={{ color: isActive ? '#FFEA0A' : 'rgba(255,255,255,0.2)' }}>
                     {label}
                   </span>
-                  <h3 className="font-basement text-lg md:text-xl lg:text-2xl xl:text-3xl font-black uppercase tracking-tight leading-tight transition-colors duration-300"
-                    style={{ color: isActive ? '#ffffff' : 'rgba(255,255,255,0.22)' }}>
+                  <h3 className="font-basement text-lg md:text-xl lg:text-2xl xl:text-3xl font-black uppercase leading-tight transition-colors duration-300"
+                    style={{ 
+                      color: isActive ? '#ffffff' : 'rgba(255,255,255,0.22)',
+                      letterSpacing: '0.08em'
+                    }}>
                     {title}
                   </h3>
                 </div>
@@ -286,9 +292,9 @@ export default function ShowcaseBanner({ onPlayReel }) {
                 <div className="overflow-hidden transition-all duration-500 ease-in-out"
                   style={{ display: 'grid', gridTemplateRows: isActive ? '1fr' : '0fr' }}>
                   <div className="overflow-hidden">
-                    <div className="pl-14 pr-4 pb-8 flex flex-col gap-5">
-                      <span className="text-[#FFEA0A] text-base md:text-lg font-semibold tracking-wide">{subtitle}</span>
-                      <p className="text-white/60 text-base md:text-lg leading-relaxed font-light">{description}</p>
+                    <div className="pl-14 pr-4 pb-8 flex flex-col gap-6">
+                      <span className="text-[#FFEA0A] text-base md:text-lg font-semibold" style={{ letterSpacing: '0.05em' }}>{subtitle}</span>
+                      <p className="text-white/60 text-base md:text-lg font-light" style={{ lineHeight: '1.8', letterSpacing: '0.05em' }}>{description}</p>
                       {onPlayReel && (
                         <button onClick={(e) => { e.stopPropagation(); onPlayReel({ title: active.title, tag: active.label, image: active.image, desc: active.description }); }}
                           className="inline-flex items-center gap-2.5 mt-2 w-fit group">

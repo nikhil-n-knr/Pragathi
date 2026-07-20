@@ -174,12 +174,44 @@ export default function Home() {
 
         {/* 6. Featured Media Strip — 2-column Before/After Grid */}
         <section className="relative z-10 w-full overflow-visible flex flex-col items-center" style={{ paddingTop: 'clamp(4rem, 8vw, 10rem)', paddingBottom: 'clamp(5rem, 10vw, 12rem)' }}>
-          <div className="flex flex-col items-center text-center mb-10 md:mb-14 w-full px-10">
-            <span className="text-[#1C1C1C]/50 font-mono text-[10px] uppercase tracking-[0.3em] block text-center mb-3">{"// Featured Work"}</span>
-            <h2 className="text-[#1C1C1C] font-bold text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight text-center w-full leading-none" style={{ fontFamily: '"Outfit", sans-serif', letterSpacing: '0.02em' }}>
+          <div 
+            className="flex flex-col items-center text-center w-full" 
+            style={{
+              paddingLeft: '2.5rem',
+              paddingRight: '2.5rem',
+              marginBottom: '3.5rem',
+              boxSizing: 'border-box'
+            }}
+          >
+            <span 
+              className="text-[#1C1C1C]/50 font-mono text-[10px] uppercase block text-center" 
+              style={{ letterSpacing: '0.4em', marginBottom: '1rem' }}
+            >
+              {"// Featured Work"}
+            </span>
+            <h2 
+              className="text-[#1C1C1C] font-bold uppercase text-center w-full leading-none" 
+              style={{ 
+                fontFamily: '"Outfit", sans-serif', 
+                fontSize: 'clamp(2rem, 4vw, 4rem)',
+                letterSpacing: '0.12em',
+                marginTop: '0.5rem'
+              }}
+            >
               Landmarks of Distinction
             </h2>
-            <p className="text-[#1C1C1C]/60 font-sans font-light text-xs md:text-sm mt-4 max-w-lg text-center leading-relaxed">
+            <p 
+              className="text-[#1C1C1C]/60 text-center"
+              style={{
+                fontFamily: '"Outfit", sans-serif',
+                fontWeight: 300,
+                fontSize: 'clamp(11px, 1.3vw, 15px)',
+                lineHeight: '1.8',
+                letterSpacing: '0.05em',
+                marginTop: '1.25rem',
+                maxWidth: '32rem'
+              }}
+            >
               Four transformations. Every detail engineered, every surface curated, every deadline met.
             </p>
           </div>

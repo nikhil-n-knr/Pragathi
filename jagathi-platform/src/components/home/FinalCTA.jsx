@@ -247,7 +247,7 @@ export default function FinalCTA() {
           className="flex flex-col sm:flex-row gap-4 opacity-0"
         >
           <a
-            href="mailto:build@jagathi.com"
+            href="mailto:info@jagathi.co"
             className="group inline-flex items-center justify-center gap-3 bg-[#FFEA0A] text-[#1a1a1a] px-8 py-4 uppercase text-xs md:text-sm tracking-[0.2em] font-bold hover:bg-white transition-all duration-300"
             data-interactive
             id="finalcta-consult-btn"

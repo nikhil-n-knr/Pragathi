@@ -40,4 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 out.zip
-
+# SQLite Database & Local email copies
+public/api/db/
+public/api/sent_emails/

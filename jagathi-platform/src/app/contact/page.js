@@ -823,7 +823,7 @@ export default function ContactPage() {
             {/* Native Light Theme Google Map Frame */}
             <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 0, overflow: 'hidden' }}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.5831969248483!2d77.57090057478794!3d12.925688587385292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15733f9eb8f1%3A0x20a0f600a33e887c!2sJAGATHI!5e0!3m2!1sen!2sin!4v1721187498424!5m2!1sen!2sin"
+                src="https://maps.google.com/maps?q=VK%20Towers%20above%20HDFC%20bank%20Banashankari%20Bengaluru&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 style={{
                   height: '100%',
                   width: '100%',
@@ -877,16 +877,16 @@ export default function ContactPage() {
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '9px', fontFamily: 'monospace' }}>
                   <span style={{ color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Coordinates</span>
-                  <span style={{ color: '#FFEA0A', fontWeight: 'bold' }}>12.9257° N, 77.5735° E</span>
+                  <span style={{ color: '#FFEA0A', fontWeight: 'bold' }}>12.9248° N, 77.5662° E</span>
                 </div>
                 <div style={{ fontSize: '11px', fontWeight: '350', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', fontFamily: '"Outfit", sans-serif' }}>
-                  4th Block, Jayanagar, Bengaluru, Karnataka 560011, India
+                  3rd Floor, VK Towers, above HDFC bank, Banashankari 2nd Stage, Banashankari, Bengaluru, Karnataka 560070
                 </div>
               </div>
 
               {/* Action Button */}
               <a
-                href="https://maps.app.goo.gl/bGfvdfhjzKPAKJEh6"
+                href="https://www.google.com/maps/search/?api=1&query=VK+Towers+Banashankari+Bengaluru"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
