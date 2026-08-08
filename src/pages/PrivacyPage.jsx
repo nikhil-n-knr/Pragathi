@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Lock, Database, ShieldCheck, Eye } from 'lucide-react';
+import { ArrowLeft, Lock, Database, ShieldCheck, Eye, FileText, CheckCircle2, Server } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -122,8 +122,8 @@ export default function PrivacyPage() {
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
-          {/* Faded Floating 3D Quantum Privacy Shield Artwork (opacity 0.35 for crisp text visibility) */}
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-35">
+          {/* Clean 3D Quantum Privacy Shield (True Transparent PNG) */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-40">
             <div className="animate-soft-float flex items-center justify-center">
               <div
                 ref={bouquetRef}
@@ -156,7 +156,7 @@ export default function PrivacyPage() {
             </Link>
           </div>
 
-          {/* 4 Pinned Beats with High-Contrast Brightened Text */}
+          {/* 4 Pinned Beats with High-Contrast Text */}
           <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-6">
             {beats.map((beat, idx) => (
               <div
@@ -206,17 +206,18 @@ export default function PrivacyPage() {
           <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
             <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-              OFFICIAL PRIVACY POLICY
+              OFFICIAL PRIVACY POLICY & DATA GOVERNANCE
             </span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
-            Data Governance & Protection
+            Data Governance & Privacy Framework
           </h2>
           <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mt-2">
-            Πsparrow Software Solutions — Production Data Governance
+            Πsparrow Software Solutions — Production Data Governance & Sovereignty
           </p>
         </div>
 
+        {/* Section 1 */}
         <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
           <div className="flex items-center space-x-3 text-tealbrand-600">
             <Lock className="w-8 h-8 flex-shrink-0" />
@@ -227,8 +228,19 @@ export default function PrivacyPage() {
           <p className="text-slate-600 text-sm leading-relaxed">
             Πsparrow Software Solutions ("Πsparrow", "We", "Our") operates under a Zero-Trust Cryptographic Model. All customer datasets, API payloads, workforce records in HRMS, CRM lead pipelines, CMS content assets, LMS progress metrics, and PlaySchool monitoring feeds are protected using AES-256 GCM authenticated encryption at rest and TLS 1.3 in transit.
           </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 font-mono text-xs text-slate-700">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
+              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
+              <span>Dedicated Hardware Security Modules (HSM) for Master Keys</span>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
+              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
+              <span>Automated Key Rotation & Ephemeral Session Tokens</span>
+            </div>
+          </div>
         </div>
 
+        {/* Section 2 */}
         <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
           <div className="flex items-center space-x-3 text-emerald-600">
             <Database className="w-8 h-8 flex-shrink-0" />
@@ -238,6 +250,69 @@ export default function PrivacyPage() {
           </div>
           <p className="text-slate-600 text-sm leading-relaxed">
             When clients utilize our AI Automation & Custom Model Fine-Tuning services, all training datasets, prompt histories, and fine-tuned model weights remain strictly isolated inside dedicated tenant containers.
+          </p>
+          <ul className="space-y-2 text-xs font-mono text-slate-600 pt-2">
+            <li className="flex items-center space-x-2">
+              <span className="text-tealbrand-600 font-bold">✔</span>
+              <span>NO CLIENT DATA IS EVER USED TO TRAIN PUBLIC BASE MODELS.</span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="text-tealbrand-600 font-bold">✔</span>
+              <span>TENANT MODEL WEIGHTS ARE ENCRYPTED WITH CLIENT-CONTROLLED KEYS.</span>
+            </li>
+            <li className="flex items-center space-x-2">
+              <span className="text-tealbrand-600 font-bold">✔</span>
+              <span>EPHEMERAL AGENTIC MEMORY ERASURE UPON SWARM TASK COMPLETION.</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Section 3 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-cyanbrand-600">
+            <ShieldCheck className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              3. Global Regulatory Compliance (GDPR, CCPA)
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Πsparrow complies with global privacy legislation, including the General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA). Enterprise administrators maintain complete sovereignty over their data lifecycle:
+          </p>
+          <div className="space-y-3 pt-2 font-mono text-xs text-slate-700">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <strong className="text-slate-900 block mb-1">RIGHT TO ERASURE (RIGHT TO BE FORGOTTEN):</strong>
+              Execute automated 1-click tenant purge scripts to permanently erase historical audit ledgers and database rows within 24 hours.
+            </div>
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+              <strong className="text-slate-900 block mb-1">DATA PORTABILITY:</strong>
+              Export complete tenant records, schema definitions, and model parameters in structured JSON or CSV formats at any time.
+            </div>
+          </div>
+        </div>
+
+        {/* Section 4 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-tealbrand-600">
+            <Eye className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              4. Cookies & Essential Telemetry
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            We use minimal bioluminescent telemetry cookies solely to maintain session security, balance edge cluster loads, and optimize render performance. You can manage or disable optional cookies using our floating cookie bar at any time.
+          </p>
+        </div>
+
+        {/* Section 5 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-emerald-600">
+            <Server className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              5. Data Retention & Automated Purge Policy
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Operational logs and agentic execution states are retained only for the duration specified in your tenant agreement. Upon subscription termination or tenant de-provisioning, all database tables, vector embeddings, and backup snapshots are automatically destroyed using cryptographic zeroing protocols within 30 calendar days.
           </p>
         </div>
       </section>
