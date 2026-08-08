@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Lenis from 'lenis';
+
 import Navbar from './components/Navbar';
 import ParticleBackground from './components/ParticleBackground';
 import HeroCinematic from './components/HeroCinematic';
@@ -12,12 +14,37 @@ import TelemetryBoard from './components/TelemetryBoard';
 import TeamSection from './components/TeamSection';
 import ContactCanal from './components/ContactCanal';
 import Footer from './components/Footer';
-import LegalModals from './components/LegalModals';
 import CookieBanner from './components/CookieBanner';
 
-export default function App() {
-  const [activeLegalModal, setActiveLegalModal] = useState(null);
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
+import SecurityPage from './pages/SecurityPage';
 
+function HomePage() {
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative gallery-grid-pattern flex flex-col">
+      <ParticleBackground />
+      <Navbar />
+
+      <main className="relative z-10 flex-grow">
+        <HeroCinematic />
+        <AboutSection />
+        <ShowcaseGrid />
+        <CraftParallaxBanner />
+        <CapabilitiesGrid />
+        <ManifestoTypography />
+        <TelemetryBoard />
+        <TeamSection />
+        <ContactCanal />
+      </main>
+
+      <Footer />
+      <CookieBanner />
+    </div>
+  );
+}
+
+export default function App() {
   // Initialize Lenis Smooth Scroll
   useEffect(() => {
     const lenis = new Lenis({
@@ -40,56 +67,11 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative gallery-grid-pattern flex flex-col">
-      {/* Global Particle Field */}
-      <ParticleBackground />
-
-      {/* Navigation Header */}
-      <Navbar />
-
-      {/* Main Content Sections */}
-      <main className="relative z-10 flex-grow">
-        {/* 1. Cinematic Pinned Scroll Hero */}
-        <HeroCinematic />
-
-        {/* 2. Who We Are / About Section */}
-        <AboutSection />
-
-        {/* 3. System Registry / Flagship Platforms Showcase */}
-        <ShowcaseGrid />
-
-        {/* 4. Craft Parallax Banner */}
-        <CraftParallaxBanner />
-
-        {/* 5. Service Directory / Core Competencies */}
-        <CapabilitiesGrid />
-
-        {/* 6. Typography Manifesto */}
-        <ManifestoTypography />
-
-        {/* 7. Telemetry & Scale Board */}
-        <TelemetryBoard />
-
-        {/* 8. Partnership Registry / Core Flock */}
-        <TeamSection />
-
-        {/* 9. Communication Canal / Contact Form */}
-        <ContactCanal />
-      </main>
-
-      {/* Footer */}
-      <Footer onOpenLegal={(type) => setActiveLegalModal(type)} />
-
-      {/* Interactive Legal & Privacy Modals */}
-      <LegalModals
-        activeModal={activeLegalModal}
-        onClose={() => setActiveLegalModal(null)}
-      />
-
-      {/* Floating Bioluminescent Cookie Banner */}
-      <CookieBanner
-        onOpenPrivacy={() => setActiveLegalModal('privacy')}
-      />
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/terms" element={<TermsPage />} />
+      <Route path="/security" element={<SecurityPage />} />
+    </Routes>
   );
 }
