@@ -17,58 +17,58 @@ export default function HeroCinematic() {
 
   const beatsData = [
     {
-      version: 'VERSION NO. 07 // BIO-MIMETIC PLATFORM',
-      title: 'Quiet Nodes,',
-      subtitle: 'Waiting Data',
-      description: 'Algorithms unfold as raw data moves through the neural bio-circuit network.',
+      version: 'ENGINEERING PLATFORMS // V2.0',
+      title: 'Innovative Software,',
+      subtitle: 'Naturally.',
+      description: 'We engineer secure, boxy, high-contrast digital architectures designed for infinite growth.',
       s: 0.0,
       e: 0.1,
     },
     {
-      version: 'THE INITIALIZATION',
-      title: 'The First Boot',
+      version: 'THE DESIGN PHILOSOPHY',
+      title: 'Pi (Π) & Sparrow',
       subtitle: '',
-      description: 'Co-designing physical circuit architectures with self-balancing software swarms.',
+      description: 'Combining mathematical precision with agility, diligence, and system integrity.',
       s: 0.11,
       e: 0.22,
     },
     {
-      version: 'HARDWARE & EDGE SWARMS',
-      title: 'Connected Swarms',
-      subtitle: '',
-      description: 'Fifty-four autonomous nodes, architected to scale from every angle.',
+      version: 'SYSTEM REGISTRY',
+      title: 'Flagship Platforms',
+      subtitle: 'HRMS, CRM, CMS, LMS, Safety & Utilities',
+      description: 'Ready-to-deploy, high-contrast visual architectures tailored for modern enterprise.',
       s: 0.23,
       e: 0.33,
     },
     {
-      version: 'HARDWARE COMPILER',
-      title: 'A Full Cluster',
+      version: 'PRECISION COMPUTING',
+      title: 'Built Twig By Twig',
       subtitle: '',
-      description: 'Industrial PCB microservices integrated into zero-latency edge layers.',
+      description: 'Structured software built with meticulous care and mathematical exactness.',
       s: 0.34,
       e: 0.47,
     },
     {
-      version: 'TELEMETRY STREAM',
-      title: 'Data Lift',
-      subtitle: 'Carried by Cloud',
-      description: 'High-frequency telemetry carried naturally through light-speed streams.',
+      version: 'SERVICE DIRECTORY',
+      title: 'Core Competencies',
+      subtitle: 'Web Apps, Custom Architectures & Auditing Tools',
+      description: 'Diligence and technical perfection in every line of code.',
       s: 0.48,
       e: 0.64,
     },
     {
-      version: 'DEPLOYMENT PIPELINE',
-      title: 'Into the Stream',
+      version: 'COMMUNICATION CANAL',
+      title: 'Initialize A Project',
       subtitle: '',
-      description: 'Turnkey hardware and software execution built for modern industry.',
+      description: 'Let us construct your structured platform solution.',
       s: 0.65,
       e: 0.81,
     },
     {
-      version: 'DEPLOYED LIVE',
+      version: 'ΠSPARROW LIVE',
       title: 'ΠSPARROW PLATFORM',
       subtitle: '',
-      description: 'System active — explore the products and capabilities below.',
+      description: 'System active — explore our flagship platforms and competencies below.',
       s: 0.82,
       e: 1.0,
     },
@@ -153,7 +153,7 @@ export default function HeroCinematic() {
     };
   }, []);
 
-  // 2. Direct DOM RAF Loop for Silky 60/120 FPS Performance (Zero React State Re-renders)
+  // 2. Direct DOM RAF Loop for Silky 60/120 FPS Performance
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;

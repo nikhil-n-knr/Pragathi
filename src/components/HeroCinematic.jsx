@@ -1,75 +1,79 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Compass, Sparkles } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { ChevronDown } from 'lucide-react';
 
 export default function HeroCinematic() {
   const sectionRef = useRef(null);
   const canvasRef = useRef(null);
-
-  const [progress, setProgress] = useState(0);
-  const [activeBeatIndex, setActiveBeatIndex] = useState(0);
+  const bouquetRef = useRef(null);
+  const gradeWashRef = useRef(null);
+  const lbTopRef = useRef(null);
+  const lbBotRef = useRef(null);
+  const tlFillRef = useRef(null);
+  const timeLabelRef = useRef(null);
+  const beatElsRef = useRef([]);
+  const dotElsRef = useRef([]);
 
   const DUR = 12.75;
 
-  const beats = [
+  const beatsData = [
     {
-      version: 'VERSION NO. 07 // BIO-MIMETIC PLATFORM',
-      h1: 'Quiet Nodes,',
-      h1Sub: 'Waiting Data',
-      p: 'Algorithms unfold as raw data moves through the neural bio-circuit network.',
+      version: 'ENGINEERING PLATFORMS // V2.0',
+      title: 'Innovative Software,',
+      subtitle: 'Naturally.',
+      description: 'We engineer secure, boxy, high-contrast digital architectures designed for infinite growth.',
       s: 0.0,
       e: 0.1,
     },
     {
-      version: 'THE INITIALIZATION',
-      h1: 'The First Boot',
-      h1Sub: '',
-      p: 'Co-designing physical circuit architectures with self-balancing software swarms.',
+      version: 'THE DESIGN PHILOSOPHY',
+      title: 'Pi (Π) & Sparrow',
+      subtitle: '',
+      description: 'Combining mathematical precision with agility, diligence, and system integrity.',
       s: 0.11,
       e: 0.22,
     },
     {
-      version: 'HARDWARE & EDGE SWARMS',
-      h1: 'Connected Swarms',
-      h1Sub: '',
-      p: 'Fifty-four autonomous nodes, architected to scale from every angle.',
+      version: 'SYSTEM REGISTRY',
+      title: 'Flagship Platforms',
+      subtitle: 'HRMS, CRM, CMS, LMS, Safety & Utilities',
+      description: 'Ready-to-deploy, high-contrast visual architectures tailored for modern enterprise.',
       s: 0.23,
       e: 0.33,
     },
     {
-      version: 'HARDWARE COMPILER',
-      h1: 'A Full Cluster',
-      h1Sub: '',
-      p: 'Industrial PCB microservices integrated into zero-latency edge layers.',
+      version: 'PRECISION COMPUTING',
+      title: 'Built Twig By Twig',
+      subtitle: '',
+      description: 'Structured software built with meticulous care and mathematical exactness.',
       s: 0.34,
       e: 0.47,
     },
     {
-      version: 'TELEMETRY STREAM',
-      h1: 'Data Lift',
-      h1Sub: 'Carried by Cloud',
-      p: 'High-frequency telemetry carried naturally through light-speed streams.',
+      version: 'SERVICE DIRECTORY',
+      title: 'Core Competencies',
+      subtitle: 'Web Apps, Custom Architectures & Auditing Tools',
+      description: 'Diligence and technical perfection in every line of code.',
       s: 0.48,
       e: 0.64,
     },
     {
-      version: 'DEPLOYMENT PIPELINE',
-      h1: 'Into the Stream',
-      h1Sub: '',
-      p: 'Turnkey hardware and software execution built for modern industry.',
+      version: 'COMMUNICATION CANAL',
+      title: 'Initialize A Project',
+      subtitle: '',
+      description: 'Let us construct your structured platform solution.',
       s: 0.65,
       e: 0.81,
     },
     {
-      version: 'DEPLOYED LIVE',
-      h1: 'ΠSPARROW PLATFORM',
-      h1Sub: '',
-      p: 'System active — explore the products and capabilities below.',
+      version: 'ΠSPARROW LIVE',
+      title: 'ΠSPARROW PLATFORM',
+      subtitle: '',
+      description: 'System active — explore our flagship platforms and competencies below.',
       s: 0.82,
       e: 1.0,
     },
   ];
 
-  // Helper for smooth beat opacity calculation
   const calculateBeatOpacity = (p, s, e) => {
     const span = e - s;
     const fade = span * 0.3;
@@ -79,7 +83,7 @@ export default function HeroCinematic() {
     return 1;
   };
 
-  // 1. Canvas Petal Field (Biomorphic Floating Spores)
+  // 1. Canvas Nature Particles (WebGL / 2D Petals)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -96,7 +100,7 @@ export default function HeroCinematic() {
     window.addEventListener('resize', onResize);
 
     const petals = [];
-    for (let i = 0; i < 75; i++) {
+    for (let i = 0; i < 70; i++) {
       petals.push({
         x: Math.random(),
         y: Math.random(),
@@ -122,13 +126,13 @@ export default function HeroCinematic() {
         const g = ctx.createRadialGradient(px, py, 0, px, py, size);
 
         if (p.type === 0) {
-          g.addColorStop(0, 'rgba(13, 148, 136, 0.85)'); // Teal
+          g.addColorStop(0, 'rgba(13, 148, 136, 0.85)');
           g.addColorStop(1, 'rgba(13, 148, 136, 0)');
         } else if (p.type === 1) {
-          g.addColorStop(0, 'rgba(16, 185, 129, 0.85)'); // Emerald
+          g.addColorStop(0, 'rgba(16, 185, 129, 0.85)');
           g.addColorStop(1, 'rgba(16, 185, 129, 0)');
         } else {
-          g.addColorStop(0, 'rgba(6, 182, 212, 0.85)'); // Cyan
+          g.addColorStop(0, 'rgba(6, 182, 212, 0.85)');
           g.addColorStop(1, 'rgba(6, 182, 212, 0)');
         }
 
@@ -149,29 +153,69 @@ export default function HeroCinematic() {
     };
   }, []);
 
-  // 2. Smooth RAF Interpolation for 60FPS Scroll Animation
+  // 2. Direct DOM RAF Loop for Silky 60/120 FPS Performance
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     let rawP = 0;
     let renderP = 0;
-    let animReq;
+    let animId;
 
-    const loop = () => {
-      renderP += (rawP - renderP) * 0.1;
-      setProgress(renderP);
+    const rafLoop = () => {
+      renderP += (rawP - renderP) * 0.08;
+      const p = renderP;
 
-      // Find active beat
-      const currentBeatIdx = beats.findIndex((b) => renderP >= b.s && renderP <= b.e);
-      if (currentBeatIdx !== -1) {
-        setActiveBeatIndex(currentBeatIdx);
+      // 1. Bouquet Visual Transform
+      if (bouquetRef.current) {
+        const scale = 1 + p * 0.55 - Math.max(0, p - 0.48) * 0.35;
+        const roll = p * 4 - Math.max(0, p - 0.65) * 3;
+        const fwd = p * -40;
+        bouquetRef.current.style.transform = `scale(${scale.toFixed(4)}) rotate(${roll.toFixed(2)}deg) translateY(${fwd.toFixed(1)}px)`;
       }
 
-      animReq = requestAnimationFrame(loop);
+      // 2. Ambient Grade Wash Opacity
+      if (gradeWashRef.current) {
+        const op = 0.5 + Math.sin(p * Math.PI) * 0.4;
+        gradeWashRef.current.style.opacity = op.toFixed(3);
+      }
+
+      // 3. Letterbox Bars Height
+      let lb = 0;
+      if (p < 0.06) lb = (p / 0.06) * 6;
+      else if (p > 0.92) lb = 6 * (1 - (p - 0.92) / 0.08);
+      else lb = 6;
+
+      if (lbTopRef.current) lbTopRef.current.style.height = `${lb.toFixed(2)}vh`;
+      if (lbBotRef.current) lbBotRef.current.style.height = `${lb.toFixed(2)}vh`;
+
+      // 4. Timeline Progress & Label
+      if (tlFillRef.current) tlFillRef.current.style.width = `${(p * 100).toFixed(2)}%`;
+      if (timeLabelRef.current) timeLabelRef.current.textContent = `${(p * DUR).toFixed(2)}s`;
+
+      // 5. Beats Copy Opacity & Translates
+      beatsData.forEach((b, idx) => {
+        const o = calculateBeatOpacity(p, b.s, b.e);
+        const el = beatElsRef.current[idx];
+        const dot = dotElsRef.current[idx];
+
+        if (el) {
+          el.style.opacity = o.toFixed(3);
+          el.style.transform = `translateY(${((1 - o) * 20).toFixed(1)}px)`;
+          el.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
+        }
+
+        if (dot) {
+          const isActive = p >= b.s && p <= b.e;
+          dot.style.backgroundColor = isActive ? '#0d9488' : '#cbd5e1';
+          dot.style.transform = isActive ? 'scale(1.4)' : 'scale(1)';
+        }
+      });
+
+      animId = requestAnimationFrame(rafLoop);
     };
 
-    animReq = requestAnimationFrame(loop);
+    animId = requestAnimationFrame(rafLoop);
 
     const onScroll = () => {
       const rect = section.getBoundingClientRect();
@@ -185,62 +229,54 @@ export default function HeroCinematic() {
 
     return () => {
       window.removeEventListener('scroll', onScroll);
-      cancelAnimationFrame(animReq);
+      cancelAnimationFrame(animId);
     };
   }, []);
 
   const jumpToBeat = (index) => {
     const section = sectionRef.current;
     if (!section) return;
-    const b = beats[index];
+    const b = beatsData[index];
     const mid = (b.s + b.e) / 2;
     const travel = section.offsetHeight - window.innerHeight;
     const targetScroll = section.offsetTop + mid * travel;
     window.scrollTo({ top: targetScroll, behavior: 'smooth' });
   };
 
-  // Compute cinematic transforms based on render progress
-  const bouquetScale = 1 + progress * 0.55 - Math.max(0, progress - 0.48) * 0.35;
-  const bouquetRoll = progress * 4 - Math.max(0, progress - 0.65) * 3;
-  const bouquetFwd = progress * -40;
-
-  // Letterbox height calculation (0 to 7vh)
-  let lbHeight = 0;
-  if (progress < 0.06) lbHeight = (progress / 0.06) * 6;
-  else if (progress > 0.92) lbHeight = 6 * (1 - (progress - 0.92) / 0.08);
-  else lbHeight = 6;
-
   return (
     <section ref={sectionRef} id="cinematic" className="relative" style={{ height: '820vh' }}>
-      {/* Sticky Stage Container */}
+      {/* Sticky Pinned Stage */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50">
-        {/* Canvas Petal Layer */}
+        {/* Canvas Particle Field */}
         <canvas
           ref={canvasRef}
           className="absolute inset-0 w-full h-full z-10 pointer-events-none opacity-80"
         />
 
-        {/* Dynamic Letterbox Bars (Top & Bottom) */}
+        {/* Dynamic Letterbox Bars */}
         <div
-          className="absolute top-0 left-0 right-0 bg-slate-950 z-30 transition-all duration-75"
-          style={{ height: `${lbHeight}vh` }}
+          ref={lbTopRef}
+          className="absolute top-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none"
+          style={{ height: '0vh', willChange: 'height' }}
         />
         <div
-          className="absolute bottom-0 left-0 right-0 bg-slate-950 z-30 transition-all duration-75"
-          style={{ height: `${lbHeight}vh` }}
+          ref={lbBotRef}
+          className="absolute bottom-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none"
+          style={{ height: '0vh', willChange: 'height' }}
         />
 
-        {/* Ambient Radial Color Wash */}
+        {/* Ambient Color Wash */}
         <div
-          className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-300"
+          ref={gradeWashRef}
+          className="absolute inset-0 z-10 pointer-events-none"
           style={{
             background:
               'radial-gradient(circle at 50% 45%, rgba(204, 251, 241, 0.45), rgba(248, 250, 252, 0.85) 75%)',
-            opacity: 0.6 + Math.sin(progress * Math.PI) * 0.4,
+            willChange: 'opacity',
           }}
         />
 
-        {/* Corner Brackets Framing */}
+        {/* Precision Corner Brackets */}
         <div className="absolute inset-8 md:inset-12 z-30 pointer-events-none">
           <span className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-tealbrand-600/50 rounded-tl-sm"></span>
           <span className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-tealbrand-600/50 rounded-tr-sm"></span>
@@ -248,97 +284,89 @@ export default function HeroCinematic() {
           <span className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-tealbrand-600/50 rounded-br-sm"></span>
         </div>
 
-        {/* Central Floating Visual Card & Floating 3D Girl / Asset */}
+        {/* Central 3D Floating Visual Card */}
         <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
           <div
-            className="relative flex items-center justify-center transition-transform duration-100 ease-linear"
+            ref={bouquetRef}
+            className="z-40 relative shadow-2xl rounded-3xl overflow-hidden border border-tealbrand-500/20 bg-white/40 backdrop-blur-md"
             style={{
-              transform: `scale(${bouquetScale}) rotate(${bouquetRoll}deg) translateY(${bouquetFwd}px)`,
+              width: 'min(58vw, 42rem)',
+              aspectRatio: '16 / 11',
+              backgroundImage: `url("https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/d0f628cf-26bf-473d-81b9-50e422c51521_3840w.png")`,
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center center',
+              willChange: 'transform',
             }}
-          >
-            {/* Soft Ambient Aura behind floating asset */}
-            <div className="absolute w-[420px] h-[420px] rounded-full bg-tealbrand-400/20 blur-3xl animate-pulse-slow pointer-events-none" />
-
-            {/* 3D Floating Hero Image Asset (The Floating Visual from Reference) */}
-            <div
-              className="z-40 relative shadow-2xl rounded-3xl overflow-hidden border border-tealbrand-500/20 bg-white/40 backdrop-blur-md"
-              style={{
-                width: 'min(58vw, 42rem)',
-                aspectRatio: '16 / 11',
-                backgroundImage: `url("https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/d0f628cf-26bf-473d-81b9-50e422c51521_3840w.png")`,
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center center',
-              }}
-            />
-          </div>
+          />
         </div>
 
-        {/* Multi-Beat Copy Beat Layer */}
+        {/* Copy Beats Layer */}
         <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-6">
-          {beats.map((beat, idx) => {
-            const op = calculateBeatOpacity(progress, beat.s, beat.e);
-            return (
-              <div
-                key={idx}
-                className="absolute flex flex-col items-center text-center max-w-3xl px-4 transition-all duration-300"
-                style={{
-                  opacity: op.toFixed(3),
-                  transform: `translateY(${(1 - op) * 24}px)`,
-                  pointerEvents: op > 0.5 ? 'auto' : 'none',
-                }}
-              >
-                <p className="font-mono text-xs uppercase tracking-[0.35em] text-tealbrand-700 font-bold mb-3">
-                  {beat.version}
-                </p>
+          {beatsData.map((beat, idx) => (
+            <div
+              key={idx}
+              ref={(el) => (beatElsRef.current[idx] = el)}
+              className="absolute flex flex-col items-center text-center max-w-3xl px-4"
+              style={{ opacity: 0, willChange: 'transform, opacity' }}
+            >
+              <p className="font-mono text-xs uppercase tracking-[0.35em] text-tealbrand-700 font-bold mb-3">
+                {beat.version}
+              </p>
 
-                <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4 drop-shadow-sm">
-                  {beat.h1}{' '}
-                  {beat.h1Sub && (
-                    <span className="block text-tealbrand-600 font-light">{beat.h1Sub}</span>
-                  )}
-                </h1>
-
-                {beat.p && (
-                  <p className="text-sm md:text-base font-mono text-slate-600 max-w-xl mx-auto leading-relaxed uppercase tracking-wider">
-                    {beat.p}
-                  </p>
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4 drop-shadow-sm">
+                {beat.title}{' '}
+                {beat.subtitle && (
+                  <span className="block text-tealbrand-600 font-light">{beat.subtitle}</span>
                 )}
-              </div>
-            );
-          })}
+              </h1>
+
+              {beat.description && (
+                <p className="text-sm md:text-base font-mono text-slate-600 max-w-xl mx-auto leading-relaxed uppercase tracking-wider">
+                  {beat.description}
+                </p>
+              )}
+            </div>
+          ))}
         </div>
 
-        {/* Timeline HUD Track (Bottom-Left) */}
+        {/* Timeline HUD Progress Bar */}
         <div className="absolute left-6 md:left-12 bottom-8 z-40 flex items-center space-x-4 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
           <div className="w-32 md:w-44 h-1.5 bg-slate-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-tealbrand-500 via-emerald-500 to-cyanbrand-500 transition-all duration-75"
-              style={{ width: `${progress * 100}%` }}
+              ref={tlFillRef}
+              className="h-full bg-gradient-to-r from-tealbrand-500 via-emerald-500 to-cyanbrand-500"
+              style={{ width: '0%', willChange: 'width' }}
             />
           </div>
-          <span className="font-mono text-xs font-bold text-slate-800 tabular-nums">
-            {(progress * DUR).toFixed(2)}s
+          <span
+            ref={timeLabelRef}
+            className="font-mono text-xs font-bold text-slate-800 tabular-nums"
+          >
+            0.00s
           </span>
         </div>
 
-        {/* Interactive Beat Dots (Bottom-Right) */}
+        {/* Interactive Beat Dots */}
         <div className="absolute right-6 md:right-12 bottom-8 z-40 flex items-center space-x-2 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
-          {beats.map((b, idx) => {
-            const isActive = progress >= b.s && progress <= b.e;
-            return (
-              <button
-                key={idx}
-                onClick={() => jumpToBeat(idx)}
-                title={`Jump to Beat ${idx + 1}`}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  isActive
-                    ? 'bg-tealbrand-600 scale-150 ring-2 ring-tealbrand-500/40'
-                    : 'bg-slate-300 hover:bg-tealbrand-400'
-                }`}
-              />
-            );
-          })}
+          {beatsData.map((_, idx) => (
+            <button
+              key={idx}
+              ref={(el) => (dotElsRef.current[idx] = el)}
+              onClick={() => jumpToBeat(idx)}
+              title={`Jump to Beat ${idx + 1}`}
+              className="w-2.5 h-2.5 rounded-full bg-slate-300 transition-all duration-200"
+              style={{ willChange: 'transform, background-color' }}
+            />
+          ))}
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 hidden md:flex flex-col items-center text-slate-400 animate-bounce">
+          <span className="font-mono text-[9px] uppercase tracking-widest mb-1 text-slate-500">
+            SCROLL TO EXPLORE
+          </span>
+          <ChevronDown className="w-4 h-4 text-tealbrand-600" />
         </div>
       </div>
     </section>

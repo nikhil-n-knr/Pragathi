@@ -3,6 +3,7 @@ import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import ParticleBackground from './components/ParticleBackground';
 import HeroCinematic from './components/HeroCinematic';
+import AboutSection from './components/AboutSection';
 import ShowcaseGrid from './components/ShowcaseGrid';
 import CraftParallaxBanner from './components/CraftParallaxBanner';
 import CapabilitiesGrid from './components/CapabilitiesGrid';
@@ -36,7 +37,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative gallery-grid-pattern">
-      {/* Interactive Global Particle Canvas */}
+      {/* Global Particle Field */}
       <ParticleBackground />
 
       {/* Navigation Header */}
@@ -47,25 +48,28 @@ export default function App() {
         {/* 1. Cinematic Pinned Scroll Hero */}
         <HeroCinematic />
 
-        {/* 2. Showcase Grid */}
+        {/* 2. Who We Are / About Section */}
+        <AboutSection />
+
+        {/* 3. System Registry / Flagship Platforms Showcase */}
         <ShowcaseGrid />
 
-        {/* 3. Craft Parallax Banner */}
+        {/* 4. Craft Parallax Banner */}
         <CraftParallaxBanner />
 
-        {/* 4. Capabilities Grid */}
+        {/* 5. Service Directory / Core Competencies */}
         <CapabilitiesGrid />
 
-        {/* 5. Typography Manifesto */}
+        {/* 6. Typography Manifesto */}
         <ManifestoTypography />
 
-        {/* 6. Telemetry & Scale Board */}
+        {/* 7. Telemetry & Scale Board */}
         <TelemetryBoard />
 
-        {/* 7. Core Flock Team Section */}
+        {/* 8. Partnership Registry / Core Flock */}
         <TeamSection />
 
-        {/* 8. Contact & Project Form */}
+        {/* 9. Communication Canal / Contact Form */}
         <ContactCanal />
       </main>
 
