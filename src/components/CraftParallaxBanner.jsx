@@ -8,22 +8,41 @@ gsap.registerPlugin(ScrollTrigger);
 export default function CraftParallaxBanner() {
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
+  const sparrowRef = useRef(null);
 
-  // 1:1 GSAP background scroll parallax matching Ref/generated-page.html line 698
+  // 1:1 GSAP Parallax matching Ref/generated-page.html
   useEffect(() => {
-    if (!sectionRef.current || !bgRef.current) return;
+    if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.to(bgRef.current, {
-        yPercent: 20,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      });
+      if (bgRef.current) {
+        gsap.to(bgRef.current, {
+          yPercent: 20,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      }
+
+      // Parallax floating cybernetic sparrow
+      if (sparrowRef.current) {
+        gsap.to(sparrowRef.current, {
+          yPercent: -30,
+          xPercent: 15,
+          rotation: 6,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -36,7 +55,7 @@ export default function CraftParallaxBanner() {
       className="relative overflow-hidden flex items-center shadow-inner"
       style={{ height: '70vh' }}
     >
-      {/* Background Parallax Image Layer matching Ref/generated-page.html line 267 */}
+      {/* Background Layer */}
       <div
         ref={bgRef}
         id="craftBg"
@@ -47,10 +66,30 @@ export default function CraftParallaxBanner() {
         }}
       />
 
-      {/* Light Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-tealbrand-950/85 via-tealbrand-900/75 to-emerald-950/85" />
+      {/* Radial Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-tealbrand-950/90 via-tealbrand-900/80 to-emerald-950/90" />
 
-      <div className="mx-auto px-6 max-w-[77.5rem] relative z-10">
+      {/* Floating 3D Cybernetic Sparrow Artwork */}
+      <div
+        ref={sparrowRef}
+        className="absolute right-12 md:right-32 top-1/2 -translate-y-1/2 w-80 md:w-96 h-80 md:h-96 pointer-events-none opacity-90 z-10 hidden sm:block"
+        style={{ willChange: 'transform' }}
+      >
+        <img
+          src="/images/sparrow_cybernetic.png"
+          alt="3D Cybernetic Sparrow"
+          className="w-full h-full object-contain filter drop-shadow-[0_20px_50px_rgba(13,148,136,0.6)] animate-soft-float"
+        />
+      </div>
+
+      <div className="mx-auto px-6 max-w-[77.5rem] relative z-20">
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 mb-4 backdrop-blur-md">
+          <img src="/logo.png" alt="Πsparrow Mark" className="w-3.5 h-3.5 object-contain" />
+          <span className="font-mono text-[10px] font-bold text-tealbrand-300 uppercase tracking-widest">
+            BIO-MIMETIC PRECISION
+          </span>
+        </div>
+
         <div className="reveal-line overflow-hidden">
           <h2
             className="tracking-tight text-white font-medium max-w-2xl leading-[1.1]"

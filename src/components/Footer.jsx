@@ -1,97 +1,71 @@
 import React from 'react';
-import { ArrowUp, Activity } from 'lucide-react';
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
-    <footer className="bg-slate-900 text-slate-400 py-16 border-t border-slate-800 font-sans">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-          {/* Column 1: Brand Info */}
-          <div className="md:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-8 h-8 rounded-md bg-tealbrand-500/20 border border-tealbrand-500/30 flex items-center justify-center text-tealbrand-400 font-mono font-bold text-sm">
-                Π
-              </div>
-              <span className="font-mono text-sm font-bold uppercase tracking-widest text-white">
-                sparrow
+    <footer className="bg-slate-950 text-slate-400 py-16 border-t border-slate-800 font-mono text-xs">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
+        {/* Brand Column */}
+        <div className="space-y-4 md:col-span-1">
+          <div className="flex items-center space-x-3">
+            <div className="h-9 w-9 rounded-lg bg-tealbrand-500/10 border border-tealbrand-500/30 p-1 flex items-center justify-center">
+              <img src="/logo.png" alt="Πsparrow Logo" className="w-full h-full object-contain" />
+            </div>
+            <div>
+              <span className="font-mono text-sm font-bold text-white uppercase tracking-widest block">
+                Πsparrow
+              </span>
+              <span className="text-[9px] text-tealbrand-400 font-bold uppercase tracking-wider">
+                Software Solutions
               </span>
             </div>
-            <p className="text-xs font-mono text-slate-400 max-w-sm leading-relaxed mb-6">
-              Bio-mimetic software, embedded hardware engineering, and precision PCB design architectures built for infinite industrial growth.
-            </p>
-
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-mono">
-              <Activity className="w-3 h-3 text-emerald-400 animate-pulse" />
-              <span>All Edge Nodes Operational — 99.99% Uptime</span>
-            </div>
           </div>
-
-          {/* Column 2: Navigation */}
-          <div>
-            <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-white mb-4">
-              Ecosystem
-            </h4>
-            <ul className="space-y-2.5 font-mono text-xs">
-              <li>
-                <a href="#cinematic" className="hover:text-tealbrand-400 transition-colors">
-                  System Beats
-                </a>
-              </li>
-              <li>
-                <a href="#showcase" className="hover:text-tealbrand-400 transition-colors">
-                  Showcase Modules
-                </a>
-              </li>
-              <li>
-                <a href="#capabilities" className="hover:text-tealbrand-400 transition-colors">
-                  Hardware Capabilities
-                </a>
-              </li>
-              <li>
-                <a href="#telemetry" className="hover:text-tealbrand-400 transition-colors">
-                  Telemetry Stream
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Contact & Legal */}
-          <div>
-            <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-white mb-4">
-              Architecture
-            </h4>
-            <ul className="space-y-2.5 font-mono text-xs">
-              <li>
-                <a href="#team" className="hover:text-tealbrand-400 transition-colors">
-                  Core Flock
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="hover:text-tealbrand-400 transition-colors">
-                  Project Canal
-                </a>
-              </li>
-              <li className="text-slate-500">Zero-Trust Protocol</li>
-              <li className="text-slate-500">V2.0 Core RTOS</li>
-            </ul>
-          </div>
+          <p className="text-slate-500 text-[11px] leading-relaxed">
+            Innovative Software, Naturally. High-contrast digital architectures, AI swarms, and ready-to-deploy platforms built twig by twig.
+          </p>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between font-mono text-xs text-slate-500">
-          <p>© 2026 Πsparrow Software & Hardware Solutions. All rights reserved.</p>
+        {/* Quick Links */}
+        <div>
+          <h4 className="text-white font-bold uppercase tracking-widest mb-4 text-xs">Navigation</h4>
+          <ul className="space-y-2 text-[11px]">
+            <li><a href="#about" className="hover:text-tealbrand-400 transition-colors">About Us</a></li>
+            <li><a href="#services" className="hover:text-tealbrand-400 transition-colors">Solutions & AI</a></li>
+            <li><a href="#products" className="hover:text-tealbrand-400 transition-colors">Flagship Products</a></li>
+            <li><a href="#noema-board" className="hover:text-tealbrand-400 transition-colors">Live Telemetry</a></li>
+            <li><a href="#contact" className="hover:text-tealbrand-400 transition-colors">Contact Canal</a></li>
+          </ul>
+        </div>
 
-          <button
-            onClick={scrollToTop}
-            className="mt-4 md:mt-0 flex items-center space-x-2 text-tealbrand-400 hover:text-tealbrand-300 transition-colors"
-          >
-            <span>Return To Apex</span>
-            <ArrowUp className="w-4 h-4" />
-          </button>
+        {/* Ready Platforms */}
+        <div>
+          <h4 className="text-white font-bold uppercase tracking-widest mb-4 text-xs">Platforms</h4>
+          <ul className="space-y-2 text-[11px]">
+            <li><a href="#products" className="hover:text-tealbrand-400 transition-colors">HRMS Enterprise (v2.1.0)</a></li>
+            <li><a href="#products" className="hover:text-tealbrand-400 transition-colors">CRM Marketing (v1.8.5)</a></li>
+            <li><a href="#products" className="hover:text-tealbrand-400 transition-colors">CMS Publisher (v3.0.2)</a></li>
+            <li><a href="#products" className="hover:text-tealbrand-400 transition-colors">LMS Education (v1.5.0)</a></li>
+            <li><a href="#products" className="hover:text-tealbrand-400 transition-colors">PlaySchool Safety (v1.2.2)</a></li>
+            <li><a href="https://visualfrog.pisparrow.com" target="_blank" rel="noopener noreferrer" className="hover:text-tealbrand-400 transition-colors">VisualFrog Converter</a></li>
+          </ul>
+        </div>
+
+        {/* System Telemetry & Copyright */}
+        <div className="space-y-4">
+          <h4 className="text-white font-bold uppercase tracking-widest mb-2 text-xs">System Registry</h4>
+          <div className="p-3 rounded-lg bg-slate-900 border border-slate-800 space-y-1 text-[10px]">
+            <div className="flex items-center justify-between text-tealbrand-400 font-bold">
+              <span>STATUS</span>
+              <span className="flex items-center space-x-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-400 animate-ping"></span>
+                <span>SYSTEM ACTIVE</span>
+              </span>
+            </div>
+            <div className="text-slate-500">REGION: Global Multi-Cluster</div>
+            <div className="text-slate-500">BUILD: v2.0.0-PROD</div>
+          </div>
+          <p className="text-[10px] text-slate-600">
+            © {new Date().getFullYear()} Πsparrow Software Solutions. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

@@ -61,38 +61,39 @@ export default function AboutSection() {
               </p>
             </div>
 
-            {/* Interactive 3D Gyroscope Emblem Card */}
+            {/* Interactive 3D Quantum Nest Card */}
             <div className="flex justify-center">
               <div
                 ref={cardRef}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                className="w-72 h-72 border border-tealbrand-500/30 bg-gradient-to-br from-tealbrand-50/80 via-white to-emerald-50/80 rounded-2xl flex flex-col items-center justify-center relative shadow-xl cursor-pointer group"
+                className="w-80 h-80 border border-tealbrand-500/30 bg-gradient-to-br from-tealbrand-50/90 via-white to-emerald-50/90 rounded-2xl flex flex-col items-center justify-center p-6 relative shadow-2xl cursor-pointer group"
                 style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
               >
-                {/* Bioluminescent Swirling Aura Ring */}
-                <div className="absolute inset-4 rounded-full border border-tealbrand-500/30 animate-spin-slow pointer-events-none" />
-                <div className="absolute inset-8 rounded-full border border-dashed border-emerald-500/30 animate-reverse-spin pointer-events-none" />
-
-                <span
-                  className="font-mono text-9xl text-slate-300 group-hover:text-tealbrand-600 transition-colors duration-500 select-none drop-shadow-sm"
+                {/* 3D Quantum Nest Image */}
+                <div
+                  className="w-56 h-56 rounded-xl overflow-hidden mb-3 relative flex items-center justify-center"
                   style={{ transform: 'translateZ(40px)', willChange: 'transform' }}
                 >
-                  Π
-                </span>
+                  <img
+                    src="/images/sparrow_nest.png"
+                    alt="Bio-Mimetic Quantum Sparrow Nest Architecture"
+                    className="w-full h-full object-contain filter drop-shadow-lg group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
 
                 <div
-                  className="absolute bottom-4 right-4 h-9 w-9 rounded-xl bg-tealbrand-600 text-white flex items-center justify-center font-mono font-bold text-sm shadow-md group-hover:scale-110 transition-transform"
+                  className="absolute top-4 right-4 h-9 w-9 rounded-xl bg-tealbrand-600/10 border border-tealbrand-500/30 p-1 flex items-center justify-center shadow-md"
                   style={{ transform: 'translateZ(30px)' }}
                 >
-                  ★
+                  <img src="/logo.png" alt="Πsparrow Mark" className="w-full h-full object-contain" />
                 </div>
 
                 <span
-                  className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest mt-2"
+                  className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest"
                   style={{ transform: 'translateZ(20px)' }}
                 >
-                  Πsparrow Core Engine
+                  Quantum Sparrow Nest Architecture
                 </span>
               </div>
             </div>
