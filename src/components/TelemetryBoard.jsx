@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import QuantumPipelineVisualizer from './QuantumPipelineVisualizer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -167,11 +168,11 @@ export default function TelemetryBoard() {
         </div>
       </section>
 
-      {/* #noema-support section in Pristine Light Theme */}
+      {/* #noema-support section featuring Quantum Pipeline Visualizer */}
       <section
         ref={supportRef}
         id="noema-support"
-        className="relative min-h-screen bg-white text-slate-900 overflow-hidden px-6 flex items-center font-sans py-24 border-t border-slate-200/80"
+        className="relative min-h-screen bg-white text-slate-900 overflow-hidden px-6 flex items-center font-sans py-28 border-t border-slate-200/80"
       >
         {/* Giant Watermark Text matching Ref/generated-page.html line 436 */}
         <h2
@@ -182,54 +183,8 @@ export default function TelemetryBoard() {
           SCALE
         </h2>
 
-        <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-          <article className="border border-slate-200/80 bg-slate-50 text-slate-900 min-h-[310px] p-8 rounded-2xl flex flex-col justify-between shadow-sm hover:border-tealbrand-500/40 hover:-translate-y-1 transition-all duration-300 nature-glass">
-            <p className="text-xs uppercase tracking-[0.2em] text-tealbrand-700 font-mono font-bold">
-              01 / Ingestion
-            </p>
-            <h3
-              className="font-bold leading-none mt-6 tracking-tight text-slate-900"
-              style={{ fontSize: 'clamp(3rem, 5vw, 3.75rem)' }}
-            >
-              COLLECTED
-            </h3>
-            <p className="text-sm text-slate-600 mt-6 max-w-[240px] font-sans leading-relaxed">
-              Raw data is securely ingested from enterprise edge nodes instantly.
-            </p>
-          </article>
-
-          <article className="border border-tealbrand-500/30 bg-gradient-to-br from-tealbrand-50 via-white to-emerald-50 text-slate-900 min-h-[310px] p-8 rounded-2xl flex flex-col justify-between shadow-xl hover:scale-105 transition-transform duration-300">
-            <p className="text-xs uppercase tracking-[0.2em] text-tealbrand-800 font-mono font-bold">
-              02 / Synthesis
-            </p>
-            <h3
-              className="font-bold leading-none mt-6 tracking-tight text-slate-900"
-              style={{ fontSize: 'clamp(3rem, 5vw, 3.75rem)' }}
-            >
-              PROCESSED
-            </h3>
-            <a
-              href="#contact"
-              className="mt-8 text-center bg-tealbrand-600 hover:bg-tealbrand-700 text-white text-xs font-bold py-3 rounded-full transition-colors font-mono uppercase tracking-wider shadow-md"
-            >
-              VIEW METRICS
-            </a>
-          </article>
-
-          <article className="border border-slate-200/80 bg-slate-50 text-slate-900 min-h-[310px] p-8 rounded-2xl flex flex-col justify-between shadow-sm hover:border-emerald-500/40 hover:-translate-y-1 transition-all duration-300 nature-glass">
-            <p className="text-xs uppercase tracking-[0.2em] text-emerald-700 font-mono font-bold">
-              03 / Output
-            </p>
-            <h3
-              className="font-bold leading-none mt-6 tracking-tight text-slate-900"
-              style={{ fontSize: 'clamp(3rem, 5vw, 3.75rem)' }}
-            >
-              DEPLOYED
-            </h3>
-            <p className="text-sm text-slate-600 mt-6 max-w-[240px] font-sans leading-relaxed">
-              Actionable insights deployed directly into your operational pipelines.
-            </p>
-          </article>
+        <div className="relative z-10 w-full">
+          <QuantumPipelineVisualizer />
         </div>
       </section>
     </>
