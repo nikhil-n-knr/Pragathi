@@ -14,8 +14,6 @@ export default function HeroCinematic() {
   const dotRowRef = useRef(null);
   const beatElsRef = useRef([]);
 
-  const [isPlaying, setIsPlaying] = useState(true);
-
   const DUR = 10.0;
 
   const beatsData = [
@@ -70,7 +68,6 @@ export default function HeroCinematic() {
     return 1;
   };
 
-  // RAF Loop + Idle Auto-Advancing Beats Animation
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -82,29 +79,23 @@ export default function HeroCinematic() {
     let scrollIdleTimer = null;
     let animId;
 
-    // Dot row creation across bottom right
     const dotRow = dotRowRef.current;
     const dotSpans = [];
-    const totalDots = 30;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const totalDots = isMobile ? 20 : 30;
+
     if (dotRow) {
       dotRow.innerHTML = '';
       for (let i = 0; i < totalDots; i++) {
         const d = document.createElement('span');
         d.style.cssText =
-          'width:0.45rem;height:0.45rem;border-radius:50%;background:rgba(13,148,136,0.25);transition:background .3s,transform .3s;cursor:pointer;display:inline-block;flex-shrink:0;';
+          'width:0.4rem;height:0.4rem;border-radius:50%;background:rgba(13,148,136,0.25);transition:background .3s,transform .3s;cursor:pointer;display:inline-block;flex-shrink:0;';
 
         const beatIndex = Math.min(
           beatsData.length - 1,
           Math.floor((i / totalDots) * beatsData.length)
         );
         const targetBeat = beatsData[beatIndex];
-
-        d.addEventListener('mouseenter', () => {
-          d.style.transform = 'scale(1.8)';
-        });
-        d.addEventListener('mouseleave', () => {
-          d.style.transform = 'scale(1)';
-        });
 
         d.addEventListener('click', () => {
           const top =
@@ -119,7 +110,6 @@ export default function HeroCinematic() {
       }
     }
 
-    // Auto-advance progress when idle at top of page
     let lastTime = performance.now();
 
     const rafLoop = (now) => {
@@ -130,7 +120,6 @@ export default function HeroCinematic() {
       const isAtTop = rect.top >= -50;
 
       if (isAtTop && !isUserScrolling) {
-        // Auto progress cycles smoothly every 15s across the 5 beats
         autoP = (autoP + delta * 0.06) % 1.0;
         rawP = autoP;
       } else {
@@ -140,18 +129,18 @@ export default function HeroCinematic() {
       renderP += (rawP - renderP) * 0.08;
       const p = renderP;
 
-      const scale = 1 + p * 0.5 - Math.max(0, p - 0.5) * 0.3;
+      const scale = 1 + p * 0.45 - Math.max(0, p - 0.5) * 0.25;
       const roll = p * 3 - Math.max(0, p - 0.7) * 2;
-      const fwd = p * -35;
+      const fwd = p * -30;
 
       if (bouquetRef.current) {
         bouquetRef.current.style.transform = `scale(${scale.toFixed(4)}) rotate(${roll.toFixed(2)}deg) translateY(${fwd.toFixed(1)}px)`;
       }
       if (bgLayerRef.current) {
-        bgLayerRef.current.style.transform = `scale(${(1.1 + p * 0.15).toFixed(4)}) translateY(${(p * -50).toFixed(1)}px)`;
+        bgLayerRef.current.style.transform = `scale(${(1.1 + p * 0.15).toFixed(4)}) translateY(${(p * -40).toFixed(1)}px)`;
       }
       if (midLayerRef.current) {
-        midLayerRef.current.style.transform = `translateY(${(p * 25).toFixed(1)}px)`;
+        midLayerRef.current.style.transform = `translateY(${(p * 20).toFixed(1)}px)`;
       }
 
       if (gradeWashRef.current) {
@@ -159,9 +148,9 @@ export default function HeroCinematic() {
       }
 
       let lb = 0;
-      if (p < 0.06) lb = (p / 0.06) * 7;
-      else if (p > 0.92) lb = 7 * (1 - (p - 0.92) / 0.08);
-      else lb = 7;
+      if (p < 0.06) lb = (p / 0.06) * 5;
+      else if (p > 0.92) lb = 5 * (1 - (p - 0.92) / 0.08);
+      else lb = 5;
 
       if (lbTopRef.current) lbTopRef.current.style.height = `${lb.toFixed(2)}vh`;
       if (lbBotRef.current) lbBotRef.current.style.height = `${lb.toFixed(2)}vh`;
@@ -175,7 +164,7 @@ export default function HeroCinematic() {
 
         if (el) {
           el.style.opacity = o.toFixed(3);
-          el.style.transform = `translateY(${((1 - o) * 18).toFixed(1)}px)`;
+          el.style.transform = `translateY(${((1 - o) * 16).toFixed(1)}px)`;
           el.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
         }
       });
@@ -184,7 +173,7 @@ export default function HeroCinematic() {
       dotSpans.forEach((dot, idx) => {
         const isActive = idx === activeDotIndex;
         dot.style.background = isActive ? '#0d9488' : 'rgba(13, 148, 136, 0.25)';
-        dot.style.transform = isActive ? 'scale(1.6)' : 'scale(1)';
+        dot.style.transform = isActive ? 'scale(1.5)' : 'scale(1)';
       });
 
       animId = requestAnimationFrame(rafLoop);
@@ -218,13 +207,10 @@ export default function HeroCinematic() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="cinematic" className="relative" style={{ height: '600vh' }}>
-      {/* Sticky Stage Container */}
+    <section ref={sectionRef} id="cinematic" className="relative" style={{ height: '520vh' }}>
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50">
-        {/* 3D WebGL Swarming Particle Atmosphere */}
         <ParticleSwarm3D />
 
-        {/* Parallax Visual Layer */}
         <div id="visualWrap" className="absolute inset-0 z-1 pointer-events-none" style={{ willChange: 'transform' }}>
           <div
             ref={bgLayerRef}
@@ -238,15 +224,14 @@ export default function HeroCinematic() {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ willChange: 'transform' }}
           >
-            <div className="flex items-center justify-center w-full h-full">
+            <div className="flex items-center justify-center w-full h-full px-4">
               <div className="animate-soft-float flex items-center justify-center">
-                {/* Floating Figure (Transparent, no card box) */}
                 <div
                   ref={bouquetRef}
                   id="bouquet"
                   className="z-40 relative pointer-events-none"
                   style={{
-                    width: 'min(58vw, 42rem)',
+                    width: 'min(84vw, 42rem)',
                     aspectRatio: '16 / 11',
                     backgroundImage: `url("https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/d0f628cf-26bf-473d-81b9-50e422c51521_3840w.png")`,
                     backgroundSize: 'contain',
@@ -260,7 +245,6 @@ export default function HeroCinematic() {
           </div>
         </div>
 
-        {/* Radial Color Grade Wash */}
         <div
           ref={gradeWashRef}
           id="gradeWash"
@@ -272,7 +256,6 @@ export default function HeroCinematic() {
           }}
         />
 
-        {/* Dynamic Letterbox Bars */}
         <div
           ref={lbTopRef}
           id="lbTop"
@@ -286,28 +269,27 @@ export default function HeroCinematic() {
           style={{ height: '0vh', willChange: 'height' }}
         />
 
-        {/* Corner Brackets Frame */}
-        <div className="absolute inset-6 md:inset-10 z-30 pointer-events-none">
-          <span className="absolute top-0 left-0 w-5.5 h-5.5 border-t border-l border-tealbrand-600/50"></span>
-          <span className="absolute top-0 right-0 w-5.5 h-5.5 border-t border-r border-tealbrand-600/50"></span>
-          <span className="absolute bottom-0 left-0 w-5.5 h-5.5 border-b border-l border-tealbrand-600/50"></span>
-          <span className="absolute bottom-0 right-0 w-5.5 h-5.5 border-b border-r border-tealbrand-600/50"></span>
+        <div className="absolute inset-4 md:inset-10 z-30 pointer-events-none">
+          <span className="absolute top-0 left-0 w-4 h-4 md:w-5.5 md:h-5.5 border-t border-l border-tealbrand-600/50"></span>
+          <span className="absolute top-0 right-0 w-4 h-4 md:w-5.5 md:h-5.5 border-t border-r border-tealbrand-600/50"></span>
+          <span className="absolute bottom-0 left-0 w-4 h-4 md:w-5.5 md:h-5.5 border-b border-l border-tealbrand-600/50"></span>
+          <span className="absolute bottom-0 right-0 w-4 h-4 md:w-5.5 md:h-5.5 border-b border-r border-tealbrand-600/50"></span>
         </div>
 
-        {/* Auto-Advancing / Scrollable Copy Beats */}
-        <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-6">
+        {/* 5 Copy Beats with Fluid Font Clamping */}
+        <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-4 sm:px-6">
           {beatsData.map((beat, idx) => (
             <div
               key={idx}
               ref={(el) => (beatElsRef.current[idx] = el)}
-              className="beat flex flex-col items-center absolute text-center px-6"
+              className="beat flex flex-col items-center absolute text-center px-4 sm:px-6 max-w-4xl"
               style={{ opacity: 0, willChange: 'transform, opacity' }}
             >
-              <p className="text-xs uppercase tracking-[0.35rem] text-tealbrand-700 font-bold mb-4 font-mono">
+              <p className="text-[10px] sm:text-xs uppercase tracking-[0.25rem] sm:tracking-[0.35rem] text-tealbrand-700 font-bold mb-3 font-mono">
                 {beat.version}
               </p>
 
-              <h1 className="tracking-tight text-slate-900 font-medium leading-[0.95]" style={{ fontSize: 'clamp(2.5rem, 7.5vw, 5.8rem)' }}>
+              <h1 className="tracking-tight text-slate-900 font-medium leading-[0.95]" style={{ fontSize: 'clamp(1.85rem, 6.8vw, 5.8rem)' }}>
                 {beat.h1}{' '}
                 {beat.h1Sub && (
                   <>
@@ -318,7 +300,7 @@ export default function HeroCinematic() {
               </h1>
 
               {beat.p && (
-                <p className="text-sm md:text-base mt-4 text-slate-600 font-mono tracking-wider uppercase max-w-lg">
+                <p className="text-xs sm:text-sm md:text-base mt-3 sm:mt-4 text-slate-600 font-mono tracking-wider uppercase max-w-lg leading-relaxed">
                   {beat.p}
                 </p>
               )}
@@ -326,15 +308,15 @@ export default function HeroCinematic() {
           ))}
         </div>
 
-        {/* Timeline HUD Track (Bottom Left) with Auto-Play Badge */}
-        <div className="absolute left-8 bottom-12 z-45 flex items-center gap-3 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
-          <div className="flex items-center space-x-1.5 mr-1">
-            <span className="w-2 h-2 rounded-full bg-tealbrand-600 animate-ping"></span>
-            <span className="font-mono text-[9px] font-bold text-tealbrand-700 uppercase tracking-widest">
-              AUTO LIVE
+        {/* Timeline HUD (Bottom Left) */}
+        <div className="absolute left-4 sm:left-8 bottom-6 sm:bottom-12 z-45 flex items-center gap-2.5 sm:gap-4 bg-white/90 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full border border-tealbrand-500/20 shadow-md">
+          <div className="flex items-center space-x-1 sm:space-x-1.5 mr-0.5">
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-tealbrand-600 animate-ping"></span>
+            <span className="font-mono text-[8px] sm:text-[9px] font-bold text-tealbrand-700 uppercase tracking-widest">
+              LIVE
             </span>
           </div>
-          <div id="timelineTrack" className="w-36 h-1 rounded-full bg-slate-200 overflow-hidden">
+          <div id="timelineTrack" className="w-24 sm:w-36 h-1 rounded-full bg-slate-200 overflow-hidden">
             <div
               ref={tlFillRef}
               id="timelineFill"
@@ -345,17 +327,17 @@ export default function HeroCinematic() {
           <span
             ref={timeLabelRef}
             id="timeLabel"
-            className="text-xs font-mono font-bold tabular-nums text-slate-700"
+            className="text-[10px] sm:text-xs font-mono font-bold tabular-nums text-slate-700"
           >
             0.00s
           </span>
         </div>
 
-        {/* Continuous Dot Row (Bottom Right) */}
+        {/* Timeline Dots (Bottom Right) */}
         <div
           ref={dotRowRef}
           id="dotRow"
-          className="absolute right-8 bottom-12 z-45 flex gap-1.5 items-center max-w-[50vw] overflow-x-auto py-1"
+          className="absolute right-4 sm:right-8 bottom-6 sm:bottom-12 z-45 flex gap-1 sm:gap-1.5 items-center max-w-[45vw] overflow-x-auto py-1 hidden sm:flex"
         />
       </div>
     </section>

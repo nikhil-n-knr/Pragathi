@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Check, ExternalLink, Play } from 'lucide-react';
+import { ArrowRight, Check, ExternalLink } from 'lucide-react';
 import ProductDemoModal from './ProductDemoModal';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,7 +17,7 @@ export default function ShowcaseGrid() {
       category: 'Enterprise',
       version: 'v2.1.0',
       title: 'Human Resource Management System (HRMS)',
-      subtitle: 'A clean, boxy, high-contrast workforce directory designed to streamline organizational boundaries. Features automated attendance, dynamic role configuration, document audits, and interactive permissions registries in a developer-centric light-teal environment.',
+      subtitle: 'A clean, boxy, high-contrast workforce directory designed to streamline organizational boundaries. Features automated attendance, dynamic role configuration, document audits, and interactive permissions registries.',
       badge: 'Enterprise',
       features: [
         'WORKFORCE REGISTRY & COMPLIANCE',
@@ -31,7 +31,7 @@ export default function ShowcaseGrid() {
       category: 'Marketing',
       version: 'v1.8.5',
       title: 'Customer Relationship Management (CRM)',
-      subtitle: 'Maximize sales visibility with structured lead pipeline tracking and conversion analytics. Easily monitor pipeline metrics, revenue stats, and target segments within a clean tabular layout styled for rapid inspection.',
+      subtitle: 'Maximize sales visibility with structured lead pipeline tracking and conversion analytics. Easily monitor pipeline metrics, revenue stats, and target segments within a clean tabular layout.',
       badge: 'Marketing',
       features: [
         'PIPELINE PIPES & STAGES TRACKING',
@@ -45,7 +45,7 @@ export default function ShowcaseGrid() {
       category: 'Publisher',
       version: 'v3.0.2',
       title: 'Content Management System (CMS)',
-      subtitle: 'A modular content builder featuring drag-and-drop structural blocks, real-time typography styling, custom spacing configurations, and secure SEO tagging rules designed to compile responsive layouts instantly.',
+      subtitle: 'A modular content builder featuring drag-and-drop structural blocks, real-time typography styling, custom spacing configurations, and secure SEO tagging rules.',
       badge: 'Publisher',
       features: [
         'MODULAR DRAG BLOCK EDITOR',
@@ -59,7 +59,7 @@ export default function ShowcaseGrid() {
       category: 'Education',
       version: 'v1.5.0',
       title: 'Learning Management System (LMS)',
-      subtitle: 'Empower your technical teams with certification tracks, course registries, interactive progress trackers, learning statistics, and automated skill-point aggregation within an elegant developer-certified interface.',
+      subtitle: 'Empower your technical teams with certification tracks, course registries, interactive progress trackers, learning statistics, and automated skill-point aggregation.',
       badge: 'Education',
       features: [
         'DYNAMIC COURSE PROGRESS TRACKER',
@@ -99,7 +99,6 @@ export default function ShowcaseGrid() {
     },
   ];
 
-  // GSAP Fan-Out Scrub Entrance matching Ref/generated-page.html line 932
   useEffect(() => {
     const cards = cardsRef.current.filter(Boolean);
     if (!cards.length) return;
@@ -108,10 +107,10 @@ export default function ShowcaseGrid() {
       gsap.fromTo(
         cards,
         {
-          x: (i) => [-240, 0, 240][i % 3] || 0,
-          y: (i) => [-60, 100, -60][i % 3] || 0,
-          rotate: (i) => [-12, 0, 12][i % 3] || 0,
-          scale: 0.88,
+          x: (i) => [-120, 0, 120][i % 3] || 0,
+          y: (i) => [-40, 60, -40][i % 3] || 0,
+          rotate: (i) => [-8, 0, 8][i % 3] || 0,
+          scale: 0.9,
           autoAlpha: 0.3,
         },
         {
@@ -124,8 +123,8 @@ export default function ShowcaseGrid() {
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
-            start: 'top 80%',
-            end: 'top 20%',
+            start: 'top 85%',
+            end: 'top 25%',
             scrub: 1,
           },
         }
@@ -135,73 +134,49 @@ export default function ShowcaseGrid() {
     return () => ctx.revert();
   }, []);
 
-  // 1:1 3D Perspective Tilt on MouseMove matching Ref/generated-page.html lines 884-927
   const handleMouseMove = (e) => {
+    if (window.matchMedia('(pointer: coarse)').matches) return; // Skip 3D tilt on touch screens
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -10;
-    const rotateY = ((x - centerX) / centerX) * 10;
-
-    const img = card.querySelector('.card-img-pop');
-    const content = card.querySelector('.card-content-pop');
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
 
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
     card.style.transition = 'transform 0.1s ease-out';
-    card.style.zIndex = '10';
-
-    if (img) {
-      img.style.transform = 'translateZ(30px)';
-      img.style.transition = 'transform 0.1s ease-out';
-    }
-    if (content) {
-      content.style.transform = 'translateZ(20px)';
-      content.style.transition = 'transform 0.1s ease-out';
-    }
   };
 
   const handleMouseLeave = (e) => {
     const card = e.currentTarget;
-    const img = card.querySelector('.card-img-pop');
-    const content = card.querySelector('.card-content-pop');
-
     card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
     card.style.transition = 'transform 0.5s ease-out';
-    card.style.zIndex = '1';
-
-    if (img) {
-      img.style.transform = 'translateZ(0px)';
-      img.style.transition = 'transform 0.5s ease-out';
-    }
-    if (content) {
-      content.style.transform = 'translateZ(0px)';
-      content.style.transition = 'transform 0.5s ease-out';
-    }
   };
 
   return (
     <>
-      <section ref={containerRef} id="products" className="py-28 max-w-[77.5rem] mx-auto px-6 relative overflow-hidden">
-        {/* Background Repeating Line Texture Overlay matching Ref/generated-page.html line 201 */}
+      <section ref={containerRef} id="products" className="py-20 md:py-28 max-w-[77.5rem] mx-auto px-4 sm:px-6 relative overflow-hidden">
         <div className="absolute inset-0 gallery-grid-pattern pointer-events-none opacity-40"></div>
 
         <div className="reveal-line overflow-hidden mb-2">
-          <p className="text-xs uppercase text-tealbrand-700 font-mono font-bold tracking-[0.3rem]">
+          <p className="text-[10px] sm:text-xs uppercase text-tealbrand-700 font-mono font-bold tracking-[0.25rem]">
             SYSTEM REGISTRY // THE PLATFORMS
           </p>
         </div>
 
-        <div className="reveal-line overflow-hidden mt-3 mb-14">
-          <h2 className="tracking-tight text-slate-900 font-medium text-4xl sm:text-5xl md:text-6xl leading-[1.05]" data-scroll-word="true">
+        <div className="reveal-line overflow-hidden mt-2 mb-10 md:mb-14">
+          <h2
+            className="tracking-tight text-slate-900 font-medium leading-[1.05]"
+            style={{ fontSize: 'clamp(1.75rem, 5.5vw, 3.5rem)' }}
+          >
             Autonomous platforms built to scale with data
           </h2>
         </div>
 
-        {/* Grid of 3 Cards per Row matching Ref/generated-page.html layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Responsive Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product, idx) => (
             <div
               key={product.id}
@@ -209,10 +184,9 @@ export default function ShowcaseGrid() {
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
               onClick={() => setSelectedProduct(product)}
-              className="fade-card group flex flex-col border border-tealbrand-500/15 hover:bg-white/90 transition-colors duration-500 cursor-pointer rounded-2xl p-5 backdrop-blur-lg nature-glass"
+              className="fade-card group flex flex-col border border-tealbrand-500/15 hover:bg-white transition-colors duration-300 cursor-pointer rounded-2xl p-5 backdrop-blur-lg nature-glass shadow-md"
               style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
             >
-              {/* Visual Header matching Ref/generated-page.html aspect-ratio 4/5 */}
               {product.image ? (
                 <div
                   className="card-img-pop rounded-xl overflow-hidden mb-5 bg-slate-100 border border-slate-200/60 shadow-sm relative group"
@@ -221,19 +195,18 @@ export default function ShowcaseGrid() {
                     backgroundImage: `url('${product.image}')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    willChange: 'transform',
                   }}
                 >
                   <div className="absolute inset-0 bg-tealbrand-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="px-3 py-1.5 rounded-full bg-white/90 text-tealbrand-800 font-mono text-[10px] font-bold uppercase tracking-wider shadow-md">
-                      Click to Preview
+                    <span className="px-3 py-1.5 rounded-full bg-white/95 text-tealbrand-800 font-mono text-[10px] font-bold uppercase tracking-wider shadow-md">
+                      Tap to Preview
                     </span>
                   </div>
                 </div>
               ) : (
                 <div
                   className="card-img-pop rounded-xl overflow-hidden mb-5 bg-gradient-to-br from-tealbrand-50 to-emerald-50 border border-slate-200/60 flex items-center justify-center p-6 text-center"
-                  style={{ aspectRatio: '4 / 3', willChange: 'transform' }}
+                  style={{ aspectRatio: '4 / 3' }}
                 >
                   <span className="font-mono text-xs font-bold text-tealbrand-700 uppercase tracking-widest">
                     BULK IMAGE COMPILER
@@ -241,8 +214,7 @@ export default function ShowcaseGrid() {
                 </div>
               )}
 
-              {/* Card Content Pop */}
-              <div className="card-content-pop flex flex-col flex-grow justify-between" style={{ willChange: 'transform' }}>
+              <div className="card-content-pop flex flex-col flex-grow justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-mono text-[10px] text-tealbrand-700 font-bold uppercase tracking-widest">
@@ -253,7 +225,7 @@ export default function ShowcaseGrid() {
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-tealbrand-600 transition-colors mb-2">
+                  <h3 className="text-base sm:text-lg font-bold tracking-tight text-slate-900 group-hover:text-tealbrand-600 transition-colors mb-2">
                     {product.title}
                   </h3>
 
@@ -261,7 +233,6 @@ export default function ShowcaseGrid() {
                     {product.subtitle}
                   </p>
 
-                  {/* Features List */}
                   <div className="space-y-1 mb-4 pt-3 border-t border-slate-100">
                     {product.features.map((feat, i) => (
                       <div key={i} className="flex items-center space-x-2 text-[10px] font-mono text-slate-500 font-medium">
@@ -272,7 +243,6 @@ export default function ShowcaseGrid() {
                   </div>
                 </div>
 
-                {/* Card Footer */}
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-xs font-mono font-bold text-tealbrand-700 uppercase tracking-wider">
                     {product.badge}
@@ -301,7 +271,6 @@ export default function ShowcaseGrid() {
         </div>
       </section>
 
-      {/* Interactive Product Sandbox Preview Modal */}
       <ProductDemoModal
         product={selectedProduct}
         onClose={() => setSelectedProduct(null)}
