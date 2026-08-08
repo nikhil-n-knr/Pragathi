@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, FileText, CheckCircle2, Cpu, Scale, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, FileText, Scale, Cpu, ShieldAlert } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -10,6 +10,7 @@ export default function TermsPage() {
   const lbTopRef = useRef(null);
   const lbBotRef = useRef(null);
   const tlFillRef = useRef(null);
+  const bouquetRef = useRef(null);
   const beatElsRef = useRef([]);
 
   const beats = [
@@ -65,6 +66,13 @@ export default function TermsPage() {
       renderP += (rawP - renderP) * 0.1;
       const p = renderP;
 
+      const scale = 1 + p * 0.45 - Math.max(0, p - 0.5) * 0.25;
+      const roll = p * 4 - Math.max(0, p - 0.7) * 3;
+
+      if (bouquetRef.current) {
+        bouquetRef.current.style.transform = `scale(${scale.toFixed(4)}) rotate(${roll.toFixed(2)}deg)`;
+      }
+
       let lb = 0;
       if (p < 0.06) lb = (p / 0.06) * 6;
       else if (p > 0.92) lb = 6 * (1 - (p - 0.92) / 0.08);
@@ -109,10 +117,28 @@ export default function TermsPage() {
     <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative">
       <Navbar />
 
-      {/* Sticky Hero Stage */}
       <section ref={sectionRef} className="relative" style={{ height: '400vh' }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
+
+          {/* Floating 3D Digital Terms Contract Artwork */}
+          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+            <div className="animate-soft-float flex items-center justify-center">
+              <div
+                ref={bouquetRef}
+                className="z-40 relative pointer-events-none"
+                style={{
+                  width: 'min(70vw, 34rem)',
+                  aspectRatio: '1 / 1',
+                  backgroundImage: `url('/images/terms_contract.png')`,
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center center',
+                  willChange: 'transform',
+                }}
+              />
+            </div>
+          </div>
 
           <div ref={lbTopRef} className="absolute top-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
           <div ref={lbBotRef} className="absolute bottom-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
@@ -157,24 +183,22 @@ export default function TermsPage() {
         </div>
       </section>
 
-      {/* Comprehensive Detailed Terms Content */}
       <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
             <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-              MASTER TERMS & SLA AGREEMENT // V2.0.0
+              MASTER TERMS & SLA AGREEMENT
             </span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
             Terms of Service & Licensing
           </h2>
           <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mt-2">
-            Last Updated: August 2026 — Πsparrow Software Solutions
+            Πsparrow Software Solutions — Production Licensing Terms
           </p>
         </div>
 
-        {/* Section 1 */}
         <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
           <div className="flex items-center space-x-3 text-tealbrand-600">
             <FileText className="w-8 h-8 flex-shrink-0" />
@@ -184,48 +208,6 @@ export default function TermsPage() {
           </div>
           <p className="text-slate-600 text-sm leading-relaxed">
             All software products, full-stack portals, custom UI/UX design systems, and agentic workflows developed by Πsparrow are provided under enterprise non-exclusive or dedicated architecture license terms. Clients are granted full operational usage rights within agreed tenant scopes.
-          </p>
-        </div>
-
-        {/* Section 2 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-emerald-600">
-            <Scale className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              2. 99.99% Service Level Agreement (SLA) Uptime
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Πsparrow guarantees a 99.99% operational availability SLA for hosted multi-region SaaS instances (HRMS, CRM, CMS, LMS, PlaySchool Safety). Scheduled maintenance windows are announced via telemetry logs at least 48 hours prior to execution.
-          </p>
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 font-mono text-xs text-slate-700">
-            <strong>SLA CREDIT COMPENSATIONS:</strong> In the event of unscheduled downtime exceeding 0.01% in any calendar month, eligible enterprise clients receive automatic service credit credits applied to the subsequent billing cycle.
-          </div>
-        </div>
-
-        {/* Section 3 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-cyanbrand-600">
-            <Cpu className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              3. AI Swarm & Agentic Governance Rules
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Users deploying autonomous AI swarms must comply with ethical computing boundaries. Agents must not be executed for illegal data scraping, unthrottled DDoS generation, or malicious prompt injection attacks.
-          </p>
-        </div>
-
-        {/* Section 4 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-tealbrand-600">
-            <ShieldAlert className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              4. Limitation of Liability & Dispute Resolution
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            To the maximum extent permitted by law, Πsparrow Software Solutions shall not be liable for indirect, incidental, or consequential damages resulting from third-party network outages or unauthorized key exposure caused by client-side security failures.
           </p>
         </div>
       </section>

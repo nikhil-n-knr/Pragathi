@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ShieldCheck, Lock, Server, Cpu, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Lock, Server } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -10,6 +10,7 @@ export default function SecurityPage() {
   const lbTopRef = useRef(null);
   const lbBotRef = useRef(null);
   const tlFillRef = useRef(null);
+  const bouquetRef = useRef(null);
   const beatElsRef = useRef([]);
 
   const beats = [
@@ -65,6 +66,13 @@ export default function SecurityPage() {
       renderP += (rawP - renderP) * 0.1;
       const p = renderP;
 
+      const scale = 1 + p * 0.45 - Math.max(0, p - 0.5) * 0.25;
+      const roll = p * 4 - Math.max(0, p - 0.7) * 3;
+
+      if (bouquetRef.current) {
+        bouquetRef.current.style.transform = `scale(${scale.toFixed(4)}) rotate(${roll.toFixed(2)}deg)`;
+      }
+
       let lb = 0;
       if (p < 0.06) lb = (p / 0.06) * 6;
       else if (p > 0.92) lb = 6 * (1 - (p - 0.92) / 0.08);
@@ -113,6 +121,25 @@ export default function SecurityPage() {
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
+          {/* Floating 3D Zero-Trust HSM Security Vault Artwork */}
+          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+            <div className="animate-soft-float flex items-center justify-center">
+              <div
+                ref={bouquetRef}
+                className="z-40 relative pointer-events-none"
+                style={{
+                  width: 'min(70vw, 34rem)',
+                  aspectRatio: '1 / 1',
+                  backgroundImage: `url('/images/security_vault.png')`,
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center center',
+                  willChange: 'transform',
+                }}
+              />
+            </div>
+          </div>
+
           <div ref={lbTopRef} className="absolute top-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
           <div ref={lbBotRef} className="absolute bottom-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
 
@@ -156,13 +183,12 @@ export default function SecurityPage() {
         </div>
       </section>
 
-      {/* Comprehensive Security Whitepaper Content */}
       <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
             <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-              ZERO-TRUST SECURITY WHITEPAPER // V2.0.0
+              ZERO-TRUST SECURITY WHITEPAPER
             </span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
@@ -173,7 +199,6 @@ export default function SecurityPage() {
           </p>
         </div>
 
-        {/* Section 1 */}
         <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
           <div className="flex items-center space-x-3 text-tealbrand-600">
             <ShieldCheck className="w-8 h-8 flex-shrink-0" />
@@ -183,32 +208,6 @@ export default function SecurityPage() {
           </div>
           <p className="text-slate-600 text-sm leading-relaxed">
             Every SaaS platform instance (HRMS, CRM, CMS, LMS, PlaySchool) and AI agent process operates inside a virtualized sandbox container with dedicated memory allocation, database schemas, and strict RBAC policy enforcement.
-          </p>
-        </div>
-
-        {/* Section 2 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-emerald-600">
-            <Lock className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              2. 256-Bit HSM Key Management
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Secrets, database connection strings, and fine-tuned AI model weights are sealed within FIPS 140-2 Level 3 certified Hardware Security Modules (HSM) featuring automated key rotation and instant revocation.
-          </p>
-        </div>
-
-        {/* Section 3 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-cyanbrand-600">
-            <Server className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              3. Continuous Auditing & SOC-2 Alignment
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            All system mutations produce cryptographically signed audit logs. Third-party penetration testing and vulnerability scans are conducted quarterly to verify system resilience.
           </p>
         </div>
       </section>

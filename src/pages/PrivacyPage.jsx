@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Lock, Database, ShieldCheck, Eye, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Lock, Database, ShieldCheck, Eye } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -10,6 +10,7 @@ export default function PrivacyPage() {
   const lbTopRef = useRef(null);
   const lbBotRef = useRef(null);
   const tlFillRef = useRef(null);
+  const bouquetRef = useRef(null);
   const beatElsRef = useRef([]);
 
   const beats = [
@@ -65,6 +66,13 @@ export default function PrivacyPage() {
       renderP += (rawP - renderP) * 0.1;
       const p = renderP;
 
+      const scale = 1 + p * 0.45 - Math.max(0, p - 0.5) * 0.25;
+      const roll = p * 4 - Math.max(0, p - 0.7) * 3;
+
+      if (bouquetRef.current) {
+        bouquetRef.current.style.transform = `scale(${scale.toFixed(4)}) rotate(${roll.toFixed(2)}deg)`;
+      }
+
       let lb = 0;
       if (p < 0.06) lb = (p / 0.06) * 6;
       else if (p > 0.92) lb = 6 * (1 - (p - 0.92) / 0.08);
@@ -109,13 +117,35 @@ export default function PrivacyPage() {
     <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative">
       <Navbar />
 
+      {/* Cinematic Sticky Hero Stage */}
       <section ref={sectionRef} className="relative" style={{ height: '400vh' }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
+          {/* Floating 3D Quantum Privacy Shield Artwork */}
+          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+            <div className="animate-soft-float flex items-center justify-center">
+              <div
+                ref={bouquetRef}
+                className="z-40 relative pointer-events-none"
+                style={{
+                  width: 'min(70vw, 34rem)',
+                  aspectRatio: '1 / 1',
+                  backgroundImage: `url('/images/privacy_shield.png')`,
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center center',
+                  willChange: 'transform',
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Letterbox Bars */}
           <div ref={lbTopRef} className="absolute top-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
           <div ref={lbBotRef} className="absolute bottom-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
 
+          {/* Return Home Button */}
           <div className="absolute top-24 left-8 z-40">
             <Link
               to="/"
@@ -126,6 +156,7 @@ export default function PrivacyPage() {
             </Link>
           </div>
 
+          {/* 4 Pinned Beats */}
           <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-6">
             {beats.map((beat, idx) => (
               <div
@@ -147,6 +178,7 @@ export default function PrivacyPage() {
             ))}
           </div>
 
+          {/* Timeline Track */}
           <div className="absolute left-8 bottom-12 z-45 flex items-center gap-4 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
             <div className="w-40 h-1.5 rounded-full bg-slate-200 overflow-hidden">
               <div ref={tlFillRef} className="h-full bg-tealbrand-600" style={{ width: '0%' }} />
@@ -156,6 +188,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
+      {/* Comprehensive Detailed Legal Content Sections */}
       <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
