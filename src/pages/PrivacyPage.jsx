@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Lock, Database, ShieldCheck, Eye, FileText, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Lock, Database, ShieldCheck, Eye, CheckCircle2 } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -14,28 +14,28 @@ export default function PrivacyPage() {
 
   const beats = [
     {
-      label: 'PRIVACY BEAT 01',
+      label: 'ZERO-TRUST ENCRYPTION',
       title: 'Zero-Trust Encryption',
       p: 'All data ingested across our agentic AI swarms and SaaS products is encrypted at rest using 256-bit Hardware Security Modules (HSM) and TLS 1.3 in transit.',
       s: 0.0,
       e: 0.25,
     },
     {
-      label: 'PRIVACY BEAT 02',
+      label: 'MODEL ISOLATION',
       title: 'Private Model Isolation',
       p: 'Enterprise datasets provided for custom AI model training are strictly isolated within private tenant containers. Client telemetry is never used for public models.',
       s: 0.26,
       e: 0.5,
     },
     {
-      label: 'PRIVACY BEAT 03',
+      label: 'QUANTUM TELEMETRY',
       title: 'Quantum Telemetry',
       p: 'We use minimal essential telemetry cookies to maintain session authenticity, load balance edge clusters, and optimize render performance.',
       s: 0.51,
       e: 0.75,
     },
     {
-      label: 'PRIVACY BEAT 04',
+      label: 'REGULATORY COMPLIANCE',
       title: 'Regulatory Compliance',
       p: 'Fully compliant with GDPR, CCPA, and international data governance frameworks. Automated data deletion and export tools provided out of the box.',
       s: 0.76,
@@ -109,7 +109,6 @@ export default function PrivacyPage() {
     <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative">
       <Navbar />
 
-      {/* Sticky Hero Stage */}
       <section ref={sectionRef} className="relative" style={{ height: '400vh' }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
@@ -157,24 +156,22 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      {/* Comprehensive Detailed Legal Content Sections */}
       <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
             <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-              OFFICIAL PRIVACY POLICY // V2.0.0
+              OFFICIAL PRIVACY POLICY
             </span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
             Data Governance & Protection
           </h2>
           <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mt-2">
-            Last Updated: August 2026 — Πsparrow Software Solutions
+            Πsparrow Software Solutions — Production Data Governance
           </p>
         </div>
 
-        {/* Section 1 */}
         <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
           <div className="flex items-center space-x-3 text-tealbrand-600">
             <Lock className="w-8 h-8 flex-shrink-0" />
@@ -185,19 +182,8 @@ export default function PrivacyPage() {
           <p className="text-slate-600 text-sm leading-relaxed">
             Πsparrow Software Solutions ("Πsparrow", "We", "Our") operates under a Zero-Trust Cryptographic Model. All customer datasets, API payloads, workforce records in HRMS, CRM lead pipelines, CMS content assets, LMS progress metrics, and PlaySchool monitoring feeds are protected using AES-256 GCM authenticated encryption at rest and TLS 1.3 in transit.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 font-mono text-xs text-slate-700">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
-              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
-              <span>Dedicated Hardware Security Modules (HSM) for Master Keys</span>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
-              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
-              <span>Automated Key Rotation & Ephemeral Session Tokens</span>
-            </div>
-          </div>
         </div>
 
-        {/* Section 2 */}
         <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
           <div className="flex items-center space-x-3 text-emerald-600">
             <Database className="w-8 h-8 flex-shrink-0" />
@@ -207,56 +193,6 @@ export default function PrivacyPage() {
           </div>
           <p className="text-slate-600 text-sm leading-relaxed">
             When clients utilize our AI Automation & Custom Model Fine-Tuning services, all training datasets, prompt histories, and fine-tuned model weights remain strictly isolated inside dedicated tenant containers.
-          </p>
-          <ul className="space-y-2 text-xs font-mono text-slate-600 pt-2">
-            <li className="flex items-center space-x-2">
-              <span className="text-tealbrand-600 font-bold">✔</span>
-              <span>NO CLIENT DATA IS EVER USED TO TRAIN PUBLIC BASE MODELS.</span>
-            </li>
-            <li className="flex items-center space-x-2">
-              <span className="text-tealbrand-600 font-bold">✔</span>
-              <span>TENANT MODEL WEIGHTS ARE ENCRYPTED WITH CLIENT-CONTROLLED KEYS.</span>
-            </li>
-            <li className="flex items-center space-x-2">
-              <span className="text-tealbrand-600 font-bold">✔</span>
-              <span>EPHEMERAL AGENTIC MEMORY ERASURE UPON SWARM TASK COMPLETION.</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Section 3 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-cyanbrand-600">
-            <ShieldCheck className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              3. Global Regulatory Compliance (GDPR, CCPA)
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Πsparrow complies with global privacy legislation, including the General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA). Enterprise administrators maintain complete sovereignty over their data lifecycle:
-          </p>
-          <div className="space-y-3 pt-2 font-mono text-xs text-slate-700">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-              <strong className="text-slate-900 block mb-1">RIGHT TO ERASURE (RIGHT TO BE FORGOTTEN):</strong>
-              Execute automated 1-click tenant purge scripts to permanently erase historical audit ledgers and database rows within 24 hours.
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-              <strong className="text-slate-900 block mb-1">DATA PORTABILITY:</strong>
-              Export complete tenant records, schema definitions, and model parameters in structured JSON or CSV formats at any time.
-            </div>
-          </div>
-        </div>
-
-        {/* Section 4 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-tealbrand-600">
-            <Eye className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              4. Cookies & Session Telemetry
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            We use minimal bioluminescent telemetry cookies solely to maintain session security, balance server loads, and measure performance metrics. You can manage or disable optional cookies using our floating cookie bar at any time.
           </p>
         </div>
       </section>

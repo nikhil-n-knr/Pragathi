@@ -95,7 +95,7 @@ export default function Footer() {
           <Link to="/privacy" className="hover:text-tealbrand-600">Privacy</Link>
           <Link to="/terms" className="hover:text-tealbrand-600">Terms</Link>
           <Link to="/security" className="hover:text-tealbrand-600">Security</Link>
-          <span className="text-slate-400">v2.0.0-PROD</span>
+          <span className="text-tealbrand-700 font-bold">Enterprise System Active</span>
         </div>
       </div>
     </footer>

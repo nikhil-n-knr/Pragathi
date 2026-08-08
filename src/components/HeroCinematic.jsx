@@ -18,7 +18,7 @@ export default function HeroCinematic() {
 
   const beatsData = [
     {
-      version: 'BEAT 01 // COMPLETE SOFTWARE & UI/UX',
+      version: 'COMPLETE SOFTWARE & UI/UX',
       h1: 'Software & UI/UX,',
       h1Sub: 'Designed Naturally',
       p: 'We craft high-performance full-stack web applications, mobile platforms, and sleek UI/UX design systems.',
@@ -26,7 +26,7 @@ export default function HeroCinematic() {
       e: 0.18,
     },
     {
-      version: 'BEAT 02 // AI AUTOMATION & AGENTIC AI',
+      version: 'AI AUTOMATION & AGENTIC AI',
       h1: 'Agentic AI Swarms,',
       h1Sub: 'Automated Execution',
       p: 'Engineering autonomous AI agents that handle complex multi-step workflows with mathematical precision.',
@@ -34,7 +34,7 @@ export default function HeroCinematic() {
       e: 0.38,
     },
     {
-      version: 'BEAT 03 // MODEL TRAINING & FINE-TUNING',
+      version: 'MODEL TRAINING & FINE-TUNING',
       h1: 'Custom Model Training,',
       h1Sub: 'Domain Intelligence',
       p: 'Training and fine-tuning specialized AI models tailored specifically for enterprise domain modules.',
@@ -42,7 +42,7 @@ export default function HeroCinematic() {
       e: 0.58,
     },
     {
-      version: 'BEAT 04 // READY SAAS PRODUCTS',
+      version: 'READY SAAS PRODUCTS',
       h1: 'Turnkey Products,',
       h1Sub: 'Built For Industry',
       p: 'Ready-to-deploy platforms: HRMS, CRM, CMS, LMS, PlaySchool Safety, and Utility engines.',
@@ -50,7 +50,7 @@ export default function HeroCinematic() {
       e: 0.78,
     },
     {
-      version: 'BEAT 05 // ΠSPARROW LIVE',
+      version: 'ΠSPARROW ECOSYSTEM',
       h1: 'ΠSPARROW PLATFORM',
       h1Sub: '',
       p: 'System active — explore our core software solutions and flagship products below.',
@@ -276,7 +276,7 @@ export default function HeroCinematic() {
           <span className="absolute bottom-0 right-0 w-4 h-4 md:w-5.5 md:h-5.5 border-b border-r border-tealbrand-600/50"></span>
         </div>
 
-        {/* 5 Copy Beats with Fluid Font Clamping */}
+        {/* 5 Copy Beats */}
         <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-4 sm:px-6">
           {beatsData.map((beat, idx) => (
             <div

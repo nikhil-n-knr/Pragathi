@@ -15,10 +15,10 @@ export default function ShowcaseGrid() {
     {
       id: 'hrms',
       category: 'Enterprise',
-      version: 'v2.1.0',
+      version: 'Production Ready',
       title: 'Human Resource Management System (HRMS)',
       subtitle: 'A clean, boxy, high-contrast workforce directory designed to streamline organizational boundaries. Features automated attendance, dynamic role configuration, document audits, and interactive permissions registries.',
-      badge: 'Enterprise',
+      badge: 'Enterprise Suite',
       features: [
         'WORKFORCE REGISTRY & COMPLIANCE',
         'DYNAMIC ROLE ASSIGNMENT MATRIX',
@@ -29,10 +29,10 @@ export default function ShowcaseGrid() {
     {
       id: 'crm',
       category: 'Marketing',
-      version: 'v1.8.5',
+      version: 'Production Ready',
       title: 'Customer Relationship Management (CRM)',
       subtitle: 'Maximize sales visibility with structured lead pipeline tracking and conversion analytics. Easily monitor pipeline metrics, revenue stats, and target segments within a clean tabular layout.',
-      badge: 'Marketing',
+      badge: 'Marketing Engine',
       features: [
         'PIPELINE PIPES & STAGES TRACKING',
         'CONVERSION RATES & REVENUE ANCHORS',
@@ -43,10 +43,10 @@ export default function ShowcaseGrid() {
     {
       id: 'cms',
       category: 'Publisher',
-      version: 'v3.0.2',
+      version: 'Production Ready',
       title: 'Content Management System (CMS)',
       subtitle: 'A modular content builder featuring drag-and-drop structural blocks, real-time typography styling, custom spacing configurations, and secure SEO tagging rules.',
-      badge: 'Publisher',
+      badge: 'Publisher Core',
       features: [
         'MODULAR DRAG BLOCK EDITOR',
         'COMPREHENSIVE TYPOGRAPHY PRESETS',
@@ -57,10 +57,10 @@ export default function ShowcaseGrid() {
     {
       id: 'lms',
       category: 'Education',
-      version: 'v1.5.0',
+      version: 'Production Ready',
       title: 'Learning Management System (LMS)',
       subtitle: 'Empower your technical teams with certification tracks, course registries, interactive progress trackers, learning statistics, and automated skill-point aggregation.',
-      badge: 'Education',
+      badge: 'Education Suite',
       features: [
         'DYNAMIC COURSE PROGRESS TRACKER',
         'DEVELOPER CERTIFICATION REGISTRY',
@@ -71,10 +71,10 @@ export default function ShowcaseGrid() {
     {
       id: 'playschool',
       category: 'Security',
-      version: 'v1.2.2',
+      version: 'Production Ready',
       title: 'PlaySchool Safety & Monitoring System',
       subtitle: 'A specialized security platform designed for nursery and play school operations. Combines active classroom cameras, real-time safety checklists, child check-in registries, and parent communications logs.',
-      badge: 'Security',
+      badge: 'Safety Platform',
       features: [
         'ACTIVE CLASSROOM CAMERA FEED GRID',
         'SECURE CHILDREN CHECK-IN AUDIT',
@@ -85,10 +85,10 @@ export default function ShowcaseGrid() {
     {
       id: 'visualfrog',
       category: 'Utility',
-      version: 'v1.0.4',
+      version: 'Production Ready',
       title: 'VisualFrog Bulk Image Converter',
       subtitle: 'Upload a ZIP containing structured nested image folders, choose target formats (WEBP, PNG, JPG), and download the output with folder hierarchies completely intact.',
-      badge: 'Utility',
+      badge: 'Image Engine',
       link: 'https://visualfrog.pisparrow.com',
       features: [
         'ZIP FOLDER HIERARCHY PRESERVATION',
@@ -135,7 +135,7 @@ export default function ShowcaseGrid() {
   }, []);
 
   const handleMouseMove = (e) => {
-    if (window.matchMedia('(pointer: coarse)').matches) return; // Skip 3D tilt on touch screens
+    if (window.matchMedia('(pointer: coarse)').matches) return;
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -175,7 +175,6 @@ export default function ShowcaseGrid() {
           </h2>
         </div>
 
-        {/* Responsive Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product, idx) => (
             <div
