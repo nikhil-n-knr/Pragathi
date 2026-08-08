@@ -1,334 +1,344 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Cpu, ShieldCheck, Zap, Activity, ChevronDown } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import { ChevronDown, Compass, Sparkles } from 'lucide-react';
 
 export default function HeroCinematic() {
   const sectionRef = useRef(null);
-  const pinStageRef = useRef(null);
   const canvasRef = useRef(null);
-  const [currentProgress, setCurrentProgress] = useState(0);
-  const [activeBeat, setActiveBeat] = useState(0);
 
-  const beatsData = [
+  const [progress, setProgress] = useState(0);
+  const [activeBeatIndex, setActiveBeatIndex] = useState(0);
+
+  const DUR = 12.75;
+
+  const beats = [
     {
-      version: 'VERSION 2.0 / BIO-MIMETIC PLATFORM',
-      title: 'Quiet Circuitry,',
-      subtitle: 'Waiting Data',
-      description: 'Structured platforms inspired by organic resilience and engineering precision.',
-      start: 0.0,
-      end: 0.13,
+      version: 'VERSION NO. 07 // BIO-MIMETIC PLATFORM',
+      h1: 'Quiet Nodes,',
+      h1Sub: 'Waiting Data',
+      p: 'Algorithms unfold as raw data moves through the neural bio-circuit network.',
+      s: 0.0,
+      e: 0.1,
     },
     {
-      version: 'NATURE-INSPIRED ALGORITHMS',
-      title: 'The Bio-Digital Engine',
-      subtitle: 'Self-healing, micro-service networks unfold like natural ecosystems.',
-      description: 'Co-designing software algorithms with physical PCB circuit architecture.',
-      start: 0.14,
-      end: 0.28,
+      version: 'THE INITIALIZATION',
+      h1: 'The First Boot',
+      h1Sub: '',
+      p: 'Co-designing physical circuit architectures with self-balancing software swarms.',
+      s: 0.11,
+      e: 0.22,
     },
     {
-      version: 'HARDWARE & EMBEDDED SWARMS',
-      title: 'Co-Designed Silicon',
-      subtitle: 'Precision PCB Manufacturing & Edge Computing',
-      description: 'Integrated hardware clusters running at sub-millisecond edge latency.',
-      start: 0.29,
-      end: 0.43,
+      version: 'HARDWARE & EDGE SWARMS',
+      h1: 'Connected Swarms',
+      h1Sub: '',
+      p: 'Fifty-four autonomous nodes, architected to scale from every angle.',
+      s: 0.23,
+      e: 0.33,
     },
     {
-      version: 'INFINITE SCALABILITY',
-      title: 'Connected Micro-Clusters',
-      subtitle: 'Fifty-four autonomous nodes scaling across cloud and physical devices.',
-      description: 'Built for industrial reliability, high-frequency throughput, and zero downtime.',
-      start: 0.44,
-      end: 0.58,
+      version: 'HARDWARE COMPILER',
+      h1: 'A Full Cluster',
+      h1Sub: '',
+      p: 'Industrial PCB microservices integrated into zero-latency edge layers.',
+      s: 0.34,
+      e: 0.47,
     },
     {
-      version: 'ZERO-LATENCY TELEMETRY',
-      title: 'Carried by Light Stream',
-      subtitle: 'Real-time telemetry pipelines engineered with bio-mimetic efficiency.',
-      description: 'Instant data synchronization across localized edge points.',
-      start: 0.59,
-      end: 0.74,
+      version: 'TELEMETRY STREAM',
+      h1: 'Data Lift',
+      h1Sub: 'Carried by Cloud',
+      p: 'High-frequency telemetry carried naturally through light-speed streams.',
+      s: 0.48,
+      e: 0.64,
     },
     {
-      version: 'INDUSTRIAL DEPLOYMENT',
-      title: 'Into The Ecosystem',
-      subtitle: 'From prototype to high-volume production.',
-      description: 'Turnkey hardware and software execution built for modern industry.',
-      start: 0.75,
-      end: 0.88,
+      version: 'DEPLOYMENT PIPELINE',
+      h1: 'Into the Stream',
+      h1Sub: '',
+      p: 'Turnkey hardware and software execution built for modern industry.',
+      s: 0.65,
+      e: 0.81,
     },
     {
-      version: 'DEPLOYED & OPERATIONAL',
-      title: 'Πsparrow Platform',
-      subtitle: 'System Active — Explore the Ecosystem Below.',
-      description: 'Discover our showcase products, hardware capabilities, and core flock.',
-      start: 0.89,
-      end: 1.0,
+      version: 'DEPLOYED LIVE',
+      h1: 'ΠSPARROW PLATFORM',
+      h1Sub: '',
+      p: 'System active — explore the products and capabilities below.',
+      s: 0.82,
+      e: 1.0,
     },
   ];
 
-  // 1. Canvas Light Nature Particles Effect
+  // Helper for smooth beat opacity calculation
+  const calculateBeatOpacity = (p, s, e) => {
+    const span = e - s;
+    const fade = span * 0.3;
+    if (p < s || p > e) return 0;
+    if (p < s + fade) return (p - s) / fade;
+    if (p > e - fade) return (e - p) / fade;
+    return 1;
+  };
+
+  // 1. Canvas Petal Field (Biomorphic Floating Spores)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let animationFrameId;
+    let animId;
 
-    let width = (canvas.width = window.innerWidth * window.devicePixelRatio);
-    let height = (canvas.height = window.innerHeight * window.devicePixelRatio);
+    let W = (canvas.width = window.innerWidth * window.devicePixelRatio);
+    let H = (canvas.height = window.innerHeight * window.devicePixelRatio);
 
-    const handleResize = () => {
-      width = canvas.width = window.innerWidth * window.devicePixelRatio;
-      height = canvas.height = window.innerHeight * window.devicePixelRatio;
+    const onResize = () => {
+      W = canvas.width = window.innerWidth * window.devicePixelRatio;
+      H = canvas.height = window.innerHeight * window.devicePixelRatio;
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', onResize);
 
-    const particleCount = 65;
-    const particles = [];
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
+    const petals = [];
+    for (let i = 0; i < 75; i++) {
+      petals.push({
         x: Math.random(),
         y: Math.random(),
-        radius: (2 + Math.random() * 6) * window.devicePixelRatio,
-        speed: 0.15 + Math.random() * 0.45,
+        r: (5 + Math.random() * 12) * window.devicePixelRatio,
+        sp: 0.2 + Math.random() * 0.8,
         drift: Math.random() * Math.PI * 2,
-        alpha: 0.25 + Math.random() * 0.55,
-        color: i % 3 === 0 ? 'rgba(13, 148, 136, ' : i % 3 === 1 ? 'rgba(16, 185, 129, ' : 'rgba(6, 182, 212, ',
+        a: 0.3 + Math.random() * 0.5,
+        type: i % 3,
       });
     }
 
-    let time = 0;
-    const render = () => {
-      time += 1;
-      ctx.clearRect(0, 0, width, height);
+    let t = 0;
+    const draw = () => {
+      t += 16;
+      ctx.clearRect(0, 0, W, H);
 
-      particles.forEach((p) => {
-        const px = (p.x + Math.sin(time * 0.0005 * p.speed + p.drift) * 0.03) * width;
-        const py = ((p.y - time * 0.0001 * p.speed) % 1) * height + (p.y < 0 ? height : 0);
-        const currentPy = py < 0 ? py + height : py;
+      petals.forEach((p) => {
+        const px = (p.x + Math.sin(t * 0.0003 * p.sp + p.drift) * 0.04) * W;
+        const py = (((p.y - t * 0.00005 * p.sp) % 1) + 1) % 1 * H;
+        const size = p.r;
 
-        const radialGradient = ctx.createRadialGradient(px, currentPy, 0, px, currentPy, p.radius * 2);
-        radialGradient.addColorStop(0, `${p.color}${p.alpha})`);
-        radialGradient.addColorStop(1, `${p.color}0)`);
+        ctx.globalAlpha = p.a * 0.75;
+        const g = ctx.createRadialGradient(px, py, 0, px, py, size);
 
-        ctx.fillStyle = radialGradient;
+        if (p.type === 0) {
+          g.addColorStop(0, 'rgba(13, 148, 136, 0.85)'); // Teal
+          g.addColorStop(1, 'rgba(13, 148, 136, 0)');
+        } else if (p.type === 1) {
+          g.addColorStop(0, 'rgba(16, 185, 129, 0.85)'); // Emerald
+          g.addColorStop(1, 'rgba(16, 185, 129, 0)');
+        } else {
+          g.addColorStop(0, 'rgba(6, 182, 212, 0.85)'); // Cyan
+          g.addColorStop(1, 'rgba(6, 182, 212, 0)');
+        }
+
+        ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(px, currentPy, p.radius * 2, 0, Math.PI * 2);
+        ctx.ellipse(px, py, size, size * 0.6, p.drift + t * 0.0002, 0, Math.PI * 2);
         ctx.fill();
       });
-
-      animationFrameId = requestAnimationFrame(render);
+      ctx.globalAlpha = 1;
+      animId = requestAnimationFrame(draw);
     };
 
-    render();
+    draw();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', onResize);
+      cancelAnimationFrame(animId);
     };
   }, []);
 
-  // 2. GSAP ScrollTrigger Pinned Beats Timeline
+  // 2. Smooth RAF Interpolation for 60FPS Scroll Animation
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const trigger = ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.5,
-      onUpdate: (self) => {
-        const prog = self.progress;
-        setCurrentProgress(prog);
+    let rawP = 0;
+    let renderP = 0;
+    let animReq;
 
-        // Find active beat index
-        const index = beatsData.findIndex((b) => prog >= b.start && prog <= b.end);
-        if (index !== -1) {
-          setActiveBeat(index);
-        }
-      },
-    });
+    const loop = () => {
+      renderP += (rawP - renderP) * 0.1;
+      setProgress(renderP);
+
+      // Find active beat
+      const currentBeatIdx = beats.findIndex((b) => renderP >= b.s && renderP <= b.e);
+      if (currentBeatIdx !== -1) {
+        setActiveBeatIndex(currentBeatIdx);
+      }
+
+      animReq = requestAnimationFrame(loop);
+    };
+
+    animReq = requestAnimationFrame(loop);
+
+    const onScroll = () => {
+      const rect = section.getBoundingClientRect();
+      const travel = section.offsetHeight - window.innerHeight;
+      const scrolled = Math.min(Math.max(-rect.top, 0), travel);
+      rawP = travel > 0 ? scrolled / travel : 0;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
     return () => {
-      trigger.kill();
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(animReq);
     };
   }, []);
 
   const jumpToBeat = (index) => {
     const section = sectionRef.current;
     if (!section) return;
-    const targetBeat = beatsData[index];
-    const midPoint = (targetBeat.start + targetBeat.end) / 2;
-    const totalScrollable = section.offsetHeight - window.innerHeight;
-    const targetScroll = section.offsetTop + midPoint * totalScrollable;
-
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth',
-    });
+    const b = beats[index];
+    const mid = (b.s + b.e) / 2;
+    const travel = section.offsetHeight - window.innerHeight;
+    const targetScroll = section.offsetTop + mid * travel;
+    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
   };
 
+  // Compute cinematic transforms based on render progress
+  const bouquetScale = 1 + progress * 0.55 - Math.max(0, progress - 0.48) * 0.35;
+  const bouquetRoll = progress * 4 - Math.max(0, progress - 0.65) * 3;
+  const bouquetFwd = progress * -40;
+
+  // Letterbox height calculation (0 to 7vh)
+  let lbHeight = 0;
+  if (progress < 0.06) lbHeight = (progress / 0.06) * 6;
+  else if (progress > 0.92) lbHeight = 6 * (1 - (progress - 0.92) / 0.08);
+  else lbHeight = 6;
+
   return (
-    <section ref={sectionRef} id="cinematic" className="relative" style={{ height: '700vh' }}>
+    <section ref={sectionRef} id="cinematic" className="relative" style={{ height: '820vh' }}>
       {/* Sticky Stage Container */}
-      <div
-        ref={pinStageRef}
-        className="sticky top-0 h-screen w-full overflow-hidden bg-gradient-to-b from-slate-50 via-tealbrand-50/30 to-emerald-50/20"
-      >
-        {/* Canvas Particle Overlay */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50">
+        {/* Canvas Petal Layer */}
         <canvas
           ref={canvasRef}
-          className="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-70"
+          className="absolute inset-0 w-full h-full z-10 pointer-events-none opacity-80"
         />
 
-        {/* Ambient Nature Radial Glow */}
-        <div className="absolute inset-0 z-0 bg-nature-radial pointer-events-none" />
+        {/* Dynamic Letterbox Bars (Top & Bottom) */}
+        <div
+          className="absolute top-0 left-0 right-0 bg-slate-950 z-30 transition-all duration-75"
+          style={{ height: `${lbHeight}vh` }}
+        />
+        <div
+          className="absolute bottom-0 left-0 right-0 bg-slate-950 z-30 transition-all duration-75"
+          style={{ height: `${lbHeight}vh` }}
+        />
 
-        {/* Technical Corner Framing Markers */}
-        <div className="absolute inset-6 md:inset-10 z-30 pointer-events-none">
-          <span className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-tealbrand-600/40 rounded-tl-sm"></span>
-          <span className="absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-tealbrand-600/40 rounded-tr-sm"></span>
-          <span className="absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-tealbrand-600/40 rounded-bl-sm"></span>
-          <span className="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-tealbrand-600/40 rounded-br-sm"></span>
+        {/* Ambient Radial Color Wash */}
+        <div
+          className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-300"
+          style={{
+            background:
+              'radial-gradient(circle at 50% 45%, rgba(204, 251, 241, 0.45), rgba(248, 250, 252, 0.85) 75%)',
+            opacity: 0.6 + Math.sin(progress * Math.PI) * 0.4,
+          }}
+        />
+
+        {/* Corner Brackets Framing */}
+        <div className="absolute inset-8 md:inset-12 z-30 pointer-events-none">
+          <span className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-tealbrand-600/50 rounded-tl-sm"></span>
+          <span className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-tealbrand-600/50 rounded-tr-sm"></span>
+          <span className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-tealbrand-600/50 rounded-bl-sm"></span>
+          <span className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-tealbrand-600/50 rounded-br-sm"></span>
         </div>
 
-        {/* Central 3D Floating Visual Card */}
+        {/* Central Floating Visual Card & Floating 3D Girl / Asset */}
         <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
           <div
-            className="transition-transform duration-700 ease-out"
+            className="relative flex items-center justify-center transition-transform duration-100 ease-linear"
             style={{
-              transform: `scale(${1 + currentProgress * 0.25}) rotate(${currentProgress * 6}deg)`,
+              transform: `scale(${bouquetScale}) rotate(${bouquetRoll}deg) translateY(${bouquetFwd}px)`,
             }}
           >
-            <div className="w-[300px] h-[300px] md:w-[460px] md:h-[460px] rounded-3xl nature-glass border border-tealbrand-500/20 p-8 flex flex-col justify-between shadow-2xl relative overflow-hidden group">
-              {/* Inner Circuit Micro Pattern */}
-              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#0d9488_1px,transparent_1px)] [background-size:16px_16px]"></div>
+            {/* Soft Ambient Aura behind floating asset */}
+            <div className="absolute w-[420px] h-[420px] rounded-full bg-tealbrand-400/20 blur-3xl animate-pulse-slow pointer-events-none" />
 
-              {/* Top Card Bar */}
-              <div className="flex items-center justify-between z-10">
-                <div className="flex items-center space-x-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                  <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-                    NODE ARCHITECTURE // Π-SPARROW
-                  </span>
-                </div>
-                <Cpu className="w-5 h-5 text-tealbrand-600" />
-              </div>
-
-              {/* Central Glowing Microchip Emblem */}
-              <div className="my-auto flex flex-col items-center justify-center z-10 text-center">
-                <div className="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-gradient-to-br from-tealbrand-500/10 via-emerald-500/10 to-cyanbrand-500/10 border border-tealbrand-500/30 flex items-center justify-center shadow-inner mb-4 relative">
-                  <div className="absolute inset-2 rounded-xl border border-dashed border-tealbrand-500/30 animate-spin-slow"></div>
-                  <span className="font-mono font-bold text-3xl md:text-5xl text-tealbrand-700 tracking-tighter">
-                    Π
-                  </span>
-                </div>
-                <span className="font-mono text-xs text-slate-500 font-medium tracking-widest uppercase">
-                  BIO-CIRCUIT CORE
-                </span>
-              </div>
-
-              {/* Bottom Card Metrics */}
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-200/80 z-10">
-                <div>
-                  <span className="block font-mono text-[9px] text-slate-400 uppercase tracking-wider">
-                    Throughput
-                  </span>
-                  <span className="font-mono text-xs font-bold text-tealbrand-800">
-                    10.4 GB/s
-                  </span>
-                </div>
-                <div className="text-right">
-                  <span className="block font-mono text-[9px] text-slate-400 uppercase tracking-wider">
-                    Efficiency
-                  </span>
-                  <span className="font-mono text-xs font-bold text-emerald-700">
-                    99.84%
-                  </span>
-                </div>
-              </div>
-            </div>
+            {/* 3D Floating Hero Image Asset (The Floating Visual from Reference) */}
+            <div
+              className="z-40 relative shadow-2xl rounded-3xl overflow-hidden border border-tealbrand-500/20 bg-white/40 backdrop-blur-md"
+              style={{
+                width: 'min(58vw, 42rem)',
+                aspectRatio: '16 / 11',
+                backgroundImage: `url("https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/d0f628cf-26bf-473d-81b9-50e422c51521_3840w.png")`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center center',
+              }}
+            />
           </div>
         </div>
 
-        {/* Multi-Beat Copy Overlay */}
+        {/* Multi-Beat Copy Beat Layer */}
         <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-6">
-          {beatsData.map((beat, idx) => {
-            const isVisible = activeBeat === idx;
+          {beats.map((beat, idx) => {
+            const op = calculateBeatOpacity(progress, beat.s, beat.e);
             return (
               <div
                 key={idx}
-                className={`beat-text absolute text-center max-w-3xl flex flex-col items-center transition-all duration-500 ${
-                  isVisible
-                    ? 'opacity-100 translate-y-0 scale-100'
-                    : 'opacity-0 translate-y-6 scale-95 pointer-events-none'
-                }`}
+                className="absolute flex flex-col items-center text-center max-w-3xl px-4 transition-all duration-300"
+                style={{
+                  opacity: op.toFixed(3),
+                  transform: `translateY(${(1 - op) * 24}px)`,
+                  pointerEvents: op > 0.5 ? 'auto' : 'none',
+                }}
               >
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
-                  <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-                    {beat.version}
-                  </span>
-                </div>
+                <p className="font-mono text-xs uppercase tracking-[0.35em] text-tealbrand-700 font-bold mb-3">
+                  {beat.version}
+                </p>
 
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-light text-slate-900 tracking-tight leading-tight mb-3">
-                  {beat.title}{' '}
-                  {beat.subtitle && (
-                    <span className="font-bold text-tealbrand-600 block sm:inline">
-                      {beat.subtitle}
-                    </span>
+                <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-tight mb-4 drop-shadow-sm">
+                  {beat.h1}{' '}
+                  {beat.h1Sub && (
+                    <span className="block text-tealbrand-600 font-light">{beat.h1Sub}</span>
                   )}
                 </h1>
 
-                <p className="font-mono text-xs sm:text-sm text-slate-600 tracking-wider uppercase max-w-xl mx-auto leading-relaxed">
-                  {beat.description}
-                </p>
+                {beat.p && (
+                  <p className="text-sm md:text-base font-mono text-slate-600 max-w-xl mx-auto leading-relaxed uppercase tracking-wider">
+                    {beat.p}
+                  </p>
+                )}
               </div>
             );
           })}
         </div>
 
-        {/* Timeline HUD Control (Bottom Left) */}
-        <div className="absolute left-6 md:left-12 bottom-8 z-50 flex items-center space-x-4 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-sm">
-          <div className="w-28 md:w-36 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+        {/* Timeline HUD Track (Bottom-Left) */}
+        <div className="absolute left-6 md:left-12 bottom-8 z-40 flex items-center space-x-4 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
+          <div className="w-32 md:w-44 h-1.5 bg-slate-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-tealbrand-500 via-emerald-500 to-cyanbrand-500 transition-all duration-150"
-              style={{ width: `${currentProgress * 100}%` }}
+              className="h-full bg-gradient-to-r from-tealbrand-500 via-emerald-500 to-cyanbrand-500 transition-all duration-75"
+              style={{ width: `${progress * 100}%` }}
             />
           </div>
-          <span className="font-mono text-xs font-semibold text-slate-700 tabular-nums">
-            {(currentProgress * 12.0).toFixed(2)}s
+          <span className="font-mono text-xs font-bold text-slate-800 tabular-nums">
+            {(progress * DUR).toFixed(2)}s
           </span>
         </div>
 
-        {/* Interactive Beat Navigation Dots (Bottom Right) */}
-        <div className="absolute right-6 md:right-12 bottom-8 z-50 flex items-center space-x-2 bg-white/80 backdrop-blur-md px-3.5 py-2 rounded-full border border-tealbrand-500/20 shadow-sm">
-          {beatsData.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => jumpToBeat(idx)}
-              title={`Jump to Beat ${idx + 1}`}
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                activeBeat === idx
-                  ? 'bg-tealbrand-600 scale-125 ring-2 ring-tealbrand-500/30'
-                  : 'bg-slate-300 hover:bg-tealbrand-400'
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Scroll Indicator Prompt */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-40 hidden md:flex flex-col items-center text-slate-400 animate-bounce">
-          <span className="font-mono text-[9px] uppercase tracking-widest mb-1 text-slate-500">
-            SCROLL TO EXPLORE
-          </span>
-          <ChevronDown className="w-4 h-4 text-tealbrand-600" />
+        {/* Interactive Beat Dots (Bottom-Right) */}
+        <div className="absolute right-6 md:right-12 bottom-8 z-40 flex items-center space-x-2 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
+          {beats.map((b, idx) => {
+            const isActive = progress >= b.s && progress <= b.e;
+            return (
+              <button
+                key={idx}
+                onClick={() => jumpToBeat(idx)}
+                title={`Jump to Beat ${idx + 1}`}
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  isActive
+                    ? 'bg-tealbrand-600 scale-150 ring-2 ring-tealbrand-500/40'
+                    : 'bg-slate-300 hover:bg-tealbrand-400'
+                }`}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
