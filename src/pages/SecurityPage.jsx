@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ShieldCheck, Lock, Server, Cpu } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Lock, Server, Cpu, CheckCircle2 } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -156,16 +156,59 @@ export default function SecurityPage() {
         </div>
       </section>
 
-      <section className="py-24 max-w-5xl mx-auto px-6 space-y-16">
+      {/* Comprehensive Security Whitepaper Content */}
+      <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
+            <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
+              ZERO-TRUST SECURITY WHITEPAPER // V2.0.0
+            </span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
+            Security & Defense Architecture
+          </h2>
+          <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mt-2">
+            Enterprise Cryptography & Threat Mitigation Standards
+          </p>
+        </div>
+
+        {/* Section 1 */}
         <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
           <div className="flex items-center space-x-3 text-tealbrand-600">
-            <ShieldCheck className="w-8 h-8" />
-            <h2 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              1. Zero-Trust Security Blueprint
-            </h2>
+            <ShieldCheck className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              1. Multi-Tenant Container Isolation
+            </h3>
           </div>
-          <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-            Security at Πsparrow is embedded into every line of code. From containerized microservices to model weights and RBAC permissions, our platform provides complete enterprise protection.
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Every SaaS platform instance (HRMS, CRM, CMS, LMS, PlaySchool) and AI agent process operates inside a virtualized sandbox container with dedicated memory allocation, database schemas, and strict RBAC policy enforcement.
+          </p>
+        </div>
+
+        {/* Section 2 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-emerald-600">
+            <Lock className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              2. 256-Bit HSM Key Management
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Secrets, database connection strings, and fine-tuned AI model weights are sealed within FIPS 140-2 Level 3 certified Hardware Security Modules (HSM) featuring automated key rotation and instant revocation.
+          </p>
+        </div>
+
+        {/* Section 3 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-cyanbrand-600">
+            <Server className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              3. Continuous Auditing & SOC-2 Alignment
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            All system mutations produce cryptographically signed audit logs. Third-party penetration testing and vulnerability scans are conducted quarterly to verify system resilience.
           </p>
         </div>
       </section>
