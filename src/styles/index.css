@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #f8fafc;
+    color: #1e293b;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0d9488;
+}
+
+/* Glassmorphic nature utility cards */
+.nature-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(13, 148, 136, 0.15);
+  box-shadow: 0 4px 20px -2px rgba(13, 148, 136, 0.05);
+}
+
+.nature-glass-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nature-glass-hover:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(13, 148, 136, 0.35);
+  box-shadow: 0 12px 32px -4px rgba(13, 148, 136, 0.12);
+  transform: translateY(-4px);
+}
+
+/* Technical Bracket Marker */
+.tech-bracket {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: rgba(13, 148, 136, 0.4);
+  pointer-events: none;
+}
+
+/* Custom radial background wash */
+.bg-nature-radial {
+  background: radial-gradient(circle at 50% 40%, rgba(204, 251, 241, 0.45) 0%, rgba(240, 253, 244, 0.25) 50%, rgba(248, 250, 252, 0.9) 100%);
+}
+
+/* Pinned timeline beats opacity transitions */
+.beat-text {
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
