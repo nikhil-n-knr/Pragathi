@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, FileText } from 'lucide-react';
+import { ArrowLeft, FileText, Scale, Cpu, ShieldAlert, CreditCard, Award, CheckCircle2 } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -117,11 +117,12 @@ export default function TermsPage() {
     <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative">
       <Navbar />
 
+      {/* Cinematic Sticky Hero Stage */}
       <section ref={sectionRef} className="relative" style={{ height: '400vh' }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
-          {/* Faded Floating 3D Digital Terms Contract Artwork (opacity 0.35 for crisp text visibility) */}
+          {/* Floating 3D Digital Terms Contract Artwork */}
           <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-35">
             <div className="animate-soft-float flex items-center justify-center">
               <div
@@ -195,22 +196,24 @@ export default function TermsPage() {
         </div>
       </section>
 
+      {/* Comprehensive Detailed Terms Content */}
       <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
             <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-              MASTER TERMS & SLA AGREEMENT
+              MASTER TERMS OF SERVICE & SLA AGREEMENT
             </span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
-            Terms of Service & Licensing
+            Terms of Service & Enterprise Licensing
           </h2>
           <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mt-2">
-            Πsparrow Software Solutions — Production Licensing Terms
+            Πsparrow Software Solutions — Production Licensing & SLA Framework
           </p>
         </div>
 
+        {/* Section 1 */}
         <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
           <div className="flex items-center space-x-3 text-tealbrand-600">
             <FileText className="w-8 h-8 flex-shrink-0" />
@@ -219,7 +222,86 @@ export default function TermsPage() {
             </h3>
           </div>
           <p className="text-slate-600 text-sm leading-relaxed">
-            All software products, full-stack portals, custom UI/UX design systems, and agentic workflows developed by Πsparrow are provided under enterprise non-exclusive or dedicated architecture license terms. Clients are granted full operational usage rights within agreed tenant scopes.
+            All software products, full-stack portals, custom UI/UX design systems, and agentic workflows developed by Πsparrow Software Solutions ("Πsparrow") are provided under enterprise non-exclusive or dedicated architecture license terms. Clients are granted full operational usage rights within agreed tenant scopes.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 font-mono text-xs text-slate-700">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
+              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
+              <span>Dedicated Tenant License Scope & Dedicated IP Protection</span>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
+              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
+              <span>Source Code & Design Token Ownership Options</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 2 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-emerald-600">
+            <Scale className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              2. 99.99% Service Level Agreement (SLA) Uptime Guarantee
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Πsparrow guarantees a 99.99% operational availability SLA for hosted multi-region SaaS instances (HRMS, CRM, CMS, LMS, PlaySchool Safety). Scheduled maintenance windows are announced via telemetry logs at least 48 hours prior to execution.
+          </p>
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 font-mono text-xs text-slate-700">
+            <strong className="text-slate-900 block mb-1">AUTOMATED SLA CREDIT COMPENSATIONS:</strong>
+            In the event of unscheduled downtime exceeding 0.01% in any calendar month, eligible enterprise clients receive automatic service credit compensations applied directly to subsequent billing cycles.
+          </div>
+        </div>
+
+        {/* Section 3 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-cyanbrand-600">
+            <Cpu className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              3. AI Swarm & Autonomous Agent Governance Rules
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Users deploying autonomous AI swarms must comply with ethical computing boundaries. Agents must not be executed for illegal data scraping, unthrottled DDoS generation, or malicious prompt injection attacks. Violations trigger immediate container sandbox isolation.
+          </p>
+        </div>
+
+        {/* Section 4 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-tealbrand-600">
+            <Award className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              4. Turnkey SaaS Suite Licensing & Continuous Upgrades
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Our flagship SaaS suites (HRMS, CRM, CMS, LMS, PlaySchool Safety, VisualFrog Engine) include continuous platform updates, automated database schema migrations, and 24/7 technical assistance under active enterprise subscriptions.
+          </p>
+        </div>
+
+        {/* Section 5 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-emerald-600">
+            <CreditCard className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              5. Subscription Billing, Upgrades & Lifecycle
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Enterprise subscriptions are billed on a monthly or annual cycle as outlined in your master order agreement. Upgrades to higher throughput tiers take effect immediately. Subscriptions may be canceled at the end of any billing period with zero cancellation penalties.
+          </p>
+        </div>
+
+        {/* Section 6 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-tealbrand-600">
+            <ShieldAlert className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              6. Limitation of Liability & Dispute Resolution
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            To the maximum extent permitted by law, Πsparrow Software Solutions shall not be liable for indirect, incidental, or consequential damages resulting from third-party edge provider outages or client-side key exposure. All disputes are resolved through binding international arbitration.
           </p>
         </div>
       </section>

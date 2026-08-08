@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Lock, Server, Cpu, CheckCircle2, AlertTriangle, RefreshCw } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -117,11 +117,12 @@ export default function SecurityPage() {
     <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative">
       <Navbar />
 
+      {/* Cinematic Sticky Hero Stage */}
       <section ref={sectionRef} className="relative" style={{ height: '400vh' }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
-          {/* Faded Floating 3D Zero-Trust HSM Security Vault Artwork (opacity 0.35 for crisp text visibility) */}
+          {/* Floating 3D Zero-Trust HSM Security Vault Artwork */}
           <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-35">
             <div className="animate-soft-float flex items-center justify-center">
               <div
@@ -195,12 +196,13 @@ export default function SecurityPage() {
         </div>
       </section>
 
+      {/* Comprehensive Security Whitepaper Content */}
       <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
             <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-              ZERO-TRUST SECURITY WHITEPAPER
+              ZERO-TRUST SECURITY & DEFENSE WHITEPAPER
             </span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
@@ -211,15 +213,91 @@ export default function SecurityPage() {
           </p>
         </div>
 
+        {/* Section 1 */}
         <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
           <div className="flex items-center space-x-3 text-tealbrand-600">
             <ShieldCheck className="w-8 h-8 flex-shrink-0" />
             <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              1. Multi-Tenant Container Isolation
+              1. Multi-Tenant Container Sandbox Isolation
             </h3>
           </div>
           <p className="text-slate-600 text-sm leading-relaxed">
-            Every SaaS platform instance (HRMS, CRM, CMS, LMS, PlaySchool) and AI agent process operates inside a virtualized sandbox container with dedicated memory allocation, database schemas, and strict RBAC policy enforcement.
+            Every SaaS platform instance (HRMS, CRM, CMS, LMS, PlaySchool) and AI agent process operates inside a virtualized sandbox container with dedicated memory allocation, database schema separation, and strict Role-Based Access Control (RBAC) policy enforcement.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 font-mono text-xs text-slate-700">
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
+              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
+              <span>Isolated Sandbox Containers with Resource Quota Caps</span>
+            </div>
+            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
+              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
+              <span>Zero Cross-Tenant Database Visibility Enforcement</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Section 2 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-emerald-600">
+            <Lock className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              2. 256-Bit HSM Key Management & Vault Protection
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Secrets, database connection strings, and fine-tuned AI model weights are sealed within FIPS 140-2 Level 3 certified Hardware Security Modules (HSM) featuring automated key rotation and instant revocation.
+          </p>
+        </div>
+
+        {/* Section 3 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-cyanbrand-600">
+            <Server className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              3. Cryptographically Signed Immutable Audit Ledgers
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            All system mutations, permission configuration changes, and model inference executions generate cryptographically signed audit logs. Any tampering attempt invalidates the hash chain and alerts our security operations center immediately.
+          </p>
+        </div>
+
+        {/* Section 4 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-tealbrand-600">
+            <AlertTriangle className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              4. Real-Time Automated DDoS & Threat Telemetry
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Perimeter firewalls and edge clusters utilize continuous automated rate limiting and AI threat detection swarms to block malicious traffic, SQL injection attacks, and unthrottled scraping bots in under 5 milliseconds.
+          </p>
+        </div>
+
+        {/* Section 5 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-emerald-600">
+            <Cpu className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              5. SOC-2 Alignment & Penetration Testing Protocols
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Independent third-party security auditors conduct quarterly penetration testing and vulnerability assessments across our infrastructure, verifying strict alignment with SOC-2 Type II standards.
+          </p>
+        </div>
+
+        {/* Section 6 */}
+        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
+          <div className="flex items-center space-x-3 text-cyanbrand-600">
+            <RefreshCw className="w-8 h-8 flex-shrink-0" />
+            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
+              6. Incident Response & Disaster Recovery
+            </h3>
+          </div>
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Automated database snapshot backups are replicated across geo-redundant storage clusters every 15 minutes, guaranteeing a Recovery Point Objective (RPO) of under 15 minutes and Recovery Time Objective (RTO) of under 1 hour.
           </p>
         </div>
       </section>
