@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Lock, Database } from 'lucide-react';
+import { ArrowLeft, Lock, Database, ShieldCheck, Eye } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -122,8 +122,8 @@ export default function PrivacyPage() {
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
-          {/* Floating 3D Quantum Privacy Shield Artwork (True Alpha Transparent PNG) */}
-          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+          {/* Faded Floating 3D Quantum Privacy Shield Artwork (opacity 0.35 for crisp text visibility) */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-35">
             <div className="animate-soft-float flex items-center justify-center">
               <div
                 ref={bouquetRef}
@@ -149,14 +149,14 @@ export default function PrivacyPage() {
           <div className="absolute top-24 left-8 z-40">
             <Link
               to="/"
-              className="inline-flex items-center space-x-2 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full border border-slate-200 text-xs font-mono font-bold text-slate-700 hover:text-tealbrand-600 shadow-sm"
+              className="inline-flex items-center space-x-2 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full border border-slate-200 text-xs font-mono font-bold text-slate-800 hover:text-tealbrand-600 shadow-md"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Platform</span>
             </Link>
           </div>
 
-          {/* 4 Pinned Beats */}
+          {/* 4 Pinned Beats with High-Contrast Brightened Text */}
           <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-6">
             {beats.map((beat, idx) => (
               <div
@@ -165,25 +165,37 @@ export default function PrivacyPage() {
                 className="flex flex-col items-center absolute text-center px-6 max-w-3xl"
                 style={{ opacity: 0 }}
               >
-                <p className="text-xs uppercase tracking-[0.35rem] text-tealbrand-700 font-bold mb-4 font-mono">
-                  {beat.label}
-                </p>
-                <h1 className="text-4xl sm:text-6xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
+                <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-white/90 backdrop-blur-md border border-tealbrand-500/30 mb-4 shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600 animate-ping"></span>
+                  <span className="text-[11px] uppercase tracking-[0.25rem] text-tealbrand-800 font-extrabold font-mono">
+                    {beat.label}
+                  </span>
+                </div>
+
+                <h1
+                  className="text-4xl sm:text-6xl font-extrabold text-slate-950 tracking-tight leading-tight mb-6"
+                  style={{
+                    filter: 'drop-shadow(0 4px 16px rgba(255, 255, 255, 1.0))',
+                  }}
+                >
                   {beat.title}
                 </h1>
-                <p className="text-sm sm:text-base font-mono text-slate-600 max-w-xl leading-relaxed uppercase tracking-wider">
-                  {beat.p}
-                </p>
+
+                <div className="bg-white/95 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200/90 shadow-xl max-w-xl">
+                  <p className="text-xs sm:text-sm font-mono text-slate-900 font-bold leading-relaxed uppercase tracking-wider">
+                    {beat.p}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
 
           {/* Timeline Track */}
-          <div className="absolute left-8 bottom-12 z-45 flex items-center gap-4 bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
+          <div className="absolute left-8 bottom-12 z-45 flex items-center gap-4 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/30 shadow-lg">
             <div className="w-40 h-1.5 rounded-full bg-slate-200 overflow-hidden">
               <div ref={tlFillRef} className="h-full bg-tealbrand-600" style={{ width: '0%' }} />
             </div>
-            <span className="font-mono text-xs font-bold text-slate-700">Privacy Governance</span>
+            <span className="font-mono text-xs font-bold text-slate-900">Privacy Governance</span>
           </div>
         </div>
       </section>
@@ -191,7 +203,7 @@ export default function PrivacyPage() {
       {/* Comprehensive Detailed Legal Content Sections */}
       <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
             <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
               OFFICIAL PRIVACY POLICY
