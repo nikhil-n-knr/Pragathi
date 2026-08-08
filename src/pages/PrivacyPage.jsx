@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Lock, Database, ShieldCheck, Eye } from 'lucide-react';
+import { ArrowLeft, Lock, Database } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -122,7 +122,7 @@ export default function PrivacyPage() {
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
-          {/* Floating 3D Quantum Privacy Shield Artwork */}
+          {/* Seamless Floating 3D Quantum Privacy Shield Artwork (Multiply Blend Mode for zero white background) */}
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
             <div className="animate-soft-float flex items-center justify-center">
               <div
@@ -135,6 +135,7 @@ export default function PrivacyPage() {
                   backgroundSize: 'contain',
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center center',
+                  mixBlendMode: 'multiply',
                   willChange: 'transform',
                 }}
               />

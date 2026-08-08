@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, FileText, Scale, Cpu, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, FileText, Scale } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -15,28 +15,28 @@ export default function TermsPage() {
 
   const beats = [
     {
-      label: 'TERMS BEAT 01',
+      label: 'ARCHITECTURE LICENSING',
       title: 'Architecture Licensing',
       p: 'All custom software products, UI/UX design systems, and agentic workflows built by Πsparrow are licensed for enterprise scalability under dedicated agreement terms.',
       s: 0.0,
       e: 0.25,
     },
     {
-      label: 'TERMS BEAT 02',
+      label: '99.99% SLA COMMITMENT',
       title: '99.99% SLA Commitment',
       p: 'Our global multi-region edge mesh maintains a guaranteed 99.99% operational uptime. Automated status telemetry is publicly auditable in real time.',
       s: 0.26,
       e: 0.5,
     },
     {
-      label: 'TERMS BEAT 03',
+      label: 'SWARM GOVERNANCE',
       title: 'Swarm Governance Rules',
       p: 'Autonomous AI swarms must operate within certified ethics guidelines and rate boundaries. Misuse or unthrottled scraping triggers automated container isolation.',
       s: 0.51,
       e: 0.75,
     },
     {
-      label: 'TERMS BEAT 04',
+      label: 'TURNKEY SAAS SUPPORT',
       title: 'Turnkey SaaS Support',
       p: 'Full maintenance, automatic security patches, and database migrations are provided continuously for HRMS, CRM, CMS, LMS, and PlaySchool platforms.',
       s: 0.76,
@@ -121,7 +121,7 @@ export default function TermsPage() {
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
-          {/* Floating 3D Digital Terms Contract Artwork */}
+          {/* Seamless Floating 3D Digital Terms Contract Artwork (Multiply Blend Mode) */}
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
             <div className="animate-soft-float flex items-center justify-center">
               <div
@@ -134,6 +134,7 @@ export default function TermsPage() {
                   backgroundSize: 'contain',
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center center',
+                  mixBlendMode: 'multiply',
                   willChange: 'transform',
                 }}
               />

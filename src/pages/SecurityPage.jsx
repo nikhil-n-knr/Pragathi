@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ShieldCheck, Lock, Server } from 'lucide-react';
+import { ArrowLeft, ShieldCheck } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -15,28 +15,28 @@ export default function SecurityPage() {
 
   const beats = [
     {
-      label: 'SECURITY BEAT 01',
+      label: 'ISOLATED SANDBOXES',
       title: 'Isolated Tenant Sandboxes',
       p: 'Every SaaS platform instance and AI swarm operates within a dedicated isolated container with strict memory boundaries.',
       s: 0.0,
       e: 0.25,
     },
     {
-      label: 'SECURITY BEAT 02',
+      label: 'IMMUTABLE AUDIT LOGGING',
       title: 'Immutable Audit Logging',
       p: 'All data mutations, permission changes, and model inferences generate real-time cryptographic audit logs for total transparency.',
       s: 0.26,
       e: 0.5,
     },
     {
-      label: 'SECURITY BEAT 03',
+      label: '256-BIT HSM VAULT',
       title: '256-Bit HSM Vault',
       p: 'API keys, database credentials, and fine-tuned weights are locked behind Hardware Security Modules with automated rotation.',
       s: 0.51,
       e: 0.75,
     },
     {
-      label: 'SECURITY BEAT 04',
+      label: '24/7 THREAT TELEMETRY',
       title: '24/7 Threat Telemetry',
       p: 'Real-time automated DDoS defense, vulnerability scanning, and anomaly detection swarms monitor every request line continuously.',
       s: 0.76,
@@ -121,7 +121,7 @@ export default function SecurityPage() {
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
-          {/* Floating 3D Zero-Trust HSM Security Vault Artwork */}
+          {/* Seamless Floating 3D Zero-Trust HSM Security Vault Artwork (Multiply Blend Mode) */}
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
             <div className="animate-soft-float flex items-center justify-center">
               <div
@@ -134,6 +134,7 @@ export default function SecurityPage() {
                   backgroundSize: 'contain',
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center center',
+                  mixBlendMode: 'multiply',
                   willChange: 'transform',
                 }}
               />
