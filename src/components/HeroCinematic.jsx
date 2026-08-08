@@ -14,63 +14,48 @@ export default function HeroCinematic() {
   const dotRowRef = useRef(null);
   const beatElsRef = useRef([]);
 
-  const DUR = 12.75;
+  const DUR = 10.0;
 
+  // 5 Uniform Clean Beats detailing Pi Sparrow's core capabilities
   const beatsData = [
     {
-      version: 'ENGINEERING PLATFORMS // V2.0',
-      h1: 'Quiet Nodes,',
-      h1Sub: 'Waiting Data',
-      p: 'Algorithms unfold as raw data moves through the neural bio-circuit network.',
+      version: 'BEAT 01 // COMPLETE SOFTWARE & UI/UX',
+      h1: 'Software & UI/UX,',
+      h1Sub: 'Designed Naturally',
+      p: 'We craft high-performance full-stack web applications, mobile platforms, and sleek UI/UX design systems.',
       s: 0.0,
-      e: 0.1,
+      e: 0.18,
     },
     {
-      version: 'THE DESIGN PHILOSOPHY',
-      h1: 'The First Boot',
-      h1Sub: '',
-      p: 'Combining mathematical precision with agility, diligence, and system integrity.',
-      s: 0.11,
-      e: 0.22,
+      version: 'BEAT 02 // AI AUTOMATION & AGENTIC AI',
+      h1: 'Agentic AI Swarms,',
+      h1Sub: 'Automated Execution',
+      p: 'Engineering autonomous AI agents that handle complex multi-step workflows with mathematical precision.',
+      s: 0.19,
+      e: 0.38,
     },
     {
-      version: 'SYSTEM REGISTRY',
-      h1: 'Connected Swarms',
-      h1Sub: '',
-      p: 'Ready-to-deploy, high-contrast visual architectures tailored for modern enterprise.',
-      s: 0.23,
-      e: 0.33,
+      version: 'BEAT 03 // MODEL TRAINING & FINE-TUNING',
+      h1: 'Custom Model Training,',
+      h1Sub: 'Domain Intelligence',
+      p: 'Training and fine-tuning specialized AI models tailored specifically for enterprise domain modules.',
+      s: 0.39,
+      e: 0.58,
     },
     {
-      version: 'PRECISION COMPUTING',
-      h1: 'A Full Cluster',
-      h1Sub: '',
-      p: 'Fifty-four autonomous nodes, architected to scale from every angle.',
-      s: 0.34,
-      e: 0.47,
+      version: 'BEAT 04 // READY SAAS PRODUCTS',
+      h1: 'Turnkey Products,',
+      h1Sub: 'Built For Industry',
+      p: 'Ready-to-deploy platforms: HRMS, CRM, CMS, LMS, PlaySchool Safety, and Utility engines.',
+      s: 0.59,
+      e: 0.78,
     },
     {
-      version: 'SERVICE DIRECTORY',
-      h1: 'Data Lift',
-      h1Sub: 'Carried by Cloud',
-      p: 'High-frequency telemetry carried naturally through light-speed streams.',
-      s: 0.48,
-      e: 0.64,
-    },
-    {
-      version: 'COMMUNICATION CANAL',
-      h1: 'Into the Stream',
-      h1Sub: '',
-      p: 'Turnkey hardware and software execution built for modern industry.',
-      s: 0.65,
-      e: 0.81,
-    },
-    {
-      version: 'ΠSPARROW LIVE',
+      version: 'BEAT 05 // ΠSPARROW LIVE',
       h1: 'ΠSPARROW PLATFORM',
       h1Sub: '',
-      p: 'System active — explore the products and capabilities below.',
-      s: 0.82,
+      p: 'System active — explore our core software solutions and flagship products below.',
+      s: 0.79,
       e: 1.0,
     },
   ];
@@ -84,7 +69,7 @@ export default function HeroCinematic() {
     return 1;
   };
 
-  // 1:1 Velocity-Aware RAF Loop matching Ref/generated-page.html lines 613-664
+  // Smooth RAF Loop for 5 Pinned Beats
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -93,10 +78,10 @@ export default function HeroCinematic() {
     let renderP = 0;
     let animId;
 
-    // Build continuous timeline dot row matching Image 2 1:1 (~35 dots across bottom right)
+    // Continuous timeline dot row across bottom right
     const dotRow = dotRowRef.current;
     const dotSpans = [];
-    const totalDots = 35;
+    const totalDots = 30;
     if (dotRow) {
       dotRow.innerHTML = '';
       for (let i = 0; i < totalDots; i++) {
@@ -134,27 +119,24 @@ export default function HeroCinematic() {
       renderP += (rawP - renderP) * 0.1;
       const p = renderP;
 
-      // 1:1 Scale, Roll, Translation math from Ref/generated-page.html lines 617-623
-      const scale = 1 + p * 0.55 - Math.max(0, p - 0.48) * 0.35;
-      const roll = p * 4 - Math.max(0, p - 0.65) * 3;
-      const fwd = p * -40;
+      const scale = 1 + p * 0.5 - Math.max(0, p - 0.5) * 0.3;
+      const roll = p * 3 - Math.max(0, p - 0.7) * 2;
+      const fwd = p * -35;
 
       if (bouquetRef.current) {
         bouquetRef.current.style.transform = `scale(${scale.toFixed(4)}) rotate(${roll.toFixed(2)}deg) translateY(${fwd.toFixed(1)}px)`;
       }
       if (bgLayerRef.current) {
-        bgLayerRef.current.style.transform = `scale(${(1.1 + p * 0.15).toFixed(4)}) translateY(${(p * -60).toFixed(1)}px)`;
+        bgLayerRef.current.style.transform = `scale(${(1.1 + p * 0.15).toFixed(4)}) translateY(${(p * -50).toFixed(1)}px)`;
       }
       if (midLayerRef.current) {
-        midLayerRef.current.style.transform = `translateY(${(p * 30).toFixed(1)}px)`;
+        midLayerRef.current.style.transform = `translateY(${(p * 25).toFixed(1)}px)`;
       }
 
-      // Grade wash opacity matching Ref/generated-page.html line 628
       if (gradeWashRef.current) {
         gradeWashRef.current.style.opacity = (0.4 + Math.sin(p * Math.PI) * 0.5).toFixed(3);
       }
 
-      // Letterbox height math (0 to 7vh) matching Ref/generated-page.html lines 630-636
       let lb = 0;
       if (p < 0.06) lb = (p / 0.06) * 7;
       else if (p > 0.92) lb = 7 * (1 - (p - 0.92) / 0.08);
@@ -163,11 +145,9 @@ export default function HeroCinematic() {
       if (lbTopRef.current) lbTopRef.current.style.height = `${lb.toFixed(2)}vh`;
       if (lbBotRef.current) lbBotRef.current.style.height = `${lb.toFixed(2)}vh`;
 
-      // Timeline fill & label matching Ref/generated-page.html lines 638-639
       if (tlFillRef.current) tlFillRef.current.style.width = `${(p * 100).toFixed(2)}%`;
       if (timeLabelRef.current) timeLabelRef.current.textContent = `${(p * DUR).toFixed(2)}s`;
 
-      // Update beats text opacity & dot highlight row matching Ref/generated-page.html lines 641-648
       beatsData.forEach((b, idx) => {
         const o = calculateBeatOpacity(p, b.s, b.e);
         const el = beatElsRef.current[idx];
@@ -208,13 +188,13 @@ export default function HeroCinematic() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="cinematic" className="relative" style={{ height: '820vh' }}>
+    <section ref={sectionRef} id="cinematic" className="relative" style={{ height: '600vh' }}>
       {/* Pinned Stage Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50">
-        {/* 3D WebGL Swarming Particle Atmosphere (Swirling 3D Orbital Rings) */}
+        {/* 3D WebGL Swarming Particle Atmosphere */}
         <ParticleSwarm3D />
 
-        {/* Parallax Visual Layers matching Ref/generated-page.html lines 54-84 */}
+        {/* Parallax Visual Layer */}
         <div id="visualWrap" className="absolute inset-0 z-1 pointer-events-none" style={{ willChange: 'transform' }}>
           <div
             ref={bgLayerRef}
@@ -230,7 +210,7 @@ export default function HeroCinematic() {
           >
             <div className="flex items-center justify-center w-full h-full">
               <div className="animate-soft-float flex items-center justify-center">
-                {/* 1:1 Transparent Floating Figure (NO white card wrapper!) matching Ref/generated-page.html line 80 */}
+                {/* Seamless Floating Figure (No card wrapper) */}
                 <div
                   ref={bouquetRef}
                   id="bouquet"
@@ -250,7 +230,7 @@ export default function HeroCinematic() {
           </div>
         </div>
 
-        {/* Radial Color Grade Wash matching Ref/generated-page.html line 87 */}
+        {/* Radial Color Grade Wash */}
         <div
           ref={gradeWashRef}
           id="gradeWash"
@@ -262,7 +242,7 @@ export default function HeroCinematic() {
           }}
         />
 
-        {/* Dynamic Letterbox Bars matching Ref/generated-page.html lines 90-91 */}
+        {/* Dynamic Letterbox Bars */}
         <div
           ref={lbTopRef}
           id="lbTop"
@@ -276,7 +256,7 @@ export default function HeroCinematic() {
           style={{ height: '0vh', willChange: 'height' }}
         />
 
-        {/* Corner Brackets Frame matching Ref/generated-page.html lines 93-99 */}
+        {/* Corner Brackets Frame */}
         <div className="absolute inset-6 md:inset-10 z-30 pointer-events-none">
           <span className="absolute top-0 left-0 w-5.5 h-5.5 border-t border-l border-tealbrand-600/50"></span>
           <span className="absolute top-0 right-0 w-5.5 h-5.5 border-t border-r border-tealbrand-600/50"></span>
@@ -284,7 +264,7 @@ export default function HeroCinematic() {
           <span className="absolute bottom-0 right-0 w-5.5 h-5.5 border-b border-r border-tealbrand-600/50"></span>
         </div>
 
-        {/* Copy Beats Layer matching Ref/generated-page.html lines 102-162 */}
+        {/* 5 Uniform Copy Beats */}
         <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-6">
           {beatsData.map((beat, idx) => (
             <div
@@ -297,7 +277,7 @@ export default function HeroCinematic() {
                 {beat.version}
               </p>
 
-              <h1 className="tracking-tight text-slate-900 font-medium leading-[0.95]" style={{ fontSize: 'clamp(2.5rem, 8vw, 6rem)' }}>
+              <h1 className="tracking-tight text-slate-900 font-medium leading-[0.95]" style={{ fontSize: 'clamp(2.5rem, 7.5vw, 5.8rem)' }}>
                 {beat.h1}{' '}
                 {beat.h1Sub && (
                   <>
@@ -308,7 +288,7 @@ export default function HeroCinematic() {
               </h1>
 
               {beat.p && (
-                <p className="text-sm md:text-base mt-4 text-slate-600 font-mono tracking-wider uppercase max-w-md">
+                <p className="text-sm md:text-base mt-4 text-slate-600 font-mono tracking-wider uppercase max-w-lg">
                   {beat.p}
                 </p>
               )}
@@ -316,7 +296,7 @@ export default function HeroCinematic() {
           ))}
         </div>
 
-        {/* Timeline HUD Track matching Ref/generated-page.html lines 165-170 (Bottom Left) */}
+        {/* Timeline HUD Track (Bottom Left) */}
         <div className="absolute left-8 bottom-12 z-45 flex items-center gap-4 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
           <div id="timelineTrack" className="w-44 h-1 rounded-full bg-slate-200 overflow-hidden">
             <div
@@ -335,7 +315,7 @@ export default function HeroCinematic() {
           </span>
         </div>
 
-        {/* Continuous Dot Row matching Ref/generated-page.html lines 173-195 (Bottom Right, Image 2 1:1) */}
+        {/* Continuous Dot Row (Bottom Right) */}
         <div
           ref={dotRowRef}
           id="dotRow"
