@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import HeroCinematic from './components/HeroCinematic';
 import ShowcaseGrid from './components/ShowcaseGrid';
@@ -11,6 +12,27 @@ import ContactCanal from './components/ContactCanal';
 import Footer from './components/Footer';
 
 export default function App() {
+  // Initialize Lenis Smooth Scroll for silky 60fps/120fps scroll physics
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900">
       {/* Navigation Header */}
@@ -18,28 +40,28 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main>
-        {/* 1. Cinematic Scroll Hero (Pinned 7-Beat GSAP Stage + Canvas Particles) */}
+        {/* 1. Cinematic Pinned Scroll Hero */}
         <HeroCinematic />
 
-        {/* 2. Showcase Grid (3D Product Cards) */}
+        {/* 2. Showcase Grid */}
         <ShowcaseGrid />
 
         {/* 3. Craft Parallax Banner */}
         <CraftParallaxBanner />
 
-        {/* 4. Capabilities Grid (Hardware & Software Enterprise Stack) */}
+        {/* 4. Capabilities Grid */}
         <CapabilitiesGrid />
 
         {/* 5. Typography Manifesto */}
         <ManifestoTypography />
 
-        {/* 6. Telemetry & Scale System Board */}
+        {/* 6. Telemetry & Scale Board */}
         <TelemetryBoard />
 
         {/* 7. Core Flock Team Section */}
         <TeamSection />
 
-        {/* 8. Contact & Project Initialization Form */}
+        {/* 8. Contact & Project Form */}
         <ContactCanal />
       </main>
 
