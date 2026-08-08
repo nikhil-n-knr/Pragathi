@@ -1,42 +1,73 @@
-import React from 'react';
-import { ArrowRight, Compass } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ArrowRight } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function CraftParallaxBanner() {
+  const sectionRef = useRef(null);
+  const bgRef = useRef(null);
+
+  // 1:1 GSAP background scroll parallax matching Ref/generated-page.html line 698
+  useEffect(() => {
+    if (!sectionRef.current || !bgRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.to(bgRef.current, {
+        yPercent: 20,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative py-24 bg-gradient-to-r from-tealbrand-900 via-tealbrand-800 to-emerald-900 text-white overflow-hidden shadow-inner">
-      {/* Background Decorative Tech Lattice */}
-      <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+    <section
+      ref={sectionRef}
+      id="craft"
+      className="relative overflow-hidden flex items-center shadow-inner"
+      style={{ height: '70vh' }}
+    >
+      {/* Background Parallax Image Layer matching Ref/generated-page.html line 267 */}
+      <div
+        ref={bgRef}
+        id="craftBg"
+        className="absolute inset-[-15%] bg-cover bg-center will-change-transform"
+        style={{
+          backgroundImage: `url('https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/cf973fee-26dd-4029-b42e-26dfa75c7417_3840w.png')`,
+          filter: 'brightness(0.7) saturate(0.9)',
+        }}
+      />
 
-      {/* Ambient Radial Highlights */}
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-cyanbrand-500/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+      {/* Light Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-tealbrand-950/85 via-tealbrand-900/75 to-emerald-950/85" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 mb-6 backdrop-blur-md">
-            <Compass className="w-3.5 h-3.5 text-cyanbrand-300 animate-spin-slow" />
-            <span className="font-mono text-[10px] font-bold text-cyanbrand-200 uppercase tracking-widest">
-              THE PI SPARROW MANIFESTO // ENGINEERING PHILOSOPHY
-            </span>
-          </div>
-
-          <h2 className="text-3xl sm:text-5xl font-light tracking-tight leading-tight mb-6 text-white">
-            Every line of code and trace of copper is architected for{' '}
-            <span className="font-semibold text-cyanbrand-300">nature-like resilience.</span>
-          </h2>
-
-          <p className="text-sm md:text-base font-mono text-tealbrand-100/90 leading-relaxed mb-8 max-w-2xl">
-            We don't build temporary software. We engineer bio-mimetic systems, self-balancing circuit arrays, and high-frequency edge nodes engineered to survive, adapt, and scale indefinitely.
-          </p>
-
-          <a
-            href="#contact"
-            className="inline-flex items-center space-x-3 bg-white text-tealbrand-900 hover:bg-cyanbrand-50 px-6 py-3.5 rounded-md font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-lg hover:shadow-cyanbrand-500/20 hover:-translate-y-0.5"
+      <div className="mx-auto px-6 max-w-[77.5rem] relative z-10">
+        <div className="reveal-line overflow-hidden">
+          <h2
+            className="tracking-tight text-white font-medium max-w-2xl leading-[1.1]"
+            style={{ fontSize: 'clamp(1.75rem, 5vw, 3.25rem)' }}
           >
-            <span>Explore Bio-Architecture</span>
-            <ArrowRight className="w-4 h-4 text-tealbrand-600" />
-          </a>
+            Every algorithm is optimized by hand, the moment it compiles.
+          </h2>
         </div>
+
+        <a
+          href="#contact"
+          className="inline-flex items-center gap-2 mt-8 text-sm font-medium px-6 py-3 rounded-full bg-white/15 border border-white/25 text-white hover:bg-white/25 transition-all backdrop-blur-md shadow-lg group"
+          style={{ willChange: 'transform' }}
+        >
+          <span>Explore our architecture</span>
+          <ArrowRight className="w-4 h-4 text-cyanbrand-300 group-hover:translate-x-1 transition-transform" />
+        </a>
       </div>
     </section>
   );

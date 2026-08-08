@@ -1,48 +1,71 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ManifestoTypography() {
+  const sectionRef = useRef(null);
+  const wordsRef = useRef([]);
+
   const words = [
     'Everything',
     'your',
-    'hardware',
-    '&',
-    'software',
+    'autonomous',
     'network',
     'needs,',
-    'engineered',
-    'naturally',
+    'deployed',
     'into',
     'one',
     'unified',
     'ecosystem.',
   ];
 
+  // 1:1 GSAP progressive opacity scrub matching Ref/generated-page.html line 948
+  useEffect(() => {
+    const wordSpans = wordsRef.current.filter(Boolean);
+    if (!wordSpans.length) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        wordSpans,
+        { autoAlpha: 0.15, y: '0.4em' },
+        {
+          autoAlpha: 1,
+          y: '0em',
+          ease: 'none',
+          stagger: 0.4,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 70%',
+            end: 'center center',
+            scrub: 1,
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="relative min-h-screen bg-slate-100 text-slate-900 overflow-hidden flex items-center justify-center py-24 px-6 font-sans">
-      {/* Background Soft Nature Wash */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(13,148,136,0.15),transparent_40%),radial-gradient(circle_at_80%_70%,rgba(16,185,129,0.15),transparent_40%)] pointer-events-none" />
+    <section
+      ref={sectionRef}
+      id="noema-manifesto"
+      className="relative min-h-screen bg-slate-100 text-slate-900 overflow-hidden flex items-center justify-center py-24 px-6 font-sans"
+    >
+      {/* Radial Gradient Wash matching Ref/generated-page.html line 315 */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(13,148,136,0.18),transparent_32%),radial-gradient(circle_at_80%_72%,rgba(16,185,129,0.18),transparent_30%)] pointer-events-none" />
 
-      {/* Decorative Technical Frame Corner Lines */}
-      <div className="absolute inset-8 pointer-events-none opacity-40">
-        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-tealbrand-600"></div>
-        <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-tealbrand-600"></div>
-        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-tealbrand-600"></div>
-        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-tealbrand-600"></div>
-      </div>
-
-      <div className="relative z-10 max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
-        {words.map((word, index) => (
+      <div className="relative z-10 max-w-[1180px] flex flex-wrap items-center justify-center gap-x-[0.28em] gap-y-[0.18em] text-center">
+        {words.map((word, idx) => (
           <span
-            key={index}
-            className={`font-black uppercase tracking-tighter leading-none transition-all duration-300 ${
-              word.toLowerCase().includes('naturally') || word.toLowerCase().includes('unified')
-                ? 'text-tealbrand-600 drop-shadow-sm'
-                : word.toLowerCase().includes('ecosystem.')
-                ? 'text-emerald-700'
-                : 'text-slate-900'
-            }`}
+            key={idx}
+            ref={(el) => (wordsRef.current[idx] = el)}
+            className="inline-block font-extrabold tracking-tighter uppercase leading-[0.9] text-slate-900"
             style={{
-              fontSize: 'clamp(2.2rem, 7vw, 6.5rem)',
+              fontSize: 'clamp(2.4rem, 7.8vw, 7.4rem)',
+              willChange: 'opacity, transform',
             }}
           >
             {word}
@@ -50,9 +73,9 @@ export default function ManifestoTypography() {
         ))}
       </div>
 
-      <div className="absolute left-8 bottom-8 z-10 font-mono text-[10px] uppercase font-bold tracking-widest text-slate-500">
-        04 // SYSTEM MANIFESTO — ΠSPARROW
-      </div>
+      <p className="absolute left-6 bottom-6 z-10 text-[0.72rem] tracking-[0.18em] uppercase font-bold text-slate-500">
+        04 / ARCHITECTURE MANIFESTO — ΠSPARROW
+      </p>
     </section>
   );
 }

@@ -1,163 +1,210 @@
-import React, { useState } from 'react';
-import { Activity, ShieldCheck, Server, Radio, ArrowUpRight, BarChart3 } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function TelemetryBoard() {
-  const [selectedMetric, setSelectedMetric] = useState(0);
+  const boardRef = useRef(null);
+  const supportRef = useRef(null);
+  const boardH2Ref = useRef(null);
+  const supportH2Ref = useRef(null);
 
-  const metrics = [
-    {
-      title: 'Cluster Alpha',
-      status: 'Online',
-      tag: 'Deployment',
-      region: 'US-East Node',
-      uptime: '99.99% Uptime',
-      latency: '4.2ms',
-      color: 'bg-tealbrand-600 text-white',
-      border: 'border-tealbrand-500/30',
-    },
-    {
-      title: 'Neural Edge Array',
-      status: 'Active',
-      tag: 'Processing',
-      region: 'EU-Central Edge',
-      uptime: '12ms Ping',
-      latency: '0.8ms',
-      color: 'bg-emerald-600 text-white',
-      border: 'border-emerald-500/30',
-    },
-    {
-      title: 'Circuit Telemetry',
-      status: 'Continuous',
-      tag: 'Hardware',
-      region: 'Global Mesh',
-      uptime: 'Epoch 128',
-      latency: '100k msg/s',
-      color: 'bg-slate-900 text-white',
-      border: 'border-slate-700',
-    },
-    {
-      title: 'Zero-Trust Shield',
-      status: 'Protected',
-      tag: 'Security',
-      region: 'Hardware Enclave',
-      uptime: 'Encrypted',
-      latency: '256-Bit HSM',
-      color: 'bg-tealbrand-500 text-white',
-      border: 'border-tealbrand-400',
-    },
-  ];
+  // 1:1 GSAP Watermark Parallax Drifts matching Ref/generated-page.html lines 951-957
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (boardH2Ref.current) {
+        gsap.to(boardH2Ref.current, {
+          yPercent: -14,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: boardRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        });
+      }
 
-  const steps = [
-    {
-      step: '01 / Ingestion',
-      title: 'COLLECTED',
-      description: 'Sensor data is securely ingested from physical hardware edge nodes instantly.',
-      dark: true,
-    },
-    {
-      step: '02 / Synthesis',
-      title: 'PROCESSED',
-      description: 'Real-time bio-mimetic algorithms clean, structure, and synthesize telemetry streams.',
-      dark: false,
-    },
-    {
-      step: '03 / Output',
-      title: 'DEPLOYED',
-      description: 'Actionable control signals deployed directly into operational pipelines.',
-      dark: true,
-    },
-  ];
+      if (supportH2Ref.current) {
+        gsap.to(supportH2Ref.current, {
+          yPercent: -12,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: supportRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="telemetry" className="py-28 bg-slate-900 text-white relative overflow-hidden font-sans">
-      {/* Background Huge Watermark */}
-      <h2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[14vw] font-black text-slate-800/25 pointer-events-none select-none tracking-tighter uppercase whitespace-nowrap z-0">
-        TELEMETRY
-      </h2>
+    <>
+      {/* #noema-board section matching Ref/generated-page.html lines 352-434 */}
+      <section
+        ref={boardRef}
+        id="noema-board"
+        className="relative min-h-screen color-[#050505] overflow-hidden py-28 px-6 flex items-center font-sans bg-slate-100/70 border-t border-slate-200/80"
+      >
+        {/* Giant Watermark Text matching Ref/generated-page.html line 353 */}
+        <h2
+          ref={boardH2Ref}
+          className="absolute z-0 font-extrabold tracking-tighter whitespace-nowrap left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-300/35 pointer-events-none select-none"
+          style={{ fontSize: 'clamp(8rem, 28vw, 30rem)', lineHeight: 0.78 }}
+        >
+          MODELS
+        </h2>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
-          <div>
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-tealbrand-500/20 border border-tealbrand-500/30 mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-400 animate-ping"></span>
-              <span className="font-mono text-[10px] font-bold text-tealbrand-300 uppercase tracking-widest">
-                LIVE TELEMETRY // REAL-TIME METRICS
-              </span>
-            </div>
-            <h2 className="text-3xl md:text-5xl font-light text-white tracking-tight">
-              Operational Scale & <span className="font-bold text-tealbrand-400">Node Status</span>
-            </h2>
-          </div>
-
-          <div className="mt-4 md:mt-0 font-mono text-xs text-slate-400 flex items-center space-x-3">
-            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>All Edge Clusters Operational</span>
-          </div>
-        </div>
-
-        {/* 4 Cards Status Board */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
-          {metrics.map((m, idx) => (
-            <div
-              key={idx}
-              onClick={() => setSelectedMetric(idx)}
-              className={`p-6 rounded-xl border ${m.border} ${m.color} transition-all duration-300 cursor-pointer hover:-translate-y-1 shadow-xl flex flex-col justify-between min-h-[200px]`}
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest opacity-80">
-                    {m.tag}
-                  </span>
-                  <BarChart3 className="w-4 h-4 opacity-70" />
-                </div>
-
-                <h3 className="text-2xl font-black tracking-tight leading-none mb-1">
-                  {m.title}
-                </h3>
-                <span className="font-mono text-xs opacity-90 block">{m.status}</span>
-              </div>
-
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between font-mono text-[11px] opacity-80">
-                <span>{m.region}</span>
-                <span className="font-bold">{m.uptime}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* 3 Step Pipeline Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 border-t border-slate-800">
-          {steps.map((s, idx) => (
-            <div
-              key={idx}
-              className={`p-8 rounded-2xl border transition-all ${
-                s.dark
-                  ? 'bg-slate-950 border-slate-800 text-white'
-                  : 'bg-white border-slate-200 text-slate-900'
-              }`}
-            >
-              <span
-                className={`font-mono text-xs font-bold uppercase tracking-widest block mb-4 ${
-                  s.dark ? 'text-tealbrand-400' : 'text-tealbrand-700'
-                }`}
-              >
-                {s.step}
-              </span>
-
-              <h3 className="text-3xl font-extrabold tracking-tight mb-4">{s.title}</h3>
-
-              <p
-                className={`text-xs font-mono leading-relaxed ${
-                  s.dark ? 'text-slate-400' : 'text-slate-600'
-                }`}
-              >
-                {s.description}
+        <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <article className="min-h-[160px] border border-tealbrand-500/20 bg-slate-900 text-white p-5 flex flex-col justify-between rounded-xl shadow-lg">
+            <div>
+              <p className="text-xs uppercase tracking-[0.18em] text-tealbrand-400 font-mono">
+                Deployment
               </p>
+              <h3 className="font-extrabold text-2xl leading-tight mt-3">
+                Cluster Alpha:
+                <br />
+                Online
+              </h3>
             </div>
-          ))}
+            <div className="flex items-end justify-between text-xs text-slate-400 font-mono">
+              <span>
+                US-East Node
+                <br />
+                99.99% Uptime
+              </span>
+            </div>
+          </article>
+
+          <article className="min-h-[160px] border border-emerald-500/20 bg-slate-900 text-white p-5 flex flex-col justify-between rounded-xl shadow-lg">
+            <div>
+              <p className="text-xs uppercase tracking-[0.18em] text-emerald-400 font-mono">
+                Processing
+              </p>
+              <h3 className="font-extrabold text-2xl leading-tight mt-3">
+                Neural Node
+                <br />
+                Active
+              </h3>
+            </div>
+            <div className="flex items-end justify-between text-xs text-slate-400 font-mono">
+              <span>
+                EU-Central Edge
+                <br />
+                12ms Ping
+              </span>
+            </div>
+          </article>
+
+          <article className="min-h-[160px] border border-cyanbrand-500/20 bg-slate-900 text-white p-5 flex flex-col justify-between rounded-xl shadow-lg">
+            <div>
+              <p className="text-xs uppercase tracking-[0.18em] text-cyanbrand-400 font-mono">
+                Telemetry
+              </p>
+              <h3 className="font-extrabold text-2xl leading-tight mt-3">
+                Circuit Stream
+                <br />
+                Epoch 128
+              </h3>
+            </div>
+            <div className="flex items-end justify-between text-xs text-slate-400 font-mono">
+              <span>
+                Global Mesh
+                <br />
+                Continuous
+              </span>
+            </div>
+          </article>
+
+          <article className="min-h-[160px] border border-tealbrand-400 bg-tealbrand-600 text-white p-5 flex flex-col justify-between rounded-xl shadow-lg">
+            <div>
+              <p className="text-xs uppercase tracking-[0.18em] text-tealbrand-100 font-mono">
+                Security
+              </p>
+              <h3 className="font-extrabold text-2xl leading-tight mt-3">
+                Zero-Trust
+                <br />
+                Firewall
+              </h3>
+            </div>
+            <div className="flex items-end justify-between text-xs text-tealbrand-100 font-mono">
+              <span>
+                US-West Node
+                <br />
+                256-Bit HSM Protected
+              </span>
+            </div>
+          </article>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* #noema-support section matching Ref/generated-page.html lines 435-475 */}
+      <section
+        ref={supportRef}
+        id="noema-support"
+        className="relative min-h-screen bg-slate-950 text-white overflow-hidden px-6 flex items-center font-sans py-24"
+      >
+        {/* Giant Watermark Text matching Ref/generated-page.html line 436 */}
+        <h2
+          ref={supportH2Ref}
+          className="absolute z-0 text-slate-800/40 font-extrabold tracking-tighter whitespace-nowrap left-1/2 top-[46%] -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none"
+          style={{ fontSize: 'clamp(8rem, 28vw, 30rem)', lineHeight: 0.78 }}
+        >
+          SCALE
+        </h2>
+
+        <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
+          <article className="border border-slate-800 bg-slate-900 text-white min-h-[310px] p-6 rounded-2xl flex flex-col justify-between">
+            <p className="text-xs uppercase tracking-[0.2em] text-tealbrand-400 font-mono font-bold">
+              01 / Ingestion
+            </p>
+            <h3
+              className="font-bold leading-none mt-6 tracking-tight"
+              style={{ fontSize: 'clamp(3rem, 5vw, 3.75rem)' }}
+            >
+              COLLECTED
+            </h3>
+            <p className="text-sm text-slate-400 mt-6 max-w-[220px]">
+              Raw data is securely ingested from enterprise edge nodes instantly.
+            </p>
+          </article>
+
+          <article className="border border-slate-200 bg-white text-slate-900 min-h-[310px] p-6 rounded-2xl flex flex-col justify-between shadow-xl">
+            <p className="text-xs uppercase tracking-[0.2em] text-tealbrand-700 font-mono font-bold">
+              02 / Synthesis
+            </p>
+            <h3
+              className="font-bold leading-none mt-6 tracking-tight text-slate-900"
+              style={{ fontSize: 'clamp(3rem, 5vw, 3.75rem)' }}
+            >
+              PROCESSED
+            </h3>
+            <button className="mt-8 w-full bg-tealbrand-600 hover:bg-tealbrand-700 text-white text-sm font-semibold py-3 rounded-full transition-colors font-mono uppercase tracking-wider">
+              View Metrics
+            </button>
+          </article>
+
+          <article className="border border-slate-800 bg-slate-900 text-white min-h-[310px] p-6 rounded-2xl flex flex-col justify-between">
+            <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 font-mono font-bold">
+              03 / Output
+            </p>
+            <h3
+              className="font-bold leading-none mt-6 tracking-tight"
+              style={{ fontSize: 'clamp(3rem, 5vw, 3.75rem)' }}
+            >
+              DEPLOYED
+            </h3>
+            <p className="text-sm text-slate-400 mt-6 max-w-[220px]">
+              Actionable insights deployed directly into your operational pipelines.
+            </p>
+          </article>
+        </div>
+      </section>
+    </>
   );
 }
