@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, Check, ExternalLink } from 'lucide-react';
+import { ArrowRight, Check, ExternalLink, Play } from 'lucide-react';
+import ProductDemoModal from './ProductDemoModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ShowcaseGrid() {
   const containerRef = useRef(null);
   const cardsRef = useRef([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const products = [
     {
@@ -181,113 +183,129 @@ export default function ShowcaseGrid() {
   };
 
   return (
-    <section ref={containerRef} id="collection" className="py-28 max-w-[77.5rem] mx-auto px-6 relative overflow-hidden">
-      {/* Background Repeating Line Texture Overlay matching Ref/generated-page.html line 201 */}
-      <div className="absolute inset-0 gallery-grid-pattern pointer-events-none opacity-40"></div>
+    <>
+      <section ref={containerRef} id="products" className="py-28 max-w-[77.5rem] mx-auto px-6 relative overflow-hidden">
+        {/* Background Repeating Line Texture Overlay matching Ref/generated-page.html line 201 */}
+        <div className="absolute inset-0 gallery-grid-pattern pointer-events-none opacity-40"></div>
 
-      <div className="reveal-line overflow-hidden mb-2">
-        <p className="text-xs uppercase text-tealbrand-700 font-mono font-bold tracking-[0.3rem]">
-          SYSTEM REGISTRY // THE PLATFORMS
-        </p>
-      </div>
+        <div className="reveal-line overflow-hidden mb-2">
+          <p className="text-xs uppercase text-tealbrand-700 font-mono font-bold tracking-[0.3rem]">
+            SYSTEM REGISTRY // THE PLATFORMS
+          </p>
+        </div>
 
-      <div className="reveal-line overflow-hidden mt-3 mb-14">
-        <h2 className="tracking-tight text-slate-900 font-medium text-4xl sm:text-5xl md:text-6xl leading-[1.05]" data-scroll-word="true">
-          Autonomous platforms built to scale with data
-        </h2>
-      </div>
+        <div className="reveal-line overflow-hidden mt-3 mb-14">
+          <h2 className="tracking-tight text-slate-900 font-medium text-4xl sm:text-5xl md:text-6xl leading-[1.05]" data-scroll-word="true">
+            Autonomous platforms built to scale with data
+          </h2>
+        </div>
 
-      {/* Grid of 3 Cards per Row matching Ref/generated-page.html layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {products.map((product, idx) => (
-          <div
-            key={product.id}
-            ref={(el) => (cardsRef.current[idx] = el)}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="fade-card group flex flex-col border border-tealbrand-500/15 hover:bg-white/90 transition-colors duration-500 cursor-pointer rounded-2xl p-5 backdrop-blur-lg nature-glass"
-            style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
-          >
-            {/* Visual Header matching Ref/generated-page.html aspect-ratio 4/5 */}
-            {product.image ? (
-              <div
-                className="card-img-pop rounded-xl overflow-hidden mb-5 bg-slate-100 border border-slate-200/60 shadow-sm"
-                style={{
-                  aspectRatio: '4 / 3',
-                  backgroundImage: `url('${product.image}')`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  willChange: 'transform',
-                }}
-              />
-            ) : (
-              <div
-                className="card-img-pop rounded-xl overflow-hidden mb-5 bg-gradient-to-br from-tealbrand-50 to-emerald-50 border border-slate-200/60 flex items-center justify-center p-6 text-center"
-                style={{ aspectRatio: '4 / 3', willChange: 'transform' }}
-              >
-                <span className="font-mono text-xs font-bold text-tealbrand-700 uppercase tracking-widest">
-                  BULK IMAGE COMPILER
-                </span>
-              </div>
-            )}
-
-            {/* Card Content Pop */}
-            <div className="card-content-pop flex flex-col flex-grow justify-between" style={{ willChange: 'transform' }}>
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-mono text-[10px] text-tealbrand-700 font-bold uppercase tracking-widest">
-                    {product.category}
-                  </span>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 font-mono text-[9px] font-bold uppercase tracking-wider">
-                    {product.version}
+        {/* Grid of 3 Cards per Row matching Ref/generated-page.html layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {products.map((product, idx) => (
+            <div
+              key={product.id}
+              ref={(el) => (cardsRef.current[idx] = el)}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              onClick={() => setSelectedProduct(product)}
+              className="fade-card group flex flex-col border border-tealbrand-500/15 hover:bg-white/90 transition-colors duration-500 cursor-pointer rounded-2xl p-5 backdrop-blur-lg nature-glass"
+              style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
+            >
+              {/* Visual Header matching Ref/generated-page.html aspect-ratio 4/5 */}
+              {product.image ? (
+                <div
+                  className="card-img-pop rounded-xl overflow-hidden mb-5 bg-slate-100 border border-slate-200/60 shadow-sm relative group"
+                  style={{
+                    aspectRatio: '4 / 3',
+                    backgroundImage: `url('${product.image}')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    willChange: 'transform',
+                  }}
+                >
+                  <div className="absolute inset-0 bg-tealbrand-900/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="px-3 py-1.5 rounded-full bg-white/90 text-tealbrand-800 font-mono text-[10px] font-bold uppercase tracking-wider shadow-md">
+                      Click to Preview
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="card-img-pop rounded-xl overflow-hidden mb-5 bg-gradient-to-br from-tealbrand-50 to-emerald-50 border border-slate-200/60 flex items-center justify-center p-6 text-center"
+                  style={{ aspectRatio: '4 / 3', willChange: 'transform' }}
+                >
+                  <span className="font-mono text-xs font-bold text-tealbrand-700 uppercase tracking-widest">
+                    BULK IMAGE COMPILER
                   </span>
                 </div>
+              )}
 
-                <h3 className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-tealbrand-600 transition-colors mb-2">
-                  {product.title}
-                </h3>
+              {/* Card Content Pop */}
+              <div className="card-content-pop flex flex-col flex-grow justify-between" style={{ willChange: 'transform' }}>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-[10px] text-tealbrand-700 font-bold uppercase tracking-widest">
+                      {product.category}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 font-mono text-[9px] font-bold uppercase tracking-wider">
+                      {product.version}
+                    </span>
+                  </div>
 
-                <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                  {product.subtitle}
-                </p>
+                  <h3 className="text-lg font-bold tracking-tight text-slate-900 group-hover:text-tealbrand-600 transition-colors mb-2">
+                    {product.title}
+                  </h3>
 
-                {/* Features List */}
-                <div className="space-y-1 mb-4 pt-3 border-t border-slate-100">
-                  {product.features.map((feat, i) => (
-                    <div key={i} className="flex items-center space-x-2 text-[10px] font-mono text-slate-500 font-medium">
-                      <Check className="w-3.5 h-3.5 text-tealbrand-600 flex-shrink-0" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
+                  <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                    {product.subtitle}
+                  </p>
+
+                  {/* Features List */}
+                  <div className="space-y-1 mb-4 pt-3 border-t border-slate-100">
+                    {product.features.map((feat, i) => (
+                      <div key={i} className="flex items-center space-x-2 text-[10px] font-mono text-slate-500 font-medium">
+                        <Check className="w-3.5 h-3.5 text-tealbrand-600 flex-shrink-0" />
+                        <span>{feat}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* Card Footer */}
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <span className="text-xs font-mono font-bold text-tealbrand-700 uppercase tracking-wider">
-                  {product.badge}
-                </span>
-                {product.link ? (
-                  <a
-                    href={product.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-xs font-mono font-bold text-tealbrand-600 hover:text-tealbrand-700"
-                  >
-                    <span>Visit Engine</span>
-                    <ExternalLink className="w-3.5 h-3.5 ml-1" />
-                  </a>
-                ) : (
-                  <span className="inline-flex items-center text-xs font-mono font-bold text-tealbrand-600 group-hover:translate-x-1 transition-transform">
-                    <span>Deploy</span>
-                    <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                {/* Card Footer */}
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-xs font-mono font-bold text-tealbrand-700 uppercase tracking-wider">
+                    {product.badge}
                   </span>
-                )}
+                  {product.link ? (
+                    <a
+                      href={product.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center text-xs font-mono font-bold text-tealbrand-600 hover:text-tealbrand-700"
+                    >
+                      <span>Visit Engine</span>
+                      <ExternalLink className="w-3.5 h-3.5 ml-1" />
+                    </a>
+                  ) : (
+                    <span className="inline-flex items-center text-xs font-mono font-bold text-tealbrand-600 group-hover:translate-x-1 transition-transform">
+                      <span>Live Preview</span>
+                      <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </section>
+          ))}
+        </div>
+      </section>
+
+      {/* Interactive Product Sandbox Preview Modal */}
+      <ProductDemoModal
+        product={selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+      />
+    </>
   );
 }

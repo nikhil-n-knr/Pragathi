@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 import Navbar from './components/Navbar';
 import ParticleBackground from './components/ParticleBackground';
@@ -12,9 +12,13 @@ import TelemetryBoard from './components/TelemetryBoard';
 import TeamSection from './components/TeamSection';
 import ContactCanal from './components/ContactCanal';
 import Footer from './components/Footer';
+import LegalModals from './components/LegalModals';
+import CookieBanner from './components/CookieBanner';
 
 export default function App() {
-  // Initialize Lenis Smooth Scroll for silky 60fps/120fps scroll physics
+  const [activeLegalModal, setActiveLegalModal] = useState(null);
+
+  // Initialize Lenis Smooth Scroll
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -36,7 +40,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative gallery-grid-pattern">
+    <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative gallery-grid-pattern flex flex-col">
       {/* Global Particle Field */}
       <ParticleBackground />
 
@@ -44,7 +48,7 @@ export default function App() {
       <Navbar />
 
       {/* Main Content Sections */}
-      <main className="relative z-10">
+      <main className="relative z-10 flex-grow">
         {/* 1. Cinematic Pinned Scroll Hero */}
         <HeroCinematic />
 
@@ -74,7 +78,18 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onOpenLegal={(type) => setActiveLegalModal(type)} />
+
+      {/* Interactive Legal & Privacy Modals */}
+      <LegalModals
+        activeModal={activeLegalModal}
+        onClose={() => setActiveLegalModal(null)}
+      />
+
+      {/* Floating Bioluminescent Cookie Banner */}
+      <CookieBanner
+        onOpenPrivacy={() => setActiveLegalModal('privacy')}
+      />
     </div>
   );
 }
