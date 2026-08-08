@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import ParticleSwarm3D from './ParticleSwarm3D';
 
 export default function HeroCinematic() {
   const sectionRef = useRef(null);
-  const canvasRef = useRef(null);
   const bgLayerRef = useRef(null);
   const midLayerRef = useRef(null);
   const bouquetRef = useRef(null);
@@ -19,7 +18,7 @@ export default function HeroCinematic() {
 
   const beatsData = [
     {
-      version: 'VERSION NO. 07 // BIO-MIMETIC PLATFORM',
+      version: 'ENGINEERING PLATFORMS // V2.0',
       h1: 'Quiet Nodes,',
       h1Sub: 'Waiting Data',
       p: 'Algorithms unfold as raw data moves through the neural bio-circuit network.',
@@ -27,31 +26,31 @@ export default function HeroCinematic() {
       e: 0.1,
     },
     {
-      version: 'THE INITIALIZATION',
+      version: 'THE DESIGN PHILOSOPHY',
       h1: 'The First Boot',
       h1Sub: '',
-      p: 'Co-designing physical circuit architectures with self-balancing software swarms.',
+      p: 'Combining mathematical precision with agility, diligence, and system integrity.',
       s: 0.11,
       e: 0.22,
     },
     {
-      version: 'HARDWARE & EDGE SWARMS',
+      version: 'SYSTEM REGISTRY',
       h1: 'Connected Swarms',
       h1Sub: '',
-      p: 'Fifty-four autonomous nodes, architected to scale from every angle.',
+      p: 'Ready-to-deploy, high-contrast visual architectures tailored for modern enterprise.',
       s: 0.23,
       e: 0.33,
     },
     {
-      version: 'HARDWARE COMPILER',
+      version: 'PRECISION COMPUTING',
       h1: 'A Full Cluster',
       h1Sub: '',
-      p: 'Industrial PCB microservices integrated into zero-latency edge layers.',
+      p: 'Fifty-four autonomous nodes, architected to scale from every angle.',
       s: 0.34,
       e: 0.47,
     },
     {
-      version: 'TELEMETRY STREAM',
+      version: 'SERVICE DIRECTORY',
       h1: 'Data Lift',
       h1Sub: 'Carried by Cloud',
       p: 'High-frequency telemetry carried naturally through light-speed streams.',
@@ -59,7 +58,7 @@ export default function HeroCinematic() {
       e: 0.64,
     },
     {
-      version: 'DEPLOYMENT PIPELINE',
+      version: 'COMMUNICATION CANAL',
       h1: 'Into the Stream',
       h1Sub: '',
       p: 'Turnkey hardware and software execution built for modern industry.',
@@ -67,7 +66,7 @@ export default function HeroCinematic() {
       e: 0.81,
     },
     {
-      version: 'DEPLOYED LIVE',
+      version: 'ΠSPARROW LIVE',
       h1: 'ΠSPARROW PLATFORM',
       h1Sub: '',
       p: 'System active — explore the products and capabilities below.',
@@ -85,68 +84,7 @@ export default function HeroCinematic() {
     return 1;
   };
 
-  // 1. WebGL / Canvas Petal Field matching Ref/generated-page.html lines 516-563
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let animId;
-
-    let W = (canvas.width = window.innerWidth * window.devicePixelRatio);
-    let H = (canvas.height = window.innerHeight * window.devicePixelRatio);
-
-    const onResize = () => {
-      W = canvas.width = window.innerWidth * window.devicePixelRatio;
-      H = canvas.height = window.innerHeight * window.devicePixelRatio;
-    };
-    window.addEventListener('resize', onResize);
-
-    const petals = [];
-    for (let i = 0; i < 70; i++) {
-      petals.push({
-        x: Math.random(),
-        y: Math.random(),
-        r: 6 + Math.random() * 14,
-        sp: 0.2 + Math.random() * 0.8,
-        drift: Math.random() * Math.PI * 2,
-        a: 0.3 + Math.random() * 0.5,
-      });
-    }
-
-    let t = 0;
-    const draw = () => {
-      t += 16;
-      ctx.clearRect(0, 0, W, H);
-
-      petals.forEach((p) => {
-        const px = (p.x + Math.sin(t * 0.0003 * p.sp + p.drift) * 0.04) * W;
-        const py = (((p.y + t * 0.00004 * p.sp) % 1 + 1) % 1) * H;
-        const size = p.r * window.devicePixelRatio;
-
-        ctx.globalAlpha = p.a * 0.75;
-        const g = ctx.createRadialGradient(px, py, 0, px, py, size);
-        g.addColorStop(0, 'rgba(13, 148, 136, 0.85)'); // Teal
-        g.addColorStop(1, 'rgba(16, 185, 129, 0)');    // Emerald fade
-
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.ellipse(px, py, size, size * 0.6, p.drift + t * 0.0002, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      ctx.globalAlpha = 1;
-      animId = requestAnimationFrame(draw);
-    };
-
-    draw();
-
-    return () => {
-      window.removeEventListener('resize', onResize);
-      cancelAnimationFrame(animId);
-    };
-  }, []);
-
-  // 2. Velocity-Aware 1:1 RAF Loop matching Ref/generated-page.html lines 613-664
+  // 1:1 Velocity-Aware RAF Loop matching Ref/generated-page.html lines 613-664
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -155,31 +93,41 @@ export default function HeroCinematic() {
     let renderP = 0;
     let animId;
 
-    // Build timeline dots dynamically
+    // Build continuous timeline dot row matching Image 2 1:1 (~35 dots across bottom right)
     const dotRow = dotRowRef.current;
     const dotSpans = [];
+    const totalDots = 35;
     if (dotRow) {
       dotRow.innerHTML = '';
-      beatsData.forEach((b, i) => {
+      for (let i = 0; i < totalDots; i++) {
         const d = document.createElement('span');
         d.style.cssText =
-          'width:0.5rem;height:0.5rem;border-radius:50%;background:#cbd5e1;transition:background .3s,transform .3s;cursor:pointer;display:inline-block;';
+          'width:0.45rem;height:0.45rem;border-radius:50%;background:rgba(13,148,136,0.25);transition:background .3s,transform .3s;cursor:pointer;display:inline-block;flex-shrink:0;';
+
+        const beatIndex = Math.min(
+          beatsData.length - 1,
+          Math.floor((i / totalDots) * beatsData.length)
+        );
+        const targetBeat = beatsData[beatIndex];
 
         d.addEventListener('mouseenter', () => {
-          if (window.gsap) gsap.to(d, { scale: 1.8, duration: 0.3, ease: 'back.out(2)' });
+          d.style.transform = 'scale(1.8)';
         });
         d.addEventListener('mouseleave', () => {
-          if (window.gsap) gsap.to(d, { scale: 1, duration: 0.3 });
+          d.style.transform = 'scale(1)';
         });
 
         d.addEventListener('click', () => {
-          const top = section.offsetTop + ((b.s + b.e) / 2) * (section.offsetHeight - window.innerHeight);
+          const top =
+            section.offsetTop +
+            ((targetBeat.s + targetBeat.e) / 2) *
+              (section.offsetHeight - window.innerHeight);
           window.scrollTo({ top, behavior: 'smooth' });
         });
 
         dotRow.appendChild(d);
         dotSpans.push(d);
-      });
+      }
     }
 
     const rafLoop = () => {
@@ -201,12 +149,12 @@ export default function HeroCinematic() {
         midLayerRef.current.style.transform = `translateY(${(p * 30).toFixed(1)}px)`;
       }
 
-      // 1:1 Grade wash opacity
+      // Grade wash opacity matching Ref/generated-page.html line 628
       if (gradeWashRef.current) {
         gradeWashRef.current.style.opacity = (0.4 + Math.sin(p * Math.PI) * 0.5).toFixed(3);
       }
 
-      // 1:1 Letterbox height math (0 to 7vh)
+      // Letterbox height math (0 to 7vh) matching Ref/generated-page.html lines 630-636
       let lb = 0;
       if (p < 0.06) lb = (p / 0.06) * 7;
       else if (p > 0.92) lb = 7 * (1 - (p - 0.92) / 0.08);
@@ -215,27 +163,27 @@ export default function HeroCinematic() {
       if (lbTopRef.current) lbTopRef.current.style.height = `${lb.toFixed(2)}vh`;
       if (lbBotRef.current) lbBotRef.current.style.height = `${lb.toFixed(2)}vh`;
 
-      // 1:1 Timeline fill & label
+      // Timeline fill & label matching Ref/generated-page.html lines 638-639
       if (tlFillRef.current) tlFillRef.current.style.width = `${(p * 100).toFixed(2)}%`;
       if (timeLabelRef.current) timeLabelRef.current.textContent = `${(p * DUR).toFixed(2)}s`;
 
-      // 1:1 Beat opacity & dot status
+      // Update beats text opacity & dot highlight row matching Ref/generated-page.html lines 641-648
       beatsData.forEach((b, idx) => {
         const o = calculateBeatOpacity(p, b.s, b.e);
         const el = beatElsRef.current[idx];
-        const dot = dotSpans[idx];
 
         if (el) {
           el.style.opacity = o.toFixed(3);
           el.style.transform = `translateY(${((1 - o) * 18).toFixed(1)}px)`;
           el.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
         }
+      });
 
-        if (dot) {
-          const active = p >= b.s && p <= b.e;
-          dot.style.background = active ? '#0d9488' : '#cbd5e1';
-          dot.style.transform = active ? 'scale(1.4)' : 'scale(1)';
-        }
+      const activeDotIndex = Math.min(totalDots - 1, Math.floor(p * totalDots));
+      dotSpans.forEach((dot, idx) => {
+        const isActive = idx === activeDotIndex;
+        dot.style.background = isActive ? '#0d9488' : 'rgba(13, 148, 136, 0.25)';
+        dot.style.transform = isActive ? 'scale(1.6)' : 'scale(1)';
       });
 
       animId = requestAnimationFrame(rafLoop);
@@ -263,12 +211,8 @@ export default function HeroCinematic() {
     <section ref={sectionRef} id="cinematic" className="relative" style={{ height: '820vh' }}>
       {/* Pinned Stage Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50">
-        {/* WebGL / Canvas Petal Layer */}
-        <canvas
-          ref={canvasRef}
-          id="petalCanvas"
-          className="absolute inset-0 w-full h-full z-10 pointer-events-none opacity-85"
-        />
+        {/* 3D WebGL Swarming Particle Atmosphere (Swirling 3D Orbital Rings) */}
+        <ParticleSwarm3D />
 
         {/* Parallax Visual Layers matching Ref/generated-page.html lines 54-84 */}
         <div id="visualWrap" className="absolute inset-0 z-1 pointer-events-none" style={{ willChange: 'transform' }}>
@@ -276,10 +220,7 @@ export default function HeroCinematic() {
             ref={bgLayerRef}
             id="bgLayer"
             className="absolute -inset-[8%] bg-cover bg-center overflow-hidden isolation-isolate"
-            style={{
-              filter: 'saturate(0.8) brightness(0.95)',
-              willChange: 'transform',
-            }}
+            style={{ willChange: 'transform' }}
           />
           <div
             ref={midLayerRef}
@@ -289,12 +230,13 @@ export default function HeroCinematic() {
           >
             <div className="flex items-center justify-center w-full h-full">
               <div className="animate-soft-float flex items-center justify-center">
+                {/* 1:1 Transparent Floating Figure (NO white card wrapper!) matching Ref/generated-page.html line 80 */}
                 <div
                   ref={bouquetRef}
                   id="bouquet"
-                  className="z-40 relative shadow-2xl rounded-3xl overflow-hidden border border-tealbrand-500/20 bg-white/40 backdrop-blur-md"
+                  className="z-40 relative pointer-events-none"
                   style={{
-                    width: 'min(56vw, 40rem)',
+                    width: 'min(58vw, 42rem)',
                     aspectRatio: '16 / 11',
                     backgroundImage: `url("https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/d0f628cf-26bf-473d-81b9-50e422c51521_3840w.png")`,
                     backgroundSize: 'contain',
@@ -308,15 +250,15 @@ export default function HeroCinematic() {
           </div>
         </div>
 
-        {/* Color Grade Wash matching Ref/generated-page.html line 87 */}
+        {/* Radial Color Grade Wash matching Ref/generated-page.html line 87 */}
         <div
           ref={gradeWashRef}
           id="gradeWash"
           className="absolute inset-0 z-10 pointer-events-none"
           style={{
             background:
-              'radial-gradient(circle at 50% 45%, rgba(204, 251, 241, 0.45), rgba(248, 250, 252, 0.85) 70%)',
-            mixBlendMode: 'multiply',
+              'radial-gradient(circle at 50% 45%, rgba(204, 251, 241, 0.4), rgba(248, 250, 252, 0.82) 70%)',
+            mixBlendMode: 'screen',
           }}
         />
 
@@ -360,7 +302,7 @@ export default function HeroCinematic() {
                 {beat.h1Sub && (
                   <>
                     <br />
-                    <span className="text-tealbrand-600">{beat.h1Sub}</span>
+                    <span className="text-tealbrand-600 font-light">{beat.h1Sub}</span>
                   </>
                 )}
               </h1>
@@ -374,8 +316,8 @@ export default function HeroCinematic() {
           ))}
         </div>
 
-        {/* Timeline HUD matching Ref/generated-page.html lines 165-170 */}
-        <div className="absolute left-8 bottom-14 z-45 flex items-center gap-4 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
+        {/* Timeline HUD Track matching Ref/generated-page.html lines 165-170 (Bottom Left) */}
+        <div className="absolute left-8 bottom-12 z-45 flex items-center gap-4 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
           <div id="timelineTrack" className="w-44 h-1 rounded-full bg-slate-200 overflow-hidden">
             <div
               ref={tlFillRef}
@@ -393,11 +335,11 @@ export default function HeroCinematic() {
           </span>
         </div>
 
-        {/* Timeline Dots matching Ref/generated-page.html lines 173-195 */}
+        {/* Continuous Dot Row matching Ref/generated-page.html lines 173-195 (Bottom Right, Image 2 1:1) */}
         <div
           ref={dotRowRef}
           id="dotRow"
-          className="absolute right-8 bottom-14 z-45 flex gap-2.5 items-center bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md"
+          className="absolute right-8 bottom-12 z-45 flex gap-1.5 items-center max-w-[50vw] overflow-x-auto py-1"
         />
       </div>
     </section>
