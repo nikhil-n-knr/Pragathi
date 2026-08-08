@@ -121,7 +121,7 @@ export default function SecurityPage() {
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
-          {/* Seamless Floating 3D Zero-Trust HSM Security Vault Artwork (Multiply Blend Mode) */}
+          {/* Floating 3D Zero-Trust HSM Security Vault Artwork (True Alpha Transparent PNG) */}
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
             <div className="animate-soft-float flex items-center justify-center">
               <div
@@ -134,7 +134,6 @@ export default function SecurityPage() {
                   backgroundSize: 'contain',
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center center',
-                  mixBlendMode: 'multiply',
                   willChange: 'transform',
                 }}
               />

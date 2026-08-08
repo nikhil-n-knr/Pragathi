@@ -122,7 +122,7 @@ export default function PrivacyPage() {
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
 
-          {/* Seamless Floating 3D Quantum Privacy Shield Artwork (Multiply Blend Mode for zero white background) */}
+          {/* Floating 3D Quantum Privacy Shield Artwork (True Alpha Transparent PNG) */}
           <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
             <div className="animate-soft-float flex items-center justify-center">
               <div
@@ -135,7 +135,6 @@ export default function PrivacyPage() {
                   backgroundSize: 'contain',
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center center',
-                  mixBlendMode: 'multiply',
                   willChange: 'transform',
                 }}
               />
