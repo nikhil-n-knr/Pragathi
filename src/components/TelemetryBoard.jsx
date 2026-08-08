@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -10,7 +10,10 @@ export default function TelemetryBoard() {
   const boardH2Ref = useRef(null);
   const supportH2Ref = useRef(null);
 
-  // 1:1 GSAP Watermark Parallax Drifts matching Ref/generated-page.html lines 951-957
+  const [counter1, setCounter1] = useState(0);
+  const [counter2, setCounter2] = useState(0);
+
+  // Live Counter Animation when Scrolled into View
   useEffect(() => {
     const ctx = gsap.context(() => {
       if (boardH2Ref.current) {
@@ -38,6 +41,23 @@ export default function TelemetryBoard() {
           },
         });
       }
+
+      // Live Animated Telemetry Counters
+      const obj = { c1: 0, c2: 0 };
+      gsap.to(obj, {
+        c1: 99.99,
+        c2: 128,
+        duration: 2.5,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: boardRef.current,
+          start: 'top 75%',
+        },
+        onUpdate: () => {
+          setCounter1(obj.c1);
+          setCounter2(Math.floor(obj.c2));
+        },
+      });
     });
 
     return () => ctx.revert();
@@ -49,7 +69,7 @@ export default function TelemetryBoard() {
       <section
         ref={boardRef}
         id="noema-board"
-        className="relative min-h-screen color-[#050505] overflow-hidden py-28 px-6 flex items-center font-sans bg-slate-100/70 border-t border-slate-200/80"
+        className="relative min-h-screen overflow-hidden py-28 px-6 flex items-center font-sans bg-slate-100/70 border-t border-slate-200/80"
       >
         {/* Giant Watermark Text matching Ref/generated-page.html line 353 */}
         <h2
@@ -60,83 +80,87 @@ export default function TelemetryBoard() {
           MODELS
         </h2>
 
-        <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <article className="min-h-[160px] border border-tealbrand-500/20 bg-slate-900 text-white p-5 flex flex-col justify-between rounded-xl shadow-lg">
+        <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <article className="min-h-[180px] border border-tealbrand-500/30 bg-slate-900 text-white p-6 flex flex-col justify-between rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300">
             <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-tealbrand-400 font-mono">
-                Deployment
-              </p>
-              <h3 className="font-extrabold text-2xl leading-tight mt-3">
-                Cluster Alpha:
-                <br />
-                Online
+              <div className="flex items-center justify-between">
+                <p className="text-xs uppercase tracking-[0.18em] text-tealbrand-400 font-mono">
+                  Deployment Uptime
+                </p>
+                <span className="w-2 h-2 rounded-full bg-tealbrand-400 animate-ping"></span>
+              </div>
+              <h3 className="font-extrabold text-3xl leading-tight mt-3 font-mono">
+                {counter1.toFixed(2)}%
               </h3>
             </div>
             <div className="flex items-end justify-between text-xs text-slate-400 font-mono">
               <span>
-                US-East Node
+                Global Cluster
                 <br />
-                99.99% Uptime
+                Multi-Region Active
               </span>
             </div>
           </article>
 
-          <article className="min-h-[160px] border border-emerald-500/20 bg-slate-900 text-white p-5 flex flex-col justify-between rounded-xl shadow-lg">
+          <article className="min-h-[180px] border border-emerald-500/30 bg-slate-900 text-white p-6 flex flex-col justify-between rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300">
             <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-emerald-400 font-mono">
-                Processing
-              </p>
-              <h3 className="font-extrabold text-2xl leading-tight mt-3">
-                Neural Node
-                <br />
-                Active
-              </h3>
-            </div>
-            <div className="flex items-end justify-between text-xs text-slate-400 font-mono">
-              <span>
-                EU-Central Edge
-                <br />
+              <div className="flex items-center justify-between">
+                <p className="text-xs uppercase tracking-[0.18em] text-emerald-400 font-mono">
+                  Neural Latency
+                </p>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              </div>
+              <h3 className="font-extrabold text-3xl leading-tight mt-3 font-mono">
                 12ms Ping
-              </span>
-            </div>
-          </article>
-
-          <article className="min-h-[160px] border border-cyanbrand-500/20 bg-slate-900 text-white p-5 flex flex-col justify-between rounded-xl shadow-lg">
-            <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-cyanbrand-400 font-mono">
-                Telemetry
-              </p>
-              <h3 className="font-extrabold text-2xl leading-tight mt-3">
-                Circuit Stream
-                <br />
-                Epoch 128
               </h3>
             </div>
             <div className="flex items-end justify-between text-xs text-slate-400 font-mono">
               <span>
-                Global Mesh
+                EU & US Edge
                 <br />
-                Continuous
+                Zero-Lag Swarms
               </span>
             </div>
           </article>
 
-          <article className="min-h-[160px] border border-tealbrand-400 bg-tealbrand-600 text-white p-5 flex flex-col justify-between rounded-xl shadow-lg">
+          <article className="min-h-[180px] border border-cyanbrand-500/30 bg-slate-900 text-white p-6 flex flex-col justify-between rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300">
             <div>
-              <p className="text-xs uppercase tracking-[0.18em] text-tealbrand-100 font-mono">
-                Security
-              </p>
-              <h3 className="font-extrabold text-2xl leading-tight mt-3">
-                Zero-Trust
+              <div className="flex items-center justify-between">
+                <p className="text-xs uppercase tracking-[0.18em] text-cyanbrand-400 font-mono">
+                  Model Epochs
+                </p>
+                <span className="w-2 h-2 rounded-full bg-cyanbrand-400 animate-ping"></span>
+              </div>
+              <h3 className="font-extrabold text-3xl leading-tight mt-3 font-mono">
+                Epoch {counter2}
+              </h3>
+            </div>
+            <div className="flex items-end justify-between text-xs text-slate-400 font-mono">
+              <span>
+                Domain Training
                 <br />
-                Firewall
+                Continuous Stream
+              </span>
+            </div>
+          </article>
+
+          <article className="min-h-[180px] border border-tealbrand-400 bg-tealbrand-600 text-white p-6 flex flex-col justify-between rounded-2xl shadow-xl hover:scale-105 transition-transform duration-300">
+            <div>
+              <div className="flex items-center justify-between">
+                <p className="text-xs uppercase tracking-[0.18em] text-tealbrand-100 font-mono">
+                  Zero-Trust Shield
+                </p>
+                <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
+              </div>
+              <h3 className="font-extrabold text-3xl leading-tight mt-3 font-mono">
+                256-Bit HSM
               </h3>
             </div>
             <div className="flex items-end justify-between text-xs text-tealbrand-100 font-mono">
               <span>
-                US-West Node
+                Hardware Protected
                 <br />
-                256-Bit HSM Protected
+                Encrypted Vault
               </span>
             </div>
           </article>
@@ -159,7 +183,7 @@ export default function TelemetryBoard() {
         </h2>
 
         <div className="relative z-10 w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-          <article className="border border-slate-800 bg-slate-900 text-white min-h-[310px] p-6 rounded-2xl flex flex-col justify-between">
+          <article className="border border-slate-800 bg-slate-900 text-white min-h-[310px] p-6 rounded-2xl flex flex-col justify-between hover:border-tealbrand-500/50 transition-colors">
             <p className="text-xs uppercase tracking-[0.2em] text-tealbrand-400 font-mono font-bold">
               01 / Ingestion
             </p>
@@ -174,7 +198,7 @@ export default function TelemetryBoard() {
             </p>
           </article>
 
-          <article className="border border-slate-200 bg-white text-slate-900 min-h-[310px] p-6 rounded-2xl flex flex-col justify-between shadow-xl">
+          <article className="border border-slate-200 bg-white text-slate-900 min-h-[310px] p-6 rounded-2xl flex flex-col justify-between shadow-2xl hover:scale-105 transition-transform duration-300">
             <p className="text-xs uppercase tracking-[0.2em] text-tealbrand-700 font-mono font-bold">
               02 / Synthesis
             </p>
@@ -184,12 +208,12 @@ export default function TelemetryBoard() {
             >
               PROCESSED
             </h3>
-            <button className="mt-8 w-full bg-tealbrand-600 hover:bg-tealbrand-700 text-white text-sm font-semibold py-3 rounded-full transition-colors font-mono uppercase tracking-wider">
+            <button className="mt-8 w-full bg-tealbrand-600 hover:bg-tealbrand-700 text-white text-sm font-semibold py-3 rounded-full transition-colors font-mono uppercase tracking-wider shadow-md">
               View Metrics
             </button>
           </article>
 
-          <article className="border border-slate-800 bg-slate-900 text-white min-h-[310px] p-6 rounded-2xl flex flex-col justify-between">
+          <article className="border border-slate-800 bg-slate-900 text-white min-h-[310px] p-6 rounded-2xl flex flex-col justify-between hover:border-emerald-500/50 transition-colors">
             <p className="text-xs uppercase tracking-[0.2em] text-emerald-400 font-mono font-bold">
               03 / Output
             </p>

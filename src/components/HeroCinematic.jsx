@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ParticleSwarm3D from './ParticleSwarm3D';
 
 export default function HeroCinematic() {
@@ -14,9 +14,10 @@ export default function HeroCinematic() {
   const dotRowRef = useRef(null);
   const beatElsRef = useRef([]);
 
+  const [isPlaying, setIsPlaying] = useState(true);
+
   const DUR = 10.0;
 
-  // 5 Uniform Clean Beats detailing Pi Sparrow's core capabilities
   const beatsData = [
     {
       version: 'BEAT 01 // COMPLETE SOFTWARE & UI/UX',
@@ -69,16 +70,19 @@ export default function HeroCinematic() {
     return 1;
   };
 
-  // Smooth RAF Loop for 5 Pinned Beats
+  // RAF Loop + Idle Auto-Advancing Beats Animation
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     let rawP = 0;
     let renderP = 0;
+    let autoP = 0;
+    let isUserScrolling = false;
+    let scrollIdleTimer = null;
     let animId;
 
-    // Continuous timeline dot row across bottom right
+    // Dot row creation across bottom right
     const dotRow = dotRowRef.current;
     const dotSpans = [];
     const totalDots = 30;
@@ -115,8 +119,25 @@ export default function HeroCinematic() {
       }
     }
 
-    const rafLoop = () => {
-      renderP += (rawP - renderP) * 0.1;
+    // Auto-advance progress when idle at top of page
+    let lastTime = performance.now();
+
+    const rafLoop = (now) => {
+      const delta = (now - lastTime) / 1000;
+      lastTime = now;
+
+      const rect = section.getBoundingClientRect();
+      const isAtTop = rect.top >= -50;
+
+      if (isAtTop && !isUserScrolling) {
+        // Auto progress cycles smoothly every 15s across the 5 beats
+        autoP = (autoP + delta * 0.06) % 1.0;
+        rawP = autoP;
+      } else {
+        autoP = rawP;
+      }
+
+      renderP += (rawP - renderP) * 0.08;
       const p = renderP;
 
       const scale = 1 + p * 0.5 - Math.max(0, p - 0.5) * 0.3;
@@ -172,10 +193,18 @@ export default function HeroCinematic() {
     animId = requestAnimationFrame(rafLoop);
 
     const onScroll = () => {
+      isUserScrolling = true;
+      if (scrollIdleTimer) clearTimeout(scrollIdleTimer);
+      scrollIdleTimer = setTimeout(() => {
+        isUserScrolling = false;
+      }, 2500);
+
       const rect = section.getBoundingClientRect();
       const travel = section.offsetHeight - window.innerHeight;
       const scrolled = Math.min(Math.max(-rect.top, 0), travel);
-      rawP = travel > 0 ? scrolled / travel : 0;
+      if (scrolled > 0) {
+        rawP = travel > 0 ? scrolled / travel : 0;
+      }
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -183,13 +212,14 @@ export default function HeroCinematic() {
 
     return () => {
       window.removeEventListener('scroll', onScroll);
+      if (scrollIdleTimer) clearTimeout(scrollIdleTimer);
       cancelAnimationFrame(animId);
     };
   }, []);
 
   return (
     <section ref={sectionRef} id="cinematic" className="relative" style={{ height: '600vh' }}>
-      {/* Pinned Stage Container */}
+      {/* Sticky Stage Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50">
         {/* 3D WebGL Swarming Particle Atmosphere */}
         <ParticleSwarm3D />
@@ -210,7 +240,7 @@ export default function HeroCinematic() {
           >
             <div className="flex items-center justify-center w-full h-full">
               <div className="animate-soft-float flex items-center justify-center">
-                {/* Seamless Floating Figure (No card wrapper) */}
+                {/* Floating Figure (Transparent, no card box) */}
                 <div
                   ref={bouquetRef}
                   id="bouquet"
@@ -264,7 +294,7 @@ export default function HeroCinematic() {
           <span className="absolute bottom-0 right-0 w-5.5 h-5.5 border-b border-r border-tealbrand-600/50"></span>
         </div>
 
-        {/* 5 Uniform Copy Beats */}
+        {/* Auto-Advancing / Scrollable Copy Beats */}
         <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-6">
           {beatsData.map((beat, idx) => (
             <div
@@ -296,9 +326,15 @@ export default function HeroCinematic() {
           ))}
         </div>
 
-        {/* Timeline HUD Track (Bottom Left) */}
-        <div className="absolute left-8 bottom-12 z-45 flex items-center gap-4 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
-          <div id="timelineTrack" className="w-44 h-1 rounded-full bg-slate-200 overflow-hidden">
+        {/* Timeline HUD Track (Bottom Left) with Auto-Play Badge */}
+        <div className="absolute left-8 bottom-12 z-45 flex items-center gap-3 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-full border border-tealbrand-500/20 shadow-md">
+          <div className="flex items-center space-x-1.5 mr-1">
+            <span className="w-2 h-2 rounded-full bg-tealbrand-600 animate-ping"></span>
+            <span className="font-mono text-[9px] font-bold text-tealbrand-700 uppercase tracking-widest">
+              AUTO LIVE
+            </span>
+          </div>
+          <div id="timelineTrack" className="w-36 h-1 rounded-full bg-slate-200 overflow-hidden">
             <div
               ref={tlFillRef}
               id="timelineFill"
