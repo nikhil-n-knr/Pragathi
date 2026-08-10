@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Send, CheckCircle, Mail, MessageSquare, User, Tag } from 'lucide-react';
+import ParticleSwarm3D from './ParticleSwarm3D';
 
 export default function ContactCanal() {
   const [submitted, setSubmitted] = useState(false);
@@ -10,81 +11,6 @@ export default function ContactCanal() {
     message: '',
   });
 
-  const canvasRef = useRef(null);
-
-  // Section-scoped 3D bioluminescent particle canvas
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let animId;
-
-    let W = (canvas.width = canvas.parentElement.offsetWidth * window.devicePixelRatio);
-    let H = (canvas.height = canvas.parentElement.offsetHeight * window.devicePixelRatio);
-
-    const handleResize = () => {
-      if (!canvas.parentElement) return;
-      W = canvas.width = canvas.parentElement.offsetWidth * window.devicePixelRatio;
-      H = canvas.height = canvas.parentElement.offsetHeight * window.devicePixelRatio;
-    };
-    window.addEventListener('resize', handleResize);
-
-    const count = 40;
-    const particles = [];
-    const colors = [
-      'rgba(13, 148, 136, ',  // Teal 600
-      'rgba(16, 185, 129, ',  // Emerald 500
-      'rgba(6, 182, 212, ',   // Cyan 500
-    ];
-
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random(),
-        y: Math.random(),
-        radius: (2 + Math.random() * 4) * window.devicePixelRatio,
-        speed: 0.15 + Math.random() * 0.4,
-        drift: Math.random() * Math.PI * 2,
-        alpha: 0.15 + Math.random() * 0.4,
-        color: colors[i % colors.length],
-        seed: Math.random() * 100,
-      });
-    }
-
-    let time = 0;
-    const render = () => {
-      time += 16;
-      ctx.clearRect(0, 0, W, H);
-
-      particles.forEach((p) => {
-        const px = (p.x + Math.sin(time * 0.0003 * p.speed + p.drift) * 0.04) * W;
-        const py = (((p.y - time * 0.00003 * p.speed) % 1 + 1) % 1) * H;
-
-        const pulseAlpha = p.alpha * (0.6 + 0.4 * Math.sin(time * 0.002 + p.seed));
-        const size = p.radius * (0.85 + 0.25 * Math.cos(time * 0.0015 + p.seed));
-
-        ctx.globalAlpha = pulseAlpha;
-        const gradient = ctx.createRadialGradient(px, py, 0, px, py, size * 2.5);
-        gradient.addColorStop(0, `${p.color}0.85)`);
-        gradient.addColorStop(1, `${p.color}0)`);
-
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(px, py, size * 2.5, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      ctx.globalAlpha = 1;
-      animId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animId);
-    };
-  }, []);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.name && formData.email) {
@@ -93,11 +19,9 @@ export default function ContactCanal() {
   };
 
   return (
-    <section id="contact" className="py-28 bg-gradient-to-b from-white via-slate-50 to-slate-100 relative overflow-hidden border-t border-slate-200/80">
-      {/* 3D Bioluminescent Particle Canvas Backdrop */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <canvas ref={canvasRef} className="w-full h-full" />
-      </div>
+    <section id="contact" className="py-28 bg-slate-50 relative overflow-hidden border-t border-slate-200/80">
+      {/* Exact Same Three.js 3D WebGL Particle Swarm System as Hero */}
+      <ParticleSwarm3D className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-70" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-16">

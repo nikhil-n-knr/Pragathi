@@ -1,15 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-export default function ParticleSwarm3D() {
+export default function ParticleSwarm3D({ className = "fixed inset-0 w-full h-full pointer-events-none z-0" }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    const container = canvas.parentElement || document.body;
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const COUNT = isMobile ? 4000 : 12000;
+    const COUNT = isMobile ? 3500 : 9000;
     const rand = Math.random;
     const gauss = () => (rand() + rand() + rand() - 1.5) * 0.8;
 
@@ -106,15 +107,16 @@ export default function ParticleSwarm3D() {
       powerPreference: 'high-performance',
     });
 
+    const getW = () => container.clientWidth || window.innerWidth;
+    const getH = () => container.clientHeight || window.innerHeight;
+
     const pr = Math.min(window.devicePixelRatio, isMobile ? 1.25 : 1.75);
     renderer.setPixelRatio(pr);
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(getW(), getH());
 
     const scene = new THREE.Scene();
-    // Clear light cyan atmosphere background
-    scene.background = new THREE.Color('#f8fafc');
 
-    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+    const camera = new THREE.PerspectiveCamera(50, getW() / getH(), 0.1, 100);
     camera.position.z = 14.5;
 
     const geo = new THREE.BufferGeometry();
@@ -123,17 +125,16 @@ export default function ParticleSwarm3D() {
     geo.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
     geo.setAttribute('aRing', new THREE.BufferAttribute(ringId, 1));
 
-    // Tailored Light Nature-Tech Color Palette (Teal 600, Mint Cyan, Emerald 500)
     const uniforms = {
       uTime: { value: 0 },
       uSize: { value: 3.2 },
       uPixelRatio: { value: pr },
       uOpacity: { value: 0.85 },
-      uColor: { value: new THREE.Color('#0d9488') },   // Teal 600
-      uCore: { value: new THREE.Color('#5eead4') },    // Mint Cyan
-      uRing0: { value: new THREE.Color('#0f766e') },   // Teal 700
-      uRing1: { value: new THREE.Color('#10b981') },   // Emerald 500
-      uRing2: { value: new THREE.Color('#06b6d4') },   // Cyan 500
+      uColor: { value: new THREE.Color('#0d9488') },
+      uCore: { value: new THREE.Color('#5eead4') },
+      uRing0: { value: new THREE.Color('#0f766e') },
+      uRing1: { value: new THREE.Color('#10b981') },
+      uRing2: { value: new THREE.Color('#06b6d4') },
     };
 
     const mat = new THREE.ShaderMaterial({
@@ -175,16 +176,18 @@ export default function ParticleSwarm3D() {
 
     frame();
 
-    const handleWindowResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
+    const handleResize = () => {
+      const w = getW();
+      const h = getH();
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(w, h);
     };
-    window.addEventListener('resize', handleWindowResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleWindowResize);
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animId);
       geo.dispose();
       mat.dispose();
@@ -195,8 +198,7 @@ export default function ParticleSwarm3D() {
   return (
     <canvas
       ref={canvasRef}
-      id="particlesBg"
-      className="fixed inset-0 w-full h-full pointer-events-none z-0"
+      className={className}
     />
   );
 }
