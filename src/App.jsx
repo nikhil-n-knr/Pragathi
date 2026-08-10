@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Lenis from 'lenis';
 
@@ -16,9 +16,21 @@ import ContactCanal from './components/ContactCanal';
 import Footer from './components/Footer';
 import CookieBanner from './components/CookieBanner';
 
-import PrivacyPage from './pages/PrivacyPage';
-import TermsPage from './pages/TermsPage';
-import SecurityPage from './pages/SecurityPage';
+// Lazy-loaded dynamic imports for legal sub-pages
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
+const SecurityPage = lazy(() => import('./pages/SecurityPage'));
+
+function PagePreloader() {
+  return (
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center font-mono text-xs text-tealbrand-700 font-bold uppercase tracking-widest">
+      <div className="flex items-center space-x-2">
+        <span className="w-2 h-2 rounded-full bg-tealbrand-600 animate-ping"></span>
+        <span>Loading Specification Deck...</span>
+      </div>
+    </div>
+  );
+}
 
 function HomePage() {
   return (
@@ -67,11 +79,13 @@ export default function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/privacy" element={<PrivacyPage />} />
-      <Route path="/terms" element={<TermsPage />} />
-      <Route path="/security" element={<SecurityPage />} />
-    </Routes>
+    <Suspense fallback={<PagePreloader />}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/security" element={<SecurityPage />} />
+      </Routes>
+    </Suspense>
   );
 }
