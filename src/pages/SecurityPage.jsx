@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ShieldCheck, Lock, Server, Cpu, CheckCircle2, AlertTriangle, RefreshCw } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Lock, Server, Cpu, AlertTriangle, RefreshCw, ChevronDown, Search, CheckCircle2, Terminal } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -10,8 +10,11 @@ export default function SecurityPage() {
   const lbTopRef = useRef(null);
   const lbBotRef = useRef(null);
   const tlFillRef = useRef(null);
-  const bouquetRef = useRef(null);
   const beatElsRef = useRef([]);
+
+  const [activeFilter, setActiveFilter] = useState('ALL');
+  const [expandedSection, setExpandedSection] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const beats = [
     {
@@ -44,6 +47,90 @@ export default function SecurityPage() {
     },
   ];
 
+  const sections = [
+    {
+      id: 0,
+      tag: 'SANDBOX-ISOLATION',
+      icon: ShieldCheck,
+      title: '1. Multi-Tenant Container Sandbox Isolation',
+      badge: 'Isolated Containers',
+      summary: 'Every SaaS platform instance (HRMS, CRM, CMS, LMS, PlaySchool) and AI agent process operates inside a virtualized sandbox container with dedicated memory allocation.',
+      details: [
+        'Dedicated container memory namespaces and compute quota limits.',
+        'Schema-level database separation with zero cross-tenant query visibility.',
+        'Strict Role-Based Access Control (RBAC) policy enforcement.',
+        'Automated container teardown and ephemeral state zeroing.',
+      ],
+    },
+    {
+      id: 1,
+      tag: 'HSM-VAULT',
+      icon: Lock,
+      title: '2. 256-Bit HSM Key Management & Vault Protection',
+      badge: 'FIPS 140-2 Level 3',
+      summary: 'Secrets, database connection strings, and fine-tuned AI model weights are sealed within FIPS 140-2 Level 3 certified Hardware Security Modules (HSM).',
+      details: [
+        'AES-256 GCM master key envelope encryption.',
+        'Automated 90-day key rotation with hardware-enforced access controls.',
+        'Client-controlled KMS key integrations for hybrid cloud deployments.',
+        'Instant emergency key revocation triggers.',
+      ],
+    },
+    {
+      id: 2,
+      tag: 'IMMUTABLE-AUDIT',
+      icon: Server,
+      title: '3. Cryptographically Signed Immutable Audit Ledgers',
+      badge: 'Hash-Chain Logging',
+      summary: 'All system mutations, permission configuration changes, and model inference executions generate cryptographically signed audit logs.',
+      details: [
+        'SHA-256 hash-chained audit log structures for tamper resistance.',
+        'Real-time automated SIEM telemetry stream integration.',
+        'Immutable event history for compliance forensic reviews.',
+      ],
+    },
+    {
+      id: 3,
+      tag: 'THREAT-TELEMETRY',
+      icon: AlertTriangle,
+      title: '4. Real-Time Automated DDoS & Threat Telemetry',
+      badge: '< 5ms Edge Mitigation',
+      summary: 'Perimeter firewalls and edge clusters utilize continuous automated rate limiting and AI threat detection swarms to block malicious requests instantly.',
+      details: [
+        'Sub-5 millisecond automated edge rate-limiting and DDoS mitigation.',
+        'Automated Web Application Firewall (WAF) SQLi and XSS filtering.',
+        'Anomaly detection swarms analyzing request telemetry 24/7.',
+      ],
+    },
+    {
+      id: 4,
+      tag: 'SOC-2-AUDIT',
+      icon: Cpu,
+      title: '5. SOC-2 Alignment & Penetration Testing Protocols',
+      badge: 'Quarterly Audits',
+      summary: 'Independent third-party security auditors conduct quarterly penetration testing and vulnerability assessments across our infrastructure.',
+      details: [
+        'SOC-2 Type II control alignment across security, availability, and confidentiality.',
+        'Quarterly external penetration testing and grey-box vulnerability scans.',
+        'Continuous automated dependency and vulnerability scanning.',
+      ],
+    },
+    {
+      id: 5,
+      tag: 'DISASTER-RECOVERY',
+      icon: RefreshCw,
+      title: '6. Incident Response & Disaster Recovery Infrastructure',
+      badge: 'RPO < 15m / RTO < 1h',
+      summary: 'Automated database snapshot backups are replicated across geo-redundant storage clusters every 15 minutes with guaranteed recovery metrics.',
+      details: [
+        '15-minute geo-redundant encrypted snapshot backup replication.',
+        'Recovery Point Objective (RPO) guaranteed under 15 minutes.',
+        'Recovery Time Objective (RTO) guaranteed under 1 hour.',
+        'Automated failover routing across multi-region edge mesh clusters.',
+      ],
+    },
+  ];
+
   const calculateBeatOpacity = (p, s, e) => {
     const span = e - s;
     const fade = span * 0.3;
@@ -65,13 +152,6 @@ export default function SecurityPage() {
     const rafLoop = () => {
       renderP += (rawP - renderP) * 0.1;
       const p = renderP;
-
-      const scale = 1 + p * 0.45 - Math.max(0, p - 0.5) * 0.25;
-      const roll = p * 4 - Math.max(0, p - 0.7) * 3;
-
-      if (bouquetRef.current) {
-        bouquetRef.current.style.transform = `scale(${scale.toFixed(4)}) rotate(${roll.toFixed(2)}deg)`;
-      }
 
       let lb = 0;
       if (p < 0.06) lb = (p / 0.06) * 6;
@@ -113,47 +193,60 @@ export default function SecurityPage() {
     };
   }, []);
 
+  const filteredSections = sections.filter((sec) => {
+    const matchesFilter = activeFilter === 'ALL' || sec.tag === activeFilter;
+    const matchesSearch =
+      searchQuery === '' ||
+      sec.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      sec.summary.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative">
+    <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative font-sans">
       <Navbar />
 
-      {/* Cinematic Sticky Hero Stage */}
-      <section ref={sectionRef} className="relative" style={{ height: '400vh' }}>
+      {/* Image-Free Cinematic Sticky Stage */}
+      <section ref={sectionRef} className="relative" style={{ height: '360vh' }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
-
-          {/* Floating 3D Zero-Trust HSM Security Vault Artwork */}
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-35">
-            <div className="animate-soft-float flex items-center justify-center">
-              <div
-                ref={bouquetRef}
-                className="z-40 relative pointer-events-none"
-                style={{
-                  width: 'min(70vw, 34rem)',
-                  aspectRatio: '1 / 1',
-                  backgroundImage: `url('/images/security_vault.png')`,
-                  backgroundSize: 'contain',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center center',
-                  willChange: 'transform',
-                }}
-              />
-            </div>
-          </div>
 
           <div ref={lbTopRef} className="absolute top-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
           <div ref={lbBotRef} className="absolute bottom-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
 
-          <div className="absolute top-24 left-8 z-40">
+          {/* Interactive Protocol Switcher Header Bar */}
+          <div className="absolute top-24 left-6 right-6 max-w-4xl mx-auto z-40 flex items-center justify-between">
             <Link
               to="/"
               className="inline-flex items-center space-x-2 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full border border-slate-200 text-xs font-mono font-bold text-slate-800 hover:text-tealbrand-600 shadow-md"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Back to Platform</span>
+              <span className="hidden sm:inline">Platform Home</span>
             </Link>
+
+            <div className="flex items-center space-x-1.5 bg-white/90 backdrop-blur-md p-1.5 rounded-full border border-slate-200/90 shadow-md font-mono text-[10px] font-bold">
+              <Link
+                to="/privacy"
+                className="px-3.5 py-1.5 rounded-full text-slate-600 hover:text-tealbrand-600 transition-all"
+              >
+                Privacy
+              </Link>
+              <Link
+                to="/terms"
+                className="px-3.5 py-1.5 rounded-full text-slate-600 hover:text-tealbrand-600 transition-all"
+              >
+                Terms
+              </Link>
+              <Link
+                to="/security"
+                className="px-3.5 py-1.5 rounded-full bg-tealbrand-600 text-white shadow-sm transition-all"
+              >
+                Security
+              </Link>
+            </div>
           </div>
 
+          {/* 4 Pinned Beats with High-Contrast Text */}
           <div className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none px-6">
             {beats.map((beat, idx) => (
               <div
@@ -196,109 +289,172 @@ export default function SecurityPage() {
         </div>
       </section>
 
-      {/* Comprehensive Security Whitepaper Content */}
-      <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
+      {/* Interactive Quantum Governance Terminal & Accordion Deck */}
+      <section className="py-24 max-w-5xl mx-auto px-6 space-y-12">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
+            <Terminal className="w-4 h-4 text-tealbrand-600" />
             <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-              ZERO-TRUST SECURITY & DEFENSE WHITEPAPER
+              QUANTUM GOVERNANCE TERMINAL // ZERO-TRUST DEFENSE
             </span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
             Security & Defense Architecture
           </h2>
           <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mt-2">
-            Enterprise Cryptography & Threat Mitigation Standards
+            Interactive Zero-Trust Specifications — Πsparrow Software Solutions
           </p>
         </div>
 
-        {/* Section 1 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-tealbrand-600">
-            <ShieldCheck className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              1. Multi-Tenant Container Sandbox Isolation
-            </h3>
+        {/* Live Governance Metric Telemetry Badges */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="nature-glass rounded-xl p-4 border border-tealbrand-500/20 bg-white shadow-sm flex flex-col justify-between">
+            <span className="font-mono text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1">
+              HSM Cryptography
+            </span>
+            <span className="font-mono text-sm font-bold text-tealbrand-700 flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-tealbrand-600 animate-ping"></span>
+              <span>FIPS 140-2 Level 3</span>
+            </span>
           </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Every SaaS platform instance (HRMS, CRM, CMS, LMS, PlaySchool) and AI agent process operates inside a virtualized sandbox container with dedicated memory allocation, database schema separation, and strict Role-Based Access Control (RBAC) policy enforcement.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 font-mono text-xs text-slate-700">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
-              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
-              <span>Isolated Sandbox Containers with Resource Quota Caps</span>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
-              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
-              <span>Zero Cross-Tenant Database Visibility Enforcement</span>
-            </div>
+
+          <div className="nature-glass rounded-xl p-4 border border-emerald-500/20 bg-white shadow-sm flex flex-col justify-between">
+            <span className="font-mono text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1">
+              Threat Mitigation
+            </span>
+            <span className="font-mono text-sm font-bold text-emerald-700 flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-ping"></span>
+              <span>&lt; 5ms Response</span>
+            </span>
+          </div>
+
+          <div className="nature-glass rounded-xl p-4 border border-cyanbrand-500/20 bg-white shadow-sm flex flex-col justify-between">
+            <span className="font-mono text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1">
+              Backup Replication
+            </span>
+            <span className="font-mono text-sm font-bold text-cyanbrand-700 flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-cyanbrand-600 animate-ping"></span>
+              <span>15m Snapshots</span>
+            </span>
+          </div>
+
+          <div className="nature-glass rounded-xl p-4 border border-tealbrand-500/20 bg-white shadow-sm flex flex-col justify-between">
+            <span className="font-mono text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1">
+              Audit Compliance
+            </span>
+            <span className="font-mono text-sm font-bold text-slate-900 flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-tealbrand-600 animate-ping"></span>
+              <span>SOC-2 Aligned</span>
+            </span>
           </div>
         </div>
 
-        {/* Section 2 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-emerald-600">
-            <Lock className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              2. 256-Bit HSM Key Management & Vault Protection
-            </h3>
+        {/* Real-Time Clause Search & Filter Bar */}
+        <div className="nature-glass rounded-2xl p-4 border border-slate-200 bg-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="relative w-full sm:w-72">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+            <input
+              type="text"
+              placeholder="Search security specifications..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-800 focus:outline-none focus:border-tealbrand-600 focus:ring-2 focus:ring-tealbrand-500/10"
+            />
           </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Secrets, database connection strings, and fine-tuned AI model weights are sealed within FIPS 140-2 Level 3 certified Hardware Security Modules (HSM) featuring automated key rotation and instant revocation.
-          </p>
+
+          <div className="flex items-center space-x-1.5 overflow-x-auto w-full sm:w-auto py-1 font-mono text-[10px] font-bold">
+            {['ALL', 'SANDBOX-ISOLATION', 'HSM-VAULT', 'IMMUTABLE-AUDIT', 'THREAT-TELEMETRY', 'SOC-2-AUDIT', 'DISASTER-RECOVERY'].map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setActiveFilter(tag)}
+                className={`px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
+                  activeFilter === tag
+                    ? 'bg-tealbrand-600 text-white shadow-sm'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                #{tag}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Section 3 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-cyanbrand-600">
-            <Server className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              3. Cryptographically Signed Immutable Audit Ledgers
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            All system mutations, permission configuration changes, and model inference executions generate cryptographically signed audit logs. Any tampering attempt invalidates the hash chain and alerts our security operations center immediately.
-          </p>
-        </div>
+        {/* Interactive Expandable Policy Accordion Cards */}
+        <div className="space-y-4">
+          {filteredSections.map((sec) => {
+            const Icon = sec.icon;
+            const isOpen = expandedSection === sec.id;
 
-        {/* Section 4 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-tealbrand-600">
-            <AlertTriangle className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              4. Real-Time Automated DDoS & Threat Telemetry
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Perimeter firewalls and edge clusters utilize continuous automated rate limiting and AI threat detection swarms to block malicious traffic, SQL injection attacks, and unthrottled scraping bots in under 5 milliseconds.
-          </p>
-        </div>
+            return (
+              <div
+                key={sec.id}
+                className={`nature-glass rounded-2xl border transition-all duration-300 bg-white overflow-hidden ${
+                  isOpen ? 'border-tealbrand-500/50 shadow-xl' : 'border-slate-200/80 shadow-md hover:border-tealbrand-500/30'
+                }`}
+              >
+                <button
+                  onClick={() => setExpandedSection(isOpen ? null : sec.id)}
+                  className="w-full p-6 md:p-8 flex items-center justify-between text-left focus:outline-none"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+                        isOpen ? 'bg-tealbrand-600 text-white shadow-md' : 'bg-tealbrand-500/10 text-tealbrand-600 border border-tealbrand-500/20'
+                      }`}
+                    >
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="flex items-center space-x-2 mb-1">
+                        <span className="font-mono text-[9px] font-bold text-tealbrand-700 uppercase tracking-widest">
+                          #{sec.tag}
+                        </span>
+                        <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-mono text-[9px] font-bold uppercase">
+                          {sec.badge}
+                        </span>
+                      </div>
+                      <h3 className="text-lg md:text-xl font-bold font-mono text-slate-900">
+                        {sec.title}
+                      </h3>
+                    </div>
+                  </div>
 
-        {/* Section 5 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-emerald-600">
-            <Cpu className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              5. SOC-2 Alignment & Penetration Testing Protocols
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Independent third-party security auditors conduct quarterly penetration testing and vulnerability assessments across our infrastructure, verifying strict alignment with SOC-2 Type II standards.
-          </p>
-        </div>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 text-slate-600 transition-transform duration-300 ${
+                      isOpen ? 'rotate-180 bg-tealbrand-50 text-tealbrand-700' : ''
+                    }`}
+                  >
+                    <ChevronDown className="w-5 h-5" />
+                  </div>
+                </button>
 
-        {/* Section 6 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-cyanbrand-600">
-            <RefreshCw className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              6. Incident Response & Disaster Recovery
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Automated database snapshot backups are replicated across geo-redundant storage clusters every 15 minutes, guaranteeing a Recovery Point Objective (RPO) of under 15 minutes and Recovery Time Objective (RTO) of under 1 hour.
-          </p>
+                {isOpen && (
+                  <div className="px-6 md:px-8 pb-8 pt-2 border-t border-slate-100 space-y-6 animate-fadeIn">
+                    <p className="text-slate-700 text-sm leading-relaxed font-sans">
+                      {sec.summary}
+                    </p>
+
+                    <div className="space-y-3 pt-2">
+                      <h4 className="font-mono text-xs font-bold text-slate-900 uppercase tracking-wider">
+                        Security Implementation Parameters:
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {sec.details.map((detail, idx) => (
+                          <div
+                            key={idx}
+                            className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-xs text-slate-700 flex items-start space-x-2.5"
+                          >
+                            <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
+                            <span>{detail}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
 

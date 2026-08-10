@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Lock, Database, ShieldCheck, Eye, FileText, CheckCircle2, Server } from 'lucide-react';
+import { ArrowLeft, Lock, Database, ShieldCheck, Eye, Server, ChevronDown, Search, CheckCircle2, Terminal } from 'lucide-react';
 import ParticleSwarm3D from '../components/ParticleSwarm3D';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -10,8 +10,12 @@ export default function PrivacyPage() {
   const lbTopRef = useRef(null);
   const lbBotRef = useRef(null);
   const tlFillRef = useRef(null);
-  const bouquetRef = useRef(null);
   const beatElsRef = useRef([]);
+
+  const [activeTab, setActiveTab] = useState('privacy');
+  const [activeFilter, setActiveFilter] = useState('ALL');
+  const [expandedSection, setExpandedSection] = useState(0); // Open first section by default
+  const [searchQuery, setSearchQuery] = useState('');
 
   const beats = [
     {
@@ -44,6 +48,77 @@ export default function PrivacyPage() {
     },
   ];
 
+  const sections = [
+    {
+      id: 0,
+      tag: 'ENCRYPTION',
+      icon: Lock,
+      title: '1. Zero-Trust Cryptographic Infrastructure',
+      badge: 'AES-256 GCM & TLS 1.3',
+      summary: 'Every transaction, user session, and model prompt processed by Πsparrow is secured via AES-256 GCM encryption at rest and TLS 1.3 in transit.',
+      details: [
+        'Master cryptographic keys stored in FIPS 140-2 Level 3 Hardware Security Modules (HSM).',
+        'Automated 90-day master key rotation with zero system downtime.',
+        'Ephemeral TLS 1.3 session handshakes with Perfect Forward Secrecy (PFS).',
+        'Zero plain-text logging across edge nodes or agentic swarm workers.',
+      ],
+    },
+    {
+      id: 1,
+      tag: 'AI-ISOLATION',
+      icon: Database,
+      title: '2. AI Swarm & Training Dataset Isolation',
+      badge: 'Dedicated Tenant Containers',
+      summary: 'Client training datasets, prompt histories, and fine-tuned model weights remain strictly isolated inside dedicated virtualized sandbox containers.',
+      details: [
+        'Zero data leakage policy: Client telemetry is NEVER used to train shared base models.',
+        'Fine-tuned model weights encrypted with client-owned master keys.',
+        'Ephemeral memory wiping upon completion of agentic swarm execution tasks.',
+        'Isolated vector database index namespaces for RAG knowledge bases.',
+      ],
+    },
+    {
+      id: 2,
+      tag: 'GDPR-CCPA',
+      icon: ShieldCheck,
+      title: '3. Global Regulatory Compliance (GDPR & CCPA)',
+      badge: 'Sovereignty & Portability',
+      summary: 'Compliant with GDPR, CCPA, and international data governance standards, providing 1-click erasure scripts and full data export capabilities.',
+      details: [
+        'Automated Right-to-Erasure: Trigger 24-hour cryptographic tenant purging via admin portal.',
+        'Full Data Portability: Export complete database schemas and training histories in JSON/CSV formats.',
+        'Strict Data Localization: Choose deployment regions across US, EU, and APAC edge clusters.',
+        'DPPA & HIPAA compliant data handling options available upon request.',
+      ],
+    },
+    {
+      id: 3,
+      tag: 'TELEMETRY',
+      icon: Eye,
+      title: '4. Essential Cookies & Session Telemetry',
+      badge: 'Minimal Telemetry',
+      summary: 'We utilize minimal bioluminescent session cookies strictly for session authentication, load balancing, and render optimization.',
+      details: [
+        'Essential cookies only: No cross-site advertising trackers or third-party behavioral scripts.',
+        'Anonymized performance telemetry for edge cluster response optimization.',
+        'Granular cookie preferences configurable at any time via floating control bar.',
+      ],
+    },
+    {
+      id: 4,
+      tag: 'DATA-PURGE',
+      icon: Server,
+      title: '5. Data Retention & Cryptographic Erasure Policy',
+      badge: '30-Day Auto Purge',
+      summary: 'Operational logs and agentic execution states are retained strictly within agreed lifecycle limits and permanently zeroed upon contract termination.',
+      details: [
+        'Automated 30-day purge cycle for expired tenant session logs and temporary files.',
+        'NIST 800-88 compliant multi-pass cryptographic data sanitization for retired storage blocks.',
+        'Instant tenant revocation commands available for compliance officers.',
+      ],
+    },
+  ];
+
   const calculateBeatOpacity = (p, s, e) => {
     const span = e - s;
     const fade = span * 0.3;
@@ -65,13 +140,6 @@ export default function PrivacyPage() {
     const rafLoop = () => {
       renderP += (rawP - renderP) * 0.1;
       const p = renderP;
-
-      const scale = 1 + p * 0.45 - Math.max(0, p - 0.5) * 0.25;
-      const roll = p * 4 - Math.max(0, p - 0.7) * 3;
-
-      if (bouquetRef.current) {
-        bouquetRef.current.style.transform = `scale(${scale.toFixed(4)}) rotate(${roll.toFixed(2)}deg)`;
-      }
 
       let lb = 0;
       if (p < 0.06) lb = (p / 0.06) * 6;
@@ -113,47 +181,59 @@ export default function PrivacyPage() {
     };
   }, []);
 
+  const filteredSections = sections.filter((sec) => {
+    const matchesFilter = activeFilter === 'ALL' || sec.tag === activeFilter;
+    const matchesSearch =
+      searchQuery === '' ||
+      sec.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      sec.summary.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative">
+    <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-tealbrand-500/20 selection:text-tealbrand-900 relative font-sans">
       <Navbar />
 
-      {/* Cinematic Sticky Hero Stage */}
-      <section ref={sectionRef} className="relative" style={{ height: '400vh' }}>
+      {/* Image-Free Cinematic Sticky Stage */}
+      <section ref={sectionRef} className="relative" style={{ height: '360vh' }}>
         <div className="sticky top-0 h-screen w-full overflow-hidden bg-slate-50 flex items-center justify-center">
           <ParticleSwarm3D />
-
-          {/* Clean 3D Quantum Privacy Shield (True Transparent PNG) */}
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none opacity-40">
-            <div className="animate-soft-float flex items-center justify-center">
-              <div
-                ref={bouquetRef}
-                className="z-40 relative pointer-events-none"
-                style={{
-                  width: 'min(70vw, 34rem)',
-                  aspectRatio: '1 / 1',
-                  backgroundImage: `url('/images/privacy_shield.png')`,
-                  backgroundSize: 'contain',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center center',
-                  willChange: 'transform',
-                }}
-              />
-            </div>
-          </div>
 
           {/* Letterbox Bars */}
           <div ref={lbTopRef} className="absolute top-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
           <div ref={lbBotRef} className="absolute bottom-0 left-0 right-0 bg-slate-950 z-30 pointer-events-none" style={{ height: '0vh' }} />
 
-          {/* Return Home Button */}
-          <div className="absolute top-24 left-8 z-40">
+          {/* Interactive Protocol Switcher Header Bar */}
+          <div className="absolute top-24 left-6 right-6 max-w-4xl mx-auto z-40 flex items-center justify-between">
             <Link
               to="/"
               className="inline-flex items-center space-x-2 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full border border-slate-200 text-xs font-mono font-bold text-slate-800 hover:text-tealbrand-600 shadow-md"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Back to Platform</span>
+              <span className="hidden sm:inline">Platform Home</span>
             </Link>
+
+            {/* Protocol Switcher Pills */}
+            <div className="flex items-center space-x-1.5 bg-white/90 backdrop-blur-md p-1.5 rounded-full border border-slate-200/90 shadow-md font-mono text-[10px] font-bold">
+              <Link
+                to="/privacy"
+                className="px-3.5 py-1.5 rounded-full bg-tealbrand-600 text-white shadow-sm transition-all"
+              >
+                Privacy
+              </Link>
+              <Link
+                to="/terms"
+                className="px-3.5 py-1.5 rounded-full text-slate-600 hover:text-tealbrand-600 transition-all"
+              >
+                Terms
+              </Link>
+              <Link
+                to="/security"
+                className="px-3.5 py-1.5 rounded-full text-slate-600 hover:text-tealbrand-600 transition-all"
+              >
+                Security
+              </Link>
+            </div>
           </div>
 
           {/* 4 Pinned Beats with High-Contrast Text */}
@@ -200,120 +280,177 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      {/* Comprehensive Detailed Legal Content Sections */}
-      <section className="py-24 max-w-5xl mx-auto px-6 space-y-12 font-sans">
+      {/* Interactive Quantum Governance Terminal & Accordion Deck */}
+      <section className="py-24 max-w-5xl mx-auto px-6 space-y-12">
+        {/* Terminal Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-tealbrand-500/10 border border-tealbrand-500/20 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-tealbrand-600"></span>
+            <Terminal className="w-4 h-4 text-tealbrand-600" />
             <span className="font-mono text-[10px] font-bold text-tealbrand-700 uppercase tracking-widest">
-              OFFICIAL PRIVACY POLICY & DATA GOVERNANCE
+              QUANTUM GOVERNANCE TERMINAL // PRIVACY SPECIFICATIONS
             </span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
             Data Governance & Privacy Framework
           </h2>
           <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mt-2">
-            Πsparrow Software Solutions — Production Data Governance & Sovereignty
+            Interactive Technical Specification Deck — Πsparrow Software Solutions
           </p>
         </div>
 
-        {/* Section 1 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-tealbrand-600">
-            <Lock className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              1. Zero-Trust Cryptographic Infrastructure
-            </h3>
+        {/* Live Governance Metric Telemetry Badges */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="nature-glass rounded-xl p-4 border border-tealbrand-500/20 bg-white shadow-sm flex flex-col justify-between">
+            <span className="font-mono text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1">
+              Encryption Protocol
+            </span>
+            <span className="font-mono text-sm font-bold text-tealbrand-700 flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-tealbrand-600 animate-ping"></span>
+              <span>AES-256 GCM</span>
+            </span>
           </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Πsparrow Software Solutions ("Πsparrow", "We", "Our") operates under a Zero-Trust Cryptographic Model. All customer datasets, API payloads, workforce records in HRMS, CRM lead pipelines, CMS content assets, LMS progress metrics, and PlaySchool monitoring feeds are protected using AES-256 GCM authenticated encryption at rest and TLS 1.3 in transit.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 font-mono text-xs text-slate-700">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
-              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
-              <span>Dedicated Hardware Security Modules (HSM) for Master Keys</span>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start space-x-3">
-              <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
-              <span>Automated Key Rotation & Ephemeral Session Tokens</span>
-            </div>
+
+          <div className="nature-glass rounded-xl p-4 border border-emerald-500/20 bg-white shadow-sm flex flex-col justify-between">
+            <span className="font-mono text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1">
+              Model Isolation
+            </span>
+            <span className="font-mono text-sm font-bold text-emerald-700 flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-ping"></span>
+              <span>100% Private</span>
+            </span>
+          </div>
+
+          <div className="nature-glass rounded-xl p-4 border border-cyanbrand-500/20 bg-white shadow-sm flex flex-col justify-between">
+            <span className="font-mono text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1">
+              GDPR Sovereignty
+            </span>
+            <span className="font-mono text-sm font-bold text-cyanbrand-700 flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-cyanbrand-600 animate-ping"></span>
+              <span>1-Click Purge</span>
+            </span>
+          </div>
+
+          <div className="nature-glass rounded-xl p-4 border border-tealbrand-500/20 bg-white shadow-sm flex flex-col justify-between">
+            <span className="font-mono text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1">
+              Retention Policy
+            </span>
+            <span className="font-mono text-sm font-bold text-slate-900 flex items-center space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-tealbrand-600 animate-ping"></span>
+              <span>30-Day Auto</span>
+            </span>
           </div>
         </div>
 
-        {/* Section 2 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-emerald-600">
-            <Database className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              2. AI Model Swarm & Dataset Isolation
-            </h3>
+        {/* Real-Time Clause Search & Filter Bar */}
+        <div className="nature-glass rounded-2xl p-4 border border-slate-200 bg-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* Search Input */}
+          <div className="relative w-full sm:w-72">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+            <input
+              type="text"
+              placeholder="Search privacy clauses..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-800 focus:outline-none focus:border-tealbrand-600 focus:ring-2 focus:ring-tealbrand-500/10"
+            />
           </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            When clients utilize our AI Automation & Custom Model Fine-Tuning services, all training datasets, prompt histories, and fine-tuned model weights remain strictly isolated inside dedicated tenant containers.
-          </p>
-          <ul className="space-y-2 text-xs font-mono text-slate-600 pt-2">
-            <li className="flex items-center space-x-2">
-              <span className="text-tealbrand-600 font-bold">✔</span>
-              <span>NO CLIENT DATA IS EVER USED TO TRAIN PUBLIC BASE MODELS.</span>
-            </li>
-            <li className="flex items-center space-x-2">
-              <span className="text-tealbrand-600 font-bold">✔</span>
-              <span>TENANT MODEL WEIGHTS ARE ENCRYPTED WITH CLIENT-CONTROLLED KEYS.</span>
-            </li>
-            <li className="flex items-center space-x-2">
-              <span className="text-tealbrand-600 font-bold">✔</span>
-              <span>EPHEMERAL AGENTIC MEMORY ERASURE UPON SWARM TASK COMPLETION.</span>
-            </li>
-          </ul>
-        </div>
 
-        {/* Section 3 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-cyanbrand-600">
-            <ShieldCheck className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              3. Global Regulatory Compliance (GDPR, CCPA)
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Πsparrow complies with global privacy legislation, including the General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA). Enterprise administrators maintain complete sovereignty over their data lifecycle:
-          </p>
-          <div className="space-y-3 pt-2 font-mono text-xs text-slate-700">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-              <strong className="text-slate-900 block mb-1">RIGHT TO ERASURE (RIGHT TO BE FORGOTTEN):</strong>
-              Execute automated 1-click tenant purge scripts to permanently erase historical audit ledgers and database rows within 24 hours.
-            </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-              <strong className="text-slate-900 block mb-1">DATA PORTABILITY:</strong>
-              Export complete tenant records, schema definitions, and model parameters in structured JSON or CSV formats at any time.
-            </div>
+          {/* Filter Tags */}
+          <div className="flex items-center space-x-1.5 overflow-x-auto w-full sm:w-auto py-1 font-mono text-[10px] font-bold">
+            {['ALL', 'ENCRYPTION', 'AI-ISOLATION', 'GDPR-CCPA', 'TELEMETRY', 'DATA-PURGE'].map((tag) => (
+              <button
+                key={tag}
+                onClick={() => setActiveFilter(tag)}
+                className={`px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
+                  activeFilter === tag
+                    ? 'bg-tealbrand-600 text-white shadow-sm'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                #{tag}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Section 4 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-tealbrand-600">
-            <Eye className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              4. Cookies & Essential Telemetry
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            We use minimal bioluminescent telemetry cookies solely to maintain session security, balance edge cluster loads, and optimize render performance. You can manage or disable optional cookies using our floating cookie bar at any time.
-          </p>
-        </div>
+        {/* Interactive Expandable Policy Accordion Cards */}
+        <div className="space-y-4">
+          {filteredSections.map((sec) => {
+            const Icon = sec.icon;
+            const isOpen = expandedSection === sec.id;
 
-        {/* Section 5 */}
-        <div className="nature-glass rounded-2xl p-8 md:p-12 border border-slate-200 bg-white shadow-xl space-y-6">
-          <div className="flex items-center space-x-3 text-emerald-600">
-            <Server className="w-8 h-8 flex-shrink-0" />
-            <h3 className="text-2xl font-bold font-mono text-slate-900 uppercase tracking-tight">
-              5. Data Retention & Automated Purge Policy
-            </h3>
-          </div>
-          <p className="text-slate-600 text-sm leading-relaxed">
-            Operational logs and agentic execution states are retained only for the duration specified in your tenant agreement. Upon subscription termination or tenant de-provisioning, all database tables, vector embeddings, and backup snapshots are automatically destroyed using cryptographic zeroing protocols within 30 calendar days.
-          </p>
+            return (
+              <div
+                key={sec.id}
+                className={`nature-glass rounded-2xl border transition-all duration-300 bg-white overflow-hidden ${
+                  isOpen ? 'border-tealbrand-500/50 shadow-xl' : 'border-slate-200/80 shadow-md hover:border-tealbrand-500/30'
+                }`}
+              >
+                {/* Accordion Header */}
+                <button
+                  onClick={() => setExpandedSection(isOpen ? null : sec.id)}
+                  className="w-full p-6 md:p-8 flex items-center justify-between text-left focus:outline-none"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors ${
+                        isOpen ? 'bg-tealbrand-600 text-white shadow-md' : 'bg-tealbrand-500/10 text-tealbrand-600 border border-tealbrand-500/20'
+                      }`}
+                    >
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="flex items-center space-x-2 mb-1">
+                        <span className="font-mono text-[9px] font-bold text-tealbrand-700 uppercase tracking-widest">
+                          #{sec.tag}
+                        </span>
+                        <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-mono text-[9px] font-bold uppercase">
+                          {sec.badge}
+                        </span>
+                      </div>
+                      <h3 className="text-lg md:text-xl font-bold font-mono text-slate-900">
+                        {sec.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 text-slate-600 transition-transform duration-300 ${
+                      isOpen ? 'rotate-180 bg-tealbrand-50 text-tealbrand-700' : ''
+                    }`}
+                  >
+                    <ChevronDown className="w-5 h-5" />
+                  </div>
+                </button>
+
+                {/* Accordion Content Body */}
+                {isOpen && (
+                  <div className="px-6 md:px-8 pb-8 pt-2 border-t border-slate-100 space-y-6 animate-fadeIn">
+                    <p className="text-slate-700 text-sm leading-relaxed font-sans">
+                      {sec.summary}
+                    </p>
+
+                    <div className="space-y-3 pt-2">
+                      <h4 className="font-mono text-xs font-bold text-slate-900 uppercase tracking-wider">
+                        Technical Execution Standards:
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {sec.details.map((detail, idx) => (
+                          <div
+                            key={idx}
+                            className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 font-mono text-xs text-slate-700 flex items-start space-x-2.5"
+                          >
+                            <CheckCircle2 className="w-4 h-4 text-tealbrand-600 flex-shrink-0 mt-0.5" />
+                            <span>{detail}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
 
