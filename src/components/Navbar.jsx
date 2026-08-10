@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,6 +15,18 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Handle hash scrolling on page load if hash is present in location
+  useEffect(() => {
+    if (location.hash && location.pathname === '/') {
+      setTimeout(() => {
+        const el = document.querySelector(location.hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    }
+  }, [location]);
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -22,6 +37,20 @@ export default function Navbar() {
     { name: 'Contact', href: '#contact' },
   ];
 
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+
+    if (location.pathname === '/') {
+      const el = document.querySelector(href);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate('/' + href);
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -31,8 +60,8 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        {/* Brand Logo Link with Official Logo Image */}
-        <a href="#" className="flex items-center space-x-3 group">
+        {/* Brand Logo Link to Home Page */}
+        <Link to="/" className="flex items-center space-x-3 group">
           <div className="h-9 w-9 rounded-lg bg-tealbrand-500/10 border border-tealbrand-500/20 p-1 flex items-center justify-center shadow-sm group-hover:border-tealbrand-500/50 transition-colors">
             <img src="/logo.png" alt="Πsparrow Logo" className="w-full h-full object-contain" />
           </div>
@@ -44,7 +73,7 @@ export default function Navbar() {
               SOFTWARE SOLUTIONS
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Nav Links */}
         <nav className="hidden md:flex items-center space-x-8">
@@ -52,6 +81,7 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="font-mono text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-tealbrand-600 transition-colors"
             >
               {link.name}
@@ -68,6 +98,7 @@ export default function Navbar() {
 
           <a
             href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
             className="inline-flex items-center space-x-2 bg-tealbrand-600 hover:bg-tealbrand-700 text-white px-5 py-2.5 rounded-md font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-md group"
           >
             <span>Initialize Project</span>
@@ -91,7 +122,7 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="block font-mono text-sm font-bold uppercase tracking-wider text-slate-700 hover:text-tealbrand-600"
             >
               {link.name}
@@ -99,7 +130,7 @@ export default function Navbar() {
           ))}
           <a
             href="#contact"
-            onClick={() => setMobileMenuOpen(false)}
+            onClick={(e) => handleNavClick(e, '#contact')}
             className="block w-full text-center bg-tealbrand-600 text-white py-3 rounded-md font-mono text-xs font-bold uppercase tracking-wider"
           >
             Initialize Project
