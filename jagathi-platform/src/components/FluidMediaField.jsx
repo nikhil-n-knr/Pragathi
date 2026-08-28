@@ -12,8 +12,8 @@ const projects = [
     tag: 'Heavy Build',
     titleFirst: 'Cogen',
     titleRest: 'Energy Complex',
-    beforeImage: '/assets/images/landmarks/cogen_sketch.png',
-    afterImage: '/assets/images/landmarks/cogen_finished.png',
+    beforeImage: '/assets/images/landmarks/cogen_sketch.webp',
+    afterImage: '/assets/images/landmarks/cogen_finished.webp',
     desc: 'From barren excavated terrain to a fully operational co-generation energy complex — thermodynamic piping loops, civil concrete grids, and structural foundation matrices.',
     location: 'Whitefield, IN',
     coords: '13.0640° N, 80.2460° E',
@@ -27,8 +27,8 @@ const projects = [
     tag: 'Real Estate',
     titleFirst: 'Solitaire',
     titleRest: 'Valleys',
-    beforeImage: '/assets/images/landmarks/solitaire_sketch.png',
-    afterImage: '/assets/images/landmarks/solitaire_finished.png',
+    beforeImage: '/assets/images/landmarks/solitaire_sketch.webp',
+    afterImage: '/assets/images/landmarks/solitaire_finished.webp',
     desc: 'Raw architectural sketch transformed into a premium estate valley — strategic land acquisition, luxury villa typologies, winding roads, and municipal green zones.',
     location: 'Nandi Foothills, IN',
     coords: '13.0980° N, 80.2920° E',
@@ -42,8 +42,8 @@ const projects = [
     tag: 'Engineering',
     titleFirst: 'Orion',
     titleRest: 'Glass Villa',
-    beforeImage: '/assets/images/landmarks/orion_sketch.png',
-    afterImage: '/assets/images/landmarks/orion_finished.png',
+    beforeImage: '/assets/images/landmarks/orion_sketch.webp',
+    afterImage: '/assets/images/landmarks/orion_finished.webp',
     desc: 'Exposed structural sketch raised into a suspended lattice-core glass villa — genetic structural shear mapping, cantilevered volumes, and double-glazed acoustic extensions.',
     location: 'Beverly Hills, CA',
     coords: '34.0736° N, 118.4004° W',
@@ -57,8 +57,8 @@ const projects = [
     tag: 'Infrastructure',
     titleFirst: 'Calacatta',
     titleRest: 'Penthouse',
-    beforeImage: '/assets/images/landmarks/calacatta_sketch.png',
-    afterImage: '/assets/images/landmarks/calacatta_finished.png',
+    beforeImage: '/assets/images/landmarks/calacatta_sketch.webp',
+    afterImage: '/assets/images/landmarks/calacatta_finished.webp',
     desc: 'Pure architectural line sketch transitioned into a luxury penthouse tower — deep core shear walls, curtained glass facade, and high-efficiency floorplates.',
     location: 'Metropolis, IN',
     coords: '12.9716° N, 77.5946° E',
@@ -164,7 +164,7 @@ export default function FluidMediaField() {
             </p>
           </div>
 
-          {/* Cards 1-4 (Mobile Touch Snap Container & Desktop Pin Cards) */}
+          {/* Cards 1-4 */}
           {projects.map((p) => (
             <div
               key={p.id}
@@ -176,6 +176,8 @@ export default function FluidMediaField() {
                 <img
                   src={p.beforeImage}
                   alt={`${p.title} White Architectural Sketch`}
+                  loading="eager"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   style={{ filter: 'brightness(0.98) contrast(1.05)' }}
                 />
