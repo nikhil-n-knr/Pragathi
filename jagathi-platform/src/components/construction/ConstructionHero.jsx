@@ -8,33 +8,27 @@ export default function ConstructionHero() {
     <section
       id="home"
       data-section="home"
-      className="relative w-full overflow-hidden flex flex-col justify-center items-center z-10 text-white"
+      className="relative w-full min-h-[100dvh] overflow-hidden flex flex-col justify-center items-center text-center z-10 text-white px-4 sm:px-8 md:px-10 py-16 box-border"
       style={{
-        backgroundColor: '#1b1c1e',
-        padding: '12rem 1.5rem 10rem 1.5rem',
-        boxSizing: 'border-box',
-        minHeight: '90vh'
+        backgroundColor: '#0D0E10',
       }}
     >
-      {/* Background image & gradient overlay */}
-      <div className="absolute inset-0 z-0">
+      {/* Background image: Luminous White CAD Sketch on Deep Dark Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <img
-          src="/assets/images/construction/bridge.webp"
-          alt="Heavy structural links"
-          className="w-full h-full object-cover object-center"
+          src="/assets/sketches/dark_sketch_construction.png"
+          alt="Heavy structural civil CAD sketch"
+          className="w-full h-full object-cover object-center scale-105"
           decoding="async"
-          style={{ filter: 'brightness(0.24) saturate(0.5)' }}
+          style={{ opacity: 0.35, filter: 'contrast(1.15) brightness(1.05)' }}
         />
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to top, #1b1c1e 0%, rgba(27,28,30,0.4) 60%, #1b1c1e 100%)'
-          }}
-        />
+        {/* Soft Vignette Overlay for Crisp Text Contrast */}
+        <div className="absolute inset-0 bg-radial from-transparent via-[#0D0E10]/70 to-[#0D0E10]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0E10] via-transparent to-[#0D0E10]/80" />
       </div>
 
       <div
-        className="relative z-10 w-full max-w-[1200px] mx-auto flex flex-col items-center text-center"
+        className="relative z-10 w-full max-w-[1140px] mx-auto flex flex-col items-center justify-center text-center my-auto"
         style={{ boxSizing: 'border-box' }}
       >
         {/* Tagline */}
@@ -42,13 +36,14 @@ export default function ConstructionHero() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="font-mono uppercase tracking-[0.4em] text-[#FFEA0A] block"
+          className="font-mono uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[#FFEA0A] font-bold block"
           style={{
-            fontSize: 'clamp(9px, 1.2vw, 11px)',
-            marginBottom: '2rem'
+            fontSize: 'clamp(10px, 1.2vw, 12px)',
+            marginBottom: '1.5rem',
+            textShadow: '0 2px 10px rgba(0,0,0,0.9)'
           }}
         >
-          // Pillar 01 / Infrastructure
+          // Pillar 01 / Infrastructure &amp; Heavy Civil
         </motion.p>
 
         {/* Heading */}
@@ -56,103 +51,46 @@ export default function ConstructionHero() {
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.15 }}
-          className="font-bold uppercase leading-[1.02] tracking-tighter hover:text-[#FFEA0A] transition-colors duration-300 cursor-default"
+          className="font-bold uppercase leading-[1.05] tracking-tighter text-white hover:text-[#FFEA0A] transition-colors duration-300 cursor-default select-text"
           style={{
-            fontFamily: '"Basement Grotesque","Syncopate",sans-serif',
-            fontSize: 'clamp(2.5rem, 6.2vw, 6.2rem)',
-            letterSpacing: '-0.02em',
-            margin: '0 0 2.5rem 0',
-            maxWidth: '1000px'
+            fontFamily: '"Basement Grotesque", "Syncopate", sans-serif',
+            fontSize: 'clamp(2.0rem, 5.8vw, 5.5rem)',
+            maxWidth: '1000px',
+            marginBottom: '1.75rem',
+            textShadow: '0 4px 30px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.8)'
           }}
         >
-          We build landmarks
-          <br />
-          impossible to ignore.
+          Heavy Civil Structural Engineering.
         </motion.h1>
 
-        {/* Description & CTAs in Center-Aligned vertical stack with generous spacing */}
-        <div className="flex flex-col items-center w-full max-w-2xl mt-4">
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            style={{
-              fontFamily: '"Outfit", sans-serif',
-              fontSize: 'clamp(1.05rem, 1.4vw, 1.25rem)',
-              lineHeight: '1.8',
-              color: 'rgba(255, 255, 255, 0.85)',
-              margin: '0 0 3.5rem 0',
-              textAlign: 'center'
-            }}
-          >
-            Strategy, structural engineering, BIM digital twin testing, and zero-compromise site execution for high-stakes landmarks.
-          </motion.p>
-
-          {/* Centered Button Group */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-5 justify-center items-center w-full"
-            style={{ boxSizing: 'border-box' }}
-          >
-            <a
-              href="#work"
-              className="group inline-flex min-h-14 w-full sm:w-auto items-center justify-center gap-2 rounded-none px-8 text-xs font-bold uppercase transition-all shadow-md cursor-pointer text-[#121315]"
-              style={{
-                backgroundColor: '#FFEA0A',
-                fontFamily: '"Basement Grotesque", sans-serif',
-                letterSpacing: '0.15em',
-                transition: 'all 0.3s ease'
-              }}
-            >
-              Explore selected work <span>↓</span>
-            </a>
-            <a
-              href="/contact"
-              className="inline-flex min-h-14 w-full sm:w-auto items-center justify-center rounded-none border border-white/40 px-8 text-xs font-bold uppercase text-white hover:border-white hover:bg-white/10 transition-colors cursor-pointer"
-              style={{
-                fontFamily: '"Basement Grotesque", sans-serif',
-                letterSpacing: '0.15em'
-              }}
-            >
-              Discuss a brief
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Bottom strip */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+        {/* Sub-description */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-gray-200 font-light leading-relaxed uppercase tracking-wider px-2 sm:px-0 select-text"
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: '9.5px',
-            fontFamily: 'monospace',
-            color: 'rgba(255, 255, 255, 0.45)',
-            marginTop: '5rem',
-            borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-            paddingTop: '2rem',
-            width: '100%',
-            letterSpacing: '0.15em'
+            fontFamily: '"Outfit", sans-serif',
+            fontSize: 'clamp(11px, 1.2vw, 14px)',
+            maxWidth: '640px',
+            marginBottom: '2.5rem',
+            textShadow: '0 2px 15px rgba(0,0,0,0.95)'
           }}
         >
+          Delivering master concrete cores, cable-stayed viaducts, and heavy industrial facilities from raw technical drawing to landmark execution.
+        </motion.p>
+
+        {/* Action Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.45 }}
+        >
           <a
-            href="#proof"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              color: '#ffffff',
-              textDecoration: 'none',
-              transition: 'color 0.3s'
-            }}
-            className="hover:text-[#FFEA0A]"
+            href="#capabilities"
+            className="inline-flex items-center gap-3 bg-[#FFEA0A] text-[#121315] hover:bg-white hover:text-[#121315] font-mono text-[11px] sm:text-xs font-black uppercase tracking-[0.2em] sm:tracking-[0.25em] px-6 sm:px-8 py-3.5 sm:py-4 border border-[#FFEA0A]/30 shadow-2xl transition-all duration-300"
           >
-            Scroll to discover <span>↓</span>
+            Explore Capabilities <span>↓</span>
           </a>
         </motion.div>
       </div>

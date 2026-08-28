@@ -12,16 +12,16 @@ export default function Preloader({ onComplete }) {
     onCompleteRef.current = onComplete;
   }, [onComplete]);
 
-  // Off-thread asynchronous image decoding to prevent first-render main thread decode stutters (hangs)
+  // Off-thread asynchronous image decoding to prevent first-render main thread decode stutters
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const logoImg = new Image();
-    logoImg.src = "/assets/branding/logo.webp";
+    logoImg.src = "/assets/branding/logo.png";
     if (logoImg.decode) {
       logoImg.decode().catch(() => {});
     }
     const badgeImg = new Image();
-    badgeImg.src = "/assets/brand/5.webp";
+    badgeImg.src = "/assets/brand/5.png";
     if (badgeImg.decode) {
       badgeImg.decode().catch(() => {});
     }
@@ -66,7 +66,7 @@ export default function Preloader({ onComplete }) {
       onComplete: () => {
         // Restore body scrolling
         document.body.classList.remove('preloader-active');
-        
+
         // Remove preloader overlay from React tree
         setIsDestroyed(true);
       }
@@ -112,7 +112,7 @@ export default function Preloader({ onComplete }) {
         strokeDasharray: `0 ${length}`,
         strokeDashoffset: length - 57 // starts 57px ahead
       });
-      
+
       // Animate leading dot in perfect mathematical sync with main path with constant visual gap
       tl.to(loaderDot, {
         strokeDashoffset: length * 0.3 - 109, // ends 109px ahead to maintain constant gap
@@ -164,16 +164,16 @@ export default function Preloader({ onComplete }) {
     // Slower & smoother: duration 0.95s, stagger 0.10s per char
     tl.fromTo('.preloader-char',
       { y: 110, opacity: 0 },
-      { 
-        y: 0, 
-        opacity: 1, 
-        duration: 0.95, 
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.95,
         stagger: {
           each: 0.10,
           from: "end"
-        }, 
-        ease: "power2.out", 
-        immediateRender: false 
+        },
+        ease: "power2.out",
+        immediateRender: false
       },
       5.2
     );
@@ -183,9 +183,9 @@ export default function Preloader({ onComplete }) {
     // Each ring blinks exactly 3 times (on→off = 1 cycle, 3 cycles = repeat:5, yoyo:true)
     // Step timing: each ring gets 0.72s (3 blinks × 0.24s each)
     // Order: INNER (current box border) → MIDDLE ring → OUTER ring
-    const blinkDur   = 0.12; // half-period: on for 0.12s, off for 0.12s → 0.24s per blink
+    const blinkDur = 0.12; // half-period: on for 0.12s, off for 0.12s → 0.24s per blink
     const blinkStart = 6.8;
-    const ringGap    = 0.72; // 3 blinks × 2 × 0.12 s = 0.72s per ring
+    const ringGap = 0.72; // 3 blinks × 2 × 0.12 s = 0.72s per ring
 
     // Ring 1 – inner (the text-box border itself)
     tl.set('.preloader-text-box', { borderColor: 'transparent' }, blinkStart);
@@ -319,8 +319,8 @@ export default function Preloader({ onComplete }) {
 
       {/* 3. Semi-Circular Loader (Phase 1) */}
       <div className="preloader-loader-container">
-        <svg 
-          viewBox="-200 -200 400 400" 
+        <svg
+          viewBox="-200 -200 400 400"
           style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'visible' }}
         >
           <circle cx="0" cy="0" r="150" className="preloader-loader-path" />
@@ -345,25 +345,34 @@ export default function Preloader({ onComplete }) {
         </div>
       </div>
 
-      {/* 4b. Jagathi Brand Kit Badge (appears centered below the logo) */}
+      {/* 4b. Jagathi Brand Kit Badge (renders raw Jagathi brand kit 5.png) */}
       <div className="preloader-brand-badge-5 absolute z-[100001] preloader-brand-badge-5-margin" style={{ top: '50%', left: '50%', transform: 'translateX(-50%)', opacity: 0, pointerEvents: 'none' }}>
-        <img src="/assets/brand/5.webp" alt="Brand element" style={{ width: 'min(408px, 90vw)', height: 'auto', opacity: 0.9 }} decoding="async" />
+        <img
+          src="/assets/brand/5.png"
+          alt="Brand element"
+          style={{
+            width: 'min(408px, 90vw)',
+            height: 'auto',
+            opacity: 1
+          }}
+          decoding="async"
+        />
       </div>
 
-      {/* 4c. JAGATHI Logo Badge (renders logo/image.png) */}
+      {/* 4c. JAGATHI Logo Badge (renders raw Jagathi brand kit 1.png logo) */}
       <div className="preloader-logo-badge" style={{ opacity: 0 }}>
-        <img 
-          className="preloader-logo-image" 
-          src="/assets/branding/logo.webp" 
-          alt="Jagathi Logo" 
+        <img
+          className="preloader-logo-image"
+          src="/assets/branding/logo.png"
+          alt="Jagathi Logo"
           decoding="async"
         />
       </div>
 
       {/* 5. SVG outlines for Phase 4 Topographic Waves */}
       <div className="preloader-svg-container" style={{ opacity: 0 }}>
-        <svg 
-          viewBox="-200 -200 400 400" 
+        <svg
+          viewBox="-200 -200 400 400"
           style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, overflow: 'visible' }}
         >
           <defs>
@@ -373,10 +382,10 @@ export default function Preloader({ onComplete }) {
           </defs>
           {/* 6 outlines — reduced from 12 for cleaner, less cluttered ripple */}
           {Array.from({ length: 6 }).map((_, i) => (
-            <path 
-              key={i} 
-              d={badgePath} 
-              className="preloader-scallop-outline" 
+            <path
+              key={i}
+              d={badgePath}
+              className="preloader-scallop-outline"
               strokeLinejoin="round"
               strokeLinecap="round"
             />
@@ -388,20 +397,20 @@ export default function Preloader({ onComplete }) {
       <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden="true">
         <defs>
           <filter id="liquid-entrance-wave">
-            <feTurbulence 
+            <feTurbulence
               id="liquid-entrance-turbulence"
-              type="fractalNoise" 
-              baseFrequency="0.02 0.05" 
-              numOctaves="2" 
-              result="noise" 
+              type="fractalNoise"
+              baseFrequency="0.02 0.05"
+              numOctaves="2"
+              result="noise"
             />
-            <feDisplacementMap 
+            <feDisplacementMap
               id="liquid-entrance-displacement"
-              in="SourceGraphic" 
-              in2="noise" 
-              scale="0" 
-              xChannelSelector="R" 
-              yChannelSelector="G" 
+              in="SourceGraphic"
+              in2="noise"
+              scale="0"
+              xChannelSelector="R"
+              yChannelSelector="G"
             />
           </filter>
         </defs>

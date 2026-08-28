@@ -8,7 +8,7 @@ export default function ConstructionWaysToWork() {
       id="ways-to-work"
       className="bg-[#1b1c1e] text-white w-full border-b border-white/10 relative z-10 flex flex-col items-center"
       style={{
-        padding: '10rem 1.5rem',
+        padding: '4rem 1.5rem',
         boxSizing: 'border-box'
       }}
     >

@@ -1,121 +1,120 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 export default function CivilCollaborations() {
-  const projects = [
-    {
-      title: 'Solitaire Plotted Ridge',
-      sector: 'Pillar 03 / Plotted Residential',
-      spec: '12.5 Acres / Gated perimeter walls',
-      year: '2026',
-      image: '/assets/images/civil/residential.webp',
-      gridClass: 'lg:col-span-5',
-      aspectClass: 'aspect-[4/3]'
-    },
-    {
-      title: 'Silicon Logistics Hub',
-      sector: 'Pillar 03 / Industrial Smart Zone',
-      spec: '18.2 Acres / Hydro-checked drainage grids',
-      year: '2025',
-      image: '/assets/images/civil/industrial.webp',
-      gridClass: 'lg:col-span-7 lg:pl-16',
-      aspectClass: 'aspect-[16/10]'
-    }
-  ];
+  const trackRef1 = useRef(null);
+  const trackRef2 = useRef(null);
+  const containerRef1 = useRef(null);
+  const containerRef2 = useRef(null);
+
+  const row1Words = ['STRATEGIC LAND CORRIDORS', 'PLOTTED REAL ESTATE', 'INDUSTRIAL SMART ZONES', 'HIGHWAY INTERCHANGES'];
+  const row2Words = ['PROPERTY ADVISORY DESK', 'CLEAR TITLES', 'MUNICIPAL ZONING', 'HIGH YIELD ASSETS'];
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const setupMarquee = (track, parent, direction, speed) => {
+      if (!track || !parent) return null;
+      const halfWidth = track.scrollWidth / 2;
+      if (halfWidth <= 0) return null;
+
+      const tween = gsap.to(track, {
+        x: direction === 'right' ? halfWidth : -halfWidth,
+        ease: 'none',
+        duration: speed,
+        repeat: -1,
+        modifiers: {
+          x: (rawX) => {
+            const x = parseFloat(rawX);
+            return direction === 'right'
+              ? `${(x % halfWidth) - halfWidth}px`
+              : `${x % halfWidth}px`;
+          },
+        },
+      });
+
+      const pause = () => gsap.to(tween, { timeScale: 0, duration: 0.4, overwrite: 'auto' });
+      const resume = () => gsap.to(tween, { timeScale: 1, duration: 0.6, overwrite: 'auto' });
+
+      parent.addEventListener('mouseenter', pause);
+      parent.addEventListener('mouseleave', resume);
+
+      return () => {
+        tween.kill();
+        parent.removeEventListener('mouseenter', pause);
+        parent.removeEventListener('mouseleave', resume);
+      };
+    };
+
+    const cleanup1 = setupMarquee(trackRef1.current, containerRef1.current, 'left', 50);
+    const cleanup2 = setupMarquee(trackRef2.current, containerRef2.current, 'right', 60);
+
+    return () => {
+      if (cleanup1) cleanup1();
+      if (cleanup2) cleanup2();
+    };
+  }, []);
+
+  const tripleRow1 = [...row1Words, ...row1Words, ...row1Words, ...row1Words];
+  const tripleRow2 = [...row2Words, ...row2Words, ...row2Words, ...row2Words];
 
   return (
-    <section
-      id="collaborations"
-      className="bg-[#FFEA0A] text-[#121315] w-full"
-      style={{
-        padding: '10rem 1.5rem',
-        boxSizing: 'border-box'
-      }}
-    >
-      <div className="flex flex-col items-center" style={{ boxSizing: 'border-box', width: '100%', maxWidth: '1200px', marginLeft: 'auto', marginRight: 'auto' }}>
-        
-        {/* Centered Title Block */}
+    <section className="relative z-10 w-full py-8 md:py-12 my-2 md:my-4 select-none overflow-hidden flex flex-col gap-2">
+      {/* Row 1: Dark Charcoal Background (#1C1C1C) with Yellow Outline Text */}
+      <div
+        ref={containerRef1}
+        className="w-full py-3.5 sm:py-5 bg-[#1C1C1C] overflow-hidden shadow-xl cursor-pointer"
+        style={{ transform: 'skewY(-1.2deg)' }}
+      >
         <div
-          className="cr-reveal"
-          style={{
-            borderBottom: '1px solid rgba(18, 19, 21, 0.15)',
-            paddingBottom: '4rem',
-            marginBottom: '5rem',
-            width: '100%',
-            textAlign: 'center',
-            boxSizing: 'border-box'
-          }}
+          ref={trackRef1}
+          className="flex whitespace-nowrap gap-8 md:gap-12 text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-wider will-change-transform py-1"
+          style={{ width: 'fit-content' }}
         >
-          <p
-            className="font-mono tracking-widest uppercase"
-            style={{ fontSize: '10.5px', color: 'rgba(18, 19, 21, 0.6)', marginBottom: '1.25rem' }}
-          >
-            // Land releases
-          </p>
-          <h2
-            className="hover:text-white transition-colors duration-300 cursor-default"
-            style={{
-              fontFamily: '"Basement Grotesque","Syncopate",sans-serif',
-              fontSize: 'clamp(2rem, 4.5vw, 4.5rem)',
-              fontWeight: '900',
-              textTransform: 'uppercase',
-              lineHeight: '1.02',
-              margin: '0 auto 2.5rem auto',
-              maxWidth: '850px'
-            }}
-          >
-            Audited Evidence.
-          </h2>
-          <a
-            href="#project-index"
-            className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#111213] decoration-[#111213]/40 underline underline-offset-8 hover:decoration-black transition"
-            style={{ fontFamily: '"Basement Grotesque", sans-serif' }}
-          >
-            View plot index <span>↓</span>
-          </a>
+          {tripleRow1.map((w, idx) => (
+            <div key={idx} className="flex items-center gap-8 md:gap-12">
+              <span
+                className="inline-block transition-all duration-350 hover:scale-110 hover:text-[#FFEA0A] font-bold"
+                style={{
+                  color: 'transparent',
+                  WebkitTextStroke: '1.5px #FFEA0A',
+                  textShadow: '0 0 0px transparent',
+                }}
+              >
+                {w}
+              </span>
+              <span className="text-[#FFEA0A]/40 text-lg md:text-2xl font-light">•</span>
+            </div>
+          ))}
         </div>
+      </div>
 
-        {/* Asymmetrical Masonry Grid */}
-        <div className="grid gap-x-8 gap-y-20 lg:grid-cols-12 items-start" style={{ width: '100%', boxSizing: 'border-box' }}>
-          {projects.map((p, i) => (
-            <div key={i} className={`${p.gridClass} w-full cr-reveal`} style={{ boxSizing: 'border-box' }}>
-              <div className="group block cursor-pointer select-none">
-                <div className={`relative ${p.aspectClass} overflow-hidden bg-[#121315]/10 rounded-none border border-black/5`}>
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-                  />
-                  <div className="absolute inset-0 bg-black/5 transition-colors group-hover:bg-black/15" />
-                  
-                  {/* Details Badge */}
-                  <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-none bg-[#121315] px-4 py-2 text-[10px] font-mono uppercase tracking-widest text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    View plot <span style={{ fontSize: '11px' }}>↗</span>
-                  </span>
-                </div>
-
-                {/* Grid details block with margins */}
-                <div className="mt-6 flex items-start justify-between gap-5 border-t border-[#121315]/10 pt-5">
-                  <div style={{ fontFamily: '"Outfit", sans-serif' }}>
-                    <h3
-                      className="font-bold text-lg uppercase tracking-wide text-[#121315] hover:text-white transition-colors duration-300 cursor-default"
-                      style={{ fontFamily: '"Basement Grotesque", sans-serif', margin: '0 0 6px 0' }}
-                    >
-                      {p.title}
-                    </h3>
-                    <p className="text-xs text-black/60 leading-relaxed" style={{ margin: 0 }}>
-                      {p.sector}
-                    </p>
-                    <span className="text-[9.5px] font-mono text-black/50 uppercase tracking-widest block mt-3.5">
-                      {p.spec}
-                    </span>
-                  </div>
-                  <span className="text-xs font-bold font-mono text-black/60 pt-1">{p.year}</span>
-                </div>
-              </div>
+      {/* Row 2: Brand Yellow Background (#FFEA0A) with Dark Charcoal Outline Text */}
+      <div
+        ref={containerRef2}
+        className="w-full py-3.5 sm:py-5 bg-[#FFEA0A] overflow-hidden shadow-xl cursor-pointer"
+        style={{ transform: 'skewY(-1.2deg)' }}
+      >
+        <div
+          ref={trackRef2}
+          className="flex whitespace-nowrap gap-8 md:gap-12 text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-wider will-change-transform py-1"
+          style={{ width: 'fit-content' }}
+        >
+          {tripleRow2.map((w, idx) => (
+            <div key={idx} className="flex items-center gap-8 md:gap-12">
+              <span
+                className="inline-block transition-all duration-350 hover:scale-110 hover:text-[#1C1C1C] font-bold"
+                style={{
+                  color: 'transparent',
+                  WebkitTextStroke: '1.5px #1C1C1C',
+                  textShadow: '0 0 0px transparent',
+                }}
+              >
+                {w}
+              </span>
+              <span className="text-[#1C1C1C]/40 text-lg md:text-2xl font-light">•</span>
             </div>
           ))}
         </div>

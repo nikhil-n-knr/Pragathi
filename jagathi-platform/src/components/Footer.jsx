@@ -146,12 +146,16 @@ class InteractiveFooter {
 
   setupTextTexture() {
     this.textCanvas = document.createElement('canvas');
-    this.textCanvas.width = 2048;
-    this.textCanvas.height = 512;
+    this.textCanvas.width = 4096;
+    this.textCanvas.height = 1024;
     this.textCtx = this.textCanvas.getContext('2d');
     this.textTexture = new THREE.CanvasTexture(this.textCanvas);
-    this.textTexture.minFilter = THREE.LinearFilter;
+    this.textTexture.generateMipmaps = true;
+    this.textTexture.minFilter = THREE.LinearMipmapLinearFilter;
     this.textTexture.magFilter = THREE.LinearFilter;
+    if (this.renderer && this.renderer.capabilities) {
+      this.textTexture.anisotropy = Math.min(16, this.renderer.capabilities.getMaxAnisotropy());
+    }
     this.drawText();
     if (typeof document !== 'undefined' && document.fonts) {
       document.fonts.ready.then(() => { this.drawText(); });
@@ -162,51 +166,51 @@ class InteractiveFooter {
     const w = this.textCanvas.width;
     const h = this.textCanvas.height;
     this.textCtx.clearRect(0, 0, w, h);
-    this.textCtx.font = '900 288px "Basement Grotesque", "Syncopate", sans-serif';
+    this.textCtx.font = '900 576px "Basement Grotesque", "Syncopate", sans-serif';
     if ('letterSpacing' in this.textCtx) {
-      this.textCtx.letterSpacing = '76.8px';
+      this.textCtx.letterSpacing = '153.6px';
     }
     this.textCtx.fillStyle = '#ffffff';
     this.textCtx.textAlign = 'center';
     this.textCtx.textBaseline = 'middle';
-    this.textCtx.fillText('JAGATHI', w / 2 + 38.4, h / 2 + 18);
+    this.textCtx.fillText('JAGATHI', w / 2 + 76.8, h / 2 + 36);
     
-    // Draw single border box around JAGATHI matching the preloader style (scaled up by 20%)
-    const boxWidth = 2016;
-    const boxHeight = 372;
+    // Draw single border box around JAGATHI matching preloader style (scaled up for 4096x1024)
+    const boxWidth = 4032;
+    const boxHeight = 744;
     
     // Calculate aspect ratio correction to enforce uniform on-screen border thickness
     const targetOnScreenThickness = 14; 
-    const stretchX = this.width / 2048;
-    const stretchY = this.height / 512;
+    const stretchX = this.width / 4096;
+    const stretchY = this.height / 1024;
     
-    const strokeWidthX = targetOnScreenThickness / (stretchX || 1.0); // For vertical lines
-    const strokeWidthY = targetOnScreenThickness / (stretchY || 1.0); // For horizontal lines
+    const strokeWidthX = targetOnScreenThickness / (stretchX || 1.0); 
+    const strokeWidthY = targetOnScreenThickness / (stretchY || 1.0); 
     
     this.textCtx.strokeStyle = '#ffffff';
     
     // Draw horizontal lines (top and bottom)
     this.textCtx.lineWidth = strokeWidthY;
     this.textCtx.beginPath();
-    this.textCtx.moveTo(w / 2 - boxWidth / 2 - strokeWidthX / 2, h / 2 - boxHeight / 2 + 18);
-    this.textCtx.lineTo(w / 2 + boxWidth / 2 + strokeWidthX / 2, h / 2 - boxHeight / 2 + 18);
+    this.textCtx.moveTo(w / 2 - boxWidth / 2 - strokeWidthX / 2, h / 2 - boxHeight / 2 + 36);
+    this.textCtx.lineTo(w / 2 + boxWidth / 2 + strokeWidthX / 2, h / 2 - boxHeight / 2 + 36);
     this.textCtx.stroke();
     
     this.textCtx.beginPath();
-    this.textCtx.moveTo(w / 2 - boxWidth / 2 - strokeWidthX / 2, h / 2 + boxHeight / 2 + 18);
-    this.textCtx.lineTo(w / 2 + boxWidth / 2 + strokeWidthX / 2, h / 2 + boxHeight / 2 + 18);
+    this.textCtx.moveTo(w / 2 - boxWidth / 2 - strokeWidthX / 2, h / 2 + boxHeight / 2 + 36);
+    this.textCtx.lineTo(w / 2 + boxWidth / 2 + strokeWidthX / 2, h / 2 + boxHeight / 2 + 36);
     this.textCtx.stroke();
     
     // Draw vertical lines (left and right)
     this.textCtx.lineWidth = strokeWidthX;
     this.textCtx.beginPath();
-    this.textCtx.moveTo(w / 2 - boxWidth / 2, h / 2 - boxHeight / 2 + 18 - strokeWidthY / 2);
-    this.textCtx.lineTo(w / 2 - boxWidth / 2, h / 2 + boxHeight / 2 + 18 + strokeWidthY / 2);
+    this.textCtx.moveTo(w / 2 - boxWidth / 2, h / 2 - boxHeight / 2 + 36 - strokeWidthY / 2);
+    this.textCtx.lineTo(w / 2 - boxWidth / 2, h / 2 + boxHeight / 2 + 36 + strokeWidthY / 2);
     this.textCtx.stroke();
     
     this.textCtx.beginPath();
-    this.textCtx.moveTo(w / 2 + boxWidth / 2, h / 2 - boxHeight / 2 + 18 - strokeWidthY / 2);
-    this.textCtx.lineTo(w / 2 + boxWidth / 2, h / 2 + boxHeight / 2 + 18 + strokeWidthY / 2);
+    this.textCtx.moveTo(w / 2 + boxWidth / 2, h / 2 - boxHeight / 2 + 36 - strokeWidthY / 2);
+    this.textCtx.lineTo(w / 2 + boxWidth / 2, h / 2 + boxHeight / 2 + 36 + strokeWidthY / 2);
     this.textCtx.stroke();
     
     this.textTexture.needsUpdate = true;
@@ -534,23 +538,28 @@ export default function Footer() {
   return (
     <section className="section-panel" id="interactive-footer">
       <div className="footer-content-wrapper">
-        {/* ── Top: Nav columns ── */}
+        {/* ── Top: Nav columns matching out2 ── */}
         <div className="footer-cols">
           <div className="footer-col">
-            <h4>Pillar 01 / Build</h4>
-            <Link href="/construction" className="select-anchor">Construction Projects</Link>
-            <Link href="/coming-soon"  className="select-anchor">Consultation <span className="footer-tag">Soon</span></Link>
+            <h4>BUILD WITH JAGATHI</h4>
+            <Link href="/construction/" className="select-anchor">CONSTRUCTION PROJECTS</Link>
+            <Link href="/civil-market/" className="select-anchor">CIVIL INFRASTRUCTURE</Link>
+            <Link href="/coming-soon/" className="select-anchor">DEVELOPMENT PIPELINE</Link>
+            <Link href="/legacy-home/" className="select-anchor">ARCHITECTURAL HERITAGE</Link>
           </div>
           <div className="footer-col">
-            <h4>Pillar 02 / Secure</h4>
-            <Link href="/civil-market" className="select-anchor">Civil Market</Link>
-            <Link href="/coming-soon"  className="select-anchor">Real Estate Portfolio <span className="footer-tag">Soon</span></Link>
-            <Link href="/coming-soon"  className="select-anchor">Advisory Desk <span className="footer-tag">Soon</span></Link>
+            <h4>ARCHITECTURAL INTERIORS</h4>
+            <Link href="/interior/" className="select-anchor">INTERIOR SYSTEMS</Link>
+            <Link href="/interior/" className="select-anchor">LUXURY TYPOLOGIES</Link>
+            <Link href="/coming-soon/" className="select-anchor">TURNKEY FIT-OUTS</Link>
+            <Link href="/contact/" className="select-anchor">DESIGN CONSULTATION</Link>
           </div>
           <div className="footer-col">
-            <h4>Pillar 03 / Curate</h4>
-            <Link href="/interior"    className="select-anchor">Interior Systems</Link>
-            <Link href="/contact" className="select-anchor">Contact Jagathi</Link>
+            <h4>JAGATHI GROUP</h4>
+            <Link href="/civil-market/" className="select-anchor">PROPERTY ADVISORY</Link>
+            <Link href="/contact/" className="select-anchor">CONTACT ADVISORY DESK</Link>
+            <Link href="/llms.txt" className="select-anchor">AI SPECIFICATION / LLMS</Link>
+            <a href="https://pisparrow.com" target="_blank" rel="noopener noreferrer" className="select-anchor">DESIGNED BY PISPARROW</a>
           </div>
         </div>
 

@@ -29,7 +29,7 @@ export default function CivilFAQ() {
       id="faq"
       className="bg-[#FFEA0A] text-[#121315] w-full"
       style={{
-        padding: '10rem 1.5rem',
+        padding: '4rem 1.5rem',
         boxSizing: 'border-box'
       }}
     >

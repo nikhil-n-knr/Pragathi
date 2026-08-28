@@ -106,7 +106,7 @@ const showcaseItems = [
     title: 'The Jagathi Standard',
     subtitle: 'Quality without compromise',
     description: "Every project we touch carries one non-negotiable — it must outlast the generation that built it. No shortcuts in material selection, no tolerance for misaligned joints, no acceptance of 'good enough'. The Jagathi Standard is a singular commitment to permanence.",
-    image: '/assets/images/showcase_jagathi_standard.webp',
+    image: '/assets/images/white_renders/white_render_spatial_2.webp',
     kenBurns: styles.kenBurns0,
   },
   {
@@ -114,7 +114,7 @@ const showcaseItems = [
     title: 'The Full Lifecycle',
     subtitle: 'Land to living — one team',
     description: "We acquire the land. We design the structure. We build the shell. We finish the interior. No gaps, no handoffs, no version loss between disciplines. When Jagathi takes a project from brief to handover, every phase is owned in-house.",
-    image: '/assets/images/showcase_full_lifecycle.webp',
+    image: '/assets/images/sketches/sketch_blueprint_3.webp',
     kenBurns: styles.kenBurns1,
   },
   {
@@ -122,7 +122,7 @@ const showcaseItems = [
     title: '35 Years. Still Building.',
     subtitle: 'A legacy measured in skylines',
     description: "Since 1989, we have completed projects that define the skylines and communities of the regions we build in. Thirty-five years of earned trust, delivered on deadline, built on honesty. The benchmark is not the industry average — it is the last project we completed.",
-    image: '/assets/images/showcase_35_years.webp',
+    image: '/assets/images/completed/completed_project_1.webp',
     kenBurns: styles.kenBurns2,
   },
   {
@@ -130,7 +130,7 @@ const showcaseItems = [
     title: 'The Promise Delivered',
     subtitle: 'Every handover. On time.',
     description: "A build is only as strong as the trust that surrounds it. Jagathi's track record of on-time, on-spec delivery has made us the first call for clients who cannot afford surprises. We sign on accountability and we follow through — every single time.",
-    image: '/assets/images/showcase_the_promise.webp',
+    image: '/assets/images/white_renders/white_render_building_1.webp',
     kenBurns: styles.kenBurns0,
   },
   {
@@ -138,7 +138,7 @@ const showcaseItems = [
     title: 'Precision at Every Level',
     subtitle: 'Engineered to the millimetre',
     description: "From the reinforcement spacing in a load-bearing column to the flush alignment of a door frame — Jagathi's quality process operates at a resolution that most developers never reach. Precision is not an attribute here. It is the baseline.",
-    image: '/assets/images/showcase_precision.webp',
+    image: '/assets/images/sketches/sketch_arch_facade_2.webp',
     kenBurns: styles.kenBurns1,
   },
 ];
@@ -197,8 +197,8 @@ export default function ShowcaseBanner({ onPlayReel }) {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#1C1C1C] overflow-hidden flex flex-col"
-      style={{ fontFamily: '"Outfit", sans-serif', minHeight: '100vh' }}
+      className="jagathi-story-section relative w-full bg-transparent overflow-hidden flex flex-col items-center justify-center py-10 md:py-14"
+      style={{ fontFamily: '"Outfit", sans-serif', minHeight: 'auto' }}
       onMouseLeave={handleSectionLeave}
     >
       {/* ── Dimmed full-bleed BG ── */}
@@ -213,19 +213,19 @@ export default function ShowcaseBanner({ onPlayReel }) {
               style={{ filter: 'brightness(0.18) saturate(0.5)' }} />
           </div>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1C1C1C] via-[#1C1C1C]/60 to-[#1C1C1C]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#1C1C1C]/40 to-transparent" />
       </div>
 
       {/* ══════════════════════════════
           TOP: Centered title
       ══════════════════════════════ */}
-      <div className="sc-reveal relative z-10 w-full text-center pt-24 md:pt-32 pb-14 md:pb-20 px-10">
-        <span className="block text-[#FFEA0A]/70 font-mono text-xs md:text-sm uppercase tracking-[0.45em] font-semibold mb-6">
+      <div className="sc-reveal relative z-10 w-full max-w-[1100px] mx-auto text-center pt-4 pb-6 md:pb-10 px-6 md:px-10 flex flex-col items-center justify-center">
+        <span className="block text-[#FFEA0A]/80 font-mono text-xs md:text-sm uppercase tracking-[0.45em] font-semibold mb-2 text-center">
           {'// Who We Are'}
         </span>
         {/* Title turns yellow on hover */}
         <h2
-          className="font-basement text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-wide leading-none text-white hover:text-[#FFEA0A] transition-colors duration-300 cursor-default select-none"
+          className="font-basement text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black uppercase tracking-wide leading-none text-white text-center hover:text-[#FFEA0A] transition-colors duration-300 cursor-default select-none"
         >
           The Jagathi Story
         </h2>
@@ -234,9 +234,10 @@ export default function ShowcaseBanner({ onPlayReel }) {
       {/* ══════════════════════════════════════════
           MIDDLE: Tabs left | Image bleeds right
       ══════════════════════════════════════════ */}
+      <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6 md:px-10 flex flex-col items-center justify-center relative z-10">
       <div 
-        className="relative z-10 flex flex-col md:flex-row flex-1 items-stretch w-full max-w-[1200px] mx-auto" 
-        style={{ paddingBottom: '5rem', paddingLeft: '1.5rem', paddingRight: '1.5rem', boxSizing: 'border-box' }}
+        className="relative w-full flex flex-col md:flex-row items-stretch justify-between bg-[#121315]/95 backdrop-blur-2xl border border-[#FFEA0A]/40 shadow-[0_50px_130px_-20px_rgba(0,0,0,0.7)] overflow-hidden rounded-none"
+        style={{ marginBottom: '24px', minHeight: '560px' }}
       >
 
         {/* MOBILE ONLY: compact image strip above tabs */}
@@ -354,12 +355,12 @@ export default function ShowcaseBanner({ onPlayReel }) {
           </div>
         </div>
       </div>
+      </div>
 
       {/* ══════════════════════════════════════════
-          BOTTOM: Stats bar — full width over image
+          BOTTOM: Stats bar
       ══════════════════════════════════════════ */}
-      <div className="absolute bottom-0 left-0 right-0 z-30">
-        {/* Divider line */}
+      <div className="relative z-10 w-full max-w-[1360px] mx-auto px-4 sm:px-6 md:px-10 mt-6">
         <div className="w-full h-px bg-white/10" />
         <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 backdrop-blur-sm"
           style={{ background: 'rgba(66,66,66,0.75)' }}>

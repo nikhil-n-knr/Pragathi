@@ -11,8 +11,10 @@ body.preloader-active {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #FFEA0A; /* Brand Yellow background */
-  z-index: 99999; /* Block landing page content below */
+  background-color: #FFEA0A;
+  /* Brand Yellow background */
+  z-index: 99999;
+  /* Block landing page content below */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,13 +32,15 @@ body.preloader-active {
   display: flex;
   align-items: center;
   font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
-  color: #1C1C1C; /* Brand charcoal gray */
+  color: #1C1C1C;
+  /* Brand charcoal gray */
   font-size: clamp(1.5rem, 3.5vw, 2.5rem);
   font-weight: 900;
   letter-spacing: 0.05em;
   line-height: 1.2;
   pointer-events: none;
-  padding-bottom: 8px; /* Prevent descenders and underlines from clipping */
+  padding-bottom: 8px;
+  /* Prevent descenders and underlines from clipping */
 }
 
 .preloader-est-prefix {
@@ -50,14 +54,18 @@ body.preloader-active {
 }
 
 .preloader-ampersand {
-  border-bottom: 6px solid #1C1C1C; /* Thicker underline matching word stroke thickness */
-  padding-bottom: 1px; /* Tighter padding so it matches the other text height */
+  border-bottom: 6px solid #1C1C1C;
+  /* Thicker underline matching word stroke thickness */
+  padding-bottom: 1px;
+  /* Tighter padding so it matches the other text height */
   display: inline-block;
   line-height: 1.0;
   margin-right: 0.2rem;
-  font-size: 0.72em; /* Smaller size so it fits the height of others */
+  font-size: 0.72em;
+  /* Smaller size so it fits the height of others */
   vertical-align: middle;
-  transform: translateY(-2px); /* Align perfectly on baseline */
+  transform: translateY(-2px);
+  /* Align perfectly on baseline */
 }
 
 .preloader-est-label {
@@ -87,20 +95,23 @@ body.preloader-active {
 
 .preloader-loader-bg-path {
   fill: none;
-  stroke: rgba(28, 28, 28, 0.15); /* Brand charcoal background path */
+  stroke: rgba(28, 28, 28, 0.15);
+  /* Brand charcoal background path */
   stroke-width: 4px;
 }
 
 .preloader-loader-path {
   fill: none;
-  stroke: #1C1C1C; /* Brand charcoal active path */
+  stroke: #1C1C1C;
+  /* Brand charcoal active path */
   stroke-width: 32px;
   stroke-linecap: round;
 }
 
 /* Phase 2: Central Text Box Reveal — inner (thickest, 14px) */
 .preloader-text-box {
-  display: none; /* revealed via GSAP */
+  display: none;
+  /* revealed via GSAP */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -143,16 +154,20 @@ body.preloader-active {
 
 .preloader-text {
   font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
-  font-size: clamp(2.1rem, 7.5vw, 7rem); /* Increased font size with safe bounds */
+  font-size: clamp(2.1rem, 7.5vw, 7rem);
+  /* Increased font size with safe bounds */
   font-weight: 900;
   color: #1C1C1C;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   line-height: 1.1;
   text-align: center;
-  margin-right: -0.18em; /* Offset letter-spacing of last character */
-  white-space: nowrap; /* Ensure text never wraps on any viewport */
-  overflow: hidden; /* horizontal baseline wrapper */
+  margin-right: -0.18em;
+  /* Offset letter-spacing of last character */
+  white-space: nowrap;
+  /* Ensure text never wraps on any viewport */
+  overflow: hidden;
+  /* horizontal baseline wrapper */
   padding: 0.2rem 0;
 }
 
@@ -177,7 +192,8 @@ body.preloader-active {
   justify-content: center;
   align-items: center;
   z-index: 99999;
-  overflow: visible; /* Ensure outlines are not clipped when scaling past 400px */
+  overflow: visible;
+  /* Ensure outlines are not clipped when scaling past 400px */
   opacity: 0;
 }
 
@@ -249,14 +265,17 @@ body.preloader-active {
     letter-spacing: 0.12em;
     margin-right: -0.12em;
   }
+
   .preloader-text-box {
     border-width: 8px;
     padding: 0.6rem 1.4rem;
   }
+
   .preloader-ring-mid {
     inset: -22px;
     border-width: 5px;
   }
+
   .preloader-ring-out {
     inset: -38px;
     border-width: 2.5px;
@@ -269,17 +288,19 @@ body.preloader-active {
     letter-spacing: 0.08em;
     margin-right: -0.08em;
   }
+
   .preloader-text-box {
     border-width: 5px;
     padding: 0.4rem 0.8rem;
   }
+
   .preloader-ring-mid {
     inset: -14px;
     border-width: 3px;
   }
+
   .preloader-ring-out {
     inset: -24px;
     border-width: 1.5px;
   }
 }
-

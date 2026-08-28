@@ -11,14 +11,13 @@ import KineticHeadline from '../components/KineticHeadline';
 import Footer from '../components/Footer';
 import FluidMediaField from '../components/FluidMediaField';
 import ShowcaseBanner from '../components/ShowcaseBanner';
-import GatewaySection from '../components/GatewaySection';
 
-// Modularized Homepage Components
+// Core Homepage Components
 import Hero from '../components/home/Hero';
-
 import FinalCTA from '../components/home/FinalCTA';
 import ProjectOverlay from '../components/home/ProjectOverlay';
 import OrganicBackgroundLine from '../components/home/OrganicBackgroundLine';
+import DollyZoomChapters from '../components/home/DollyZoomChapters';
 
 export default function Home() {
   const scrollProgress = useRef(0);
@@ -44,28 +43,26 @@ export default function Home() {
     document.body.classList.add('home-theme-yellow-gray');
     gsap.registerPlugin(ScrollTrigger);
 
-    // 1. Initialize Lenis Smooth Scroll
+    // Initialize Lenis Smooth Scroll
     const lenis = new Lenis({
       duration: 1.3,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // smooth easeOutExpo
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 0.75,
-      touchMultiplier: 1.5
+      touchMultiplier: 1.5,
     });
 
-    // Sync GSAP ScrollTrigger updates with Lenis scroll
     lenis.on('scroll', ScrollTrigger.update);
 
-    // Synchronize Lenis with GSAP's ticker (removes duplicate raf loop and ensures perfect sync)
     const updateLenis = (time) => {
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(updateLenis);
     gsap.ticker.lagSmoothing(0);
 
-    // 2. Track scroll progress to animate R3F WebGL Camera and mesh
+    // Track scroll progress to animate R3F WebGL Camera
     const scrollTracker = ScrollTrigger.create({
       trigger: scrollContainerRef.current,
       start: 'top top',
@@ -78,70 +75,28 @@ export default function Home() {
           if (prev !== currentInView) return currentInView;
           return prev;
         });
-      }
+      },
     });
 
-    // 3. Staggered Gateway cards reveal
-    const gatewaysReveal = gsap.fromTo('.gateway-card',
-      { y: 80, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1.1,
-        stagger: 0.16,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.gateways-grid',
-          start: 'top bottom-=80px',
-          toggleActions: 'play none none none'
-        }
-      }
-    );
-
-    // 4. Global scroll reveals for sections and titles
-    const reveals = gsap.utils.toArray('.split-reveal');
-    const revealsTweens = reveals.map((el) => {
-      return gsap.fromTo(el,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top bottom-=60px',
-            toggleActions: 'play none none reverse'
-          }
-        }
-      );
-    });
-
-    // Cleanup scrolling triggers and Lenis instance
     return () => {
       document.body.classList.remove('home-theme-yellow-gray');
       scrollTracker.kill();
-      gatewaysReveal.kill();
-      revealsTweens.forEach(t => {
-        t.scrollTrigger?.kill();
-        t.kill();
-      });
       lenis.destroy();
       gsap.ticker.remove(updateLenis);
     };
   }, []);
 
   return (
-    <div 
+    <div
       ref={scrollContainerRef}
       id="home-scroll-container"
-      className="relative min-h-[220vh] bg-transparent text-current font-sans overflow-x-hidden w-full flex flex-col items-center"
+      className="relative min-h-[220vh] bg-transparent text-current font-sans overflow-x-hidden w-full flex flex-col items-center gap-4 md:gap-8"
     >
-      {/* 1. Page-Specific Local WebGL Background Canvas */}
-      <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-0">
+      {/* 1. Page-Specific 3D WebGL Background Canvas */}
+      <div className="fixed inset-0 w-full h-full h-[100dvh] pointer-events-none z-0">
         <Canvas
           camera={{ position: [0, 0, 6], fov: 55 }}
-          gl={{ antialias: true, alpha: true, stencil: false, depth: true, powerPreference: "high-performance" }}
+          gl={{ antialias: true, alpha: true, stencil: false, depth: true, powerPreference: 'high-performance' }}
           dpr={[1, 1.5]}
           frameloop={preloaderDone && isInView ? 'always' : 'never'}
         >
@@ -151,85 +106,48 @@ export default function Home() {
         </Canvas>
       </div>
 
-      {/* 2. Brand Hero Landing Block */}
+      {/* 2. Hero Landing Block */}
       <Hero />
 
-      {/* 3. Kinetic Word Bands (Yu-inspired) */}
-      <section className="relative z-10 pt-12 pb-20 w-full">
+      {/* 3. Kinetic Marquee Bands */}
+      <div className="w-full my-2 md:my-4">
         <KineticHeadline />
-      </section>
+      </div>
 
-      {/* Main Content Area with Organic Background Line */}
-      <div className="relative w-full flex flex-col items-center">
+      {/* 4. Main Content Area with Organic Background Line & Clean Pinned Video Chapters */}
+      <div className="relative w-full flex flex-col items-center gap-6 md:gap-12 py-2 md:py-4">
         {/* Organic Wavy Background Line */}
         <OrganicBackgroundLine />
 
-        {/* 4. Three Gateway Panels (Build, Secure, Curate) */}
-        <GatewaySection onSelectProject={setSelectedProject} />
+        {/* 5. Clean Pinned Scrubbed Dolly-Zoom Chapters (01 Construction, 02 Interiors, 03 Civil Market) */}
+        <div className="w-full my-2 md:my-4">
+          <DollyZoomChapters />
+        </div>
 
+        {/* 6. Showcase Banner — The Jagathi Story */}
+        <div className="w-full my-4 md:my-8 px-4 sm:px-8 md:px-12">
+          <ShowcaseBanner onPlayReel={(reel) => setSelectedProject(reel)} />
+        </div>
 
-
-        {/* 5b. Play Reel Showcase Banner (Organic Elastic Expansion) */}
-        <ShowcaseBanner onPlayReel={(reel) => setSelectedProject(reel)} />
-
-        {/* 6. Featured Media Strip — 2-column Before/After Grid */}
-        <section className="relative z-10 w-full overflow-visible flex flex-col items-center" style={{ paddingTop: 'clamp(4rem, 8vw, 10rem)', paddingBottom: 'clamp(5rem, 10vw, 12rem)' }}>
-          <div 
-            className="flex flex-col items-center text-center w-full" 
-            style={{
-              paddingLeft: '2.5rem',
-              paddingRight: '2.5rem',
-              marginBottom: '3.5rem',
-              boxSizing: 'border-box'
-            }}
-          >
-            <span 
-              className="text-[#1C1C1C]/50 font-mono text-[10px] uppercase block text-center" 
-              style={{ letterSpacing: '0.4em', marginBottom: '1rem' }}
-            >
-              {"// Featured Work"}
-            </span>
-            <h2 
-              className="text-[#1C1C1C] font-bold uppercase text-center w-full leading-none" 
-              style={{ 
-                fontFamily: '"Outfit", sans-serif', 
-                fontSize: 'clamp(2rem, 4vw, 4rem)',
-                letterSpacing: '0.12em',
-                marginTop: '0.5rem'
-              }}
-            >
-              Landmarks of Distinction
-            </h2>
-            <p 
-              className="text-[#1C1C1C]/60 text-center"
-              style={{
-                fontFamily: '"Outfit", sans-serif',
-                fontWeight: 300,
-                fontSize: 'clamp(11px, 1.3vw, 15px)',
-                lineHeight: '1.8',
-                letterSpacing: '0.05em',
-                marginTop: '1.25rem',
-                maxWidth: '32rem'
-              }}
-            >
-              Four transformations. Every detail engineered, every surface curated, every deadline met.
-            </p>
-          </div>
+        {/* 7. Fluid Media / Landmarks of Distinction (Horizontal Pinned Scroll) */}
+        <div className="w-full my-4 md:my-8">
           <FluidMediaField onSelectProject={(proj) => setSelectedProject(proj)} />
-        </section>
+        </div>
       </div>
 
-      {/* 7. Final Call to Action Strip */}
-      <FinalCTA />
+      {/* 8. Final Call to Action */}
+      <div className="w-full my-6 md:my-10">
+        <FinalCTA />
+      </div>
 
-      {/* 8. Fullscreen Morphing Unfurling Overlay */}
+      {/* 9. Fullscreen Project Overlay */}
       <AnimatePresence>
         {selectedProject && (
           <ProjectOverlay selectedProject={selectedProject} onClose={() => setSelectedProject(null)} />
         )}
       </AnimatePresence>
 
-      {/* Footer */}
+      {/* 10. Interactive 3D WebGL Footer */}
       <Footer />
     </div>
   );

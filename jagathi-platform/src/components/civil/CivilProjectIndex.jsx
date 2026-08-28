@@ -35,7 +35,7 @@ export default function CivilProjectIndex() {
       className="bg-[#FFEA0A] text-[#121315] w-full border-b border-[#121315]/10 relative z-10 flex flex-col items-center"
       style={{
         fontFamily: '"Outfit", sans-serif',
-        padding: '10rem 1.5rem',
+        padding: '4rem 1.5rem',
         boxSizing: 'border-box'
       }}
     >

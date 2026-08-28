@@ -28,7 +28,7 @@ export default function CivilProcessAccordion() {
       id="process-accordion"
       className="bg-[#FFEA0A] text-[#121315] w-full border-t border-b border-[#121315]/10"
       style={{
-        padding: '10rem 1.5rem',
+        padding: '4rem 1.5rem',
         boxSizing: 'border-box'
       }}
     >

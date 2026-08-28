@@ -1,28 +1,20 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef } from 'react';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import Link from 'next/link';
 
-const stats = [
-  { target: 35,  suffix: '+',  isDecimal: false, label: 'Years of Legacy' },
-  { target: 75,  suffix: '+',  isDecimal: false, label: 'Projects Delivered' },
-  { target: 3,   suffix: 'M+', isDecimal: false, label: 'Sq. Ft. Completed' },
-];
-
-function CTAStat({ target, suffix, isDecimal, label }) {
-  const [display, setDisplay] = useState('0');
-  const [hovered, setHovered] = useState(false);
+function StatItem({ target, suffix, isDecimal, label }) {
+  const [display, setDisplay] = React.useState('0');
+  const [hovered, setHovered] = React.useState(false);
   const timerRef = useRef(null);
   const intervalRef = useRef(null);
   const elementRef = useRef(null);
 
-  const runCounter = useCallback(() => {
+  const runCounter = React.useCallback(() => {
     clearInterval(timerRef.current);
     clearInterval(intervalRef.current);
-    
-    // Set up auto re-run interval of 20s
     intervalRef.current = setInterval(() => {
       runCounter();
     }, 20000);
@@ -45,12 +37,10 @@ function CTAStat({ target, suffix, isDecimal, label }) {
   }, [target, isDecimal]);
 
   useEffect(() => {
-    // Start interval
     intervalRef.current = setInterval(() => {
       runCounter();
     }, 20000);
 
-    // Run when scrolled into view
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -109,8 +99,8 @@ export default function FinalCTA() {
   const line1Ref = useRef(null);
   const line2Ref = useRef(null);
   const line3Ref = useRef(null);
-  const subRef = useRef(null);
-  const btnsRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const buttonsRef = useRef(null);
   const statsRef = useRef(null);
 
   useEffect(() => {
@@ -121,17 +111,27 @@ export default function FinalCTA() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top 75%',
-        toggleActions: 'play none none none',
-      },
+        toggleActions: 'play none none none'
+      }
     });
 
     tl.fromTo(
       [line1Ref.current, line2Ref.current, line3Ref.current],
       { y: '110%', opacity: 0 },
-      { y: '0%', opacity: 1, duration: 1.0, ease: 'power4.out', stagger: 0.12 }
+      { y: '0%', opacity: 1, duration: 1, ease: 'power4.out', stagger: 0.12 }
     )
-      .fromTo(subRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
-      .fromTo(btnsRef.current, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.5')
+      .fromTo(
+        subtitleRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+        '-=0.5'
+      )
+      .fromTo(
+        buttonsRef.current,
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+        '-=0.5'
+      )
       .fromTo(
         statsRef.current?.querySelectorAll('.stat-item'),
         { opacity: 0, y: 16 },
@@ -148,41 +148,42 @@ export default function FinalCTA() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden flex flex-col"
+      className="relative z-30 w-full overflow-hidden flex flex-col bg-[#1C1C1C]"
       style={{ minHeight: '100svh', fontFamily: '"Outfit", sans-serif' }}
     >
-      {/* ── Full-bleed background ── */}
+      {/* Dimmed background image */}
       <div className="absolute inset-0 z-0">
         <img
           src="/assets/images/finalcta_bg.webp"
-          alt=""
-          aria-hidden="true"
+          alt="Jagathi Architectural Engineering Landscape"
           loading="lazy"
           decoding="async"
           className="w-full h-full object-cover object-center"
           style={{ filter: 'brightness(0.22) saturate(0.6) contrast(1.1)' }}
         />
-        {/* Dark gradient overlays */}
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.80) 100%)' }}
+          style={{
+            background:
+              'linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.30) 50%, rgba(10,10,10,0.80) 100%)'
+          }}
         />
-        {/* Left edge vignette */}
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.45) 0%, transparent 60%)' }}
+          style={{
+            background:
+              'linear-gradient(to right, rgba(10,10,10,0.45) 0%, transparent 60%)'
+          }}
         />
       </div>
 
-      {/* ── Content ── */}
+      {/* Main text content */}
       <div className="relative z-10 flex flex-col justify-center flex-1 w-full max-w-[1600px] mx-auto px-10 md:px-12 lg:px-20 xl:px-24 pt-20 md:pt-28 pb-40 md:pb-52">
-
-        {/* Mono label */}
         <span className="text-[#FFEA0A]/60 font-mono text-[10px] md:text-xs uppercase tracking-[0.35em] mb-8 md:mb-10 block">
-          {'// Begin Your Build'}
+          // Begin Your Build
         </span>
 
-        {/* Headline — 3 staggered lines */}
+        {/* Big stacked headline */}
         <div className="overflow-hidden mb-3 md:mb-4">
           <h2
             ref={line1Ref}
@@ -192,13 +193,14 @@ export default function FinalCTA() {
               fontWeight: 700,
               fontSize: 'clamp(2.5rem, 7.5vw, 7.5rem)',
               letterSpacing: '-0.02em',
-              lineHeight: 1.0,
+              lineHeight: 1,
               transform: 'translateY(110%)'
             }}
           >
             Ready to Build
           </h2>
         </div>
+
         <div className="overflow-hidden mb-3 md:mb-4">
           <h2
             ref={line2Ref}
@@ -208,14 +210,15 @@ export default function FinalCTA() {
               fontWeight: 700,
               fontSize: 'clamp(2.5rem, 7.5vw, 7.5rem)',
               letterSpacing: '-0.02em',
-              lineHeight: 1.0,
+              lineHeight: 1,
               transform: 'translateY(110%)'
             }}
           >
             Something That
           </h2>
         </div>
-        <div className="overflow-hidden mb-10 md:mb-14">
+
+        <div className="overflow-hidden mb-8 md:mb-12">
           <h2
             ref={line3Ref}
             className="text-white font-bold uppercase leading-none"
@@ -224,7 +227,7 @@ export default function FinalCTA() {
               fontWeight: 700,
               fontSize: 'clamp(2.5rem, 7.5vw, 7.5rem)',
               letterSpacing: '-0.02em',
-              lineHeight: 1.0,
+              lineHeight: 1,
               transform: 'translateY(110%)'
             }}
           >
@@ -232,68 +235,40 @@ export default function FinalCTA() {
           </h2>
         </div>
 
-        {/* Subtext */}
         <p
-          ref={subRef}
-          className="text-white/55 font-light text-sm md:text-lg max-w-xl leading-relaxed mb-10 md:mb-12 opacity-0"
-          style={{ fontFamily: '"Outfit", sans-serif' }}
+          ref={subtitleRef}
+          className="text-gray-300 font-sans font-light text-sm md:text-xl lg:text-2xl max-w-2xl leading-relaxed mb-10 md:mb-14 opacity-0"
+          style={{ letterSpacing: '0.02em' }}
         >
           From site acquisition to the final material swatch, Jagathi manages every phase with zero tolerance for compromise. Reach our advisory desk — we answer within 24 hours.
         </p>
 
-        {/* CTA Buttons */}
-        <div
-          ref={btnsRef}
-          className="flex flex-col sm:flex-row gap-4 opacity-0"
-        >
-          <a
-            href="mailto:info@jagathi.co"
-            className="group inline-flex items-center justify-center gap-3 bg-[#FFEA0A] text-[#1a1a1a] px-8 py-4 uppercase text-xs md:text-sm tracking-[0.2em] font-bold hover:bg-white transition-all duration-300"
-            data-interactive
-            id="finalcta-consult-btn"
-          >
-            Request Consultation
-            <span className="group-hover:translate-x-1 transition-transform duration-300 text-base">→</span>
-          </a>
+        <div ref={buttonsRef} className="flex flex-wrap items-center gap-5 md:gap-8 opacity-0">
           <Link
-            href="/#landmarks"
-            className="group inline-flex items-center justify-center gap-3 border border-white/30 text-white px-8 py-4 uppercase text-xs md:text-sm tracking-[0.2em] font-semibold hover:border-[#FFEA0A] hover:text-[#FFEA0A] transition-all duration-300"
-            data-interactive
-            id="finalcta-portfolio-btn"
+            href="/contact"
+            className="bg-[#FFEA0A] text-[#1C1C1C] hover:bg-white font-mono text-xs md:text-sm font-black tracking-[0.25em] uppercase px-8 md:px-12 py-4 md:py-5 shadow-2xl transition-all duration-300 rounded-none border border-[#FFEA0A]"
           >
-            Explore Portfolio
-            <span className="group-hover:translate-x-1 transition-transform duration-300 text-base">→</span>
+            Request Consultation →
+          </Link>
+          <Link
+            href="/construction"
+            className="border border-white/30 text-white hover:border-[#FFEA0A] hover:text-[#FFEA0A] font-mono text-xs md:text-sm font-semibold tracking-[0.25em] uppercase px-8 md:px-10 py-4 md:py-5 transition-all duration-300 rounded-none backdrop-blur-sm"
+          >
+            Explore Portfolio →
           </Link>
         </div>
       </div>
 
-      {/* ── Stats bar — pinned to bottom ── */}
+      {/* Bottom stats bar */}
       <div
         ref={statsRef}
-        className="absolute bottom-0 left-0 right-0 z-20"
+        className="absolute bottom-0 left-0 right-0 z-20 border-t border-white/10 bg-[#121315]/90 backdrop-blur-xl grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10"
       >
-        <div className="h-px bg-white/10 w-full" />
-        <div
-          className="grid grid-cols-3 divide-x divide-white/10 w-full"
-          style={{ background: 'rgba(10,10,10,0.82)', backdropFilter: 'blur(12px)' }}
-        >
-          {stats.map((s, i) => (
-            <CTAStat
-              key={i}
-              {...s}
-            />
-          ))}
-        </div>
+        <StatItem target={35} suffix="+" isDecimal={false} label="Years of Legacy" />
+        <StatItem target={75} suffix="+" isDecimal={false} label="Projects Delivered" />
+        <StatItem target={3} suffix="M+" isDecimal={false} label="Sq. Ft. Completed" />
+        <StatItem target={100} suffix="%" isDecimal={false} label="Compliance Rating" />
       </div>
-
-      {/* Subtle grid overlay texture */}
-      <div
-        className="absolute inset-0 z-[1] pointer-events-none opacity-[0.025]"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)',
-          backgroundSize: '60px 60px'
-        }}
-      />
     </section>
   );
 }

@@ -1,15 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@700;800&family=Outfit:wght@300;400;600;900&family=Syncopate:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import "./preloader.css";
+@import "./footer.css";
+@import "tailwindcss";
 
 @font-face {
   font-family: 'Basement Grotesque';
   src: url('https://db.onlinewebfonts.com/t/22a5057c44af95176db4b4c5dd40fb15.woff2') format('woff2');
-  font-weight: 900;
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
-@import "tailwindcss";
-@import "./preloader.css";
-@import "./footer.css";
+
+*, ::before, ::after {
+  font-family: 'Basement Grotesque', sans-serif !important;
+}
 
 :root {
   --brand-yellow: #FFFF00;
@@ -18,28 +22,34 @@
   --text-color: #ffffff;
   --text-gray: #a0a0a0;
   
-  /* Mouse position for the radial glow, defaulted to center screen */
+  /* Mouse position for radial glow */
   --mouse-x: 50%;
   --mouse-y: 50%;
 
-  /* Custom cursor — white bordered arrow (consistent across all pages) */
-  --cursor-dot: #ffffff;
-  --cursor-border: #ffffff;
-  --cursor-bg: rgba(255, 255, 255, 0.04);
-  --cursor-glow: rgba(255, 255, 255, 0.18);
-  --cursor-border-hover: #ffffff;
-  --cursor-bg-hover: rgba(255, 255, 255, 0.10);
-  --cursor-glow-hover: rgba(255, 255, 255, 0.35);
-  --cursor-border-click: #ffffff;
-  --cursor-bg-click: rgba(255, 255, 255, 0.20);
-  --cursor-glow-click: rgba(255, 255, 255, 0.28);
+  /* Custom cursor */
+  --cursor-dot: #FFEA0A;
+  --cursor-border: #000000;
+  --cursor-bg: #FFEA0A;
+  --cursor-glow: rgba(255, 234, 10, 0.4);
+  --cursor-border-hover: #000000;
+  --cursor-bg-hover: #FFEA0A;
+  --cursor-glow-hover: rgba(255, 234, 10, 0.6);
+  --cursor-border-click: #000000;
+  --cursor-bg-click: #FFD700;
+  --cursor-glow-click: rgba(255, 215, 0, 0.5);
 
-  /* Default header theme (dark transparent) */
+  /* Header theme */
   --header-bg: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
   --header-logo: #ffffff;
   --header-logo-hover: var(--brand-yellow);
   --header-link: var(--text-gray);
   --header-link-hover: #ffffff;
+}
+
+/* Hide native OS cursor globally when custom cursor is active */
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important;
 }
 
 body.home-theme-yellow-gray {
@@ -48,19 +58,17 @@ body.home-theme-yellow-gray {
   --text-gray: #555555;
   --brand-yellow-glow: rgba(66, 66, 66, 0.05);
 
-  /* Homepage yellow-bg: keep white cursor so it contrasts against yellow */
-  --cursor-dot: #ffffff;
-  --cursor-border: #ffffff;
-  --cursor-bg: rgba(255, 255, 255, 0.04);
-  --cursor-glow: rgba(255, 255, 255, 0.18);
-  --cursor-border-hover: #ffffff;
-  --cursor-bg-hover: rgba(255, 255, 255, 0.10);
-  --cursor-glow-hover: rgba(255, 255, 255, 0.35);
-  --cursor-border-click: #ffffff;
-  --cursor-bg-click: rgba(255, 255, 255, 0.20);
-  --cursor-glow-click: rgba(255, 255, 255, 0.28);
+  --cursor-dot: #FFEA0A;
+  --cursor-border: #000000;
+  --cursor-bg: #FFEA0A;
+  --cursor-glow: rgba(255, 234, 10, 0.4);
+  --cursor-border-hover: #000000;
+  --cursor-bg-hover: #FFEA0A;
+  --cursor-glow-hover: rgba(255, 234, 10, 0.6);
+  --cursor-border-click: #000000;
+  --cursor-bg-click: #FFD700;
+  --cursor-glow-click: rgba(255, 215, 0, 0.5);
 
-  /* Homepage-specific header theme */
   --header-bg: transparent;
   --header-logo: #424242;
   --header-logo-hover: #000000;
@@ -71,7 +79,6 @@ body.home-theme-yellow-gray {
   color: var(--text-color);
 }
 
-/* Home theme text selection override */
 body.home-theme-yellow-gray ::selection {
   background: #424242;
   color: #FFEA0A;
@@ -87,52 +94,58 @@ body.home-theme-yellow-gray ::-webkit-scrollbar-thumb:hover {
   background: #424242;
 }
 
-
 .font-serif-luxury {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Basement Grotesque', sans-serif !important;
 }
 
 .noise-overlay {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.04;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Premium Interactive Text Hover Transitions */
+.hover-color-switch,
+h1, h2, h3, h4, h5, a, button {
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              text-shadow 0.35s ease,
+              letter-spacing 0.35s ease;
 }
 
+.text-hover-glow:hover {
+  color: #FFEA0A !important;
+  text-shadow: 0 0 16px rgba(255, 234, 10, 0.5);
+  transform: translateY(-1px);
+}
+
+.heading-hover-lift:hover {
+  transform: translateY(-2px) scale(1.015);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base resets */
 html, body {
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: 'Basement Grotesque', 'Syncopate', sans-serif;
   overflow-x: hidden;
-  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-/* Dynamic mouse-tracked radial glow removed */
-
-/* Hide cursor when custom cursor is active */
-body.custom-cursor-active, 
-body.custom-cursor-active * {
-  cursor: none !important;
+::selection {
+  background: var(--brand-yellow);
+  color: #000000;
 }
 
-/* Heading Fonts */
-h1, h2, h3, h4, .brand-header, .font-basement {
-  font-family: 'Basement Grotesque', 'Syncopate', sans-serif !important;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Hardware Acceleration Helpers */
-.gpu-accelerated {
+/* GPU hardware acceleration helper classes */
+.gpu-accel {
   will-change: transform, opacity;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
@@ -154,7 +167,6 @@ h1, h2, h3, h4, .brand-header, .font-basement {
   background: var(--brand-yellow);
 }
 
-/* Custom inline SVG noise and turbulence melting filters */
 .melt-filter {
   filter: url(#melting-noise);
 }
@@ -176,7 +188,6 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
-/* Performance & Hardware compositing acceleration overrides */
 .cr-reveal {
   will-change: transform, opacity;
   transform: translate3d(0, 0, 0);
@@ -187,12 +198,3 @@ html.lenis, html.lenis body {
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
-
-/* Global Mobile Layout Padding Override to give spacious margins on all sections */
-@media (max-width: 768px) {
-  .px-6, .px-5 {
-    padding-left: 2.5rem !important;
-    padding-right: 2.5rem !important;
-  }
-}
-

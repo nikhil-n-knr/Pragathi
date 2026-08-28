@@ -27,7 +27,7 @@ export default function CivilCapabilities() {
       data-section="sectors"
       className="bg-[#1b1c1e] text-white w-full border-b border-white/10"
       style={{
-        padding: '10rem 1.5rem',
+        padding: '4rem 1.5rem',
         boxSizing: 'border-box'
       }}
     >

@@ -9,73 +9,62 @@ import DisciplineVideo from './DisciplineVideo';
 
 const disciplines = [
   {
-    portal: '// PORTAL 01',
+    disciplineNum: '1',
     title: 'CONSTRUCTION & LAND DEVELOPMENT',
-    subtitle: 'Heavy civil & land development',
+    subtitle: 'Structural engineering & land development',
     description:
       'Delivering master-scale concrete cores, structural lattices, and industrial complexes built to endure generations.',
     image: '/assets/images/construction_discipline.webp',
-    videoWebm: '/assets/videos/construction_loop.webm',
     videoMp4: '/assets/videos/construction_loop.mp4',
     alt: 'Construction & Land Development',
-    href: '/construction',
+    href: '/construction/',
     index: 0,
     reverse: false,
     zIndex: 11,
+    topOffset: '0px',
     kenBurns: styles.kenBurns0,
+    brightness: 1.06,
   },
   {
-    portal: '// PORTAL 02',
-    title: 'INTERIORS',
-    subtitle: 'Turnkey bespoke spaces',
+    disciplineNum: '2',
+    title: 'ARCHITECTURAL INTERIOR SOLUTIONS',
+    subtitle: 'Turnkey bespoke interiors & spatial design',
     description:
       'Every square inch managed seamlessly — from raw architectural layouts and custom millwork to absolute lighting design.',
     image: '/assets/images/interiors_discipline.webp',
-    videoWebm: '/assets/videos/interiors_loop.webm',
     videoMp4: '/assets/videos/interiors_loop.mp4',
-    alt: 'Interiors',
-    href: '/interior',
+    alt: 'Architectural Interior Solutions',
+    href: '/interior/',
     index: 1,
     reverse: true,
     zIndex: 12,
+    topOffset: '35px',
     kenBurns: styles.kenBurns1,
+    brightness: 0.92,
   },
   {
-    portal: '// PORTAL 03',
-    title: 'CIVIL MARKET',
-    subtitle: 'Lands & plotted assets',
+    disciplineNum: '3',
+    title: 'PROPERTY ADVISORY SERVICES',
+    subtitle: 'Lands & plotted assets advisory',
     description:
       'Vetting and securing high-potential growth corridors, industrial smart-zones, and premium plotted inventories.',
     image: '/assets/images/civil_market_discipline.webp',
-    videoWebm: '/assets/videos/civil_market_loop.webm',
     videoMp4: '/assets/videos/civil_market_loop.mp4',
-    alt: 'Civil Market',
-    href: '/civil-market',
+    alt: 'Property Advisory Services',
+    href: '/civil-market/',
     index: 2,
     reverse: false,
     zIndex: 13,
+    topOffset: '70px',
     kenBurns: styles.kenBurns2,
+    brightness: 0.92,
   },
 ];
 
 export default function GatewaySection() {
   const router = useRouter();
-  const [hoveredRow, setHoveredRow] = useState(null);
-  const [autoplayRow, setAutoplayRow] = useState(0);
 
-  const getIsActive = (index) =>
-    hoveredRow === index || (hoveredRow === null && autoplayRow === index);
-
-  // Autoplay cycle — pauses while hovering
-  useEffect(() => {
-    if (hoveredRow !== null) return;
-    const interval = setInterval(() => {
-      setAutoplayRow((prev) => (prev + 1) % 3);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, [hoveredRow]);
-
-  // GSAP — sticky stack + staggered rise-in per card
+  // GSAP sticky stack scale-down on scroll
   useEffect(() => {
     if (typeof window === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
@@ -83,7 +72,6 @@ export default function GatewaySection() {
     const allTriggers = [];
     const cards = gsap.utils.toArray('.gateway-card-item');
 
-    // Sticky stack scale-down
     cards.forEach((card, i) => {
       const nextCard = cards[i + 1];
       if (nextCard) {
@@ -103,26 +91,6 @@ export default function GatewaySection() {
       }
     });
 
-    // Rise-in per card
-    cards.forEach((card) => {
-      const targets = card.querySelectorAll('.rise-target');
-      if (!targets.length) return;
-      gsap.set(targets, { y: 48, opacity: 0 });
-      const t = gsap.to(targets, {
-        y: 0,
-        opacity: 1,
-        duration: 0.82,
-        stagger: 0.11,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-      });
-      allTriggers.push(t);
-    });
-
     return () => {
       allTriggers.forEach((t) => {
         t.scrollTrigger?.kill();
@@ -133,134 +101,100 @@ export default function GatewaySection() {
 
   return (
     <section
-      className="relative z-10 w-full bg-transparent flex flex-col items-center justify-start overflow-visible"
+      id="gateways"
+      data-section="gateways"
+      className="relative z-10 w-full text-white bg-transparent flex flex-col items-center justify-center overflow-visible"
       style={{
-        paddingTop: 'clamp(5rem, 10vw, 10rem)',
-        paddingBottom: 'clamp(8rem, 15vw, 15rem)',
-        fontFamily: '"Outfit", sans-serif',
+        paddingTop: 'clamp(40px, 5vh, 60px)',
+        paddingBottom: 'clamp(50px, 7vh, 80px)',
+        marginTop: '20px',
+        marginBottom: '30px',
+        boxSizing: 'border-box',
       }}
     >
-      {/* ── Section Header ── */}
-      <div 
-        className="flex flex-col items-center text-center mx-auto w-full"
-        style={{
-          paddingLeft: '2.5rem',
-          paddingRight: '2.5rem',
-          maxWidth: '1200px',
-          marginBottom: '2.5rem',
-          boxSizing: 'border-box'
-        }}
+      {/* Section header */}
+      <div
+        className="w-full max-w-[1100px] mx-auto px-6 md:px-10 text-center flex flex-col items-center justify-center pointer-events-none"
+        style={{ marginBottom: 'clamp(24px, 4vh, 45px)' }}
       >
-        <span 
-          className="rise-target text-[#1C1C1C]/70 font-mono text-xs uppercase block text-center font-semibold" 
-          style={{ letterSpacing: '0.4em', marginBottom: '1.25rem' }}
-        >
-          {'// Gateway Portals'}
-        </span>
-        <h2 
-          className="rise-target text-[#1C1C1C] font-black uppercase text-center w-full leading-none font-basement" 
-          style={{ 
-            letterSpacing: '0.08em', 
-            fontSize: 'clamp(2.5rem, 5.5vw, 5.5rem)',
-            marginTop: '0.5rem' 
-          }}
-        >
-          One Group. Three Disciplines.
+        <h2 className="rise-target text-[#1C1C1C] font-black uppercase text-center w-full leading-none font-basement tracking-[0.06em] text-[clamp(2.4rem,5vw,5rem)]">
+          One Group <br />Three Disciplines
         </h2>
       </div>
 
-      {/* ── Cards Stack ── */}
-      <div className="gateway-stack-container w-full max-w-[1600px] mx-auto px-10 md:px-12 lg:px-16 flex flex-col gap-0 relative overflow-visible mt-14 md:mt-24 lg:mt-32">
-        {disciplines.map(({ portal, title, subtitle, description, image, videoWebm, videoMp4, alt, href, index, reverse, zIndex, kenBurns }) => {
-          const isActive = getIsActive(index);
-          const rowDirection = reverse ? 'flex-col md:flex-row-reverse' : 'flex-col md:flex-row';
-
-          return (
+      {/* Cards stack */}
+      <div className="gateway-stack-container w-full max-w-[1160px] mx-auto px-4 sm:px-6 md:px-8 flex flex-col items-center justify-center relative overflow-visible">
+        {disciplines.map(({ disciplineNum, title, subtitle, description, image, videoMp4, alt, href, index, reverse, zIndex, topOffset, kenBurns, brightness }) => (
+          <div
+            key={index}
+            className="gateway-card-item sticky w-full max-w-[1160px] mx-auto flex items-center justify-center"
+            style={{
+              top: `calc(14vh + ${topOffset})`,
+              zIndex,
+              height: 'clamp(560px, 64vh, 640px)',
+              marginBottom: 'clamp(35px, 6vh, 60px)',
+            }}
+          >
             <div
-              key={index}
-              className="gateway-card-item sticky top-[8vh] md:top-[14vh] w-full md:h-[80vh] flex items-center justify-center mb-[12vh] md:mb-[20vh]"
-              style={{ zIndex }}
+              className={`gateway-card-inner relative w-full h-full bg-[#121315]/90 backdrop-blur-xl border flex flex-col ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-stretch justify-between shadow-[0_45px_100px_-20px_rgba(0,0,0,0.65)] overflow-hidden cursor-pointer group rounded-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] border-[#FFEA0A]/30 hover:border-[#FFEA0A]/70`}
+              onClick={() => router.push(href)}
             >
-              <div
-                className={`gateway-card-inner w-full h-full bg-[#1C1C1C] border border-[#FFEA0A]/10 flex ${rowDirection} items-stretch justify-between gap-0 shadow-[0_45px_90px_-25px_rgba(0,0,0,0.40)] overflow-hidden cursor-pointer`}
-                onMouseEnter={() => setHoveredRow(index)}
-                onMouseLeave={() => setHoveredRow(null)}
-                onClick={() => router.push(href)}
-              >
-                {/* ── Image / Video Panel ── */}
-                <div className="w-full md:w-[50%] h-[56vw] sm:h-[44vw] md:h-full relative overflow-hidden flex-shrink-0">
-                  <DisciplineVideo
-                    imageSrc={image}
-                    videoSrcWebm={videoWebm}
-                    videoSrcMp4={videoMp4}
+              {/* Image/Video panel */}
+              <div className="h-full relative overflow-hidden flex-shrink-0 bg-transparent transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] w-full md:w-[62%] lg:w-[64%] border-b md:border-b-0 border-[#FFEA0A]/15">
+                <div className="w-full h-full relative overflow-hidden">
+                  <img
+                    src={image}
                     alt={alt}
-                    kenBurnsClass={kenBurns}
-                    isActive={isActive}
+                    decoding="async"
+                    className={`absolute inset-0 w-full h-full object-cover block ${kenBurns}`}
+                    style={{ filter: `brightness(${brightness})`, transition: 'filter 0.9s ease, opacity 0.8s ease', opacity: 1, zIndex: 1 }}
                   />
-                  {/* Edge gradient blending toward text */}
-                  <div
-                    className="absolute inset-0 pointer-events-none z-10"
-                    style={{
-                      background: reverse
-                        ? 'linear-gradient(to left, rgba(28,28,28,0.60) 0%, transparent 42%)'
-                        : 'linear-gradient(to right, rgba(28,28,28,0.60) 0%, transparent 42%)',
-                    }}
-                  />
-                  {/* Bottom fade */}
-                  <div
-                    className="absolute inset-x-0 bottom-0 h-20 pointer-events-none z-10"
-                    style={{
-                      background: 'linear-gradient(to top, rgba(28,28,28,0.45) 0%, transparent 100%)',
-                    }}
-                  />
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover block"
+                    style={{ opacity: 0, transition: 'opacity 1.2s ease', filter: `brightness(${brightness})`, zIndex: 2 }}
+                  >
+                    <source src={videoMp4} type="video/mp4" />
+                  </video>
                 </div>
-
-                {/* ── Text Panel ── */}
                 <div
-                  className={`
-                    w-full md:w-[50%] flex flex-col justify-center items-start text-left font-sans
-                    px-10 md:px-12 lg:px-16 xl:px-20
-                    py-7 md:py-14 lg:py-18 xl:py-20
-                    ${reverse
-                      ? 'border-r-0 md:border-r border-[#FFEA0A]/10'
-                      : 'border-l-0 md:border-l border-[#FFEA0A]/10'}
-                  `}
-                >
-                  <div className="flex flex-col gap-5 w-full max-w-lg">
-                    <div className="overflow-hidden">
-                      <span className="rise-target block text-[#FFEA0A]/60 font-mono text-xs md:text-sm tracking-[0.28em] uppercase font-semibold">
-                        {portal}
-                      </span>
-                    </div>
-                    <div className="overflow-hidden">
-                      <h3 className="rise-target font-basement text-2xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.05] uppercase text-white">
-                        {title}
-                      </h3>
-                    </div>
-                    <div className="overflow-hidden">
-                      <span className="rise-target block font-sans font-normal text-[#FFEA0A] tracking-wider text-base md:text-xl lg:text-2xl">
-                        {subtitle}
-                      </span>
-                    </div>
-                    <div className="overflow-hidden">
-                      <div className="rise-target w-10 h-[2px] bg-[#FFEA0A]/30 rounded-full" />
-                    </div>
-                    <div className="overflow-hidden">
-                      <p className="rise-target text-gray-300 text-sm md:text-lg lg:text-xl leading-relaxed font-sans font-light">
-                        {description}
-                      </p>
-                    </div>
-                    <div className="overflow-hidden pt-3">
-                      <button className="rise-target inline-flex items-center gap-3 text-[#FFEA0A] uppercase tracking-[0.2em] text-xs md:text-sm font-extrabold border-b-2 border-[#FFEA0A]/30 pb-2 hover:text-white hover:border-white hover:gap-5 transition-all duration-300">
-                        Explore Discipline <span className="text-base">→</span>
-                      </button>
-                    </div>
-                  </div>
+                  className="absolute inset-x-0 bottom-0 h-32 pointer-events-none z-10"
+                  style={{ background: 'linear-gradient(to top, rgba(18,19,21,0.85) 0%, transparent 100%)' }}
+                />
+              </div>
+
+              {/* Text panel */}
+              <div
+                className={`h-full bg-[#121315]/90 backdrop-blur-xl flex flex-col justify-between p-6 sm:p-8 md:p-9 lg:p-12 text-left font-sans relative z-20 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] w-full md:w-[40%] lg:w-[38%] opacity-100 border-l border-r border-[#FFEA0A]/15 md:border-r-0`}
+                style={{ boxSizing: 'border-box' }}
+              >
+                <div className="flex flex-col gap-3.5 pr-2 md:pr-4">
+                  <span className="text-[#FFEA0A]/80 font-mono text-[10px] tracking-[0.3em] uppercase block font-bold">
+                    {`// DISCIPLINE 0${disciplineNum}`}
+                  </span>
+                  <h3 className="font-basement text-lg sm:text-xl md:text-2xl font-black tracking-tight leading-snug uppercase text-white hover:text-[#FFEA0A] transition-colors break-words pr-2">
+                    {title}
+                  </h3>
+                  <span className="font-sans font-medium text-[#FFEA0A] tracking-wider text-xs md:text-sm">
+                    {subtitle}
+                  </span>
+                  <div className="w-12 h-[2px] bg-[#FFEA0A]/40 my-1" />
+                  <p className="text-gray-300 text-xs md:text-sm leading-relaxed font-sans font-light line-clamp-4 md:line-clamp-6">
+                    {description}
+                  </p>
+                </div>
+                <div className="pt-6 border-t border-white/15 pr-2 md:pr-4">
+                  <button className="w-full bg-[#FFEA0A] text-[#1C1C1C] hover:bg-white uppercase tracking-[0.2em] text-[10.5px] font-black py-3.5 px-4 transition-all flex items-center justify-center gap-2 rounded-none shadow-lg">
+                    Explore Discipline <span>→</span>
+                  </button>
                 </div>
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </section>
   );

@@ -5,96 +5,88 @@ import Link from 'next/link';
 import gsap from 'gsap';
 import { useFluid } from '../context/FluidContext';
 
+// Row config — decompiled from out2 exactly
+const rows = [
+  {
+    speed: 84,
+    direction: 'left',
+    words: [
+      { text: 'INFRASTRUCTURE',   path: '/construction' },
+      { text: 'CIVIL MARKET',     path: '/civil-market' },
+      { text: 'INTERIOR DESIGN',  path: '/interior' },
+      { text: 'CIVIL ENGINEERING',path: '/construction' },
+    ],
+    stroke: '#FFEA0A',
+    glowColor: 'rgba(255, 234, 10, 0.5)',
+  },
+  {
+    speed: 112,
+    direction: 'right',
+    words: [
+      { text: 'ESTABLISHED 1989',      path: '/legacy-home' },
+      { text: 'UNCOMPROMISED QUALITY', path: '/legacy-home' },
+      { text: 'CONCEPT TO CURATION',   path: '/interior' },
+    ],
+    stroke: '#ffffff',
+    glowColor: 'rgba(255, 255, 255, 0.5)',
+  },
+];
+
 export default function KineticHeadline() {
+  // Scroll velocity from FluidContext — drives parallax shift between the two rows
   const { smoothScrollVel } = useFluid();
-  
-  // Rail refs for horizontal slides
-  const rail1Ref = useRef(null);
-  const rail2Ref = useRef(null);
-  
-  // Parent refs for applying skew/lag without conflicting with GSAP
-  const parent1Ref = useRef(null);
-  const parent2Ref = useRef(null);
 
-  // Configuration of words, targets, and speeds per rail
-  const railData = [
-    {
-      ref: rail1Ref,
-      parentRef: parent1Ref,
-      speed: 60, // Slowed down further (more than 50% slower than original 28s)
-      direction: 'left',
-      words: [
-        { text: "INFRASTRUCTURE", path: "/construction" },
-        { text: "CIVIL MARKET", path: "/civil-market" },
-        { text: "INTERIOR DESIGN", path: "/interior" },
-        { text: "CIVIL ENGINEERING", path: "/construction" }
-      ]
-    },
-    {
-      ref: rail2Ref,
-      parentRef: parent2Ref,
-      speed: 80, // Slowed down further (more than 50% slower than original 36s)
-      direction: 'right',
-      words: [
-        { text: "ESTABLISHED 1989", path: "/legacy-home" },
-        { text: "UNCOMPROMISED QUALITY", path: "/legacy-home" },
-        { text: "CONCEPT TO CURATION", path: "/interior" }
-      ]
-    }
-  ];
+  // innerRefs — the actual scrolling track divs animated by GSAP
+  const innerRef0 = useRef(null);
+  const innerRef1 = useRef(null);
 
+  // parentRefs — the outer container divs that listen for hover (pause/resume)
+  const parentRef0 = useRef(null);
+  const parentRef1 = useRef(null);
+
+  const innerRefs   = [innerRef0, innerRef1];
+  const parentRefs  = [parentRef0, parentRef1];
+
+  // ── 1. GSAP infinite marquee + mouse-pause ─────────────────────────────
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
     const tweens = [];
 
-    // Initialize marquee animations
-    railData.forEach((rail) => {
-      const target = rail.ref.current;
-      if (!target) return;
+    rows.forEach((row, rowIdx) => {
+      const trackEl  = innerRefs[rowIdx].current;
+      const parentEl = parentRefs[rowIdx].current;
+      if (!trackEl || !parentEl) return;
 
-      const totalWidth = target.scrollWidth / 2; // Half is duplicate repeat
-      const limit = totalWidth;
-      
-      const tween = gsap.to(target, {
-        x: rail.direction === 'right' ? limit : -limit,
+      const halfWidth = trackEl.scrollWidth / 2;
+
+      // Infinite GSAP tween using modifiers for seamless looping
+      const tween = gsap.to(trackEl, {
+        x: row.direction === 'right' ? halfWidth : -halfWidth,
         ease: 'none',
-        duration: rail.speed,
+        duration: row.speed,
         repeat: -1,
         modifiers: {
-          x: (x) => {
-            const val = parseFloat(x);
-            if (rail.direction === 'right') {
-              const wrapped = (val % limit) - limit;
-              return `${wrapped}px`;
+          x: (rawX) => {
+            const x = parseFloat(rawX);
+            if (row.direction === 'right') {
+              return `${(x % halfWidth) - halfWidth}px`;
             } else {
-              const wrapped = val % limit;
-              return `${wrapped}px`;
+              return `${x % halfWidth}px`;
             }
-          }
-        }
+          },
+        },
       });
 
-      tweens.push({ tween, target });
+      tweens.push({ tween, target: trackEl });
 
-      // Attach mouseover listeners to stationary parent to prevent moving-target glitching
-      const parent = rail.parentRef.current;
-      if (!parent) return;
+      // Hover → pause / resume the marquee
+      const pause   = () => gsap.to(tween, { timeScale: 0, duration: 0.4, overwrite: 'auto' });
+      const resume  = () => gsap.to(tween, { timeScale: 1, duration: 0.6, overwrite: 'auto' });
 
-      const onMouseEnter = () => {
-        gsap.to(tween, { timeScale: 0.0, duration: 0.4, overwrite: 'auto' });
-      };
-
-      const onMouseLeave = () => {
-        gsap.to(tween, { timeScale: 1.0, duration: 0.6, overwrite: 'auto' });
-      };
-
-      parent.addEventListener('mouseenter', onMouseEnter);
-      parent.addEventListener('mouseleave', onMouseLeave);
-
-      parent._cleanMarquee = () => {
-        parent.removeEventListener('mouseenter', onMouseEnter);
-        parent.removeEventListener('mouseleave', onMouseLeave);
+      parentEl.addEventListener('mouseenter', pause);
+      parentEl.addEventListener('mouseleave', resume);
+      parentEl._cleanMarquee = () => {
+        parentEl.removeEventListener('mouseenter', pause);
+        parentEl.removeEventListener('mouseleave', resume);
       };
     });
 
@@ -102,120 +94,80 @@ export default function KineticHeadline() {
       tweens.forEach(({ tween, target }) => {
         tween.kill();
         const parent = target.parentElement;
-        if (parent && parent._cleanMarquee) {
-          parent._cleanMarquee();
-        }
+        if (parent && parent._cleanMarquee) parent._cleanMarquee();
       });
     };
   }, []);
 
-  // Update skew and horizontal lag in real-time scroll velocity loop
+  // ── 2. Scroll-velocity parallax between rows ───────────────────────────
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    let rAfId;
-    const updateLag = () => {
-      const vel = smoothScrollVel ? smoothScrollVel.current : 0;
-      
-      // Elastic horizontal translation lag offset based on scroll speed
-      const lag = vel * -0.22;
-
-      if (parent1Ref.current) {
-        parent1Ref.current.style.transform = `translateX(${lag}px)`;
-      }
-      if (parent2Ref.current) {
-        parent2Ref.current.style.transform = `translateX(${-lag}px)`;
-      }
-
-      rAfId = requestAnimationFrame(updateLag);
+    let raf;
+    const loop = () => {
+      // smoothScrollVel.current is positive on scroll-down, negative on scroll-up
+      const shift = -0.22 * (smoothScrollVel ? smoothScrollVel.current : 0);
+      if (parentRef0.current) parentRef0.current.style.transform = `translateX(${shift}px)`;
+      if (parentRef1.current) parentRef1.current.style.transform = `translateX(${-shift}px)`;
+      raf = requestAnimationFrame(loop);
     };
-
-    rAfId = requestAnimationFrame(updateLag);
-    return () => {
-      cancelAnimationFrame(rAfId);
-    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
   }, [smoothScrollVel]);
 
-  // Repeat word array multiple times to fill overflow
-  const getLoopingWords = (words) => {
-    return [...words, ...words, ...words, ...words, ...words, ...words];
-  };
-
   return (
-    <div 
-      className="w-full pt-12 pb-18 overflow-hidden bg-[#1C1C1C] border-y border-[#FFEA0A]/20 select-none flex flex-col gap-6 relative z-10 shadow-2xl"
-      style={{ transform: 'skewY(-1.8deg)' }} // Technical slanted grid alignment
-    >
-      {railData.map((rail, railIdx) => {
-        const loopList = getLoopingWords(rail.words);
-        return (
-          <div 
-            key={railIdx} 
-            ref={rail.parentRef}
-            className="flex whitespace-nowrap overflow-visible relative group/rail will-change-transform" 
-            style={{ width: 'fit-content' }}
-          >
-            {/* Scrollable Rail container */}
-            <div 
-              ref={rail.ref} 
-              className="flex gap-16 md:gap-24 text-5xl md:text-8xl font-black uppercase tracking-wider relative transition-opacity duration-300"
-              style={{ willChange: 'transform' }}
+    <section className="relative z-10 pt-4 pb-6 md:pb-8 mb-6 md:mb-10 w-full">
+      <div
+        className="w-full py-2.5 sm:py-3.5 md:py-4 overflow-hidden bg-[#1C1C1C] select-none flex flex-col gap-1.5 md:gap-2 relative z-10 shadow-xl"
+        style={{ transform: 'skewY(-1.8deg)' }}
+      >
+        {rows.map((row, rowIdx) => {
+          const words = [...row.words, ...row.words, ...row.words, ...row.words, ...row.words, ...row.words];
+
+          return (
+            <div
+              key={rowIdx}
+              ref={parentRefs[rowIdx]}
+              style={{ width: 'fit-content' }}
+              className="flex whitespace-nowrap overflow-visible relative group/rail will-change-transform py-0.5"
             >
-              {loopList.map((word, wordIdx) => (
-                <div key={wordIdx} className="flex items-center gap-16 md:gap-24 overflow-visible">
-                  
-                  {/* Dynamic interactive Word Link Capsule */}
-                  <Link 
-                    href={word.path}
-                    className="inline-block relative transition-all duration-355 hover:scale-108 hover:z-20 hover:tracking-wide select-all font-bold"
-                    style={{
-                      transformOrigin: 'center center',
-                      textShadow: '0 0 0px transparent',
-                      color: 'transparent',
-                      WebkitTextStroke: railIdx === 0 ? '1.5px #FFEA0A' : '1.5px #ffffff',
-                      transition: 'all 0.35s cubic-bezier(0.25, 1, 0.5, 1)'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (railIdx === 0) {
-                        e.target.style.textShadow = '0 0 20px rgba(255, 234, 10, 0.5)';
-                        e.target.style.color = '#FFEA0A';
-                        e.target.style.WebkitTextStroke = '1.5px #FFEA0A';
-                      } else {
-                        e.target.style.textShadow = '0 0 20px rgba(255, 255, 255, 0.5)';
-                        e.target.style.color = '#ffffff';
-                        e.target.style.WebkitTextStroke = '1.5px #ffffff';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.textShadow = '0 0 0px transparent';
-                      e.target.style.color = 'transparent';
-                      e.target.style.WebkitTextStroke = railIdx === 0 ? '1.5px #FFEA0A' : '1.5px #ffffff';
-                    }}
-                    data-interactive
-                  >
-                    {word.text}
-                  </Link>
-
-                  <span className="text-[#FFEA0A]/40 text-3xl md:text-5xl font-light select-none">•</span>
-                </div>
-              ))}
+              <div
+                ref={innerRefs[rowIdx]}
+                style={{ willChange: 'transform' }}
+                className="flex gap-6 md:gap-10 text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black uppercase tracking-wider relative transition-opacity duration-300 leading-none"
+              >
+                {words.map((word, idx) => (
+                  <div key={idx} className="flex items-center gap-6 md:gap-10 overflow-visible">
+                    <Link
+                      href={word.path}
+                      className="inline-block relative transition-all duration-355 hover:scale-108 hover:z-20 hover:tracking-wide select-all font-bold"
+                      style={{
+                        transformOrigin: 'center center',
+                        textShadow: '0 0 0px transparent',
+                        color: 'transparent',
+                        WebkitTextStroke: `1.5px ${row.stroke}`,
+                        transition: 'all 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.textShadow = `0 0 20px ${row.glowColor}`;
+                        e.target.style.color = row.stroke;
+                        e.target.style.WebkitTextStroke = `1.5px ${row.stroke}`;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.textShadow = '0 0 0px transparent';
+                        e.target.style.color = 'transparent';
+                        e.target.style.WebkitTextStroke = `1.5px ${row.stroke}`;
+                      }}
+                      data-interactive="true"
+                    >
+                      {word.text}
+                    </Link>
+                    <span className="text-[#FFEA0A]/40 text-xl md:text-3xl font-light select-none">•</span>
+                  </div>
+                ))}
+              </div>
             </div>
-
-            {/* CSS-driven Row dimming mechanism when hovering over capsules */}
-            <style jsx global>{`
-              .group\\/rail:hover .flex > div > a {
-                opacity: 0.45;
-                filter: blur(0.3px);
-              }
-              .group\\/rail .flex > div > a:hover {
-                opacity: 1 !important;
-                filter: blur(0px) !important;
-              }
-            `}</style>
-
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

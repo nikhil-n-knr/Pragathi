@@ -81,7 +81,7 @@ export default function ConstructionStats() {
           {statsData.map((s, i) => (
             <div
               key={i}
-              className="flex flex-col items-center justify-center py-16 md:py-20 px-6 text-center border-[#121315]/15"
+              className="flex flex-col items-center justify-center py-8 md:py-10 px-6 text-center border-[#121315]/15"
               style={{ boxSizing: 'border-box' }}
             >
               <span className="text-[#121315]/50 font-mono text-[9px] block mb-4 tracking-[0.2em]">

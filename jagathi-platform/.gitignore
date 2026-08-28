@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /out/
+/out2/
 
 # production
 /build
@@ -23,6 +24,11 @@
 # misc
 .DS_Store
 *.pem
+*.zip
+out2_index_body.html
+test2.html
+test_svg.html
+Ref-Templates/
 
 # debug
 npm-debug.log*
@@ -38,8 +44,4 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
-out.zip
-# SQLite Database & Local email copies
-public/api/db/
-public/api/sent_emails/
+next-env.d.js
